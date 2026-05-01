@@ -1,0 +1,1 @@
+ALTER TABLE public.templates ADD COLUMN youtube_id text DEFAULT NULL;
