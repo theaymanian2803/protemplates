@@ -17,7 +17,7 @@ serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization')
     if (!authHeader?.startsWith('Bearer ')) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Missing Auth Header' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -37,10 +37,13 @@ serve(async (req) => {
       !paypalSecret
     ) {
       console.error('Missing critical environment variables.')
-      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      return new Response(
+        JSON.stringify({ error: 'Server configuration error: Missing Secrets' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -51,7 +54,7 @@ serve(async (req) => {
     const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token)
 
     if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Token' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -110,10 +113,13 @@ serve(async (req) => {
         .in('id', itemIds)
 
       if (tplError || !templates) {
-        return new Response(JSON.stringify({ error: 'Failed to verify template prices' }), {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        })
+        return new Response(
+          JSON.stringify({ error: `Template Fetch Error: ${tplError?.message}` }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
       }
 
       const priceMap = new Map(templates.map((t: any) => [t.id, t]))
@@ -131,11 +137,12 @@ serve(async (req) => {
           item.license === 'extended' && tpl.extended_price ? tpl.extended_price : tpl.price
         serverTotal += price
 
+        // Defensive check to ensure name is never blank for PayPal
         const safeTitle =
           tpl.title && tpl.title.trim() !== '' ? tpl.title : `Website Template ${item.id}`
 
         paypalItems.push({
-          name: safeTitle.substring(0, 120),
+          name: safeTitle.substring(0, 120), // PayPal limits name to 127 chars
           quantity: '1',
           unit_amount: { currency_code: 'USD', value: '' },
           category: 'DIGITAL_GOODS',
@@ -203,10 +210,15 @@ serve(async (req) => {
     const authData = await authResponse.json()
     if (!authResponse.ok) {
       console.error('PayPal auth error:', authData)
-      return new Response(JSON.stringify({ error: 'Failed to authenticate with PayPal' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      return new Response(
+        JSON.stringify({
+          error: `PayPal Auth Error: ${authData.error_description || authData.error}`,
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
@@ -242,7 +254,8 @@ serve(async (req) => {
     const orderData = await orderResponse.json()
     if (!orderResponse.ok) {
       console.error('PayPal order error:', orderData)
-      return new Response(JSON.stringify({ error: 'Failed to create PayPal order' }), {
+      const issue = orderData.details?.[0]?.issue || orderData.message || 'Unknown PayPal Issue'
+      return new Response(JSON.stringify({ error: `PayPal Order Rejected: ${issue}` }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -253,8 +266,8 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (error: any) {
-    console.error('Error:', error)
-    return new Response(JSON.stringify({ error: error.message || 'Unknown error' }), {
+    console.error('Fatal Function Error:', error)
+    return new Response(JSON.stringify({ error: `Server Crash: ${error.message}` }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })

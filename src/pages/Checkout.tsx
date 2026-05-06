@@ -1,231 +1,263 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { useCart } from "@/contexts/CartContext";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useValidateCoupon } from "@/hooks/useCoupons";
-import { 
-  ArrowLeft, 
-  ShieldCheck, 
+import Footer from '@/components/Footer'
+import HostingWizard from '@/components/HostingWizard'
+import Navbar from '@/components/Navbar'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { useAuth } from '@/contexts/AuthContext'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/hooks/use-toast'
+import { useValidateCoupon } from '@/hooks/useCoupons'
+import { supabase } from '@/integrations/supabase/client'
+import {
+  ArrowLeft,
+  CheckCircle2,
   CreditCard,
   Loader2,
-  CheckCircle2,
+  Rocket,
+  ShieldCheck,
   Tag,
   X,
-  Rocket
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import HostingWizard from "@/components/HostingWizard";
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 declare global {
   interface Window {
-    paypal?: any;
+    paypal?: any
   }
 }
 
 const Checkout = () => {
-  const { items, totalPrice, clearCart, isAllAccess } = useCart();
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  
-  const [isLoading, setIsLoading] = useState(false);
-  const [paypalLoaded, setPaypalLoaded] = useState(false);
-  const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
-  const [couponCode, setCouponCode] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
-  const validateCoupon = useValidateCoupon();
-  const [hostingOpen, setHostingOpen] = useState(false);
+  const { items, totalPrice, clearCart, isAllAccess } = useCart()
+  const { user, loading } = useAuth()
+  const navigate = useNavigate()
+  const { toast } = useToast()
 
-  const finalTotal = appliedCoupon ? Math.max(0, totalPrice - appliedCoupon.discount) : totalPrice;
+  const [isLoading, setIsLoading] = useState(false)
+  const [paypalLoaded, setPaypalLoaded] = useState(false)
+  const [orderComplete, setOrderComplete] = useState(false)
+  const [orderId, setOrderId] = useState<string | null>(null)
+  const [couponCode, setCouponCode] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(
+    null
+  )
+  const validateCoupon = useValidateCoupon()
+  const [hostingOpen, setHostingOpen] = useState(false)
+
+  const finalTotal = appliedCoupon ? Math.max(0, totalPrice - appliedCoupon.discount) : totalPrice
 
   const handleApplyCoupon = async () => {
-    if (!couponCode.trim()) return;
+    if (!couponCode.trim()) return
     try {
-      const result = await validateCoupon.mutateAsync({ code: couponCode, orderTotal: totalPrice });
-      setAppliedCoupon({ code: result.coupon.code, discount: result.discount });
-      toast({ title: "Coupon applied!", description: `You saved $${result.discount}` });
+      const result = await validateCoupon.mutateAsync({ code: couponCode, orderTotal: totalPrice })
+      setAppliedCoupon({ code: result.coupon.code, discount: result.discount })
+      toast({ title: 'Coupon applied!', description: `You saved $${result.discount}` })
     } catch (error: any) {
-      toast({ title: "Invalid coupon", description: error.message, variant: "destructive" });
+      toast({ title: 'Invalid coupon', description: error.message, variant: 'destructive' })
     }
-  };
+  }
 
   const handleRemoveCoupon = () => {
-    setAppliedCoupon(null);
-    setCouponCode("");
-  };
+    setAppliedCoupon(null)
+    setCouponCode('')
+  }
 
   // Redirect if not authenticated or cart is empty
   useEffect(() => {
-    if (loading) return;
-    
+    if (loading) return
+
     if (!user) {
       toast({
-        title: "Sign in required",
-        description: "Please sign in to proceed with checkout.",
-        variant: "destructive",
-      });
-      navigate("/auth?redirect=/checkout");
-      return;
+        title: 'Sign in required',
+        description: 'Please sign in to proceed with checkout.',
+        variant: 'destructive',
+      })
+      navigate('/auth?redirect=/checkout')
+      return
     }
-    
-    if (items.length === 0 && !isAllAccess && !orderComplete) {
-      navigate("/cart");
-    }
-  }, [user, loading, items, navigate, toast, orderComplete]);
 
-  const [paypalError, setPaypalError] = useState<string | null>(null);
+    if (items.length === 0 && !isAllAccess && !orderComplete) {
+      navigate('/cart')
+    }
+  }, [user, loading, items, navigate, toast, orderComplete])
+
+  const [paypalError, setPaypalError] = useState<string | null>(null)
 
   // Load PayPal SDK
   useEffect(() => {
-    if (orderComplete) return;
-    
+    if (orderComplete) return
+
     const loadPayPalScript = async () => {
-      const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-      
+      const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID
+
       // Check if client ID is missing or is the placeholder value
-      if (!clientId || clientId === "YOUR_PAYPAL_SANDBOX_CLIENT_ID" || clientId.startsWith("YOUR_")) {
-        console.error("PayPal Client ID not configured properly");
-        setPaypalError("PayPal is not configured. Please add your PayPal Client ID to the .env file.");
-        return;
+      if (
+        !clientId ||
+        clientId === 'YOUR_PAYPAL_SANDBOX_CLIENT_ID' ||
+        clientId.startsWith('YOUR_')
+      ) {
+        console.error('PayPal Client ID not configured properly')
+        setPaypalError(
+          'PayPal is not configured. Please add your PayPal Client ID to the .env file.'
+        )
+        return
       }
 
-      const script = document.createElement("script");
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD&intent=capture`;
-      script.async = true;
+      const script = document.createElement('script')
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD&intent=capture`
+      script.async = true
       script.onload = () => {
-        setPaypalLoaded(true);
-        setPaypalError(null);
-      };
+        setPaypalLoaded(true)
+        setPaypalError(null)
+      }
       script.onerror = () => {
-        console.error("Failed to load PayPal SDK");
-        setPaypalError("Failed to load PayPal. Please check your Client ID is valid.");
+        console.error('Failed to load PayPal SDK')
+        setPaypalError('Failed to load PayPal. Please check your Client ID is valid.')
         toast({
-          title: "Payment Error",
-          description: "Failed to load payment system. Please check PayPal configuration.",
-          variant: "destructive",
-        });
-      };
-      document.body.appendChild(script);
+          title: 'Payment Error',
+          description: 'Failed to load payment system. Please check PayPal configuration.',
+          variant: 'destructive',
+        })
+      }
+      document.body.appendChild(script)
 
       return () => {
-        const existingScript = document.querySelector(`script[src*="paypal.com/sdk"]`);
+        const existingScript = document.querySelector(`script[src*="paypal.com/sdk"]`)
         if (existingScript) {
-          document.body.removeChild(existingScript);
+          document.body.removeChild(existingScript)
         }
-      };
-    };
+      }
+    }
 
-    loadPayPalScript();
-  }, [toast, orderComplete]);
+    loadPayPalScript()
+  }, [toast, orderComplete])
 
   // Render PayPal buttons
   useEffect(() => {
-    if (!paypalLoaded || !window.paypal || orderComplete) return;
+    if (!paypalLoaded || !window.paypal || orderComplete) return
 
-    const container = document.getElementById("paypal-button-container");
-    if (!container) return;
-    
-    container.innerHTML = "";
+    const container = document.getElementById('paypal-button-container')
+    if (!container) return
 
-    window.paypal.Buttons({
-      style: {
-        layout: "vertical",
-        color: "gold",
-        shape: "rect",
-        label: "paypal",
-      },
-      createOrder: async () => {
-        setIsLoading(true);
-        try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const accessToken = sessionData?.session?.access_token;
+    container.innerHTML = ''
 
-          const response = await supabase.functions.invoke("create-paypal-order", {
-            body: { items: isAllAccess ? [] : items.map(i => ({ id: i.id, license: i.license })), isAllAccess, couponCode: appliedCoupon?.code },
-            headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-          });
+    window.paypal
+      .Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+        },
+        createOrder: async () => {
+          setIsLoading(true)
+          try {
+            const { data: sessionData } = await supabase.auth.getSession()
+            const accessToken = sessionData?.session?.access_token
 
-          if (response.error) {
-            throw new Error(response.error.message || "Failed to create order");
+            const response = await supabase.functions.invoke('create-paypal-order', {
+              body: {
+                items: isAllAccess ? [] : items.map((i) => ({ id: i.id, license: i.license })),
+                isAllAccess,
+                couponCode: appliedCoupon?.code,
+              },
+              headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+            })
+
+            // Polished Error Handling for Create Order
+            if (response.error) {
+              let errorMsg = response.error.message || 'Failed to create order'
+              if (errorMsg.includes('non-2xx')) {
+                errorMsg = 'Payment system unavailable. Please try again later.'
+              }
+              throw new Error(response.error.error || response.data?.error || errorMsg)
+            }
+
+            if (response.data?.error) {
+              throw new Error(response.data.error)
+            }
+
+            return response.data.orderId
+          } catch (error: any) {
+            console.error('Create order error:', error)
+            toast({
+              title: 'Order Error',
+              description: error.message || 'Failed to create order. Please try again.',
+              variant: 'destructive',
+            })
+            throw error
+          } finally {
+            setIsLoading(false)
           }
+        },
+        onApprove: async (data: any) => {
+          setIsLoading(true)
+          try {
+            const { data: sessionData } = await supabase.auth.getSession()
+            const accessToken = sessionData?.session?.access_token
 
-          return response.data.orderId;
-        } catch (error: any) {
-          console.error("Create order error:", error);
-          toast({
-            title: "Order Error",
-            description: error.message || "Failed to create order. Please try again.",
-            variant: "destructive",
-          });
-          throw error;
-        } finally {
-          setIsLoading(false);
-        }
-      },
-      onApprove: async (data: any) => {
-        setIsLoading(true);
-        try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const accessToken = sessionData?.session?.access_token;
+            const response = await supabase.functions.invoke('capture-paypal-order', {
+              body: {
+                paypalOrderId: data.orderID,
+                items: isAllAccess ? [] : items.map((i) => ({ id: i.id, license: i.license })),
+                isAllAccess,
+                couponCode: appliedCoupon?.code,
+              },
+              headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+            })
 
-          const response = await supabase.functions.invoke("capture-paypal-order", {
-            body: { 
-              paypalOrderId: data.orderID, 
-              items: isAllAccess ? [] : items.map(i => ({ id: i.id, license: i.license })),
-              isAllAccess,
-              couponCode: appliedCoupon?.code,
-            },
-            headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-          });
+            // Polished Error Handling for Capture/Declines
+            if (response.error) {
+              let errorMsg = response.error.message || 'Failed to capture payment'
+              if (errorMsg.includes('non-2xx')) {
+                errorMsg =
+                  'Your bank or credit card declined the payment. Please check your funds or try a different card.'
+              }
+              throw new Error(response.error.error || response.data?.error || errorMsg)
+            }
 
-          if (response.error) {
-            throw new Error(response.error.message || "Failed to capture payment");
+            if (response.data?.error) {
+              throw new Error(response.data.error)
+            }
+
+            setOrderId(response.data.orderId)
+            setOrderComplete(true)
+            clearCart()
+
+            toast({
+              title: 'Payment Successful!',
+              description: 'Your order has been placed successfully.',
+            })
+          } catch (error: any) {
+            console.error('Capture error:', error)
+            toast({
+              title: 'Payment Error',
+              description: error.message || 'Failed to process payment. Please try again.',
+              variant: 'destructive',
+            })
+          } finally {
+            setIsLoading(false)
           }
-
-          setOrderId(response.data.orderId);
-          setOrderComplete(true);
-          clearCart();
-          
+        },
+        onError: (err: any) => {
+          console.error('PayPal error:', err)
           toast({
-            title: "Payment Successful!",
-            description: "Your order has been placed successfully.",
-          });
-        } catch (error: any) {
-          console.error("Capture error:", error);
+            title: 'Payment Error',
+            description: 'Something went wrong with PayPal. Please try again.',
+            variant: 'destructive',
+          })
+        },
+        onCancel: () => {
           toast({
-            title: "Payment Error",
-            description: error.message || "Failed to process payment. Please try again.",
-            variant: "destructive",
-          });
-        } finally {
-          setIsLoading(false);
-        }
-      },
-      onError: (err: any) => {
-        console.error("PayPal error:", err);
-        toast({
-          title: "Payment Error",
-          description: "Something went wrong with PayPal. Please try again.",
-          variant: "destructive",
-        });
-      },
-      onCancel: () => {
-        toast({
-          title: "Payment Cancelled",
-          description: "You cancelled the payment process.",
-        });
-      },
-    }).render("#paypal-button-container");
-  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon]);
+            title: 'Payment Cancelled',
+            description: 'You cancelled the payment process.',
+          })
+        },
+      })
+      .render('#paypal-button-container')
+  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon, isAllAccess])
 
   if (orderComplete) {
     return (
@@ -241,7 +273,8 @@ const Checkout = () => {
                 Thank You for Your Purchase!
               </h1>
               <p className="text-muted-foreground mb-6">
-                Your order has been successfully placed. You will receive a confirmation email shortly.
+                Your order has been successfully placed. You will receive a confirmation email
+                shortly.
               </p>
               {orderId && (
                 <p className="text-sm text-muted-foreground mb-8">
@@ -265,16 +298,18 @@ const Checkout = () => {
         <Footer />
         <HostingWizard open={hostingOpen} onOpenChange={setHostingOpen} />
       </main>
-    );
+    )
   }
 
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      
+
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <Link to="/cart" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
+          <Link
+            to="/cart"
+            className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Cart
           </Link>
@@ -291,30 +326,25 @@ const Checkout = () => {
                   <CreditCard className="w-5 h-5" />
                   Payment Method
                 </h2>
-                
+
                 <div className="mb-6">
                   <Label className="text-muted-foreground">Email</Label>
-                  <Input 
-                    value={user?.email || ""} 
-                    disabled 
-                    className="mt-1 bg-muted/50"
-                  />
+                  <Input value={user?.email || ''} disabled className="mt-1 bg-muted/50" />
                 </div>
 
                 {paypalError && (
                   <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/30 mb-4">
-                    <p className="text-sm text-destructive font-medium mb-2">Configuration Required</p>
-                    <p className="text-xs text-muted-foreground">
-                      {paypalError}
+                    <p className="text-sm text-destructive font-medium mb-2">
+                      Configuration Required
                     </p>
+                    <p className="text-xs text-muted-foreground">{paypalError}</p>
                     <p className="text-xs text-muted-foreground mt-2">
-                      Get your Client ID from{" "}
-                      <a 
-                        href="https://developer.paypal.com/dashboard/applications/sandbox" 
-                        target="_blank" 
+                      Get your Client ID from{' '}
+                      <a
+                        href="https://developer.paypal.com/dashboard/applications/sandbox"
+                        target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
+                        className="text-primary hover:underline">
                         PayPal Developer Dashboard
                       </a>
                     </p>
@@ -328,7 +358,10 @@ const Checkout = () => {
                   </div>
                 )}
 
-                <div id="paypal-button-container" className={isLoading || paypalError ? "hidden" : ""} />
+                <div
+                  id="paypal-button-container"
+                  className={isLoading || paypalError ? 'hidden' : ''}
+                />
 
                 {!paypalLoaded && !isLoading && !paypalError && (
                   <div className="flex items-center justify-center py-8">
@@ -351,10 +384,8 @@ const Checkout = () => {
             {/* Right Column - Order Summary */}
             <div>
               <div className="glass-card p-6 rounded-2xl border border-border/50 sticky top-24">
-                <h2 className="font-semibold text-lg text-foreground mb-4">
-                  Order Summary
-                </h2>
-                
+                <h2 className="font-semibold text-lg text-foreground mb-4">Order Summary</h2>
+
                 <div className="space-y-4 mb-6">
                   {isAllAccess ? (
                     <div className="flex gap-4 items-center">
@@ -383,9 +414,7 @@ const Checkout = () => {
                             {item.license} License
                           </p>
                         </div>
-                        <span className="font-semibold text-foreground">
-                          ${item.price}
-                        </span>
+                        <span className="font-semibold text-foreground">${item.price}</span>
                       </div>
                     ))
                   )}
@@ -400,10 +429,16 @@ const Checkout = () => {
                     <div className="flex items-center justify-between p-2 rounded-lg bg-accent/10 border border-accent/30">
                       <div className="flex items-center gap-2">
                         <Tag className="w-4 h-4 text-accent" />
-                        <span className="font-mono text-sm font-medium text-foreground">{appliedCoupon.code}</span>
+                        <span className="font-mono text-sm font-medium text-foreground">
+                          {appliedCoupon.code}
+                        </span>
                         <span className="text-sm text-accent">-${appliedCoupon.discount}</span>
                       </div>
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={handleRemoveCoupon}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={handleRemoveCoupon}>
                         <X className="w-3 h-3" />
                       </Button>
                     </div>
@@ -415,13 +450,16 @@ const Checkout = () => {
                         onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                         className="flex-1"
                       />
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={handleApplyCoupon}
-                        disabled={validateCoupon.isPending || !couponCode.trim()}
-                      >
-                        {validateCoupon.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                        disabled={validateCoupon.isPending || !couponCode.trim()}>
+                        {validateCoupon.isPending ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          'Apply'
+                        )}
                       </Button>
                     </div>
                   )}
@@ -461,10 +499,10 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </main>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout
