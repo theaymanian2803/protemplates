@@ -23,7 +23,6 @@ serve(async (req) => {
       })
     }
 
-    // Defensive trimming to prevent invalid_client errors
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
@@ -132,12 +131,11 @@ serve(async (req) => {
           item.license === 'extended' && tpl.extended_price ? tpl.extended_price : tpl.price
         serverTotal += price
 
-        // FIX: Ensure name is never blank even if database title is missing
         const safeTitle =
           tpl.title && tpl.title.trim() !== '' ? tpl.title : `Website Template ${item.id}`
 
         paypalItems.push({
-          name: safeTitle.substring(0, 120), // PayPal limits name to 127 chars
+          name: safeTitle.substring(0, 120),
           quantity: '1',
           unit_amount: { currency_code: 'USD', value: '' },
           category: 'DIGITAL_GOODS',
@@ -176,16 +174,15 @@ serve(async (req) => {
       })
     }
 
-    if (!isProHosting && !isAllAccess) {
-      const perItemValue = (serverTotal / paypalItems.length).toFixed(2)
-      let runningTotal = 0
-      for (let i = 0; i < paypalItems.length; i++) {
-        if (i === paypalItems.length - 1) {
-          paypalItems[i].unit_amount.value = (serverTotal - runningTotal).toFixed(2)
-        } else {
-          paypalItems[i].unit_amount.value = perItemValue
-          runningTotal += parseFloat(perItemValue)
-        }
+    // Force items math to match the serverTotal exactly so PayPal doesn't reject the math
+    const perItemValue = (serverTotal / paypalItems.length).toFixed(2)
+    let runningTotal = 0
+    for (let i = 0; i < paypalItems.length; i++) {
+      if (i === paypalItems.length - 1) {
+        paypalItems[i].unit_amount.value = (serverTotal - runningTotal).toFixed(2)
+      } else {
+        paypalItems[i].unit_amount.value = perItemValue
+        runningTotal += parseFloat(perItemValue)
       }
     }
 
@@ -237,7 +234,7 @@ serve(async (req) => {
         ],
         application_context: {
           brand_name: 'Template Marketplace',
-          shipping_preference: 'NO_SHIPPING', // Crucial for Digital Products & Moroccan users
+          shipping_preference: 'NO_SHIPPING',
         },
       }),
     })
