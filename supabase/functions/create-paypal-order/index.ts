@@ -23,12 +23,12 @@ serve(async (req) => {
       })
     }
 
-    // 1. Safe extraction of Environment Variables
+    // Defensive trimming to prevent invalid_client errors
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    const paypalClientId = Deno.env.get('PAYPAL_CLIENT_ID')
-    const paypalSecret = Deno.env.get('PAYPAL_SECRET')
+    const paypalClientId = Deno.env.get('PAYPAL_CLIENT_ID')?.trim()
+    const paypalSecret = Deno.env.get('PAYPAL_SECRET')?.trim()
 
     if (
       !supabaseUrl ||
@@ -77,7 +77,10 @@ serve(async (req) => {
       serverTotal = proPrice
       paypalItems = [
         {
-          name: 'Pro Hosting Service' + (templateTitle ? ` - ${templateTitle}` : ''),
+          name: ('Pro Hosting Service' + (templateTitle ? ` - ${templateTitle}` : '')).substring(
+            0,
+            120
+          ),
           quantity: '1',
           unit_amount: { currency_code: 'USD', value: proPrice.toFixed(2) },
           category: 'DIGITAL_GOODS',
@@ -128,16 +131,20 @@ serve(async (req) => {
         const price =
           item.license === 'extended' && tpl.extended_price ? tpl.extended_price : tpl.price
         serverTotal += price
+
+        // FIX: Ensure name is never blank even if database title is missing
+        const safeTitle =
+          tpl.title && tpl.title.trim() !== '' ? tpl.title : `Website Template ${item.id}`
+
         paypalItems.push({
-          name: tpl.title,
+          name: safeTitle.substring(0, 120), // PayPal limits name to 127 chars
           quantity: '1',
-          unit_amount: { currency_code: 'USD', value: '' }, // Handled below
+          unit_amount: { currency_code: 'USD', value: '' },
           category: 'DIGITAL_GOODS',
         })
       }
     }
 
-    // Apply coupon
     if (couponCode && !isProHosting) {
       const { data: coupon, error: couponError } = await supabaseAdmin
         .from('coupons')
@@ -182,9 +189,8 @@ serve(async (req) => {
       }
     }
 
-    // 2. Set environment dynamically via Supabase Secrets
     const PAYPAL_API =
-      Deno.env.get('PAYPAL_ENVIRONMENT') === 'production'
+      Deno.env.get('PAYPAL_ENVIRONMENT')?.trim() === 'production'
         ? 'https://api-m.paypal.com'
         : 'https://api-m.sandbox.paypal.com'
 
@@ -231,7 +237,7 @@ serve(async (req) => {
         ],
         application_context: {
           brand_name: 'Template Marketplace',
-          shipping_preference: 'NO_SHIPPING',
+          shipping_preference: 'NO_SHIPPING', // Crucial for Digital Products & Moroccan users
         },
       }),
     })

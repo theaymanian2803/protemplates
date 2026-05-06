@@ -26,8 +26,8 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    const paypalClientId = Deno.env.get('PAYPAL_CLIENT_ID')
-    const paypalSecret = Deno.env.get('PAYPAL_SECRET')
+    const paypalClientId = Deno.env.get('PAYPAL_CLIENT_ID')?.trim()
+    const paypalSecret = Deno.env.get('PAYPAL_SECRET')?.trim()
 
     if (
       !supabaseUrl ||
@@ -125,7 +125,7 @@ serve(async (req) => {
         serverTotal += price
         verifiedItems.push({
           id: tpl.id,
-          title: tpl.title,
+          title: tpl.title || 'Website Template',
           license: item.license || 'regular',
           price,
         })
@@ -162,7 +162,7 @@ serve(async (req) => {
     }
 
     const PAYPAL_API =
-      Deno.env.get('PAYPAL_ENVIRONMENT') === 'production'
+      Deno.env.get('PAYPAL_ENVIRONMENT')?.trim() === 'production'
         ? 'https://api-m.paypal.com'
         : 'https://api-m.sandbox.paypal.com'
 
