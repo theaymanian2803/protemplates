@@ -17,7 +17,7 @@ serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization')
     if (!authHeader?.startsWith('Bearer ')) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Missing Auth Header' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -36,10 +36,13 @@ serve(async (req) => {
       !paypalClientId ||
       !paypalSecret
     ) {
-      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      return new Response(
+        JSON.stringify({ error: 'Server configuration error: Missing Secrets' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -50,7 +53,7 @@ serve(async (req) => {
     const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token)
 
     if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Invalid Token' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -103,10 +106,13 @@ serve(async (req) => {
         .in('id', itemIds)
 
       if (tplError || !templates) {
-        return new Response(JSON.stringify({ error: 'Failed to verify template prices' }), {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        })
+        return new Response(
+          JSON.stringify({ error: `Template Fetch Error: ${tplError?.message}` }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
       }
 
       const priceMap = new Map(templates.map((t: any) => [t.id, t]))
@@ -177,10 +183,16 @@ serve(async (req) => {
 
     const authData = await authResponse.json()
     if (!authResponse.ok) {
-      return new Response(JSON.stringify({ error: 'Failed to authenticate with PayPal' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      console.error('PayPal auth error:', authData)
+      return new Response(
+        JSON.stringify({
+          error: `PayPal Auth Error: ${authData.error_description || authData.error}`,
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const accessToken = authData.access_token
@@ -191,18 +203,24 @@ serve(async (req) => {
 
     const verifyData = await verifyResponse.json()
     if (!verifyResponse.ok) {
-      return new Response(JSON.stringify({ error: 'Failed to verify PayPal order' }), {
+      return new Response(JSON.stringify({ error: `PayPal Verify Error: ${verifyData.message}` }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
     const paypalAmount = parseFloat(verifyData.purchase_units?.[0]?.amount?.value || '0')
-    if (Math.abs(paypalAmount - serverTotal) > 0.01) {
-      return new Response(JSON.stringify({ error: 'Payment amount mismatch.' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+    // Safe rounding comparison to prevent fractional errors
+    if (Math.abs(paypalAmount - parseFloat(serverTotal.toFixed(2))) > 0.01) {
+      return new Response(
+        JSON.stringify({
+          error: `Amount mismatch. PayPal: ${paypalAmount}, Server: ${serverTotal.toFixed(2)}`,
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const captureResponse = await fetch(
@@ -218,7 +236,9 @@ serve(async (req) => {
 
     const captureData = await captureResponse.json()
     if (!captureResponse.ok) {
-      return new Response(JSON.stringify({ error: 'Failed to capture PayPal payment' }), {
+      console.error('Capture Data Error:', captureData)
+      const issue = captureData.details?.[0]?.issue || captureData.message || 'Unknown PayPal Issue'
+      return new Response(JSON.stringify({ error: `PayPal Capture Rejected: ${issue}` }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
@@ -236,10 +256,14 @@ serve(async (req) => {
       .single()
 
     if (orderError) {
-      return new Response(JSON.stringify({ error: 'Failed to create order record' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      console.error('Orders Table Error:', orderError)
+      return new Response(
+        JSON.stringify({ error: `DB Error (Orders Table): ${orderError.message}` }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     if (isProHosting) {
@@ -261,11 +285,20 @@ serve(async (req) => {
         metadata: { order_id: order.id, template_title: templateTitle },
       })
     } else if (isAllAccess) {
-      await supabaseAdmin.from('all_access_passes').insert({
+      const { error: accessError } = await supabaseAdmin.from('all_access_passes').insert({
         user_id: userId,
         order_id: order.id,
         price: serverTotal,
       })
+      if (accessError) {
+        return new Response(
+          JSON.stringify({ error: `DB Error (All Access): ${accessError.message}` }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
     } else {
       const orderItems = verifiedItems.map((item) => ({
         order_id: order.id,
@@ -277,10 +310,14 @@ serve(async (req) => {
 
       const { error: itemsError } = await supabaseAdmin.from('order_items').insert(orderItems)
       if (itemsError) {
-        return new Response(JSON.stringify({ error: 'Failed to create order items' }), {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        })
+        console.error('Order Items Table Error:', itemsError)
+        return new Response(
+          JSON.stringify({ error: `DB Error (Order Items Table): ${itemsError.message}` }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
       }
     }
 
@@ -289,7 +326,8 @@ serve(async (req) => {
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || 'Unknown error' }), {
+    console.error('Fatal Function Error:', error)
+    return new Response(JSON.stringify({ error: `Server Crash: ${error.message}` }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
