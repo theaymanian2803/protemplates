@@ -30,17 +30,25 @@ const Downloads = () => {
 
   const handleDownload = async (sourceFileUrl: string, title: string) => {
     setDownloadingId(sourceFileUrl)
+
     try {
-      if (sourceFileUrl.startsWith('http://') || sourceFileUrl.startsWith('https://')) {
-        window.open(sourceFileUrl, '_blank', 'noopener,noreferrer')
+      // 1. Trim any hidden spaces that might be breaking the string check
+      const cleanUrl = sourceFileUrl.trim()
+
+      // 2. Stronger check: Look for 'http' anywhere at the start, OR specifically check for Google Drive
+      if (cleanUrl.startsWith('http') || cleanUrl.includes('drive.google.com')) {
+        window.open(cleanUrl, '_blank', 'noopener,noreferrer')
         setDownloadingId(null)
         return
       }
 
+      // 3. If it's NOT an external link, run the Supabase storage logic
       const { data, error } = await supabase.storage
         .from('template-files')
-        .createSignedUrl(sourceFileUrl, 60)
+        .createSignedUrl(cleanUrl, 60)
+
       if (error) throw error
+
       const link = document.createElement('a')
       link.href = data.signedUrl
       link.download = `${title}.zip`
