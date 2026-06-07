@@ -1,12 +1,5 @@
-import { Order } from "@/hooks/useOrders";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Badge } from '@/components/ui/badge'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
   Table,
   TableBody,
@@ -14,25 +7,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
-import { X } from "lucide-react";
+} from '@/components/ui/table'
+import { Order } from '@/hooks/useOrders'
+import { format } from 'date-fns'
 
 interface OrderDetailsProps {
-  order: Order | null;
-  onClose: () => void;
+  order: Order | null
+  onClose: () => void
 }
 
 const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
-  processing: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-  completed: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  cancelled: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
-  refunded: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
-};
+  pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+  processing: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+  completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+  cancelled: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+  refunded: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
+}
 
 export const OrderDetails = ({ order, onClose }: OrderDetailsProps) => {
-  if (!order) return null;
+  if (!order) return null
 
   return (
     <Dialog open={!!order} onOpenChange={() => onClose()}>
@@ -92,9 +85,7 @@ export const OrderDetails = ({ order, onClose }: OrderDetailsProps) => {
                           {item.license_type}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-right">
-                        ${item.price.toFixed(2)}
-                      </TableCell>
+                      <TableCell className="text-right">${item.price.toFixed(2)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -107,12 +98,10 @@ export const OrderDetails = ({ order, onClose }: OrderDetailsProps) => {
           {/* Total */}
           <div className="flex items-center justify-between pt-4 border-t">
             <span className="font-medium">Total Amount</span>
-            <span className="text-xl font-bold">
-              ${order.total_amount.toFixed(2)}
-            </span>
+            <span className="text-xl font-bold">${order.total_amount.toFixed(2)}</span>
           </div>
         </div>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
