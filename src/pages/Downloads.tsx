@@ -32,17 +32,14 @@ const Downloads = () => {
     setDownloadingId(sourceFileUrl)
 
     try {
-      // 1. Trim any hidden spaces that might be breaking the string check
       const cleanUrl = sourceFileUrl.trim()
 
-      // 2. Stronger check: Look for 'http' anywhere at the start, OR specifically check for Google Drive
-      if (cleanUrl.startsWith('http') || cleanUrl.includes('drive.google.com')) {
+      if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
         window.open(cleanUrl, '_blank', 'noopener,noreferrer')
         setDownloadingId(null)
         return
       }
 
-      // 3. If it's NOT an external link, run the Supabase storage logic
       const { data, error } = await supabase.storage
         .from('template-files')
         .createSignedUrl(cleanUrl, 60)

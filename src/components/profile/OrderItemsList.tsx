@@ -47,12 +47,30 @@ const OrderItemsList = ({ orderId, orderStatus }: OrderItemsListProps) => {
   const handleDownload = async (sourceFileUrl: string, templateTitle: string) => {
     setDownloadingId(sourceFileUrl)
     try {
-      // Directly open the Google Drive URL in a new tab, bypassing Supabase storage completely
-      window.open(sourceFileUrl, '_blank', 'noopener,noreferrer')
+      const cleanUrl = sourceFileUrl.trim()
+
+      if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
+        window.open(cleanUrl, '_blank', 'noopener,noreferrer')
+        setDownloadingId(null)
+        return
+      }
+
+      const { data, error } = await supabase.storage
+        .from('template-files')
+        .createSignedUrl(cleanUrl, 60)
+
+      if (error) throw error
+
+      const link = document.createElement('a')
+      link.href = data.signedUrl
+      link.download = `${templateTitle}.zip`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     } catch (error: any) {
       toast({
         title: 'Download failed',
-        description: error.message || 'Could not open download link',
+        description: error.message || 'Could not generate download link',
         variant: 'destructive',
       })
     } finally {
