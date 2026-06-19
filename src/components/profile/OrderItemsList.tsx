@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/hooks/use-toast'
 import { supabase } from '@/integrations/supabase/client'
+import { getDirectDownloadUrl } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Download, FileArchive, Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -50,7 +51,8 @@ const OrderItemsList = ({ orderId, orderStatus }: OrderItemsListProps) => {
       const cleanUrl = sourceFileUrl.trim()
 
       if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
-        window.open(cleanUrl, '_blank', 'noopener,noreferrer')
+        const directUrl = getDirectDownloadUrl(cleanUrl)
+        window.open(directUrl, '_blank', 'noopener,noreferrer')
         setDownloadingId(null)
         return
       }

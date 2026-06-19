@@ -79,6 +79,26 @@ serve(async (req) => {
     }
 
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+
+    // Idempotency check: has this PayPal order already been processed?
+    const { data: existingOrder } = await supabaseAdmin
+      .from('orders')
+      .select('id, status')
+      .eq('paypal_order_id', paypalOrderId)
+      .maybeSingle()
+
+    if (existingOrder) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          orderId: existingOrder.id,
+          paypalOrderId,
+          alreadyProcessed: true,
+        }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     let serverTotal: number
     let verifiedItems: { id: string; title: string; license: string; price: number }[] = []
 
@@ -138,6 +158,9 @@ serve(async (req) => {
       }
     }
 
+    // Calculate coupon discount (but don't increment usage yet)
+    let couponData: any = null
+    let discount = 0
     if (couponCode && !isProHosting) {
       const { data: coupon, error: couponError } = await supabaseAdmin
         .from('coupons')
@@ -153,19 +176,16 @@ serve(async (req) => {
         const meetsMinimum = !coupon.min_order_amount || serverTotal >= coupon.min_order_amount
 
         if (notExpired && underMaxUses && meetsMinimum) {
-          const discount =
+          discount =
             coupon.discount_type === 'percentage'
               ? (serverTotal * coupon.discount_value) / 100
               : coupon.discount_value
-          serverTotal = Math.max(0, serverTotal - discount)
-
-          await supabaseAdmin
-            .from('coupons')
-            .update({ used_count: coupon.used_count + 1 })
-            .eq('id', coupon.id)
+          couponData = coupon
         }
       }
     }
+
+    const totalAfterDiscount = Math.max(0, serverTotal - discount)
 
     const PAYPAL_API =
       Deno.env.get('PAYPAL_ENVIRONMENT')?.trim() === 'production'
@@ -210,11 +230,10 @@ serve(async (req) => {
     }
 
     const paypalAmount = parseFloat(verifyData.purchase_units?.[0]?.amount?.value || '0')
-    // Safe rounding comparison to prevent fractional errors
-    if (Math.abs(paypalAmount - parseFloat(serverTotal.toFixed(2))) > 0.01) {
+    if (Math.abs(paypalAmount - parseFloat(totalAfterDiscount.toFixed(2))) > 0.01) {
       return new Response(
         JSON.stringify({
-          error: `Amount mismatch. PayPal: ${paypalAmount}, Server: ${serverTotal.toFixed(2)}`,
+          error: `Amount mismatch. PayPal: ${paypalAmount}, Server: ${totalAfterDiscount.toFixed(2)}`,
         }),
         {
           status: 400,
@@ -223,34 +242,15 @@ serve(async (req) => {
       )
     }
 
-    const captureResponse = await fetch(
-      `${PAYPAL_API}/v2/checkout/orders/${paypalOrderId}/capture`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    )
-
-    const captureData = await captureResponse.json()
-    if (!captureResponse.ok) {
-      console.error('Capture Data Error:', captureData)
-      const issue = captureData.details?.[0]?.issue || captureData.message || 'Unknown PayPal Issue'
-      return new Response(JSON.stringify({ error: `PayPal Capture Rejected: ${issue}` }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
-
+    // Insert order as 'pending' before capturing payment
     const { data: order, error: orderError } = await supabaseAdmin
       .from('orders')
       .insert({
         user_id: userId,
         user_email: userEmail,
-        total_amount: serverTotal,
-        status: 'completed',
+        total_amount: totalAfterDiscount,
+        status: 'pending',
+        paypal_order_id: paypalOrderId,
       })
       .select()
       .single()
@@ -266,8 +266,53 @@ serve(async (req) => {
       )
     }
 
+    // Capture payment from PayPal
+    const captureResponse = await fetch(
+      `${PAYPAL_API}/v2/checkout/orders/${paypalOrderId}/capture`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+
+    const captureData = await captureResponse.json()
+
+    if (!captureResponse.ok) {
+      console.error('Capture Data Error:', captureData)
+      // Mark order as cancelled since capture failed
+      await supabaseAdmin.from('orders').update({ status: 'cancelled' }).eq('id', order.id)
+      const issue = captureData.details?.[0]?.issue || captureData.message || 'Unknown PayPal Issue'
+      return new Response(JSON.stringify({ error: `PayPal Capture Rejected: ${issue}` }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    // Capture succeeded — increment coupon usage if applicable
+    if (couponData && discount > 0) {
+      await supabaseAdmin
+        .from('coupons')
+        .update({ used_count: couponData.used_count + 1 })
+        .eq('id', couponData.id)
+    }
+
+    // Update order to 'completed'
+    const { error: updateError } = await supabaseAdmin
+      .from('orders')
+      .update({ status: 'completed' })
+      .eq('id', order.id)
+
+    if (updateError) {
+      console.error('Failed to update order to completed:', updateError)
+      // Payment captured but status update failed — log for manual reconciliation
+    }
+
+    // Create order items / all access pass / contacts
     if (isProHosting) {
-      const contactMessage = `Pro Hosting Service purchased.\n\nTemplate: ${templateTitle || 'Not specified'}\nUser Notes: ${proHostingNotes || 'None'}\nOrder ID: ${order.id}\nAmount Paid: $${serverTotal}`
+      const contactMessage = `Pro Hosting Service purchased.\n\nTemplate: ${templateTitle || 'Not specified'}\nUser Notes: ${proHostingNotes || 'None'}\nOrder ID: ${order.id}\nAmount Paid: $${totalAfterDiscount}`
 
       await supabaseAdmin.from('contacts').insert({
         name: userEmail,
@@ -288,16 +333,10 @@ serve(async (req) => {
       const { error: accessError } = await supabaseAdmin.from('all_access_passes').insert({
         user_id: userId,
         order_id: order.id,
-        price: serverTotal,
+        price: totalAfterDiscount,
       })
       if (accessError) {
-        return new Response(
-          JSON.stringify({ error: `DB Error (All Access): ${accessError.message}` }),
-          {
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          }
-        )
+        console.error('DB Error (All Access):', accessError)
       }
     } else {
       const orderItems = verifiedItems.map((item) => ({
@@ -311,13 +350,6 @@ serve(async (req) => {
       const { error: itemsError } = await supabaseAdmin.from('order_items').insert(orderItems)
       if (itemsError) {
         console.error('Order Items Table Error:', itemsError)
-        return new Response(
-          JSON.stringify({ error: `DB Error (Order Items Table): ${itemsError.message}` }),
-          {
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          }
-        )
       }
     }
 

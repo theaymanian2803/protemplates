@@ -225,6 +225,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          paypal_order_id: string | null
           status: Database["public"]["Enums"]["order_status"]
           total_amount: number
           updated_at: string
@@ -234,6 +235,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          paypal_order_id?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           total_amount?: number
           updated_at?: string
@@ -243,6 +245,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          paypal_order_id?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           total_amount?: number
           updated_at?: string

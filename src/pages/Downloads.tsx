@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useToast } from '@/hooks/use-toast'
 import { usePurchasedTemplates } from '@/hooks/useDashboard'
 import { supabase } from '@/integrations/supabase/client'
+import { getDirectDownloadUrl } from '@/lib/utils'
 import { Download, FileArchive, Loader2, Package, Rocket, Search, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -35,7 +36,8 @@ const Downloads = () => {
       const cleanUrl = sourceFileUrl.trim()
 
       if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
-        window.open(cleanUrl, '_blank', 'noopener,noreferrer')
+        const directUrl = getDirectDownloadUrl(cleanUrl)
+        window.open(directUrl, '_blank', 'noopener,noreferrer')
         setDownloadingId(null)
         return
       }

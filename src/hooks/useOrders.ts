@@ -19,6 +19,7 @@ export interface Order {
   user_email: string;
   status: OrderStatus;
   total_amount: number;
+  paypal_order_id: string | null;
   created_at: string;
   updated_at: string;
   items?: OrderItem[];
