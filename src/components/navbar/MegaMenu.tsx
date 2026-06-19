@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCategories } from "@/hooks/useTemplates";
 import {
   Grid3X3,
@@ -24,8 +24,6 @@ import {
 const MegaMenu = () => {
   const { data: categories, isLoading } = useCategories();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
 
   return (
     <NavigationMenu>
@@ -151,26 +149,22 @@ const MegaMenu = () => {
         </NavigationMenuItem>
 
         {/* Homepage anchor links */}
-        {isHomePage && (
-          <>
-            <NavigationMenuItem>
-              <a
-                href="#pricing"
-                className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
-              >
-                Pricing
-              </a>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <a
-                href="#features"
-                className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
-              >
-                Features
-              </a>
-            </NavigationMenuItem>
-          </>
-        )}
+          <NavigationMenuItem>
+            <a
+              href="/#pricing"
+              className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
+            >
+              Pricing
+            </a>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a
+              href="/#features"
+              className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
+            >
+              Features
+            </a>
+          </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

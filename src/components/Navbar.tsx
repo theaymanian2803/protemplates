@@ -27,12 +27,10 @@ import {
   X,
 } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const location = useLocation()
-  const isHomePage = location.pathname === '/'
   const { totalItems } = useCart()
   const { user, signOut } = useAuth()
   const { favorites } = useFavorites()
@@ -187,16 +185,12 @@ const Navbar = () => {
                 Browse Templates
               </MobileNavLink>
 
-              {isHomePage && (
-                <>
-                  <MobileAnchorLink href="#pricing" onClick={() => setIsOpen(false)}>
-                    Pricing
-                  </MobileAnchorLink>
-                  <MobileAnchorLink href="#features" onClick={() => setIsOpen(false)}>
-                    Features
-                  </MobileAnchorLink>
-                </>
-              )}
+              <MobileAnchorLink href="/#pricing" onClick={() => setIsOpen(false)}>
+                Pricing
+              </MobileAnchorLink>
+              <MobileAnchorLink href="/#features" onClick={() => setIsOpen(false)}>
+                Features
+              </MobileAnchorLink>
 
               <div className="h-px bg-border my-3" />
 
