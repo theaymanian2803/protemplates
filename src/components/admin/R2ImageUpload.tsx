@@ -61,11 +61,11 @@ export function R2ImageUpload({ value, onChange }: R2ImageUploadProps) {
 
       console.log('5. Upload success! Setting public URL...')
       onChange(publicUrl)
-      toast({ title: 'Image uploaded successfully!' })
+      toast({ title: 'Image téléchargée avec succès !' })
     } catch (error: any) {
       console.error('Upload error:', error)
       toast({
-        title: 'Upload Failed',
+        title: 'Échec du téléchargement',
         description: error.message,
         variant: 'destructive',
       })
@@ -95,7 +95,7 @@ export function R2ImageUpload({ value, onChange }: R2ImageUploadProps) {
               size="sm"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}>
-              {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Replace'}
+              {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Remplacer'}
             </Button>
             <Button type="button" variant="destructive" size="sm" onClick={() => onChange('')}>
               <X className="w-4 h-4" />
@@ -109,13 +109,13 @@ export function R2ImageUpload({ value, onChange }: R2ImageUploadProps) {
           {isUploading ? (
             <div className="flex flex-col items-center gap-2">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="text-sm">Uploading to R2...</span>
+              <span className="text-sm">Téléchargement vers R2...</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
               <UploadCloud className="w-8 h-8 mb-2" />
-              <span className="font-medium text-foreground">Click to upload image</span>
-              <span className="text-xs">PNG, JPG, WebP up to 5MB</span>
+              <span className="font-medium text-foreground">Cliquez pour télécharger une image</span>
+              <span className="text-xs">PNG, JPG, WebP jusqu'à 5 Mo</span>
             </div>
           )}
         </div>

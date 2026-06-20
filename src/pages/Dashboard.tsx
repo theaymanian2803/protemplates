@@ -57,10 +57,10 @@ const Dashboard = () => {
   }
 
   const statCards = [
-    { label: "Total Orders", value: stats?.totalOrders ?? 0, icon: Package, color: "text-primary" },
-    { label: "Total Spent", value: `$${(stats?.totalSpent ?? 0).toFixed(0)}`, icon: DollarSign, color: "text-primary" },
+    { label: "Commandes", value: stats?.totalOrders ?? 0, icon: Package, color: "text-primary" },
+    { label: "Dépensé", value: `$${(stats?.totalSpent ?? 0).toFixed(0)}`, icon: DollarSign, color: "text-primary" },
     { label: "Templates", value: stats?.totalDownloads ?? 0, icon: Download, color: "text-primary" },
-    { label: "Pending Reviews", value: stats?.pendingReviews ?? 0, icon: Star, color: "text-accent" },
+    { label: "Avis en attente", value: stats?.pendingReviews ?? 0, icon: Star, color: "text-accent" },
   ];
 
   const unreviewed = (purchased || []).filter((t) => !t.has_review);
@@ -74,9 +74,9 @@ const Dashboard = () => {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Welcome back{user?.user_metadata?.display_name ? `, ${user.user_metadata.display_name}` : ""}!
+              Bon retour{user?.user_metadata?.display_name ? `, ${user.user_metadata.display_name}` : ""} !
             </h1>
-            <p className="text-muted-foreground mt-1">Here's your account overview</p>
+            <p className="text-muted-foreground mt-1">Aperçu de votre compte</p>
           </div>
 
           {/* Stats Grid */}
@@ -113,18 +113,19 @@ const Dashboard = () => {
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Clock className="w-5 h-5 text-primary" />
                     Recent Orders
+                    Commandes récentes
                   </CardTitle>
-                  <CardDescription>Your latest purchases</CardDescription>
+                  <CardDescription>Vos derniers achats</CardDescription>
                 </div>
                 <Link to="/profile">
                   <Button variant="ghost" size="sm" className="gap-1">
-                    View All <ArrowRight className="w-4 h-4" />
+                    Tout voir <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </CardHeader>
               <CardContent>
                 {!recentOrders?.length ? (
-                  <p className="text-sm text-muted-foreground py-4">No orders yet. Start browsing templates!</p>
+                  <p className="text-sm text-muted-foreground py-4">Aucune commande pour le moment. Parcourez nos templates !</p>
                 ) : (
                   <div className="space-y-3">
                     {recentOrders.slice(0, 5).map((order) => (
@@ -158,17 +159,17 @@ const Dashboard = () => {
             {/* Quick Actions */}
             <Card className="border-border/50">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardTitle className="text-lg">Actions rapides</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link to="/downloads" className="block">
                   <Button variant="outline" className="w-full justify-start gap-2">
-                    <Download className="w-4 h-4" /> My Downloads
+                    <Download className="w-4 h-4" /> Mes téléchargements
                   </Button>
                 </Link>
                 <Link to="/favorites" className="block">
                   <Button variant="outline" className="w-full justify-start gap-2">
-                    <Heart className="w-4 h-4" /> Favorites
+                    <Heart className="w-4 h-4" /> Favoris
                     {favorites.length > 0 && (
                       <Badge variant="secondary" className="ml-auto">{favorites.length}</Badge>
                     )}
@@ -176,12 +177,12 @@ const Dashboard = () => {
                 </Link>
                 <Link to="/templates" className="block">
                   <Button variant="outline" className="w-full justify-start gap-2">
-                    <ShoppingCart className="w-4 h-4" /> Browse Templates
+                    <ShoppingCart className="w-4 h-4" /> Parcourir
                   </Button>
                 </Link>
                 <Link to="/profile" className="block">
                   <Button variant="outline" className="w-full justify-start gap-2">
-                    <MessageSquare className="w-4 h-4" /> Profile Settings
+                    <MessageSquare className="w-4 h-4" /> Paramètres
                   </Button>
                 </Link>
                 <Button
@@ -189,7 +190,7 @@ const Dashboard = () => {
                   className="w-full justify-start gap-2"
                   onClick={() => setHostingOpen(true)}
                 >
-                  <Rocket className="w-4 h-4" /> Start Hosting
+                  <Rocket className="w-4 h-4" /> Héberger
                 </Button>
               </CardContent>
             </Card>
@@ -199,10 +200,10 @@ const Dashboard = () => {
           {recommendedTemplates && recommendedTemplates.length > 0 && (
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-display font-bold text-foreground">Recommended for You</h2>
+                <h2 className="text-xl font-display font-bold text-foreground">Recommandations</h2>
                 <Link to="/templates">
                   <Button variant="ghost" size="sm" className="gap-1">
-                    View All <ArrowRight className="w-4 h-4" />
+                    Tout voir <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>

@@ -29,19 +29,19 @@ import { z } from 'zod'
 const profileSchema = z.object({
   displayName: z
     .string()
-    .min(1, 'Display name is required')
-    .max(50, 'Display name must be less than 50 characters'),
-  avatarUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+    .min(1, "Le nom d'affichage est requis")
+    .max(50, "Le nom ne peut pas dépasser 50 caractères"),
+  avatarUrl: z.string().url('Doit être une URL valide').optional().or(z.literal('')),
 })
 
 const passwordSchema = z
   .object({
-    currentPassword: z.string().min(6, 'Password must be at least 6 characters'),
-    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
+    currentPassword: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
+    newPassword: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
+    confirmPassword: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "Les mots de passe ne correspondent pas",
     path: ['confirmPassword'],
   })
 
@@ -130,13 +130,13 @@ const Profile = () => {
       if (error) throw error
 
       toast({
-        title: 'Profile updated',
-        description: 'Your profile has been updated successfully.',
+        title: 'Profil mis à jour',
+        description: 'Votre profil a été mis à jour avec succès.',
       })
     } catch (error: any) {
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to update profile',
+        title: 'Erreur',
+        description: error.message || 'Échec de la mise à jour du profil',
         variant: 'destructive',
       })
     } finally {
@@ -154,7 +154,7 @@ const Profile = () => {
       })
 
       if (signInError) {
-        throw new Error('Current password is incorrect')
+        throw new Error('Le mot de passe actuel est incorrect')
       }
 
       const { error } = await supabase.auth.updateUser({
@@ -165,13 +165,13 @@ const Profile = () => {
 
       passwordForm.reset()
       toast({
-        title: 'Password changed',
-        description: 'Your password has been updated successfully.',
+        title: 'Mot de passe modifié',
+        description: 'Votre mot de passe a été mis à jour avec succès.',
       })
     } catch (error: any) {
       toast({
-        title: 'Error',
-        description: error.message || 'Failed to change password',
+        title: 'Erreur',
+        description: error.message || 'Échec du changement de mot de passe',
         variant: 'destructive',
       })
     } finally {
@@ -210,7 +210,7 @@ const Profile = () => {
             </Avatar>
             <div>
               <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-                My Profile
+                Mon profil
               </h1>
               <p className="text-muted-foreground">{user?.email}</p>
             </div>
@@ -223,8 +223,9 @@ const Profile = () => {
                 <CardTitle className="flex items-center gap-2">
                   <User className="w-5 h-5" />
                   Profile Information
+                  Informations du profil
                 </CardTitle>
-                <CardDescription>Update your display name and avatar</CardDescription>
+                <CardDescription>Modifiez votre nom d'affichage et votre avatar</CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoadingProfile ? (
@@ -242,9 +243,9 @@ const Profile = () => {
                         name="displayName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Display Name</FormLabel>
+                            <FormLabel>Nom d'affichage</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your name" {...field} />
+                              <Input placeholder="Votre nom" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -256,7 +257,7 @@ const Profile = () => {
                         name="avatarUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Avatar URL</FormLabel>
+                            <FormLabel>URL de l'avatar</FormLabel>
                             <FormControl>
                               <Input placeholder="https://example.com/avatar.jpg" {...field} />
                             </FormControl>
@@ -271,7 +272,7 @@ const Profile = () => {
                         ) : (
                           <Save className="w-4 h-4 mr-2" />
                         )}
-                        Save Changes
+                        Enregistrer
                       </Button>
                     </form>
                   </Form>
@@ -285,8 +286,9 @@ const Profile = () => {
                 <CardTitle className="flex items-center gap-2">
                   <Mail className="w-5 h-5" />
                   Email Address
+                  Adresse e-mail
                 </CardTitle>
-                <CardDescription>Your email address is used for authentication</CardDescription>
+                <CardDescription>Votre adresse e-mail est utilisée pour l'authentification</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
@@ -294,7 +296,7 @@ const Profile = () => {
                   <span className="text-foreground">{user?.email}</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Contact support if you need to change your email address.
+                  Contactez le support si vous devez changer votre adresse e-mail.
                 </p>
               </CardContent>
             </Card>
@@ -306,7 +308,7 @@ const Profile = () => {
                   <KeyRound className="w-5 h-5" />
                   Change Password
                 </CardTitle>
-                <CardDescription>Update your password to keep your account secure</CardDescription>
+                <CardDescription>Mettez à jour votre mot de passe pour sécuriser votre compte</CardDescription>
               </CardHeader>
               <CardContent>
                 <Form {...passwordForm}>
@@ -318,7 +320,7 @@ const Profile = () => {
                       name="currentPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Current Password</FormLabel>
+                          <FormLabel>Mot de passe actuel</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <Input
@@ -349,7 +351,7 @@ const Profile = () => {
                       name="newPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>New Password</FormLabel>
+                          <FormLabel>Nouveau mot de passe</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <Input
@@ -378,7 +380,7 @@ const Profile = () => {
                       name="confirmPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Confirm New Password</FormLabel>
+                          <FormLabel>Confirmer le nouveau mot de passe</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <Input
@@ -408,7 +410,7 @@ const Profile = () => {
                       ) : (
                         <Lock className="w-4 h-4 mr-2" />
                       )}
-                      Change Password
+                  Modifier
                     </Button>
                   </form>
                 </Form>

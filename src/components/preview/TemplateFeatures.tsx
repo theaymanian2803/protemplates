@@ -13,19 +13,19 @@ const TemplateFeatures = ({ features }: TemplateFeaturesProps) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-          Features & Highlights
-        </h2>
-        <p className="text-muted-foreground">
-          Everything included with this template
-        </p>
+          <h2 className="text-2xl font-display font-bold text-foreground mb-2">
+            Fonctionnalités
+          </h2>
+          <p className="text-muted-foreground">
+            Tout ce qui est inclus avec ce modèle
+          </p>
       </div>
 
       {/* Features List */}
       <div className="glass-card p-6 rounded-xl border border-border/50">
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="w-5 h-5 text-primary" />
-          <h3 className="font-semibold text-foreground">All Features Included</h3>
+          <h3 className="font-semibold text-foreground">Toutes les fonctionnalités incluses</h3>
         </div>
         <div className="grid md:grid-cols-2 gap-3">
           {features.map((feature, index) => (

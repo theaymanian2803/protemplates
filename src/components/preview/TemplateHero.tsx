@@ -21,19 +21,19 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
 
   const handleFavoriteClick = async () => {
     if (!user) {
-      toast.error("Please sign in to add favorites");
+      toast.error("Veuillez vous connecter pour ajouter aux favoris");
       return;
     }
     await toggleFavorite(template.id);
-    toast.success(isInFavorites ? "Removed from favorites" : "Added to favorites");
+    toast.success(isInFavorites ? "Retiré des favoris" : "Ajouté aux favoris");
   };
 
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      toast.success("Link copied to clipboard!");
+      toast.success("Lien copié dans le presse-papiers !");
     } catch {
-      toast.error("Failed to copy link");
+      toast.error("Échec de la copie du lien");
     }
   };
 
@@ -41,7 +41,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
     if (template.demo_url) {
       window.open(template.demo_url, "_blank");
     } else {
-      toast.info("Live preview not available for this template");
+      toast.info("Aperçu en direct non disponible pour ce modèle");
     }
   };
 
@@ -51,7 +51,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
       <div className="flex items-center gap-2 text-sm">
         <Link to="/templates" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
           <ArrowLeft className="w-4 h-4" />
-          Back to Templates
+          Retour aux modèles
         </Link>
         <span className="text-muted-foreground">/</span>
         <Link to={`/templates?category=${encodeURIComponent(template.category)}`} className="text-muted-foreground hover:text-primary transition-colors">{template.category}</Link>
@@ -63,7 +63,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
       <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-lg group">
         <img
           src={template.image_url}
-          alt={`${template.title} Preview`}
+          alt={`Aperçu de ${template.title}`}
           className="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105"
         />
         
@@ -73,12 +73,12 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
             <div className="flex items-center gap-3">
               <Button variant="hero" size="lg" className="gap-2" onClick={handleLivePreview}>
                 <Eye className="w-5 h-5" />
-                Live Preview
+                Aperçu en direct
               </Button>
               {template.youtube_id && (
                 <Button variant="secondary" size="lg" className="gap-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white" onClick={() => setVideoOpen(true)}>
                   <Play className="w-5 h-5" />
-                  Watch Preview
+                  Voir l'aperçu
                 </Button>
               )}
             </div>
@@ -106,10 +106,10 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2">
           {template.sales > 1000 && (
-            <Badge className="bg-primary text-primary-foreground">Best Seller</Badge>
+            <Badge className="bg-primary text-primary-foreground">Meilleure vente</Badge>
           )}
           {template.featured && (
-            <Badge className="bg-accent text-accent-foreground">Featured</Badge>
+            <Badge className="bg-accent text-accent-foreground">En vedette</Badge>
           )}
         </div>
       </div>
@@ -121,7 +121,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
             {template.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            {template.description || "A premium, fully responsive template with stunning design."}
+            {template.description || "Un modèle premium, entièrement responsive, au design époustouflant."}
           </p>
         </div>
         
@@ -132,7 +132,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
           </div>
           <div className="flex items-center gap-1 text-muted-foreground">
             <Download className="w-4 h-4" />
-            <span>{template.sales.toLocaleString()} downloads</span>
+            <span>{template.sales.toLocaleString()} téléchargements</span>
           </div>
         </div>
       </div>

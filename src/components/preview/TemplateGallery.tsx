@@ -10,11 +10,11 @@ interface TemplateGalleryProps {
 
 const TemplateGallery = ({ template }: TemplateGalleryProps) => {
   const allImages = [
-    { id: 0, src: template.image_url, label: "Main Preview" },
+    { id: 0, src: template.image_url, label: "Aperçu principal" },
     ...(template.gallery_images || []).map((src, index) => ({
       id: index + 1,
       src,
-      label: `Screenshot ${index + 1}`,
+      label: `Capture ${index + 1}`,
     })),
   ];
 
@@ -36,7 +36,7 @@ const TemplateGallery = ({ template }: TemplateGalleryProps) => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-display font-bold text-foreground">
-            Template Preview
+            Aperçu du modèle
           </h2>
         </div>
         <div
@@ -67,16 +67,16 @@ const TemplateGallery = ({ template }: TemplateGalleryProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-display font-bold text-foreground">
-          Template Screenshots
-        </h2>
-        <button
-          onClick={() => openLightbox(allImages.findIndex((i) => i.id === activeImage.id))}
-          className="text-sm text-primary hover:underline flex items-center gap-1.5"
-        >
-          <Maximize2 className="w-4 h-4" />
-          View Fullscreen
-        </button>
+          <h2 className="text-2xl font-display font-bold text-foreground">
+            Captures d'écran
+          </h2>
+          <button
+            onClick={() => openLightbox(allImages.findIndex((i) => i.id === activeImage.id))}
+            className="text-sm text-primary hover:underline flex items-center gap-1.5"
+          >
+            <Maximize2 className="w-4 h-4" />
+            Voir en plein écran
+          </button>
       </div>
 
       {/* Main Image */}

@@ -10,9 +10,6 @@ const colorClasses = [
 const TestimonialsSection = () => {
   const { data: settings } = useTestimonialsSection();
 
-  const badge = settings?.badge || "Testimonials";
-  const headline = settings?.headline || "Loved by 50,000+ Creators";
-  const subheadline = settings?.subheadline || "See why professionals trust us for their most important projects";
   const testimonials = settings?.testimonials || [];
 
   return (
@@ -27,11 +24,11 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-sm font-semibold text-accent uppercase tracking-wider">{badge}</span>
+          <span className="text-sm font-semibold text-accent uppercase tracking-wider">Témoignages</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-            {headline}
+            Aimé par plus de 50 000 créateurs
           </h2>
-          <p className="text-lg text-muted-foreground">{subheadline}</p>
+          <p className="text-lg text-muted-foreground">Découvrez pourquoi les professionnels nous font confiance pour leurs projets les plus importants</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">

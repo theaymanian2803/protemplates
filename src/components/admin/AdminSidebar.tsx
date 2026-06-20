@@ -29,26 +29,26 @@ import {
 import { cn } from "@/lib/utils";
 
 const managementItems = [
-  { title: "Templates", value: "templates", icon: LayoutTemplate },
-  { title: "Orders", value: "orders", icon: ShoppingCart },
-  { title: "Coupons", value: "coupons", icon: Tag },
-  { title: "Reviews", value: "reviews", icon: Star },
-  { title: "Contacts", value: "contacts", icon: MessageCircle },
-  { title: "Refunds", value: "refunds", icon: RotateCcw },
+  { title: "Modèles", value: "templates", icon: LayoutTemplate },
+  { title: "Commandes", value: "orders", icon: ShoppingCart },
+  { title: "Codes promo", value: "coupons", icon: Tag },
+  { title: "Avis", value: "reviews", icon: Star },
+  { title: "Messages", value: "contacts", icon: MessageCircle },
+  { title: "Remboursements", value: "refunds", icon: RotateCcw },
 ];
 
 const contentItems = [
-  { title: "Hero Banner", value: "hero", icon: ImageIcon },
-  { title: "Features", value: "features", icon: Sparkles },
-  { title: "Pricing", value: "pricing", icon: DollarSign },
-  { title: "Categories", value: "categories", icon: Grid3X3 },
-  { title: "Testimonials", value: "testimonials", icon: Quote },
-  { title: "Hosting Wizard", value: "hosting", icon: Rocket },
+  { title: "Bannière Héro", value: "hero", icon: ImageIcon },
+  { title: "Fonctionnalités", value: "features", icon: Sparkles },
+  { title: "Tarifs", value: "pricing", icon: DollarSign },
+  { title: "Catégories", value: "categories", icon: Grid3X3 },
+  { title: "Témoignages", value: "testimonials", icon: Quote },
+  { title: "Assistant Hébergement", value: "hosting", icon: Rocket },
 ];
 
 const pageItems = [
-  { title: "About Us", value: "about", icon: Info },
-  { title: "Contact Page", value: "contact-page", icon: Phone },
+  { title: "À propos", value: "about", icon: Info },
+  { title: "Contact", value: "contact-page", icon: Phone },
 ];
 
 interface AdminSidebarProps {
@@ -105,8 +105,8 @@ export const AdminSidebar = ({ activeTab, onTabChange }: AdminSidebarProps) => {
             <span className="font-display font-bold text-foreground">Admin</span>
           </div>
         )}
-        {renderGroup("Management", managementItems)}
-        {renderGroup("Homepage Sections", contentItems)}
+        {renderGroup("Gestion", managementItems)}
+        {renderGroup("Sections Accueil", contentItems)}
         {renderGroup("Pages", pageItems)}
       </SidebarContent>
     </Sidebar>

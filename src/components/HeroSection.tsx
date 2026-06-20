@@ -21,7 +21,7 @@ const HeroSection = () => {
     "Découvrez notre catalogue de sites premium, optimisés pour le marché marocain. Ne perdez plus de temps avec le développement : achetez votre site professionnel et commencez à vendre dès aujourd'hui."
   const ctaPText = hero?.cta_primary_text || 'Voir le catalogue'
   const ctaPLink = hero?.cta_primary_link || '/templates'
-  const ctaSText = hero?.cta_secondary_text || 'Comment ça marche'
+  const ctaSText = 'Comment ça marche'
   const demoVideoId = hero?.demo_video_id || 'dQw4w9WgXcQ'
   const heroImage = hero?.hero_image_url || ''
 

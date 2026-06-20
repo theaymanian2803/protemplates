@@ -59,7 +59,7 @@ export const OrderList = ({
   if (orders.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground">No orders found</p>
+        <p className="text-muted-foreground">Aucune commande trouvée</p>
       </div>
     );
   }
@@ -69,9 +69,9 @@ export const OrderList = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Order ID</TableHead>
-            <TableHead>Customer</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>ID de commande</TableHead>
+            <TableHead>Client</TableHead>
+            <TableHead>Statut</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -100,11 +100,11 @@ export const OrderList = ({
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="processing">Processing</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                    <SelectItem value="refunded">Refunded</SelectItem>
+                    <SelectItem value="pending">En attente</SelectItem>
+                    <SelectItem value="processing">En cours</SelectItem>
+                    <SelectItem value="completed">Terminée</SelectItem>
+                    <SelectItem value="cancelled">Annulée</SelectItem>
+                    <SelectItem value="refunded">Remboursée</SelectItem>
                   </SelectContent>
                 </Select>
               </TableCell>
@@ -137,19 +137,19 @@ export const OrderList = ({
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Order</AlertDialogTitle>
+                        <AlertDialogTitle>Supprimer la commande</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Are you sure you want to delete this order? This action
-                          cannot be undone.
+                          Êtes-vous sûr de vouloir supprimer cette commande ? Cette action
+                          est irréversible.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => onDelete(order.id)}
                           className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
-                          Delete
+                          Supprimer
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

@@ -33,9 +33,9 @@ const OrderHistory = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShoppingBag className="w-5 h-5" />
-          Order History
+          Historique des commandes
         </CardTitle>
-        <CardDescription>Your past purchases and their status</CardDescription>
+        <CardDescription>Vos achats passés et leur statut</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -46,8 +46,8 @@ const OrderHistory = () => {
         ) : !orders?.length ? (
           <div className="text-center py-8 text-muted-foreground">
             <Package className="w-10 h-10 mx-auto mb-3 opacity-50" />
-            <p className="font-medium">No orders yet</p>
-            <p className="text-sm">Your purchases will appear here.</p>
+            <p className="font-medium">Aucune commande pour le moment</p>
+            <p className="text-sm">Vos achats apparaîtront ici.</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -61,10 +61,10 @@ const OrderHistory = () => {
                   >
                     <div className="space-y-1">
                       <p className="text-sm font-medium text-foreground">
-                        Order #{order.id.slice(0, 8)}
+                        Commande nº {order.id.slice(0, 8)}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {format(new Date(order.created_at), "MMM d, yyyy 'at' h:mm a")}
+                        {format(new Date(order.created_at), "MMM d, yyyy 'à' h:mm a")}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">

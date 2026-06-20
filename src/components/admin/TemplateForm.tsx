@@ -13,14 +13,14 @@ import { z } from 'zod'
 import { R2ImageUpload } from './R2ImageUpload'
 
 const templateSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(100),
+  title: z.string().min(1, 'Le titre est requis').max(100),
   description: z.string().max(500).nullable(),
-  category: z.string().min(1, 'Category is required').max(50),
-  price: z.number().min(0, 'Price must be positive'),
-  image_url: z.string().url('Must be a valid URL'),
-  demo_url: z.string().url('Must be a valid URL').nullable().or(z.literal('')),
+  category: z.string().min(1, 'La catégorie est requise').max(50),
+  price: z.number().min(0, 'Le prix doit être positif'),
+  image_url: z.string().url('Doit être une URL valide'),
+  demo_url: z.string().url('Doit être une URL valide').nullable().or(z.literal('')),
   featured: z.boolean(),
-  source_file_url: z.string().url('Must be a valid download URL').or(z.literal('')),
+  source_file_url: z.string().url('Doit être une URL de téléchargement valide').or(z.literal('')),
 })
 
 interface TemplateFormProps {
@@ -134,12 +134,12 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Title */}
         <div className="space-y-2">
-          <Label htmlFor="title">Title *</Label>
+          <Label htmlFor="title">Titre *</Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Template title"
+            placeholder="Titre du modèle"
             className={errors.title ? 'border-destructive' : ''}
           />
           {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
@@ -147,12 +147,12 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
         {/* Category */}
         <div className="space-y-2">
-          <Label htmlFor="category">Category *</Label>
+          <Label htmlFor="category">Catégorie *</Label>
           <Input
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="e.g., Dashboard, E-Commerce"
+            placeholder="ex. Tableau de bord, E-Commerce"
             className={errors.category ? 'border-destructive' : ''}
           />
           {errors.category && <p className="text-sm text-destructive">{errors.category}</p>}
@@ -160,7 +160,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
         {/* Price */}
         <div className="space-y-2">
-          <Label htmlFor="price">Price ($) *</Label>
+          <Label htmlFor="price">Prix ($) *</Label>
           <Input
             id="price"
             type="number"
@@ -177,7 +177,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
         {/* --- REPLACED WITH R2 UPLOADER --- */}
         {/* Main Image Upload */}
         <div className="space-y-2 md:col-span-2">
-          <Label>Template Image *</Label>
+          <Label>Image du modèle *</Label>
           <div className="max-w-md">
             <R2ImageUpload
               value={imageUrl}
@@ -194,7 +194,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
         {/* Demo URL */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="demoUrl">Demo URL</Label>
+          <Label htmlFor="demoUrl">URL de démonstration</Label>
           <Input
             id="demoUrl"
             value={demoUrl}
@@ -205,21 +205,21 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
         {/* YouTube ID */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="youtubeId">YouTube Video ID</Label>
+          <Label htmlFor="youtubeId">ID Vidéo YouTube</Label>
           <Input
             id="youtubeId"
             value={youtubeId}
             onChange={(e) => setYoutubeId(e.target.value)}
-            placeholder="e.g. dQw4w9WgXcQ"
+            placeholder="ex. dQw4w9WgXcQ"
           />
           <p className="text-xs text-muted-foreground">
-            The ID from the YouTube URL (e.g. youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>)
+            L'ID de l'URL YouTube (ex. youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>)
           </p>
         </div>
 
         {/* Source File Download URL */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="sourceFileUrl">Source File Download URL *</Label>
+          <Label htmlFor="sourceFileUrl">URL de téléchargement du fichier source *</Label>
           <Input
             id="sourceFileUrl"
             value={sourceFileUrl}
@@ -231,7 +231,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
             <p className="text-sm text-destructive">{errors.source_file_url}</p>
           )}
           <p className="text-xs text-muted-foreground">
-            External download link (Google Drive, Mega, etc.) delivered to the user after purchase
+            Lien de téléchargement externe (Google Drive, Mega, etc.) remis à l'utilisateur après l'achat
           </p>
         </div>
       </div>
@@ -243,7 +243,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Template description..."
+          placeholder="Description du modèle..."
           rows={3}
         />
       </div>
@@ -251,12 +251,12 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
       {/* Featured Toggle */}
       <div className="flex items-center gap-3">
         <Switch id="featured" checked={featured} onCheckedChange={setFeatured} />
-        <Label htmlFor="featured">Featured template</Label>
+        <Label htmlFor="featured">Modèle en vedette</Label>
       </div>
 
       {/* Tech Stack */}
       <div className="space-y-2">
-        <Label>Tech Stack</Label>
+        <Label>Technologies</Label>
         <div className="flex gap-2">
           <Input
             value={newTech}
@@ -296,12 +296,12 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
       {/* Features */}
       <div className="space-y-2">
-        <Label>Features</Label>
+        <Label>Fonctionnalités</Label>
         <div className="flex gap-2">
           <Input
             value={newFeature}
             onChange={(e) => setNewFeature(e.target.value)}
-            placeholder="Responsive design, Dark mode..."
+            placeholder="Design responsive, Mode sombre..."
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
@@ -336,11 +336,11 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
 
       {/* --- ADDED R2 UPLOADER TO GALLERY --- */}
       <div className="space-y-4">
-        <Label>Gallery Images</Label>
+        <Label>Images de la galerie</Label>
 
         {/* R2 Direct Upload for Gallery */}
         <div className="max-w-md">
-          <p className="text-xs text-muted-foreground mb-2">Upload an image directly to R2:</p>
+          <p className="text-xs text-muted-foreground mb-2">Téléchargez une image directement vers R2 :</p>
           <R2ImageUpload
             value={''}
             onChange={(url) => {
@@ -356,7 +356,7 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
           <Input
             value={newGalleryImage}
             onChange={(e) => setNewGalleryImage(e.target.value)}
-            placeholder="Or paste an image URL..."
+            placeholder="Ou collez une URL d'image..."
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
@@ -404,16 +404,16 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Saving...
+              Enregistrement...
             </>
           ) : template ? (
-            'Update Template'
+            'Mettre à jour le modèle'
           ) : (
-            'Create Template'
+            'Créer le modèle'
           )}
         </Button>
         <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
+          Annuler
         </Button>
       </div>
     </form>

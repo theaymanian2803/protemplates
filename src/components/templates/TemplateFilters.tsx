@@ -17,7 +17,7 @@ const TemplateFilters = ({ selectedCategory, onCategoryChange }: TemplateFilters
         <div className="flex items-center justify-between px-1">
           {/* Matches the Card Title typography */}
           <h3 className="font-semibold text-foreground text-sm tracking-tight leading-tight">
-            Categories
+            Catégories
           </h3>
           {selectedCategory && (
             <Button
@@ -27,7 +27,7 @@ const TemplateFilters = ({ selectedCategory, onCategoryChange }: TemplateFilters
               // Matches the Card Category typography
               className="h-auto p-0 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-transparent">
               <X className="w-3 h-3 mr-1" />
-              Clear
+              Effacer
             </Button>
           )}
         </div>
@@ -49,7 +49,7 @@ const TemplateFilters = ({ selectedCategory, onCategoryChange }: TemplateFilters
                     ? 'font-semibold text-foreground text-sm tracking-tight bg-muted/60 shadow-sm' // Matches the Card Price Tag look
                     : 'text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50'
                 }`}>
-                All Templates
+                Tous les templates
               </button>
               {categories?.map((category) => (
                 <button

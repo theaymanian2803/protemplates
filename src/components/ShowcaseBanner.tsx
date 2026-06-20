@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Zap, Globe, Shield, Rocket } from "lucide-react";
 
 const metrics = [
-  { icon: Zap, value: "99.9%", label: "Uptime Guarantee", color: "text-primary" },
-  { icon: Globe, value: "190+", label: "Countries Served", color: "text-accent" },
-  { icon: Shield, value: "256-bit", label: "SSL Encryption", color: "text-primary" },
-  { icon: Rocket, value: "<1s", label: "Load Time", color: "text-accent" },
+  { icon: Zap, value: "99.9%", label: "Garantie de disponibilité", color: "text-primary" },
+  { icon: Globe, value: "190+", label: "Pays desservis", color: "text-accent" },
+  { icon: Shield, value: "256-bit", label: "Chiffrement SSL", color: "text-primary" },
+  { icon: Rocket, value: "<1s", label: "Temps de chargement", color: "text-accent" },
 ];
 
 const ShowcaseBanner = () => {

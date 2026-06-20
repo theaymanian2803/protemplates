@@ -14,7 +14,7 @@ const YouTubeModal = ({ youtubeId, open, onOpenChange }: YouTubeModalProps) => {
           <iframe
             className="absolute inset-0 w-full h-full"
             src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
-            title="Template Preview Video"
+            title="Vidéo d'aperçu du modèle"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />

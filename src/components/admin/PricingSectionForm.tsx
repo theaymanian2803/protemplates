@@ -26,9 +26,9 @@ export const PricingSectionForm = () => {
     if (!form) return;
     try {
       await updateMutation.mutateAsync(form);
-      toast({ title: "Pricing section updated!", description: "Changes are live on the homepage." });
+      toast({ title: "Section tarifs mise à jour !", description: "Les modifications sont en ligne sur la page d'accueil." });
     } catch (err: any) {
-      toast({ title: "Error saving", description: err.message, variant: "destructive" });
+      toast({ title: "Erreur lors de l'enregistrement", description: err.message, variant: "destructive" });
     }
   };
 
@@ -64,8 +64,8 @@ export const PricingSectionForm = () => {
       {/* Section Header */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Section Header</CardTitle>
-          <CardDescription>Badge, headline, and subheadline above the pricing cards</CardDescription>
+          <CardTitle className="text-base">En-tête de section</CardTitle>
+          <CardDescription>Badge, titre et sous-titre au-dessus des cartes de tarifs</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -73,11 +73,11 @@ export const PricingSectionForm = () => {
             <Input value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })} />
           </div>
           <div>
-            <Label className="text-xs text-muted-foreground">Headline</Label>
+            <Label className="text-xs text-muted-foreground">Titre</Label>
             <Input value={form.headline} onChange={(e) => setForm({ ...form, headline: e.target.value })} />
           </div>
           <div>
-            <Label className="text-xs text-muted-foreground">Subheadline</Label>
+            <Label className="text-xs text-muted-foreground">Sous-titre</Label>
             <Input value={form.subheadline} onChange={(e) => setForm({ ...form, subheadline: e.target.value })} />
           </div>
         </CardContent>
@@ -86,8 +86,8 @@ export const PricingSectionForm = () => {
       {/* Individual Templates Card */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Individual Templates Card</CardTitle>
-          <CardDescription>Left pricing card settings</CardDescription>
+          <CardTitle className="text-base">Cartes de modèles individuels</CardTitle>
+          <CardDescription>Paramètres de la carte de gauche</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -102,27 +102,27 @@ export const PricingSectionForm = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Price Label</Label>
+              <Label className="text-xs text-muted-foreground">Libellé du prix</Label>
               <Input value={form.individual_price_label} onChange={(e) => setForm({ ...form, individual_price_label: e.target.value })} />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Price Note</Label>
+              <Label className="text-xs text-muted-foreground">Note sur le prix</Label>
               <Input value={form.individual_price_note} onChange={(e) => setForm({ ...form, individual_price_note: e.target.value })} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Button Text</Label>
+              <Label className="text-xs text-muted-foreground">Texte du bouton</Label>
               <Input value={form.individual_cta_text} onChange={(e) => setForm({ ...form, individual_cta_text: e.target.value })} />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Button Link</Label>
+              <Label className="text-xs text-muted-foreground">Lien du bouton</Label>
               <Input value={form.individual_cta_link} onChange={(e) => setForm({ ...form, individual_cta_link: e.target.value })} />
             </div>
           </div>
 
           <Separator />
-          <Label className="text-xs text-muted-foreground font-semibold">Features</Label>
+          <Label className="text-xs text-muted-foreground font-semibold">Fonctionnalités</Label>
           {form.individual_features.map((f, i) => (
             <div key={i} className="flex items-center gap-2">
               <Input value={f} onChange={(e) => updateFeature("individual_features", i, e.target.value)} />
@@ -140,41 +140,41 @@ export const PricingSectionForm = () => {
       {/* All Access Card */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">All Access Pass Card</CardTitle>
-          <CardDescription>Right pricing card settings (price is set in code)</CardDescription>
+          <CardTitle className="text-base">Carte Pass Tout Accès</CardTitle>
+          <CardDescription>Paramètres de la carte de droite (prix défini dans le code)</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Title</Label>
+              <Label className="text-xs text-muted-foreground">Titre</Label>
               <Input value={form.allaccess_title} onChange={(e) => setForm({ ...form, allaccess_title: e.target.value })} />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Subtitle</Label>
+              <Label className="text-xs text-muted-foreground">Sous-titre</Label>
               <Input value={form.allaccess_subtitle} onChange={(e) => setForm({ ...form, allaccess_subtitle: e.target.value })} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Badge Text</Label>
+            <Label className="text-xs text-muted-foreground">Texte du badge</Label>
               <Input value={form.allaccess_badge} onChange={(e) => setForm({ ...form, allaccess_badge: e.target.value })} />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Price ($)</Label>
+              <Label className="text-xs text-muted-foreground">Prix ($)</Label>
               <Input type="number" min={0} value={form.allaccess_price} onChange={(e) => setForm({ ...form, allaccess_price: Number(e.target.value) })} />
             </div>
           </div>
           <div>
-            <Label className="text-xs text-muted-foreground">Price Note</Label>
+            <Label className="text-xs text-muted-foreground">Note sur le prix</Label>
             <Input value={form.allaccess_price_note} onChange={(e) => setForm({ ...form, allaccess_price_note: e.target.value })} />
           </div>
           <div>
-            <Label className="text-xs text-muted-foreground">Button Text</Label>
+            <Label className="text-xs text-muted-foreground">Texte du bouton</Label>
             <Input value={form.allaccess_cta_text} onChange={(e) => setForm({ ...form, allaccess_cta_text: e.target.value })} />
           </div>
 
           <Separator />
-          <Label className="text-xs text-muted-foreground font-semibold">Features</Label>
+          <Label className="text-xs text-muted-foreground font-semibold">Fonctionnalités</Label>
           {form.allaccess_features.map((f, i) => (
             <div key={i} className="flex items-center gap-2">
               <Input value={f} onChange={(e) => updateFeature("allaccess_features", i, e.target.value)} />
@@ -184,7 +184,7 @@ export const PricingSectionForm = () => {
             </div>
           ))}
           <Button variant="outline" size="sm" onClick={() => addFeature("allaccess_features")} className="gap-1">
-            <Plus className="w-3 h-3" /> Add Feature
+            <Plus className="w-3 h-3" /> Ajouter une fonctionnalité
           </Button>
         </CardContent>
       </Card>
@@ -193,7 +193,7 @@ export const PricingSectionForm = () => {
       <div className="flex gap-3">
         <Button onClick={handleSave} disabled={updateMutation.isPending} className="gap-2">
           {updateMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          Save Changes
+          Enregistrer les modifications
         </Button>
       </div>
     </div>

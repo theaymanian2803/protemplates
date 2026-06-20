@@ -72,7 +72,7 @@ const Navbar = () => {
               <Link
                 to="/favorites"
                 className="relative p-2.5 rounded-full hover:bg-muted transition-colors"
-                aria-label="Favorites">
+                    aria-label="Favoris">
                 <Heart className="w-[18px] h-[18px] text-foreground" />
                 {favorites.length > 0 && (
                   <span className="absolute top-1 right-1 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -85,7 +85,7 @@ const Navbar = () => {
             <Link
               to="/cart"
               className="relative p-2.5 rounded-full hover:bg-muted transition-colors"
-              aria-label="Cart">
+              aria-label="Panier">
               <ShoppingCart className="w-[18px] h-[18px] text-foreground" />
               {totalItems > 0 && (
                 <span className="absolute top-1 right-1 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -108,25 +108,25 @@ const Navbar = () => {
                   className="w-52 bg-background border border-border">
                   <div className="px-3 py-2">
                     <p className="text-sm font-semibold truncate text-foreground">{user.email}</p>
-                    <p className="text-xs text-muted-foreground">Signed in</p>
+                    <p className="text-xs text-muted-foreground">Connecté</p>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link to="/dashboard">
                       <LayoutDashboard className="w-4 h-4 mr-2" />
-                      Dashboard
+                      Tableau de bord
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link to="/downloads">
                       <Download className="w-4 h-4 mr-2" />
-                      My Downloads
+                      Mes téléchargements
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link to="/profile">
                       <Settings className="w-4 h-4 mr-2" />
-                      Profile Settings
+                      Paramètres
                     </Link>
                   </DropdownMenuItem>
 
@@ -135,14 +135,14 @@ const Navbar = () => {
                     <DropdownMenuItem asChild className="cursor-pointer">
                       <Link to="/admin">
                         <Shield className="w-4 h-4 mr-2" />
-                        Admin Dashboard
+                        Admin
                       </Link>
                     </DropdownMenuItem>
                   )}
 
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-accent">
                     <LogOut className="w-4 h-4 mr-2" />
-                    Sign Out
+                    Déconnexion
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -151,7 +151,7 @@ const Navbar = () => {
                 <Button
                   size="sm"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-5 font-semibold">
-                  Get Started
+                  Commencer
                 </Button>
               </Link>
             )}
@@ -182,24 +182,24 @@ const Navbar = () => {
             <div className="flex flex-col gap-1">
               {/* Primary Links */}
               <MobileNavLink to="/templates" onClick={() => setIsOpen(false)}>
-                Browse Templates
+                Parcourir
               </MobileNavLink>
 
               <MobileAnchorLink href="/#pricing" onClick={() => setIsOpen(false)}>
-                Pricing
+                Tarifs
               </MobileAnchorLink>
               <MobileAnchorLink href="/#features" onClick={() => setIsOpen(false)}>
-                Features
+                Fonctionnalités
               </MobileAnchorLink>
 
               <div className="h-px bg-border my-3" />
 
               {/* Company Links */}
               <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest px-3 mb-1">
-                Company
+                Entreprise
               </p>
               <MobileNavLink to="/about" onClick={() => setIsOpen(false)}>
-                About Us
+                À propos
               </MobileNavLink>
               <MobileNavLink to="/faq" onClick={() => setIsOpen(false)}>
                 FAQ
@@ -212,13 +212,13 @@ const Navbar = () => {
                 <>
                   <div className="h-px bg-border my-3" />
                   <MobileNavLink to="/favorites" onClick={() => setIsOpen(false)}>
-                    Favorites {favorites.length > 0 && `(${favorites.length})`}
+                    Favoris {favorites.length > 0 && `(${favorites.length})`}
                   </MobileNavLink>
 
                   {/* Admin Dashboard Mobile Link */}
                   {isAdmin && (
                     <MobileNavLink to="/admin" onClick={() => setIsOpen(false)}>
-                      Admin Dashboard
+                      Admin
                     </MobileNavLink>
                   )}
                 </>
@@ -233,7 +233,7 @@ const Navbar = () => {
                     <Link to="/dashboard" className="flex-1" onClick={() => setIsOpen(false)}>
                       <Button variant="outline" size="sm" className="w-full">
                         <LayoutDashboard className="w-4 h-4 mr-2" />
-                        Dashboard
+                        Tableau de bord
                       </Button>
                     </Link>
                     <Button
@@ -245,7 +245,7 @@ const Navbar = () => {
                         setIsOpen(false)
                       }}>
                       <LogOut className="w-4 h-4 mr-2" />
-                      Sign Out
+                      Déconnexion
                     </Button>
                   </>
                 ) : (
@@ -253,7 +253,7 @@ const Navbar = () => {
                     <Button
                       size="sm"
                       className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
-                      Get Started
+                      Commencer
                     </Button>
                   </Link>
                 )}

@@ -7,56 +7,56 @@ const Terms = () => {
       <Navbar />
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Terms of Service</h1>
-          <p className="text-muted-foreground mb-12">Last updated: March 2026</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Conditions d'utilisation</h1>
+          <p className="text-muted-foreground mb-12">Dernière mise à jour : mars 2026</p>
 
           <div className="prose prose-lg max-w-none space-y-8">
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">1. Acceptance of Terms</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">1. Acceptation des conditions</h2>
               <p className="text-muted-foreground leading-relaxed">
-                By accessing and using TemplatePro, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you may not use our services.
+                En accédant et en utilisant TemplatePro, vous acceptez d'être lié par ces conditions d'utilisation. Si vous n'acceptez pas une partie de ces conditions, vous ne pouvez pas utiliser nos services.
               </p>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">2. Account Registration</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">2. Création de compte</h2>
               <p className="text-muted-foreground leading-relaxed">
-                To purchase templates, you must create an account with a valid email address. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account.
+                Pour acheter des templates, vous devez créer un compte avec une adresse e-mail valide. Vous êtes responsable de la confidentialité de vos identifiants de compte et de toutes les activités effectuées sous votre compte.
               </p>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">3. Purchases & Licensing</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">3. Achats et licences</h2>
               <p className="text-muted-foreground leading-relaxed">
-                All template purchases are subject to our licensing terms. A Regular License permits use in a single end product. An Extended License permits use in products sold to end users. The All Access Pass grants a Regular License for every template in our catalog, including future additions.
+                Tous les achats de templates sont soumis à nos conditions de licence. Une licence standard permet l'utilisation dans un seul produit final. Une licence étendue permet l'utilisation dans des produits vendus aux utilisateurs finaux. Le Pass Tout Accès octroie une licence standard pour chaque template de notre catalogue, y compris les ajouts futurs.
               </p>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">4. Intellectual Property</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">4. Propriété intellectuelle</h2>
               <p className="text-muted-foreground leading-relaxed">
-                All templates, designs, code, and content on TemplatePro are owned by TemplatePro or its licensors. Purchasing a template grants you a license to use it — not ownership of the intellectual property. You may not resell, redistribute, or sublicense the template source files.
+                Tous les templates, designs, codes et contenus sur TemplatePro sont la propriété de TemplatePro ou de ses concédants de licence. L'achat d'un template vous accorde une licence d'utilisation — et non la propriété de la propriété intellectuelle. Vous ne pouvez pas revendre, redistribuer ou sous-licencier les fichiers sources des templates.
               </p>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">5. Prohibited Uses</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">5. Utilisations interdites</h2>
               <p className="text-muted-foreground leading-relaxed">
-                You may not use our templates for illegal purposes, resell template files as-is, claim authorship of any template design, or use templates in a way that competes with TemplatePro. Violation of these terms may result in license revocation without refund.
+                Vous ne pouvez pas utiliser nos templates à des fins illégales, revendre les fichiers de template tels quels, revendiquer la paternité d'un design de template, ou utiliser les templates d'une manière qui concurrence TemplatePro. La violation de ces conditions peut entraîner la révocation de la licence sans remboursement.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-2xl font-bold text-foreground mb-3">6. Modifications</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We reserve the right to modify these terms at any time. Significant changes will be communicated via email or a prominent notice on our website. Continued use after changes constitutes acceptance of the updated terms.
+                Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications importantes seront communiquées par e-mail ou par un avis visible sur notre site web. L'utilisation continue après les modifications constitue l'acceptation des conditions mises à jour.
               </p>
             </section>
 
             <section>
               <h2 className="font-display text-2xl font-bold text-foreground mb-3">7. Contact</h2>
               <p className="text-muted-foreground leading-relaxed">
-                For questions about these Terms, contact us at uncacademycode@gmail.com.
+                Pour toute question concernant ces conditions, contactez-nous à uncacademycode@gmail.com.
               </p>
             </section>
           </div>

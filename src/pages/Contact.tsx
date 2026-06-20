@@ -30,11 +30,11 @@ import { Link } from 'react-router-dom'
 const methodIcons = [Mail, Phone, MessageSquare, MapPin]
 
 const quickLinks = [
-  { icon: FileQuestion, title: 'FAQ', description: 'Find quick answers', href: '/faq' },
+  { icon: FileQuestion, title: 'FAQ', description: 'Réponses rapides', href: '/faq' },
   {
     icon: Headphones,
-    title: 'Support Center',
-    description: 'Get technical help',
+    title: 'Centre d\'aide',
+    description: 'Aide technique',
     href: '/faq#support',
   },
 ]
@@ -76,11 +76,11 @@ const Contact = () => {
     setIsSubmitting(false)
 
     if (error) {
-      toast({ title: 'Error sending message', description: error.message, variant: 'destructive' })
+      toast({ title: 'Erreur lors de l\'envoi', description: error.message, variant: 'destructive' })
       return
     }
 
-    toast({ title: 'Message sent!', description: "We'll get back to you within 24 hours." })
+    toast({ title: 'Message envoyé !', description: 'Nous vous répondrons sous 24 heures.' })
     ;(e.target as HTMLFormElement).reset()
   }
 
@@ -100,17 +100,17 @@ const Contact = () => {
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
               <Mail className="w-4 h-4" />
-              {s?.hero_badge || 'Get in Touch'}
+              {s?.hero_badge || 'Contactez-nous'}
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6">
-              {s?.hero_headline || "We'd Love to"}{' '}
+              {s?.hero_headline || "Nous serions ravis de"}{' '}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {s?.hero_highlight || 'Hear From You'}
+                {s?.hero_highlight || 'vous entendre'}
               </span>
             </h1>
             <p className="text-lg text-muted-foreground">
               {s?.hero_subheadline ||
-                'Have a question, feedback, or need help? Our team is ready to assist you.'}
+                'Une question, un feedback ou besoin d\'aide ? Notre équipe est là pour vous.'}
             </p>
           </div>
         </div>
@@ -145,53 +145,53 @@ const Contact = () => {
             <div className="lg:col-span-3">
               <div className="glass-card p-8 rounded-3xl border border-border/50">
                 <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-                  {s?.form_title || 'Send us a Message'}
+                  {s?.form_title || 'Envoyez-nous un message'}
                 </h2>
                 <p className="text-muted-foreground mb-8">
                   {s?.form_subtitle ||
-                    "Fill out the form below and we'll get back to you as soon as possible."}
+                    "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais."}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" name="firstName" placeholder="John" required />
+                      <Label htmlFor="firstName">Prénom</Label>
+                      <Input id="firstName" name="firstName" placeholder="Jean" required />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" name="lastName" placeholder="Doe" required />
+                      <Label htmlFor="lastName">Nom</Label>
+                      <Input id="lastName" name="lastName" placeholder="Dupont" required />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="email">Adresse e-mail</Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="jean@exemple.com"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
+                    <Label htmlFor="subject">Sujet</Label>
                     <Select name="subject" required>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a topic" />
+                        <SelectValue placeholder="Choisissez un sujet" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="general">General Inquiry</SelectItem>
-                        <SelectItem value="support">Technical Support</SelectItem>
-                        <SelectItem value="sales">Sales Question</SelectItem>
-                        <SelectItem value="licensing">Licensing Help</SelectItem>
-                        <SelectItem value="refund">Refund Request</SelectItem>
-                        <SelectItem value="partnership">Partnership</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="general">Demande générale</SelectItem>
+                        <SelectItem value="support">Support technique</SelectItem>
+                        <SelectItem value="sales">Question commerciale</SelectItem>
+                        <SelectItem value="licensing">Aide licence</SelectItem>
+                        <SelectItem value="refund">Demande de remboursement</SelectItem>
+                        <SelectItem value="partnership">Partenariat</SelectItem>
+                        <SelectItem value="other">Autre</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="orderNumber">Order Number (Optional)</Label>
+                    <Label htmlFor="orderNumber">Numéro de commande (optionnel)</Label>
                     <Input id="orderNumber" name="orderNumber" placeholder="TP-XXXXXX" />
                   </div>
                   <div className="space-y-2">
@@ -199,7 +199,7 @@ const Contact = () => {
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Tell us how we can help you..."
+                      placeholder="Dites-nous comment nous pouvons vous aider..."
                       rows={5}
                       required
                     />
@@ -211,11 +211,11 @@ const Contact = () => {
                     className="w-full gap-2"
                     disabled={isSubmitting}>
                     {isSubmitting ? (
-                      <>Sending...</>
+                      <>Envoi en cours...</>
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        Send Message
+                        Envoyer
                       </>
                     )}
                   </Button>
@@ -226,7 +226,7 @@ const Contact = () => {
             {/* Sidebar Info */}
             <div className="lg:col-span-2 space-y-6">
               <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <h3 className="font-semibold text-foreground mb-4">Quick Resources</h3>
+                <h3 className="font-semibold text-foreground mb-4">Liens rapides</h3>
                 <div className="space-y-3">
                   {quickLinks.map((link, index) => (
                     <Link
@@ -249,7 +249,7 @@ const Contact = () => {
               <div className="glass-card p-6 rounded-2xl border border-border/50">
                 <div className="flex items-center gap-2 mb-4">
                   <Clock className="w-5 h-5 text-primary" />
-                  <h3 className="font-semibold text-foreground">Business Hours</h3>
+                  <h3 className="font-semibold text-foreground">Horaires d'ouverture</h3>
                 </div>
                 <div className="space-y-2 text-sm">
                   {(s?.business_hours || []).map((h, i) => (
@@ -261,14 +261,14 @@ const Contact = () => {
                 </div>
                 <div className="mt-4 p-3 rounded-lg bg-primary/10 text-sm">
                   <span className="text-primary font-medium">
-                    {s?.live_chat_note || '💬 Live chat available 24/7'}
+                    {s?.live_chat_note || '💬 Chat en direct disponible 24h/24 et 7j/7'}
                   </span>
                 </div>
               </div>
 
               {/* Response Time */}
               <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <h3 className="font-semibold text-foreground mb-4">Expected Response Time</h3>
+                <h3 className="font-semibold text-foreground mb-4">Délai de réponse estimé</h3>
                 <div className="space-y-3">
                   {(s?.response_times || []).map((r, i) => (
                     <div key={i} className="flex items-center gap-3">
@@ -292,10 +292,10 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-              {s?.location_title || 'Our Location'}
+              {s?.location_title || 'Notre adresse'}
             </h2>
             <p className="text-muted-foreground">
-              {s?.location_subtitle || 'Visit us at our headquarters'}
+              {s?.location_subtitle || 'Rendez-nous visite'}
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-6">
@@ -310,7 +310,7 @@ const Contact = () => {
             </div>
             <div className="flex flex-col justify-center glass-card p-8 rounded-3xl border border-border/50">
               <MapPin className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">Address</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Adresse</h3>
               <p className="text-muted-foreground mb-1">
                 {s?.location_address_line1 || '123 Design Street'}
               </p>
@@ -322,7 +322,7 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer">
                 <Button variant="outline" size="sm" className="gap-2">
-                  <MapPin className="w-4 h-4" /> Get Directions
+                  <MapPin className="w-4 h-4" /> Itinéraire
                 </Button>
               </a>
             </div>

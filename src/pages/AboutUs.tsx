@@ -61,7 +61,7 @@ const AboutUs = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center max-w-4xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary font-medium text-sm mb-8">
               <Sparkles className="w-4 h-4" />
-              {s?.hero_badge || "About TemplatePro"}
+              {s?.hero_badge || "À propos de TemplatePro"}
             </motion.div>
 
             <motion.h1 variants={fadeUp} custom={1} className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-foreground mb-6 leading-[1.1] tracking-tight">
@@ -83,13 +83,13 @@ const AboutUs = () => {
             <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4 justify-center">
               <Link to={s?.hero_cta_primary_link || "/templates"}>
                 <Button variant="hero" size="lg" className="gap-2 text-base px-8">
-                  {s?.hero_cta_primary_text || "Browse Templates"}
+                  {s?.hero_cta_primary_text || "Parcourir"}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link to={s?.hero_cta_secondary_link || "/contact"}>
                 <Button variant="hero-outline" size="lg" className="text-base px-8">
-                  {s?.hero_cta_secondary_text || "Get in Touch"}
+                  {s?.hero_cta_secondary_text || "Nous contacter"}
                 </Button>
               </Link>
             </motion.div>
@@ -120,7 +120,7 @@ const AboutUs = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary font-medium text-xs mb-6 uppercase tracking-wider">
-                {s?.mission_badge || "Our Mission"}
+                {s?.mission_badge || "Notre mission"}
               </motion.div>
               <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
                 {s?.mission_headline}
@@ -161,7 +161,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary font-medium text-xs mb-6 uppercase tracking-wider">
-              {s?.values_badge || "What We Stand For"}
+              {s?.values_badge || "Nos valeurs"}
             </motion.div>
             <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">{s?.values_headline}</motion.h2>
             <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground max-w-2xl mx-auto">{s?.values_subheadline}</motion.p>
@@ -185,7 +185,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary font-medium text-xs mb-6 uppercase tracking-wider">
-              {s?.milestones_badge || "Our Journey"}
+              {s?.milestones_badge || "Notre parcours"}
             </motion.div>
             <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-foreground">{s?.milestones_headline}</motion.h2>
           </motion.div>
@@ -213,7 +213,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary font-medium text-xs mb-6 uppercase tracking-wider">
-              {s?.team_badge || "The People"}
+              {s?.team_badge || "L'équipe"}
             </motion.div>
             <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">{s?.team_headline}</motion.h2>
             <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground max-w-2xl mx-auto">{s?.team_subheadline}</motion.p>
@@ -249,7 +249,7 @@ const AboutUs = () => {
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10 p-10 md:p-16 text-center">
               <motion.h2 variants={fadeUp} custom={0} className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-4">
-                {s?.cta_headline || "Ready to Build Something Amazing?"}
+                {s?.cta_headline || "Prêt à créer quelque chose d'incroyable ?"}
               </motion.h2>
               <motion.p variants={fadeUp} custom={1} className="text-primary-foreground/80 text-lg mb-10 max-w-xl mx-auto">
                 {s?.cta_subheadline}
@@ -257,13 +257,13 @@ const AboutUs = () => {
               <motion.div variants={fadeUp} custom={2} className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to={s?.cta_primary_link || "/templates"}>
                   <Button size="lg" className="bg-white text-primary hover:bg-white/90 gap-2 text-base px-8 font-semibold">
-                    {s?.cta_primary_text || "Browse Templates"}
+                    {s?.cta_primary_text || "Parcourir"}
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
                 <Link to={s?.cta_secondary_link || "/contact"}>
                   <Button size="lg" variant="outline" className="border-white/30 text-primary-foreground hover:bg-white/10 text-base px-8">
-                    {s?.cta_secondary_text || "Contact Us"}
+                    {s?.cta_secondary_text || "Nous contacter"}
                   </Button>
                 </Link>
               </motion.div>

@@ -65,7 +65,7 @@ export const ContactList = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-contacts"] });
-      toast({ title: "Contact deleted" });
+      toast({ title: "Message supprimé" });
     },
   });
 
@@ -90,7 +90,7 @@ export const ContactList = () => {
     return (
       <div className="text-center py-12 text-muted-foreground">
         <Mail className="w-12 h-12 mx-auto mb-4 opacity-50" />
-        <p>No contact messages yet.</p>
+        <p>Aucun message de contact pour l'instant.</p>
       </div>
     );
   }
@@ -99,7 +99,7 @@ export const ContactList = () => {
     <>
       {unreadCount > 0 && (
         <div className="mb-4">
-          <Badge variant="destructive">{unreadCount} unread</Badge>
+          <Badge variant="destructive">{unreadCount} non lu{unreadCount > 1 ? "s" : ""}</Badge>
         </div>
       )}
 
@@ -107,11 +107,11 @@ export const ContactList = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Status</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Subject</TableHead>
-              <TableHead>Template</TableHead>
+              <TableHead>Statut</TableHead>
+              <TableHead>Nom</TableHead>
+              <TableHead>E-mail</TableHead>
+              <TableHead>Sujet</TableHead>
+              <TableHead>Modèle</TableHead>
               <TableHead>Date</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -164,12 +164,12 @@ export const ContactList = () => {
           <DialogHeader>
             <DialogTitle>{selectedContact?.subject}</DialogTitle>
             <DialogDescription>
-              From {selectedContact?.name} ({selectedContact?.email}) · {selectedContact?.created_at && new Date(selectedContact.created_at).toLocaleString()}
+              De {selectedContact?.name} ({selectedContact?.email}) · {selectedContact?.created_at && new Date(selectedContact.created_at).toLocaleString()}
             </DialogDescription>
           </DialogHeader>
           {selectedContact?.template_title && (
             <div className="text-sm">
-              <span className="text-muted-foreground">Template: </span>
+              <span className="text-muted-foreground">Modèle : </span>
               <Badge variant="secondary">{selectedContact.template_title}</Badge>
             </div>
           )}
@@ -178,7 +178,7 @@ export const ContactList = () => {
           </div>
           <Button variant="outline" asChild>
             <a href={`mailto:${selectedContact?.email}?subject=Re: ${selectedContact?.subject}`}>
-              Reply via Email
+              Répondre par e-mail
             </a>
           </Button>
         </DialogContent>

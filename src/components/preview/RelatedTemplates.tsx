@@ -10,10 +10,10 @@ const RelatedTemplates = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-display font-bold text-foreground">
-            You May Also Like
+            Vous aimerez aussi
           </h2>
           <p className="text-muted-foreground mt-1">
-            Similar templates from our collection
+            Des modèles similaires de notre collection
           </p>
         </div>
       </div>

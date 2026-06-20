@@ -71,7 +71,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
 
   const handleCopyCommand = (command: string) => {
     navigator.clipboard.writeText(command);
-    toast({ title: "Copied!", description: "Command copied to clipboard." });
+    toast({ title: "Copié !", description: "Commande copiée dans le presse-papiers." });
   };
 
   const steps = selectedPlatform?.steps || [];
@@ -85,19 +85,19 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
             <DialogHeader>
               <DialogTitle className="text-xl font-display flex items-center gap-2">
                 <Rocket className="w-5 h-5 text-primary" />
-                Start Hosting
+                Commencer l'hébergement
               </DialogTitle>
               <DialogDescription>
                 {templateTitle
-                  ? `Choose a platform to host "${templateTitle}"`
-                  : "Choose a hosting platform for your template"}
+                  ? `Choisissez une plateforme pour héberger "${templateTitle}"`
+                  : "Choisissez une plateforme d'hébergement pour votre template"}
               </DialogDescription>
             </DialogHeader>
 
             {isLoading ? (
               <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
             ) : platforms.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-8">No hosting platforms configured.</p>
+              <p className="text-sm text-muted-foreground text-center py-8">Aucune plateforme d'hébergement configurée.</p>
             ) : (
               <div className="grid gap-3 mt-4">
                 {platforms.map((p) => (
@@ -121,7 +121,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                 {proService?.enabled && (
                   <div className="mt-2 p-4 rounded-xl border-2 border-accent/50 bg-accent/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-[10px] font-bold px-3 py-0.5 rounded-bl-lg">
-                      POPULAR
+                      POPULAIRE
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-lg bg-accent text-accent-foreground flex items-center justify-center shrink-0">
@@ -141,7 +141,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-baseline gap-1">
                             <span className="text-2xl font-bold text-foreground">${proService.price}</span>
-                            <span className="text-xs text-muted-foreground">one-time</span>
+                            <span className="text-xs text-muted-foreground">unique</span>
                           </div>
                           <Button
                             size="sm"
@@ -171,7 +171,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                   {selectedPlatform.name}
                 </Badge>
                 <span className="text-xs text-muted-foreground">
-                  Step {currentStep + 1} of {steps.length}
+                  Étape {currentStep + 1} sur {steps.length}
                 </span>
               </div>
               <Progress value={progress} className="h-1.5 mb-2" />
@@ -212,7 +212,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                 <a href={steps[currentStep].link_url} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="sm" className="gap-2 mt-2">
                     <ExternalLink className="w-3.5 h-3.5" />
-                    {steps[currentStep].link_label || "Open Link"}
+                    {steps[currentStep].link_label || "Ouvrir le lien"}
                   </Button>
                 </a>
               )}
@@ -229,16 +229,16 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                 className="gap-1"
               >
                 <ArrowLeft className="w-4 h-4" />
-                {currentStep === 0 ? "Back" : "Previous"}
+                {currentStep === 0 ? "Retour" : "Précédent"}
               </Button>
 
               {currentStep < steps.length - 1 ? (
                 <Button size="sm" onClick={() => setCurrentStep((s) => s + 1)} className="gap-1">
-                  Next <ArrowRight className="w-4 h-4" />
+                  Suivant <ArrowRight className="w-4 h-4" />
                 </Button>
               ) : (
                 <Button size="sm" onClick={handleClose} className="gap-1">
-                  <Check className="w-4 h-4" /> Done
+                  <Check className="w-4 h-4" /> Terminé
                 </Button>
               )}
             </div>

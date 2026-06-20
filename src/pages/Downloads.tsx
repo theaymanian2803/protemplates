@@ -56,8 +56,8 @@ const Downloads = () => {
       document.body.removeChild(link)
     } catch (error: any) {
       toast({
-        title: 'Download failed',
-        description: error.message || 'Could not generate download link',
+        title: 'Échec du téléchargement',
+        description: error.message || 'Impossible de générer le lien de téléchargement',
         variant: 'destructive',
       })
     } finally {
@@ -77,10 +77,10 @@ const Downloads = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              My Downloads
+              Mes téléchargements
             </h1>
             <p className="text-muted-foreground mt-1">
-              Access all your purchased templates anytime
+              Accédez à tous vos templates achetés à tout moment
             </p>
           </div>
 
@@ -88,7 +88,7 @@ const Downloads = () => {
           <div className="relative mb-6">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search purchased templates..."
+              placeholder="Rechercher dans mes achats..."
               className="pl-10"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -106,16 +106,16 @@ const Downloads = () => {
               <CardContent className="flex flex-col items-center justify-center py-16 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {search ? 'No matching templates' : 'No purchased templates yet'}
+                  {search ? 'Aucun template trouvé' : 'Aucun achat pour le moment'}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   {search
-                    ? 'Try a different search term'
-                    : 'Browse our marketplace to find the perfect template'}
+                    ? 'Essayez un autre terme de recherche'
+                    : 'Parcourez notre catalogue pour trouver le template parfait'}
                 </p>
                 {!search && (
                   <Link to="/templates">
-                    <Button>Browse Templates</Button>
+                    <Button>Parcourir</Button>
                   </Link>
                 )}
               </CardContent>
@@ -151,7 +151,7 @@ const Downloads = () => {
                       {!item.has_review && (
                         <Link to={`/template/${item.template_id}`}>
                           <Button variant="ghost" size="sm" className="gap-1 text-accent">
-                            <Star className="w-3 h-3" /> Review
+                            <Star className="w-3 h-3" /> Avis
                           </Button>
                         </Link>
                       )}
@@ -169,7 +169,7 @@ const Downloads = () => {
                             ) : (
                               <Download className="w-3 h-3" />
                             )}
-                            Download
+                            Télécharger
                           </Button>
                           <Button
                             size="sm"
@@ -179,11 +179,11 @@ const Downloads = () => {
                               setHostingTitle(item.template_title)
                               setHostingOpen(true)
                             }}>
-                            <Rocket className="w-3 h-3" /> Host
+                            <Rocket className="w-3 h-3" /> Héberger
                           </Button>
                         </>
                       ) : (
-                        <span className="text-xs text-muted-foreground">No file available</span>
+                        <span className="text-xs text-muted-foreground">Fichier non disponible</span>
                       )}
                     </div>
                   </CardContent>

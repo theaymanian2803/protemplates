@@ -10,8 +10,8 @@ import Footer from "@/components/Footer";
 import { Mail, Lock, User, ArrowRight, Loader2, ArrowLeft, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 
-const emailSchema = z.string().email("Please enter a valid email address");
-const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
+const emailSchema = z.string().email("Veuillez entrer une adresse email valide");
+const passwordSchema = z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères");
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -64,21 +64,21 @@ const Auth = () => {
         if (error) {
           if (error.message.includes("Invalid login credentials")) {
             toast({
-              title: "Login failed",
-              description: "Invalid email or password. Please try again.",
+              title: "Connexion échouée",
+              description: "Email ou mot de passe incorrect. Veuillez réessayer.",
               variant: "destructive",
             });
           } else {
             toast({
-              title: "Login failed",
+              title: "Connexion échouée",
               description: error.message,
               variant: "destructive",
             });
           }
         } else {
           toast({
-            title: "Welcome back!",
-            description: "You have successfully logged in.",
+            title: "Bon retour !",
+            description: "Vous êtes connecté avec succès.",
           });
           navigate("/");
         }
@@ -87,21 +87,21 @@ const Auth = () => {
         if (error) {
           if (error.message.includes("User already registered")) {
             toast({
-              title: "Sign up failed",
-              description: "This email is already registered. Please log in instead.",
+              title: "Inscription échouée",
+              description: "Cet email est déjà utilisé. Connectez-vous plutôt.",
               variant: "destructive",
             });
           } else {
             toast({
-              title: "Sign up failed",
+              title: "Inscription échouée",
               description: error.message,
               variant: "destructive",
             });
           }
         } else {
           toast({
-            title: "Account created!",
-            description: "Welcome to TemplateMarket!",
+            title: "Compte créé !",
+            description: "Bienvenue sur TemplatePro !",
           });
           navigate("/");
         }
@@ -127,15 +127,15 @@ const Auth = () => {
       
       if (error) {
         toast({
-          title: "Reset failed",
+          title: "Échec de réinitialisation",
           description: error.message,
           variant: "destructive",
         });
       } else {
         setResetEmailSent(true);
         toast({
-          title: "Email sent!",
-          description: "Check your inbox for the password reset link.",
+          title: "Email envoyé !",
+          description: "Vérifiez votre boîte de réception pour le lien de réinitialisation.",
         });
       }
     } finally {
@@ -157,10 +157,10 @@ const Auth = () => {
                   <CheckCircle className="w-8 h-8 text-primary" />
                 </div>
                 <h1 className="text-2xl font-display font-bold text-foreground mb-2">
-                  Check Your Email
+                  Vérifiez votre email
                 </h1>
                 <p className="text-muted-foreground mb-6">
-                  We've sent a password reset link to <strong className="text-foreground">{email}</strong>
+                  Nous avons envoyé un lien de réinitialisation à <strong className="text-foreground">{email}</strong>
                 </p>
                 <Button
                   variant="outline"
@@ -172,7 +172,7 @@ const Auth = () => {
                   }}
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Back to Sign In
+                  Retour à la connexion
                 </Button>
               </div>
             </div>
@@ -191,10 +191,10 @@ const Auth = () => {
           <div className="container mx-auto px-4 max-w-md">
             <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
-                Forgot Password?
+                Mot de passe oublié ?
               </h1>
               <p className="text-muted-foreground">
-                Enter your email and we'll send you a reset link
+                Entrez votre email et nous vous enverrons un lien de réinitialisation
               </p>
             </div>
 
@@ -207,7 +207,7 @@ const Auth = () => {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder="vous@exemple.com"
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -232,7 +232,7 @@ const Auth = () => {
                     <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
                     <>
-                      Send Reset Link
+                      Envoyer le lien
                       <ArrowRight className="w-5 h-5" />
                     </>
                   )}
@@ -249,7 +249,7 @@ const Auth = () => {
                   className="text-primary font-medium hover:underline inline-flex items-center gap-1"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Back to Sign In
+                  Retour à la connexion
                 </button>
               </div>
             </div>
@@ -270,12 +270,12 @@ const Auth = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
-              {isLogin ? "Welcome Back" : "Create Account"}
+              {isLogin ? "Bon retour" : "Créer un compte"}
             </h1>
             <p className="text-muted-foreground">
               {isLogin 
-                ? "Sign in to access your favorites and purchases" 
-                : "Join us to save favorites and track orders"}
+                ? "Connectez-vous pour accéder à vos favoris et achats" 
+                : "Rejoignez-nous pour sauvegarder vos favoris et suivre vos commandes"}
             </p>
           </div>
 
@@ -284,13 +284,13 @@ const Auth = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               {!isLogin && (
                 <div className="space-y-2">
-                  <Label htmlFor="displayName">Display Name</Label>
+                  <Label htmlFor="displayName">Nom d'affichage</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <Input
                       id="displayName"
                       type="text"
-                      placeholder="Your name"
+                      placeholder="Votre nom"
                       value={displayName}
                       onChange={(e) => setDisplayName(e.target.value)}
                       className="pl-10"
@@ -300,13 +300,13 @@ const Auth = () => {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
+                  <Label htmlFor="email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="vous@exemple.com"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -322,7 +322,7 @@ const Auth = () => {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">Mot de passe</Label>
                   {isLogin && (
                     <button
                       type="button"
@@ -332,7 +332,7 @@ const Auth = () => {
                       }}
                       className="text-sm text-primary hover:underline"
                     >
-                      Forgot password?
+                      Mot de passe oublié ?
                     </button>
                   )}
                 </div>
@@ -374,7 +374,7 @@ const Auth = () => {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    {isLogin ? "Sign In" : "Create Account"}
+                    {isLogin ? "Se connecter" : "Créer un compte"}
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}
@@ -383,7 +383,7 @@ const Auth = () => {
 
             <div className="mt-6 text-center">
               <p className="text-muted-foreground">
-                {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+                {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
                 <button
                   type="button"
                   onClick={() => {
@@ -392,7 +392,7 @@ const Auth = () => {
                   }}
                   className="text-primary font-medium hover:underline"
                 >
-                  {isLogin ? "Sign up" : "Sign in"}
+                  {isLogin ? "S'inscrire" : "Se connecter"}
                 </button>
               </p>
             </div>

@@ -36,13 +36,13 @@ const FeaturesSection = () => {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">
-            {s?.badge || "Why Choose Us"}
+            {s?.badge || "Pourquoi nous choisir"}
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-            {s?.headline || "Built for Success"}
+            {s?.headline || "Conçu pour la réussite"}
           </h2>
           <p className="text-lg text-muted-foreground">
-            {s?.subheadline || "Every template comes packed with features designed to help you succeed online"}
+            {s?.subheadline || "Chaque template est conçu avec des fonctionnalités pour vous aider à réussir en ligne"}
           </p>
         </motion.div>
 

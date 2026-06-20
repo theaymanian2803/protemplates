@@ -49,8 +49,8 @@ const ProHostingCheckout = () => {
     if (loading) return;
     if (!user) {
       toast({
-        title: "Sign in required",
-        description: "Please sign in to proceed with checkout.",
+        title: "Connexion requise",
+        description: "Veuillez vous connecter pour continuer.",
         variant: "destructive",
       });
       navigate("/auth?redirect=/checkout/pro-hosting");
@@ -63,7 +63,7 @@ const ProHostingCheckout = () => {
 
     const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
     if (!clientId || clientId.startsWith("YOUR_")) {
-      setPaypalError("PayPal is not configured. Please add your PayPal Client ID.");
+      setPaypalError("PayPal n'est pas configuré. Ajoutez votre ID client PayPal.");
       return;
     }
 
@@ -103,10 +103,10 @@ const ProHostingCheckout = () => {
               headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
             });
 
-            if (response.error) throw new Error(response.error.message || "Failed to create order");
+            if (response.error) throw new Error(response.error.message || "Échec de la création de la commande");
             return response.data.orderId;
           } catch (error: any) {
-            toast({ title: "Order Error", description: error.message, variant: "destructive" });
+            toast({ title: "Erreur de commande", description: error.message, variant: "destructive" });
             throw error;
           } finally {
             setIsLoading(false);
@@ -134,15 +134,15 @@ const ProHostingCheckout = () => {
 
             setOrderId(response.data.orderId);
             setOrderComplete(true);
-            toast({ title: "Payment Successful!", description: "Our team will contact you shortly." });
+            toast({ title: "Paiement réussi !", description: "Notre équipe vous contactera sous peu." });
           } catch (error: any) {
-            toast({ title: "Payment Error", description: error.message, variant: "destructive" });
+            toast({ title: "Erreur de paiement", description: error.message, variant: "destructive" });
           } finally {
             setIsLoading(false);
           }
         },
-        onError: () => toast({ title: "Payment Error", description: "Something went wrong with PayPal.", variant: "destructive" }),
-        onCancel: () => toast({ title: "Payment Cancelled", description: "You cancelled the payment." }),
+        onError: () => toast({ title: "Erreur de paiement", description: "Une erreur est survenue avec PayPal.", variant: "destructive" }),
+        onCancel: () => toast({ title: "Paiement annulé", description: "Vous avez annulé le paiement." }),
       })
       .render("#paypal-pro-hosting-container");
   }, [paypalLoaded, orderComplete, notes, templateTitle]);
@@ -158,10 +158,10 @@ const ProHostingCheckout = () => {
                 <CheckCircle2 className="w-10 h-10 text-accent" />
               </div>
               <h1 className="font-display text-3xl font-bold text-foreground mb-4">
-                Pro Hosting Request Submitted!
+                Demande d'hébergement Pro envoyée !
               </h1>
               <p className="text-muted-foreground mb-6">
-                Our team has received your hosting request. We'll contact you within 24 hours to get started with your deployment.
+                Notre équipe a reçu votre demande d'hébergement. Nous vous contacterons sous 24 heures pour commencer le déploiement.
               </p>
               {orderId && (
                 <p className="text-sm text-muted-foreground mb-8">
@@ -170,10 +170,10 @@ const ProHostingCheckout = () => {
               )}
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/dashboard">
-                  <Button variant="hero">Go to Dashboard</Button>
+                  <Button variant="hero">Tableau de bord</Button>
                 </Link>
                 <Link to="/templates">
-                  <Button variant="ghost">Continue Shopping</Button>
+                  <Button variant="ghost">Continuer</Button>
                 </Link>
               </div>
             </div>
@@ -191,11 +191,11 @@ const ProHostingCheckout = () => {
         <div className="container mx-auto px-4">
           <Link to="/dashboard" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
+            Retour au tableau de bord
           </Link>
 
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-8">
-            Pro Hosting Checkout
+            Paiement Hébergement Pro
           </h1>
 
           <div className="grid lg:grid-cols-2 gap-8">
@@ -204,20 +204,20 @@ const ProHostingCheckout = () => {
               <div className="glass-card p-6 rounded-2xl border border-border/50">
                 <h2 className="font-semibold text-lg text-foreground mb-4 flex items-center gap-2">
                   <CreditCard className="w-5 h-5" />
-                  Payment Method
+                  Moyen de paiement
                 </h2>
 
                 <div className="mb-4">
-                  <Label className="text-muted-foreground">Email</Label>
+                  <Label className="text-muted-foreground">E-mail</Label>
                   <Input value={user?.email || ""} disabled className="mt-1 bg-muted/50" />
                 </div>
 
                 <div className="mb-6">
-                  <Label className="text-muted-foreground">Additional Notes (optional)</Label>
+                  <Label className="text-muted-foreground">Notes supplémentaires (optionnel)</Label>
                   <Textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Any specific requirements for your hosting setup..."
+                    placeholder="Décrivez vos besoins pour l'hébergement..."
                     className="mt-1"
                     rows={3}
                   />
@@ -232,7 +232,7 @@ const ProHostingCheckout = () => {
                 {isLoading && (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                    <span className="ml-2 text-muted-foreground">Processing...</span>
+                    <span className="ml-2 text-muted-foreground">Traitement...</span>
                   </div>
                 )}
 
@@ -241,7 +241,7 @@ const ProHostingCheckout = () => {
                 {!paypalLoaded && !isLoading && !paypalError && (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                    <span className="ml-2 text-muted-foreground">Loading payment options...</span>
+                    <span className="ml-2 text-muted-foreground">Chargement...</span>
                   </div>
                 )}
               </div>
@@ -249,24 +249,24 @@ const ProHostingCheckout = () => {
               <div className="glass-card p-6 rounded-2xl border border-border/50">
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <ShieldCheck className="w-5 h-5 text-accent" />
-                  <span className="text-sm">Your payment is secured with PayPal's buyer protection</span>
+                  <span className="text-sm">Votre paiement est sécurisé par la protection des acheteurs PayPal</span>
                 </div>
               </div>
             </div>
 
-            {/* Order Summary Column */}
+            {/* Récapitulatif Column */}
             <div>
               <div className="glass-card p-6 rounded-2xl border border-border/50 sticky top-24">
-                <h2 className="font-semibold text-lg text-foreground mb-4">Order Summary</h2>
+                <h2 className="font-semibold text-lg text-foreground mb-4">Récapitulatif</h2>
 
                 <div className="flex gap-4 items-center mb-6">
                   <div className="w-16 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
                     <Crown className="w-6 h-6 text-accent" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-foreground text-sm">Pro Hosting Service</h3>
+                    <h3 className="font-medium text-foreground text-sm">Service Hébergement Pro</h3>
                     <p className="text-xs text-muted-foreground">
-                      {templateTitle ? `For: ${templateTitle}` : "Professional deployment assistance"}
+                      {templateTitle ? `For: ${templateTitle}` : "Assistance au déploiement professionnelle"}
                     </p>
                   </div>
                   <span className="font-semibold text-foreground">${price}</span>
@@ -276,10 +276,10 @@ const ProHostingCheckout = () => {
 
                 <div className="space-y-2 mb-4">
                   {(proService?.features || [
-                    "Full deployment setup",
-                    "Domain configuration",
-                    "SSL certificate setup",
-                    "24-hour turnaround",
+                    "Installation complète",
+                    "Configuration du domaine",
+                    "Installation du certificat SSL",
+                    "Délai de 24 heures",
                   ]).map((feature, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-foreground">
                       <Check className="w-4 h-4 text-accent shrink-0" />
@@ -292,11 +292,11 @@ const ProHostingCheckout = () => {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-muted-foreground">Sous-total</span>
                     <span className="text-foreground">${price}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Tax</span>
+                    <span className="text-muted-foreground">Taxe</span>
                     <span className="text-foreground">$0.00</span>
                   </div>
                   <Separator />

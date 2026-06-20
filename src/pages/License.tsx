@@ -7,68 +7,68 @@ const License = () => {
       <Navbar />
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">License Agreement</h1>
-          <p className="text-muted-foreground mb-12">Last updated: March 2026</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Contrat de licence</h1>
+          <p className="text-muted-foreground mb-12">Dernière mise à jour : mars 2026</p>
 
           <div className="prose prose-lg max-w-none space-y-8">
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Regular License</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Licence standard</h2>
               <p className="text-muted-foreground leading-relaxed">
-                The Regular License grants you the right to use a template in a <strong className="text-foreground">single end product</strong> for yourself or a client. The end product must not be sold or distributed to end users. You may customize, modify, and build upon the template for your project.
+                La licence standard vous permet d'utiliser un template dans un <strong className="text-foreground">seul produit final</strong> pour vous-même ou un client. Le produit final ne doit pas être vendu ou distribué aux utilisateurs finaux. Vous pouvez personnaliser, modifier et construire à partir du template pour votre projet.
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 mt-3">
-                <li>Use in one project (personal or client)</li>
-                <li>Modify and customize freely</li>
-                <li>Cannot be resold or redistributed</li>
-                <li>Cannot be used in a SaaS or product sold to users</li>
-                <li>Includes 6 months of support</li>
-                <li>Lifetime updates included</li>
+                <li>Utilisation dans un seul projet (personnel ou client)</li>
+                <li>Modification et personnalisation libres</li>
+                <li>Ne peut pas être revendu ou redistribué</li>
+                <li>Ne peut pas être utilisé dans un SaaS ou un produit vendu à des utilisateurs</li>
+                <li>Inclut 6 mois de support</li>
+                <li>Mises à jour à vie incluses</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Extended License</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Licence étendue</h2>
               <p className="text-muted-foreground leading-relaxed">
-                The Extended License grants you the right to use a template in a <strong className="text-foreground">single end product that is sold or distributed to end users</strong>. This includes SaaS applications, themes sold on marketplaces, and products with paying customers.
+                La licence étendue vous permet d'utiliser un template dans un <strong className="text-foreground">seul produit final qui est vendu ou distribué aux utilisateurs finaux</strong>. Cela inclut les applications SaaS, les thèmes vendus sur les marketplaces, et les produits avec des clients payants.
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 mt-3">
-                <li>Use in one commercial product</li>
-                <li>End product can be sold to users</li>
-                <li>Modify and customize freely</li>
-                <li>Cannot resell the template source files directly</li>
-                <li>Includes 12 months of priority support</li>
-                <li>Lifetime updates included</li>
+                <li>Utilisation dans un seul produit commercial</li>
+                <li>Le produit final peut être vendu à des utilisateurs</li>
+                <li>Modification et personnalisation libres</li>
+                <li>Ne peut pas revendre les fichiers sources du template directement</li>
+                <li>Inclut 12 mois de support prioritaire</li>
+                <li>Mises à jour à vie incluses</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">All Access Pass</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Pass Tout Accès</h2>
               <p className="text-muted-foreground leading-relaxed">
-                The All Access Pass is a one-time purchase of $300 that grants a Regular License for <strong className="text-foreground">every template</strong> in our catalog, including all future templates added to the marketplace. It's the best value for agencies and developers who work on multiple projects.
+                Le Pass Tout Accès est un achat unique de 300 $ qui octroie une licence standard pour <strong className="text-foreground">chaque template</strong> de notre catalogue, y compris tous les futurs templates ajoutés à la marketplace. C'est le meilleur rapport qualité-prix pour les agences et les développeurs qui travaillent sur plusieurs projets.
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 mt-3">
-                <li>Access to all current templates</li>
-                <li>All future templates included at no extra cost</li>
-                <li>Regular License for each template</li>
-                <li>Priority support</li>
-                <li>Lifetime updates for all templates</li>
+                <li>Accès à tous les templates actuels</li>
+                <li>Tous les futurs templates inclus sans frais supplémentaires</li>
+                <li>Licence standard pour chaque template</li>
+                <li>Support prioritaire</li>
+                <li>Mises à jour à vie pour tous les templates</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">What You Cannot Do</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Ce que vous ne pouvez pas faire</h2>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>Resell, redistribute, or sublicense template source files</li>
-                <li>Claim authorship of any template design</li>
-                <li>Use templates to create competing products or marketplaces</li>
-                <li>Remove copyright or attribution notices from source files</li>
+                <li>Revendre, redistribuer ou sous-licencier les fichiers sources des templates</li>
+                <li>Revendiquer la paternité d'un design de template</li>
+                <li>Utiliser les templates pour créer des produits ou marketplaces concurrents</li>
+                <li>Supprimer les mentions de copyright ou d'attribution des fichiers sources</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Questions?</h2>
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">Des questions ?</h2>
               <p className="text-muted-foreground leading-relaxed">
-                If you need clarification on licensing, contact us at uncacademycode@gmail.com. We're happy to help you choose the right license for your project.
+                Si vous avez besoin d'éclaircissements sur les licences, contactez-nous à uncacademycode@gmail.com. Nous sommes heureux de vous aider à choisir la licence adaptée à votre projet.
               </p>
             </section>
           </div>

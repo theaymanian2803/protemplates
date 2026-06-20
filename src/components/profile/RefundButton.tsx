@@ -23,9 +23,9 @@ interface RefundButtonProps {
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; variant: "default" | "secondary" | "destructive" | "outline"; label: string }> = {
-  pending: { icon: Clock, variant: "outline", label: "Refund Pending" },
-  approved: { icon: CheckCircle2, variant: "default", label: "Refund Approved" },
-  rejected: { icon: XCircle, variant: "destructive", label: "Refund Rejected" },
+  pending: { icon: Clock, variant: "outline", label: "Remboursement en attente" },
+  approved: { icon: CheckCircle2, variant: "default", label: "Remboursement approuvé" },
+  rejected: { icon: XCircle, variant: "destructive", label: "Remboursement refusé" },
 };
 
 const RefundButton = ({ orderId, orderStatus }: RefundButtonProps) => {
@@ -62,12 +62,12 @@ const RefundButton = ({ orderId, orderStatus }: RefundButtonProps) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["refund-request", orderId] });
-      toast({ title: "Refund request submitted", description: "We'll review your request within 1-3 business days." });
+      toast({ title: "Demande de remboursement soumise", description: "Nous examinerons votre demande sous 1 à 3 jours ouvrés." });
       setOpen(false);
       setReason("");
     },
     onError: (error: any) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: "Erreur", description: error.message, variant: "destructive" });
     },
   });
 
@@ -97,31 +97,31 @@ const RefundButton = ({ orderId, orderStatus }: RefundButtonProps) => {
       <DialogTrigger asChild>
         <Button size="sm" variant="outline" className="gap-1 text-xs">
           <RotateCcw className="w-3 h-3" />
-          Request Refund
+          Demander un remboursement
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Request a Refund</DialogTitle>
+          <DialogTitle>Demander un remboursement</DialogTitle>
           <DialogDescription>
-            Please tell us why you'd like a refund. Our team will review your request within 1-3 business days. 
-            Refunds are available within 14 days of purchase per our refund policy.
+            Veuillez nous indiquer pourquoi vous souhaitez un remboursement. Notre équipe examinera votre demande sous 1 à 3 jours ouvrés. 
+            Les remboursements sont disponibles dans les 14 jours suivant l'achat conformément à notre politique de remboursement.
           </DialogDescription>
         </DialogHeader>
         <Textarea
-          placeholder="Please describe the reason for your refund request..."
+          placeholder="Veuillez décrire la raison de votre demande de remboursement..."
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           rows={4}
         />
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
           <Button
             onClick={() => submitMutation.mutate()}
             disabled={!reason.trim() || submitMutation.isPending}
           >
             {submitMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-            Submit Request
+            Soumettre la demande
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -45,12 +45,12 @@ const TemplateTechStack = ({ techStack }: TemplateTechStackProps) => {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-display font-bold text-foreground">
-        Tech Stack
+        Stack technique
       </h2>
 
       {/* Technologies */}
       <div className="glass-card p-6 rounded-xl border border-border/50">
-        <h3 className="font-semibold text-foreground mb-4">Built With</h3>
+        <h3 className="font-semibold text-foreground mb-4">Construit avec</h3>
         <div className="flex flex-wrap gap-3">
           {techStack.map((tech, index) => (
             <div

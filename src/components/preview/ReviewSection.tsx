@@ -75,27 +75,27 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
 
   const handleSubmit = async () => {
     if (rating === 0) {
-      toast({ title: "Please select a rating", variant: "destructive" });
+      toast({ title: "Veuillez sélectionner une note", variant: "destructive" });
       return;
     }
 
     try {
       await submitReview.mutateAsync({ templateId, rating, comment });
-      toast({ title: userReview ? "Review updated! It will appear after admin approval." : "Review submitted! It will appear after admin approval." });
+      toast({ title: userReview ? "Avis mis à jour ! Il apparaîtra après approbation de l'administrateur." : "Avis soumis ! Il apparaîtra après approbation de l'administrateur." });
       setRating(0);
       setComment("");
       setIsEditing(false);
     } catch {
-      toast({ title: "Error submitting review", variant: "destructive" });
+      toast({ title: "Erreur lors de l'envoi de l'avis", variant: "destructive" });
     }
   };
 
   const handleDelete = async (reviewId: string) => {
     try {
       await deleteReview.mutateAsync({ reviewId, templateId });
-      toast({ title: "Review deleted" });
+      toast({ title: "Avis supprimé" });
     } catch {
-      toast({ title: "Error deleting review", variant: "destructive" });
+      toast({ title: "Erreur lors de la suppression de l'avis", variant: "destructive" });
     }
   };
 
@@ -114,7 +114,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-display font-bold text-foreground flex items-center gap-2">
           <MessageSquare className="w-5 h-5 text-primary" />
-          Reviews
+          Avis
           {reviews.length > 0 && (
             <span className="text-sm font-normal text-muted-foreground">
               ({reviews.length})
@@ -135,11 +135,11 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {canReview && (
         <div className="glass-card p-5 rounded-2xl border border-border/50 space-y-4">
           <h4 className="font-semibold text-foreground text-sm">
-            {userReview ? "Update your review" : "Write a review"}
+            {userReview ? "Modifier votre avis" : "Écrire un avis"}
           </h4>
           <StarRating rating={rating} onRate={setRating} interactive />
           <Textarea
-            placeholder="Share your experience with this template..."
+            placeholder="Partagez votre expérience avec ce template..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={3}
@@ -152,10 +152,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
               disabled={submitReview.isPending}
             >
               {submitReview.isPending
-                ? "Submitting..."
+                ? "Envoi en cours..."
                 : userReview
-                ? "Update Review"
-                : "Submit Review"}
+                ? "Modifier l'avis"
+                : "Soumettre l'avis"}
             </Button>
             {isEditing && (
               <Button
@@ -167,7 +167,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
                   setComment("");
                 }}
               >
-                Cancel
+                Annuler
               </Button>
             )}
           </div>
@@ -178,11 +178,11 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {!canReview && !userReview && (
         <div className="glass-card p-5 rounded-2xl border border-border/50 text-center">
           <p className="text-sm text-muted-foreground">
-            {!user
-              ? "Sign in and purchase this template to leave a review."
-              : !hasPurchased
-              ? "Purchase this template to leave a review."
-              : ""}
+              {!user
+                ? "Connectez-vous et achetez ce template pour laisser un avis."
+                : !hasPurchased
+                ? "Achetez ce template pour laisser un avis."
+                : ""}
           </p>
         </div>
       )}
@@ -192,7 +192,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
         <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-sm">
           <Clock className="w-4 h-4 text-yellow-500" />
           <span className="text-yellow-600 dark:text-yellow-400">
-            Your review is pending admin approval.
+            Votre avis est en attente d'approbation par l'administrateur.
           </span>
         </div>
       )}
@@ -201,10 +201,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {userReview && !isEditing && (
         <div className="glass-card p-5 rounded-2xl border border-primary/20 bg-primary/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-primary">Your review</span>
+            <span className="text-xs font-medium text-primary">Votre avis</span>
             <div className="flex gap-1">
               <Button size="sm" variant="ghost" onClick={startEdit}>
-                Edit
+                Modifier
               </Button>
               <Button
                 size="sm"
@@ -226,10 +226,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
 
       {/* Reviews list */}
       {isLoading ? (
-        <p className="text-sm text-muted-foreground">Loading reviews...</p>
+        <p className="text-sm text-muted-foreground">Chargement des avis...</p>
       ) : reviews.length === 0 ? (
         <p className="text-sm text-muted-foreground text-center py-4">
-          No reviews yet. Be the first to review!
+          Aucun avis pour le moment. Soyez le premier à donner votre avis !
         </p>
       ) : (
         <div className="space-y-4">

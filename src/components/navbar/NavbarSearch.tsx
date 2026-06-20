@@ -77,7 +77,7 @@ const NavbarSearch = () => {
             transition={{ duration: 0.15 }}
             onClick={() => setIsOpen(true)}
             className="p-2.5 rounded-full hover:bg-muted transition-colors"
-            aria-label="Search templates"
+            aria-label="Rechercher des templates"
           >
             <Search className="w-[18px] h-[18px] text-foreground" />
           </motion.button>
@@ -96,7 +96,7 @@ const NavbarSearch = () => {
               ref={inputRef}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search templates…"
+              placeholder="Rechercher des templates…"
               className="bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none w-full"
             />
             <button
@@ -147,11 +147,11 @@ const NavbarSearch = () => {
                   onClick={handleSubmit as any}
                   className="w-full px-4 py-2 text-xs font-semibold text-primary hover:bg-muted/50 transition-colors border-t border-border"
                 >
-                  View all results →
+                  Voir tous les résultats →
                 </button>
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground text-center py-6">No templates found</p>
+              <p className="text-sm text-muted-foreground text-center py-6">Aucun template trouvé</p>
             )}
           </motion.div>
         )}

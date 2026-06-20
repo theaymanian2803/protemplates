@@ -28,25 +28,25 @@ const TemplateSidebar = () => {
   const handleAddToCart = () => {
     addToCart({
       id: templateId,
-      title: template?.title || 'Template',
+      title: template?.title || 'Modèle',
       image: template?.image_url || '',
       price: template ? Number(template.price) : 59,
       license: 'regular',
     })
 
     toast({
-      title: inCart ? 'Cart updated' : 'Added to cart',
+      title: inCart ? 'Panier mis à jour' : 'Ajouté au panier',
       description: inCart
-        ? 'Item has been updated in your cart.'
-        : `${template?.title || 'Template'} has been added to your cart.`,
+        ? 'L\'article a été mis à jour dans votre panier.'
+        : `${template?.title || 'Modèle'} a été ajouté à votre panier.`,
     })
   }
 
   const handleToggleFavorite = async () => {
     if (!user) {
       toast({
-        title: 'Sign in required',
-        description: 'Please sign in to save favorites.',
+        title: 'Connexion requise',
+        description: 'Veuillez vous connecter pour sauvegarder vos favoris.',
         variant: 'destructive',
       })
       return
@@ -54,10 +54,10 @@ const TemplateSidebar = () => {
 
     await toggleFavorite(templateId)
     toast({
-      title: isFav ? 'Removed from favorites' : 'Added to favorites',
+      title: isFav ? 'Retiré des favoris' : 'Ajouté aux favoris',
       description: isFav
-        ? 'Template has been removed from your favorites.'
-        : 'Template has been added to your favorites.',
+        ? 'Le template a été retiré de vos favoris.'
+        : 'Le template a été ajouté à vos favoris.',
     })
   }
 
@@ -67,7 +67,7 @@ const TemplateSidebar = () => {
         {/* Dynamic Category Section */}
         {template?.category && (
           <div>
-            <h4 className="font-semibold text-foreground mb-3 text-sm">Category</h4>
+            <h4 className="font-semibold text-foreground mb-3 text-sm">Catégorie</h4>
             <div className="flex flex-wrap gap-2 mb-6">
               <Badge
                 variant="secondary"
@@ -81,7 +81,7 @@ const TemplateSidebar = () => {
         {/* Dynamic Features Checklist */}
         {template?.features && template.features.length > 0 && (
           <div className="pt-4 border-t border-border">
-            <h4 className="font-semibold text-foreground mb-4 text-sm">Features</h4>
+            <h4 className="font-semibold text-foreground mb-4 text-sm">Fonctionnalités</h4>
             <ul className="space-y-3">
               {template.features.slice(0, 8).map((feature: string, index: number) => (
                 <li
@@ -99,7 +99,7 @@ const TemplateSidebar = () => {
 
         {/* Share Section */}
         <div className="pt-4 border-t border-border">
-          <h4 className="font-semibold text-foreground mb-3 text-sm">Share</h4>
+          <h4 className="font-semibold text-foreground mb-3 text-sm">Partager</h4>
           <div className="flex items-center gap-4">
             <button className="text-muted-foreground hover:text-foreground transition-colors">
               <Twitter className="w-4 h-4" />
@@ -122,11 +122,11 @@ const TemplateSidebar = () => {
             variant={inCart ? 'secondary' : 'default'}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             onClick={handleAddToCart}>
-            {inCart ? 'Added to Cart' : 'Add to Cart'}
+            {inCart ? 'Ajouté au panier' : 'Ajouter au panier'}
           </Button>
 
           <Button variant="outline" className="w-full" onClick={handleToggleFavorite}>
-            {isFav ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            {isFav ? 'Retirer de la liste de souhaits' : 'Ajouter à la liste de souhaits'}
           </Button>
 
           {template?.youtube_id && (
@@ -134,7 +134,7 @@ const TemplateSidebar = () => {
               variant="ghost"
               className="w-full text-muted-foreground"
               onClick={() => setVideoOpen(true)}>
-              <Play className="w-4 h-4 mr-2" /> Watch Video Tutorial
+              <Play className="w-4 h-4 mr-2" /> Voir le tutoriel vidéo
             </Button>
           )}
 
@@ -142,7 +142,7 @@ const TemplateSidebar = () => {
             variant="link"
             className="w-full text-muted-foreground text-xs"
             onClick={() => setContactOpen(true)}>
-            <MessageCircle className="w-3 h-3 mr-2" /> Have questions? Contact Support
+            <MessageCircle className="w-3 h-3 mr-2" /> Des questions ? Contactez le support
           </Button>
         </div>
       </div>

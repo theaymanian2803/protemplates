@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import { Lock, ArrowRight, Loader2, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 
-const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
+const passwordSchema = z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères");
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -31,8 +31,8 @@ const ResetPassword = () => {
     const timer = setTimeout(() => {
       if (!session) {
         toast({
-          title: "Invalid or expired link",
-          description: "Please request a new password reset link.",
+          title: "Lien invalide ou expiré",
+          description: "Veuillez demander un nouveau lien de réinitialisation.",
           variant: "destructive",
         });
         navigate("/auth");
@@ -51,7 +51,7 @@ const ResetPassword = () => {
     }
     
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = "Les mots de passe ne correspondent pas";
     }
     
     setErrors(newErrors);
@@ -70,15 +70,15 @@ const ResetPassword = () => {
       
       if (error) {
         toast({
-          title: "Password reset failed",
+          title: "Échec de la réinitialisation",
           description: error.message,
           variant: "destructive",
         });
       } else {
         setIsComplete(true);
         toast({
-          title: "Password updated!",
-          description: "Your password has been successfully changed.",
+          title: "Mot de passe mis à jour !",
+          description: "Votre mot de passe a été modifié avec succès.",
         });
       }
     } finally {
@@ -98,10 +98,10 @@ const ResetPassword = () => {
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
               <h1 className="text-2xl font-display font-bold text-foreground mb-2">
-                Password Updated
+                Mot de passe mis à jour
               </h1>
               <p className="text-muted-foreground mb-6">
-                Your password has been successfully changed. You can now sign in with your new password.
+                Votre mot de passe a été changé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
               </p>
               <Button
                 variant="hero"
@@ -109,7 +109,7 @@ const ResetPassword = () => {
                 className="gap-2"
                 onClick={() => navigate("/")}
               >
-                Continue to Home
+                Retour à l'accueil
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
@@ -129,17 +129,17 @@ const ResetPassword = () => {
         <div className="container mx-auto px-4 max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
-              Set New Password
+              Nouveau mot de passe
             </h1>
             <p className="text-muted-foreground">
-              Enter your new password below
+              Saisissez votre nouveau mot de passe ci-dessous
             </p>
           </div>
 
           <div className="glass-card p-8 rounded-2xl border border-border/50 shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="password">New Password</Label>
+                <Label htmlFor="password">Nouveau mot de passe</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
@@ -168,7 +168,7 @@ const ResetPassword = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
@@ -207,7 +207,7 @@ const ResetPassword = () => {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    Update Password
+                    Mettre à jour
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}

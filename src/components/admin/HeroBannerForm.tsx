@@ -28,9 +28,9 @@ export const HeroBannerForm = () => {
     if (!form) return;
     try {
       await updateMutation.mutateAsync(form);
-      toast({ title: "Hero banner updated!", description: "Changes are live on the homepage." });
+      toast({ title: "Bannière héro mise à jour !", description: "Les modifications sont en ligne sur la page d'accueil." });
     } catch (err: any) {
-      toast({ title: "Error saving", description: err.message, variant: "destructive" });
+      toast({ title: "Erreur lors de l'enregistrement", description: err.message, variant: "destructive" });
     }
   };
 
@@ -70,13 +70,13 @@ export const HeroBannerForm = () => {
             <Sparkles className="w-4 h-4 text-primary" />
             Badge
           </CardTitle>
-          <CardDescription>The small badge above the headline</CardDescription>
+          <CardDescription>Le petit badge au-dessus du titre</CardDescription>
         </CardHeader>
         <CardContent>
           <Input
             value={form.badge_text}
             onChange={(e) => setForm({ ...form, badge_text: e.target.value })}
-            placeholder="🔥 #1 Template Marketplace"
+            placeholder="🔥 #1 Marketplace de modèles"
           />
         </CardContent>
       </Card>
@@ -84,43 +84,43 @@ export const HeroBannerForm = () => {
       {/* Headlines */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Headlines</CardTitle>
-          <CardDescription>Main headline with highlighted words</CardDescription>
+          <CardTitle className="text-base">Titres</CardTitle>
+          <CardDescription>Titre principal avec mots mis en avant</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Line 1 Prefix</Label>
+              <Label className="text-xs text-muted-foreground">Préfixe ligne 1</Label>
               <Input
                 value={form.headline_line1_prefix}
                 onChange={(e) => setForm({ ...form, headline_line1_prefix: e.target.value })}
-                placeholder="Build "
+                placeholder="Construisez "
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Line 1 Highlight</Label>
+              <Label className="text-xs text-muted-foreground">Mot mis en avant ligne 1</Label>
               <Input
                 value={form.headline_line1_highlight}
                 onChange={(e) => setForm({ ...form, headline_line1_highlight: e.target.value })}
-                placeholder="Stunning"
+                placeholder="Magnifiques"
               />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Line 2 Prefix</Label>
+              <Label className="text-xs text-muted-foreground">Préfixe ligne 2</Label>
               <Input
                 value={form.headline_line2_prefix}
                 onChange={(e) => setForm({ ...form, headline_line2_prefix: e.target.value })}
-                placeholder="Websites "
+                placeholder="Sites web "
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Line 2 Highlight</Label>
+              <Label className="text-xs text-muted-foreground">Mot mis en avant ligne 2</Label>
               <Input
                 value={form.headline_line2_highlight}
                 onChange={(e) => setForm({ ...form, headline_line2_highlight: e.target.value })}
-                placeholder="Instantly"
+                placeholder="Instantanément"
               />
             </div>
           </div>
@@ -130,7 +130,7 @@ export const HeroBannerForm = () => {
       {/* Subheadline */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Subheadline</CardTitle>
+          <CardTitle className="text-base">Sous-titre</CardTitle>
         </CardHeader>
         <CardContent>
           <Textarea
@@ -144,19 +144,19 @@ export const HeroBannerForm = () => {
       {/* CTAs */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Call to Action Buttons</CardTitle>
+          <CardTitle className="text-base">Boutons d'appel à l'action</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Primary Button Text</Label>
+              <Label className="text-xs text-muted-foreground">Texte du bouton principal</Label>
               <Input
                 value={form.cta_primary_text}
                 onChange={(e) => setForm({ ...form, cta_primary_text: e.target.value })}
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Primary Button Link</Label>
+              <Label className="text-xs text-muted-foreground">Lien du bouton principal</Label>
               <Input
                 value={form.cta_primary_link}
                 onChange={(e) => setForm({ ...form, cta_primary_link: e.target.value })}
@@ -165,14 +165,14 @@ export const HeroBannerForm = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label className="text-xs text-muted-foreground">Secondary Button Text</Label>
+              <Label className="text-xs text-muted-foreground">Texte du bouton secondaire</Label>
               <Input
                 value={form.cta_secondary_text}
                 onChange={(e) => setForm({ ...form, cta_secondary_text: e.target.value })}
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">Secondary Button Link</Label>
+              <Label className="text-xs text-muted-foreground">Lien du bouton secondaire</Label>
               <Input
                 value={form.cta_secondary_link}
                 onChange={(e) => setForm({ ...form, cta_secondary_link: e.target.value })}
@@ -185,14 +185,14 @@ export const HeroBannerForm = () => {
       {/* Demo Video */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Demo Video</CardTitle>
-          <CardDescription>YouTube video ID for the "Watch Demo" button (e.g. dQw4w9WgXcQ)</CardDescription>
+          <CardTitle className="text-base">Vidéo de démonstration</CardTitle>
+          <CardDescription>ID YouTube pour le bouton « Voir la démo » (ex. dQw4w9WgXcQ)</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <Input
             value={form.demo_video_id || ""}
             onChange={(e) => setForm({ ...form, demo_video_id: e.target.value })}
-            placeholder="YouTube Video ID"
+            placeholder="ID Vidéo YouTube"
           />
           {form.demo_video_id && (
             <div className="rounded-lg overflow-hidden border border-border">
@@ -210,8 +210,8 @@ export const HeroBannerForm = () => {
       {/* Hero Image */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Hero Image</CardTitle>
-          <CardDescription>Background image shown behind the hero text with a fading overlay</CardDescription>
+          <CardTitle className="text-base">Image héro</CardTitle>
+          <CardDescription>Image d'arrière-plan derrière le texte héro avec un fondu</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <Input
@@ -235,22 +235,22 @@ export const HeroBannerForm = () => {
       {/* Stats */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Stats Row</CardTitle>
-          <CardDescription>Up to 4 stats displayed below the CTA</CardDescription>
+          <CardTitle className="text-base">Ligne de statistiques</CardTitle>
+          <CardDescription>Jusqu'à 4 statistiques affichées sous le CTA</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           {form.stats.map((stat, i) => (
             <div key={i} className="flex items-end gap-2">
               <div className="w-16">
-                <Label className="text-xs text-muted-foreground">Icon</Label>
+                <Label className="text-xs text-muted-foreground">Icône</Label>
                 <Input value={stat.icon} onChange={(e) => updateStat(i, "icon", e.target.value)} />
               </div>
               <div className="flex-1">
-                <Label className="text-xs text-muted-foreground">Value</Label>
+                <Label className="text-xs text-muted-foreground">Valeur</Label>
                 <Input value={stat.value} onChange={(e) => updateStat(i, "value", e.target.value)} />
               </div>
               <div className="flex-1">
-                <Label className="text-xs text-muted-foreground">Label</Label>
+                <Label className="text-xs text-muted-foreground">Libellé</Label>
                 <Input value={stat.label} onChange={(e) => updateStat(i, "label", e.target.value)} />
               </div>
               <Button variant="ghost" size="icon" className="shrink-0" onClick={() => removeStat(i)}>
@@ -260,7 +260,7 @@ export const HeroBannerForm = () => {
           ))}
           {form.stats.length < 4 && (
             <Button variant="outline" size="sm" onClick={addStat} className="gap-1">
-              <Plus className="w-3 h-3" /> Add Stat
+              <Plus className="w-3 h-3" /> Ajouter une statistique
             </Button>
           )}
         </CardContent>
@@ -270,7 +270,7 @@ export const HeroBannerForm = () => {
       {showPreview && (
         <Card className="border-primary/30">
           <CardHeader>
-            <CardTitle className="text-base">Preview</CardTitle>
+            <CardTitle className="text-base">Aperçu</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-center space-y-3 p-6 bg-muted/30 rounded-xl">
@@ -307,11 +307,11 @@ export const HeroBannerForm = () => {
       <div className="flex gap-3">
         <Button onClick={handleSave} disabled={updateMutation.isPending} className="gap-2">
           {updateMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          Save Changes
+          Enregistrer les modifications
         </Button>
         <Button variant="outline" onClick={() => setShowPreview(!showPreview)} className="gap-2">
           <Eye className="w-4 h-4" />
-          {showPreview ? "Hide Preview" : "Preview"}
+          {showPreview ? "Masquer l'aperçu" : "Aperçu"}
         </Button>
       </div>
     </div>

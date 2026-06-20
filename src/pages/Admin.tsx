@@ -1,4 +1,4 @@
-import { AboutUsSectionForm } from '@/components/admin/AboutUsSectionForm'
+﻿import { AboutUsSectionForm } from '@/components/admin/AboutUsSectionForm'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { CategoriesSectionForm } from '@/components/admin/CategoriesSectionForm'
 import { ContactList } from '@/components/admin/ContactList'
@@ -103,12 +103,12 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template created successfully!' })
+      toast({ title: 'Template créé avec succès !' })
       setShowForm(false)
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error creating template',
+        title: 'Erreur lors de la création',
         description: error.message,
         variant: 'destructive',
       })
@@ -131,13 +131,13 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template updated successfully!' })
+      toast({ title: 'Template mis à jour avec succès !' })
       setEditingTemplate(null)
       setShowForm(false)
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error updating template',
+        title: 'Erreur lors de la mise à jour',
         description: error.message,
         variant: 'destructive',
       })
@@ -152,12 +152,12 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template deleted successfully!' })
+      toast({ title: 'Template supprimé avec succès !' })
       setDeletingId(null)
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error deleting template',
+        title: 'Erreur lors de la suppression',
         description: error.message,
         variant: 'destructive',
       })
@@ -187,10 +187,10 @@ const Admin = () => {
     updateOrderStatus.mutate(
       { orderId, status },
       {
-        onSuccess: () => toast({ title: 'Order status updated!' }),
+        onSuccess: () => toast({ title: 'Statut de la commande mis à jour !' }),
         onError: (error) =>
           toast({
-            title: 'Error updating order',
+            title: 'Erreur lors de la mise à jour',
             description: error.message,
             variant: 'destructive',
           }),
@@ -202,11 +202,11 @@ const Admin = () => {
     setDeletingOrderId(orderId)
     deleteOrder.mutate(orderId, {
       onSuccess: () => {
-        toast({ title: 'Order deleted successfully!' })
+        toast({ title: 'Commande supprimée avec succès !' })
         setDeletingOrderId(null)
       },
       onError: (error) => {
-        toast({ title: 'Error deleting order', description: error.message, variant: 'destructive' })
+        toast({ title: 'Erreur lors de la suppression', description: error.message, variant: 'destructive' })
         setDeletingOrderId(null)
       },
     })
@@ -255,11 +255,11 @@ const Admin = () => {
               <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShieldAlert className="w-10 h-10 text-destructive" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground mb-2">Access Denied</h1>
+              <h1 className="text-2xl font-bold text-foreground mb-2">Accès refusé</h1>
               <p className="text-muted-foreground mb-6">
-                You don't have permission to access the admin dashboard.
+                Vous n'avez pas les permissions nécessaires pour accéder au tableau de bord.
               </p>
-              <Button onClick={() => navigate('/')}>Return Home</Button>
+              <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
             </div>
           </div>
         </div>
@@ -269,37 +269,37 @@ const Admin = () => {
   }
 
   const sectionGroup: Record<string, string> = {
-    templates: 'Management',
-    orders: 'Management',
-    coupons: 'Management',
-    reviews: 'Management',
-    contacts: 'Management',
-    refunds: 'Management',
-    hero: 'Homepage Sections',
-    features: 'Homepage Sections',
-    pricing: 'Homepage Sections',
-    categories: 'Homepage Sections',
-    testimonials: 'Homepage Sections',
-    hosting: 'Homepage Sections',
+    templates: 'Gestion',
+    orders: 'Gestion',
+    coupons: 'Gestion',
+    reviews: 'Gestion',
+    contacts: 'Gestion',
+    refunds: 'Gestion',
+    hero: 'Sections page d\'accueil',
+    features: 'Sections page d\'accueil',
+    pricing: 'Sections page d\'accueil',
+    categories: 'Sections page d\'accueil',
+    testimonials: 'Sections page d\'accueil',
+    hosting: 'Sections page d\'accueil',
     about: 'Pages',
     'contact-page': 'Pages',
   }
 
   const sectionTitle: Record<string, string> = {
     templates: 'Templates',
-    orders: 'Orders',
-    coupons: 'Coupons',
-    reviews: 'Reviews',
-    contacts: 'Contacts',
-    refunds: 'Refund Requests',
-    hero: 'Hero Banner',
-    features: 'Features Section',
-    pricing: 'Pricing Section',
-    categories: 'Categories Section',
-    testimonials: 'Testimonials Section',
-    hosting: 'Hosting Wizard',
-    about: 'About Us',
-    'contact-page': 'Contact Page',
+    orders: 'Commandes',
+    coupons: 'Codes promo',
+    reviews: 'Avis',
+    contacts: 'Messages',
+    refunds: 'Remboursements',
+    hero: 'Bannière Hero',
+    features: 'Section fonctionnalités',
+    pricing: 'Section tarifs',
+    categories: 'Section catégories',
+    testimonials: 'Section témoignages',
+    hosting: 'Assistant hébergement',
+    about: 'À propos',
+    'contact-page': 'Page de contact',
   }
 
   return (
@@ -319,18 +319,18 @@ const Admin = () => {
                   <Breadcrumb>
                     <BreadcrumbList>
                       <BreadcrumbItem>
-                        <span className="text-muted-foreground text-sm font-medium">Admin</span>
+                        <span className="text-muted-foreground text-sm font-medium">Administration</span>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
                         <span className="text-muted-foreground text-sm">
-                          {sectionGroup[activeTab] || 'General'}
+                          {sectionGroup[activeTab] || 'Général'}
                         </span>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
                         <BreadcrumbPage className="font-semibold">
-                          {sectionTitle[activeTab] || 'Dashboard'}
+                          {sectionTitle[activeTab] || 'Tableau de bord'}
                         </BreadcrumbPage>
                       </BreadcrumbItem>
                     </BreadcrumbList>
@@ -339,7 +339,7 @@ const Admin = () => {
                 {activeTab === 'templates' && !showForm && (
                   <Button onClick={() => setShowForm(true)} size="sm" className="gap-2 shrink-0">
                     <Plus className="w-4 h-4" />
-                    Add Template
+                    Ajouter
                   </Button>
                 )}
               </div>
@@ -348,16 +348,16 @@ const Admin = () => {
               <div className="px-4 md:px-6 py-4 border-b border-border/30">
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
                   <StatCard label="Templates" value={templates.length} />
-                  <StatCard label="Featured" value={templates.filter((t) => t.featured).length} />
-                  <StatCard label="Sales" value={templates.reduce((a, t) => a + t.sales, 0)} />
+                  <StatCard label="En vedette" value={templates.filter((t) => t.featured).length} />
+                  <StatCard label="Ventes" value={templates.reduce((a, t) => a + t.sales, 0)} />
                   <StatCard
-                    label="Orders"
+                    label="Commandes"
                     value={orders.length}
                     icon={<Package className="w-4 h-4" />}
                   />
-                  <StatCard label="Pending" value={pendingOrders} className="text-accent" />
+                  <StatCard label="En attente" value={pendingOrders} className="text-accent" />
                   <StatCard
-                    label="Revenue"
+                    label="Revenus"
                     value={`$${totalRevenue.toFixed(0)}`}
                     icon={<DollarSign className="w-4 h-4" />}
                     className="text-primary"
@@ -371,7 +371,7 @@ const Admin = () => {
                   (showForm ? (
                     <div className="glass-card p-6 rounded-2xl border border-border/50">
                       <h2 className="text-xl font-semibold mb-6">
-                        {editingTemplate ? 'Edit Template' : 'Create New Template'}
+                        {editingTemplate ? 'Modifier le template' : 'Créer un template'}
                       </h2>
                       <TemplateForm
                         template={editingTemplate}
@@ -385,7 +385,7 @@ const Admin = () => {
                       <SearchBar
                         value={searchQuery}
                         onChange={setSearchQuery}
-                        placeholder="Search templates..."
+                        placeholder="Rechercher..."
                       />
                       {templatesLoading ? (
                         <LoadingState />
@@ -405,7 +405,7 @@ const Admin = () => {
                     <SearchBar
                       value={searchQuery}
                       onChange={setSearchQuery}
-                      placeholder="Search orders by email or ID..."
+                      placeholder="Rechercher..."
                     />
                     {ordersLoading ? (
                       <LoadingState />

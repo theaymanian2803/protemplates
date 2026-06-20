@@ -46,7 +46,7 @@ const MegaMenu = () => {
                       Explore All
                     </h3>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Browse our full collection of premium templates built for modern web.
+                      Parcourez notre collection complète de templates premium.
                     </p>
                   </div>
                   <NavigationMenuLink asChild>
@@ -54,7 +54,7 @@ const MegaMenu = () => {
                       onClick={() => navigate("/templates")}
                       className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
                     >
-                      Browse All <ArrowRight className="w-3.5 h-3.5" />
+                      Tout explorer <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </NavigationMenuLink>
                 </div>
@@ -85,7 +85,7 @@ const MegaMenu = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-muted-foreground py-2">No categories yet</p>
+                    <p className="text-sm text-muted-foreground py-2">Aucune catégorie</p>
                   )}
                 </div>
               </div>
@@ -96,7 +96,7 @@ const MegaMenu = () => {
         {/* Company Mega Menu */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent hover:bg-muted/50 data-[state=open]:bg-muted/50 h-auto py-2 px-3">
-            <span className="text-sm font-semibold text-foreground">Company</span>
+            <span className="text-sm font-semibold text-foreground">Entreprise</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className="w-[320px] p-4">
@@ -110,8 +110,8 @@ const MegaMenu = () => {
                       <Users className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">About Us</p>
-                      <p className="text-xs text-muted-foreground">Our story and mission</p>
+                      <p className="text-sm font-semibold text-foreground">À propos</p>
+                      <p className="text-xs text-muted-foreground">Notre histoire et mission</p>
                     </div>
                   </Link>
                 </NavigationMenuLink>
@@ -125,7 +125,7 @@ const MegaMenu = () => {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">Contact</p>
-                      <p className="text-xs text-muted-foreground">Get in touch with us</p>
+                      <p className="text-xs text-muted-foreground">Contactez-nous</p>
                     </div>
                   </Link>
                 </NavigationMenuLink>
@@ -139,7 +139,7 @@ const MegaMenu = () => {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">FAQ</p>
-                      <p className="text-xs text-muted-foreground">Common questions answered</p>
+                      <p className="text-xs text-muted-foreground">Questions fréquentes</p>
                     </div>
                   </Link>
                 </NavigationMenuLink>
@@ -154,7 +154,7 @@ const MegaMenu = () => {
               href="/#pricing"
               className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
             >
-              Pricing
+              Tarifs
             </a>
           </NavigationMenuItem>
           <NavigationMenuItem>
@@ -162,7 +162,7 @@ const MegaMenu = () => {
               href="/#features"
               className="inline-flex items-center px-3 py-2 text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
             >
-              Features
+              Fonctionnalités
             </a>
           </NavigationMenuItem>
       </NavigationMenuList>

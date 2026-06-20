@@ -35,7 +35,7 @@ const CTASection = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 border border-primary/25 mb-8"
           >
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-background">Limited Time: 30% Off All Templates</span>
+            <span className="text-sm font-medium text-background">Offre limitée : -30% sur tous les templates</span>
           </motion.div>
 
           <motion.h2
@@ -45,8 +45,8 @@ const CTASection = () => {
             transition={{ delay: 0.1 }}
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-background mb-6 leading-tight"
           >
-            Ready to Build Something{" "}
-            <span className="text-primary">Amazing?</span>
+            Prêt à créer quelque chose d'{" "}
+            <span className="text-primary">Incroyable ?</span>
           </motion.h2>
           
           <motion.p
@@ -56,7 +56,7 @@ const CTASection = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-background/60 mb-10 max-w-2xl mx-auto"
           >
-            Join thousands of creators who've launched successful websites with our premium templates.
+            Rejoignez des milliers de créateurs qui ont lancé des sites web réussis avec nos templates premium.
           </motion.p>
 
           <motion.div
@@ -71,7 +71,7 @@ const CTASection = () => {
                 size="xl" 
                 className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow group"
               >
-                Get Started Now
+                Commencer maintenant
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -81,7 +81,7 @@ const CTASection = () => {
                 size="xl"
                 className="text-background/80 hover:text-background hover:bg-background/10 border border-background/15"
               >
-                Contact Sales
+                Nous contacter
               </Button>
             </Link>
           </motion.div>

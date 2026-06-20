@@ -14,7 +14,7 @@ const LogoCloud = () => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground font-medium uppercase tracking-wider mb-8"
         >
-          Trusted by teams at world-class companies
+          Approuvé par des équipes de grandes entreprises
         </motion.p>
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
           {brands.map((brand, index) => (

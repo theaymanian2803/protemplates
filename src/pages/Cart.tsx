@@ -15,7 +15,7 @@ const Cart = () => {
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-8">
-            Shopping Cart
+            Panier
           </h1>
 
           {items.length === 0 ? (
@@ -23,13 +23,13 @@ const Cart = () => {
               <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-muted flex items-center justify-center">
                 <ShoppingBag className="w-12 h-12 text-muted-foreground" />
               </div>
-              <h2 className="text-2xl font-semibold text-foreground mb-2">Your cart is empty</h2>
+              <h2 className="text-2xl font-semibold text-foreground mb-2">Votre panier est vide</h2>
               <p className="text-muted-foreground mb-6">
-                Browse our templates and add some items to your cart
+                Parcourez nos templates et ajoutez des articles à votre panier
               </p>
               <Link to="/#templates">
                 <Button variant="hero" size="lg">
-                  Browse Templates
+                  Parcourir
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
@@ -65,7 +65,7 @@ const Cart = () => {
                               : "border-border text-muted-foreground hover:border-primary"
                           }`}
                         >
-                          Regular $59
+                          Standard 59$
                         </button>
                         <button
                           onClick={() => updateLicense(item.id, "extended")}
@@ -75,7 +75,7 @@ const Cart = () => {
                               : "border-border text-muted-foreground hover:border-primary"
                           }`}
                         >
-                          Extended $299
+                          Étendue 299$
                         </button>
                       </div>
                     </div>
@@ -92,22 +92,22 @@ const Cart = () => {
                 ))}
 
                 <Button variant="ghost" onClick={clearCart} className="text-muted-foreground">
-                  Clear Cart
+                  Vider le panier
                 </Button>
               </div>
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
                 <div className="glass-card p-6 rounded-2xl border border-border/50 sticky top-24">
-                  <h2 className="font-semibold text-lg text-foreground mb-4">Order Summary</h2>
+                  <h2 className="font-semibold text-lg text-foreground mb-4">Récapitulatif</h2>
                   
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Subtotal ({items.length} items)</span>
+                      <span className="text-muted-foreground">Sous-total ({items.length} article(s))</span>
                       <span className="text-foreground">${totalPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Discount</span>
+                      <span className="text-muted-foreground">Réduction</span>
                       <span className="text-accent">-$0</span>
                     </div>
                     <div className="border-t border-border pt-3 flex justify-between">
@@ -118,13 +118,13 @@ const Cart = () => {
 
                   <Link to="/checkout">
                     <Button variant="hero" size="lg" className="w-full">
-                      Proceed to Checkout
+                      Passer à la caisse
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
 
                   <p className="text-xs text-muted-foreground text-center mt-4">
-                    Secure checkout powered by Stripe
+                    Paiement sécurisé par Stripe
                   </p>
                 </div>
               </div>

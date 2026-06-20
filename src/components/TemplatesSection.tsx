@@ -23,17 +23,17 @@ const TemplatesSection = () => {
           className="flex flex-col md:flex-row md:items-end md:justify-between mb-12"
         >
           <div>
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Featured</span>
+            <span className="text-sm font-semibold text-primary uppercase tracking-wider">En vedette</span>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-              Trending Templates
+              Templates tendance
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl">
-              Discover our best-selling templates, handpicked by our design experts
+              Découvrez nos templates les plus vendus, sélectionnés par nos experts en design
             </p>
           </div>
           <Link to="/templates">
             <Button variant="outline" size="lg" className="mt-6 md:mt-0 group">
-              View All Templates
+              Tout voir
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>

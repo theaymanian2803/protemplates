@@ -23,17 +23,17 @@ const ReviewReminderBanner = ({ templates }: ReviewReminderBannerProps) => {
           <div>
             <p className="text-sm font-semibold text-foreground">
               {templates.length === 1
-                ? `Share your thoughts on "${first.template_title}"`
-                : `You have ${templates.length} templates waiting for a review`}
+                ? `Partagez votre avis sur "${first.template_title}"`
+                : `Vous avez ${templates.length} templates en attente d'avis`}
             </p>
             <p className="text-xs text-muted-foreground">
-              Your reviews help other developers make better decisions
+              Vos avis aident d'autres développeurs à faire les bons choix
             </p>
           </div>
         </div>
         <Link to={`/template/${first.template_id}`}>
           <Button size="sm" variant="outline" className="gap-1 border-accent/30 text-accent hover:bg-accent/10">
-            Leave a Review <ArrowRight className="w-3 h-3" />
+            Laisser un avis <ArrowRight className="w-3 h-3" />
           </Button>
         </Link>
       </CardContent>

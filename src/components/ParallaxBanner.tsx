@@ -46,7 +46,7 @@ const ParallaxBanner = () => {
               viewport={{ once: true }}
               className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4"
             >
-              Why Choose Us
+              Pourquoi nous choisir
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -54,8 +54,8 @@ const ParallaxBanner = () => {
               viewport={{ once: true }}
               className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight"
             >
-              Everything You Need to{" "}
-              <span className="gradient-text-primary">Ship Faster</span>
+              Tout ce dont vous avez besoin pour{" "}
+              <span className="gradient-text-primary">lancer plus vite</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -64,11 +64,11 @@ const ParallaxBanner = () => {
               transition={{ delay: 0.1 }}
               className="text-lg text-muted-foreground mb-8"
             >
-              Our templates are more than just designs. They're complete, production-ready codebases built with modern technologies.
+              Nos templates sont plus que de simples designs. Ce sont des bases de code complètes et prêtes pour la production, construites avec les technologies modernes.
             </motion.p>
             <Link to="/templates">
               <Button variant="hero" size="lg" className="group">
-                Get Started
+                Commencer
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -77,11 +77,11 @@ const ParallaxBanner = () => {
           {/* Right features */}
           <div className="space-y-5">
             {[
-              { title: "Production-Ready Code", desc: "Clean, well-documented, and battle-tested components" },
-              { title: "Responsive Design", desc: "Pixel-perfect on every device, from mobile to 4K" },
-              { title: "SEO Optimized", desc: "Built-in best practices for search engine rankings" },
-              { title: "Dark Mode Ready", desc: "Beautiful light and dark themes out of the box" },
-              { title: "Regular Updates", desc: "New features and security patches delivered monthly" },
+              { title: "Code prêt pour la production", desc: "Propre, bien documenté et testé" },
+              { title: "Design responsive", desc: "Parfait sur chaque appareil, du mobile au 4K" },
+              { title: "Optimisé SEO", desc: "Bonnes pratiques intégrées pour le référencement" },
+              { title: "Mode sombre inclus", desc: "Thèmes clair et sombre magnifiques prêts à l'emploi" },
+              { title: "Mises à jour régulières", desc: "Nouvelles fonctionnalités et correctifs livrés mensuellement" },
             ].map((item, index) => (
               <motion.div
                 key={index}

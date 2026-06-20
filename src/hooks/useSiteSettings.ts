@@ -18,24 +18,24 @@ export interface HeroBannerSettings {
 }
 
 const DEFAULT_HERO: HeroBannerSettings = {
-  badge_text: '🔥 #1 Template Marketplace — 50K+ Creators',
-  headline_line1_prefix: 'Build ',
-  headline_line1_highlight: 'Stunning',
-  headline_line2_prefix: 'Websites ',
-  headline_line2_highlight: 'Instantly',
+  badge_text: '🔥 Place de marché nº1 — Plus de 50 000 créateurs',
+  headline_line1_prefix: "Achetez des ",
+  headline_line1_highlight: 'Sites Magnifiques',
+  headline_line2_prefix: 'Prêts à ',
+  headline_line2_highlight: 'Lancer',
   subheadline:
-    'Premium, pixel-perfect templates that launch in minutes. Stop coding from scratch — start shipping faster.',
-  cta_primary_text: 'Explore Templates',
+    "Des templates premium, pixels parfaits, lancés en quelques minutes. Arrêtez de coder de zéro — commencez à vendre plus vite.",
+  cta_primary_text: 'Voir le catalogue',
   cta_primary_link: '/templates',
-  cta_secondary_text: 'Watch Demo',
+  cta_secondary_text: 'Voir la démo',
   cta_secondary_link: '/contact',
   demo_video_id: 'dQw4w9WgXcQ',
   hero_image_url: '',
   stats: [
     { value: '12K+', label: 'Templates', icon: '📦' },
-    { value: '50K+', label: 'Happy Creators', icon: '🎉' },
-    { value: '4.9★', label: 'Average Rating', icon: '⭐' },
-    { value: '24/7', label: 'Expert Support', icon: '🛟' },
+    { value: '50K+', label: 'Créateurs satisfaits', icon: '🎉' },
+    { value: '4.9★', label: 'Note moyenne', icon: '⭐' },
+    { value: '24h/24', label: 'Support expert', icon: '🛟' },
   ],
 }
 
@@ -115,139 +115,138 @@ export interface AboutUsSettings {
 }
 
 const DEFAULT_ABOUT: AboutUsSettings = {
-  // ... (Keeping your original defaults)
-  hero_badge: 'About TemplatePro',
-  hero_headline: 'We Build the Future of',
-  hero_highlight: 'Web Design',
+  hero_badge: 'À propos de TemplatePro',
+  hero_headline: 'Nous construisons l\'avenir du',
+  hero_highlight: 'Design Web',
   hero_subheadline:
-    "We're on a mission to make professional web design accessible to everyone — from solo founders to enterprise teams.",
-  hero_cta_primary_text: 'Browse Templates',
+    "Notre mission est de rendre le design web professionnel accessible à tous — des fondateurs solo aux équipes enterprise.",
+  hero_cta_primary_text: 'Voir les templates',
   hero_cta_primary_link: '/templates',
-  hero_cta_secondary_text: 'Get in Touch',
+  hero_cta_secondary_text: 'Nous contacter',
   hero_cta_secondary_link: '/contact',
   stats: [
-    { value: '50K+', label: 'Templates Sold' },
-    { value: '12K+', label: 'Happy Customers' },
-    { value: '500+', label: 'Premium Authors' },
-    { value: '150+', label: 'Countries Served' },
+    { value: '50K+', label: 'Templates vendus' },
+    { value: '12K+', label: 'Clients satisfaits' },
+    { value: '500+', label: 'Auteurs premium' },
+    { value: '150+', label: 'Pays desservis' },
   ],
-  mission_badge: 'Our Mission',
-  mission_headline: 'Empowering creators to launch faster & build better',
+  mission_badge: 'Notre mission',
+  mission_headline: 'Permettre aux créateurs de lancer plus vite et de mieux construire',
   mission_paragraphs: [
-    'TemplatePro was born in 2018 from a simple frustration: why should great web design be reserved for those with big budgets or specialized skills?',
-    'We host 500+ talented authors worldwide, offering templates across e-commerce, portfolios, landing pages, dashboards, and more — each vetted for design quality, clean code, and exceptional UX.',
+    'TemplatePro est né en 2018 d\'une simple frustration : pourquoi le design web de qualité devrait-il être réservé à ceux qui ont de gros budgets ou des compétences spécialisées ?',
+    'Nous hébergeons plus de 500 auteurs talentueux dans le monde entier, offrant des templates dans les domaines de l\'e-commerce, des portfolios, des landing pages, des tableaux de bord et bien plus — chacun vérifié pour la qualité du design, le code propre et l\'expérience utilisateur exceptionnelle.',
   ],
   mission_image_url:
     'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&h=500&fit=crop',
   awards: [
-    { title: 'Best Marketplace', subtitle: 'Web Awards 2023' },
-    { title: '98% Satisfaction', subtitle: 'Customer Rating' },
+    { title: 'Meilleure place de marché', subtitle: 'Web Awards 2023' },
+    { title: '98% de satisfaction', subtitle: 'Avis clients' },
   ],
-  values_badge: 'What We Stand For',
-  values_headline: 'Our Core Values',
+  values_badge: 'Nos valeurs',
+  values_headline: 'Nos valeurs fondamentales',
   values_subheadline:
-    'These principles guide everything we do — from curating templates to supporting our global community of creators.',
+    'Ces principes guident tout ce que nous faisons — de la sélection des templates au soutien de notre communauté mondiale de créateurs.',
   values: [
     {
-      title: 'Quality First',
+      title: 'Qualité avant tout',
       description:
-        'Every template undergoes rigorous review — pixel-perfect design, clean code, and flawless responsiveness.',
+        'Chaque template est soumis à une révision rigoureuse — design pixel-parfait, code propre et réactivité irréprochable.',
     },
     {
-      title: 'Community Driven',
+      title: 'Axé sur la communauté',
       description:
-        'We empower designers and developers worldwide to showcase their creativity and build thriving careers.',
+        'Nous permettons aux designers et développeurs du monde entier de montrer leur créativité et de bâtir des carrières prospères.',
     },
     {
       title: 'Innovation',
       description:
-        'Staying ahead of design trends with cutting-edge templates that help businesses stand out online.',
+        'Rester en avance sur les tendances du design avec des templates de pointe qui aident les entreprises à se démarquer en ligne.',
     },
     {
-      title: 'Customer Success',
+      title: 'Réussite client',
       description:
-        'Your success is our priority. Dedicated support and resources to help you launch faster.',
+        'Votre réussite est notre priorité. Support dédié et ressources pour vous aider à lancer plus vite.',
     },
     {
-      title: 'Trust & Security',
+      title: 'Confiance et sécurité',
       description:
-        'Secure transactions, licensed code, and a money-back guarantee on every purchase.',
+        'Transactions sécurisées, code sous licence et garantie de remboursement sur chaque achat.',
     },
     {
-      title: 'Developer Friendly',
+      title: 'Conviviale pour les développeurs',
       description:
-        'Clean, well-documented code built with modern frameworks. Easy to customize and extend.',
+        'Code propre et bien documenté, construit avec des frameworks modernes. Facile à personnaliser et à étendre.',
     },
   ],
-  team_badge: 'The People',
-  team_headline: 'Meet Our Team',
+  team_badge: 'L\'équipe',
+  team_headline: 'Rencontrez notre équipe',
   team_subheadline:
-    'The passionate people behind TemplatePro who work tirelessly to bring you the best templates.',
+    'Les passionnés derrière TemplatePro qui travaillent sans relâche pour vous offrir les meilleurs templates.',
   team: [
     {
       name: 'Sarah Chen',
-      role: 'Founder & CEO',
-      bio: 'Former design lead at Figma. Passionate about democratizing web design for everyone.',
+      role: 'Fondatrice & PDG',
+      bio: 'Ancienne responsable design chez Figma. Passionnée par la démocratisation du design web pour tous.',
       image:
         'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
     },
     {
       name: 'Marcus Johnson',
-      role: 'Head of Design',
-      bio: 'Award-winning designer with 10+ years crafting beautiful digital experiences.',
+      role: 'Directeur du Design',
+      bio: 'Designer primé avec plus de 10 ans d\'expérience dans la création d\'expériences numériques magnifiques.',
       image:
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
     },
     {
       name: 'Emily Rodriguez',
-      role: 'Lead Developer',
-      bio: 'Full-stack engineer obsessed with performance, accessibility, and clean architecture.',
+      role: 'Développeuse principale',
+      bio: 'Développeuse full-stack obsédée par la performance, l\'accessibilité et l\'architecture propre.',
       image:
         'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face',
     },
     {
       name: 'David Kim',
-      role: 'Head of Customer Success',
-      bio: 'Ensures every customer has an exceptional experience from purchase to launch.',
+      role: 'Responsable Réussite Client',
+      bio: 'Veille à ce que chaque client vive une expérience exceptionnelle, de l\'achat au lancement.',
       image:
         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
     },
   ],
-  milestones_badge: 'Our Journey',
-  milestones_headline: 'Key Milestones',
+  milestones_badge: 'Notre parcours',
+  milestones_headline: 'Étapes clés',
   milestones: [
     {
       year: '2018',
-      title: 'The Beginning',
-      event: 'TemplatePro founded with a vision to democratize web design.',
+      title: 'Le début',
+      event: 'TemplatePro fondé avec la vision de démocratiser le design web.',
     },
     {
       year: '2019',
-      title: 'First Milestone',
-      event: 'Reached 1,000 templates and 5,000 customers worldwide.',
+      title: 'Premier jalon',
+      event: 'Atteint 1 000 templates et 5 000 clients dans le monde.',
     },
     {
       year: '2021',
-      title: 'Creator Economy',
-      event: 'Launched Author Partner Program with 200+ creators onboarded.',
+      title: 'Économie des créateurs',
+      event: 'Lancement du programme partenaire auteur avec plus de 200 créateurs inscrits.',
     },
     {
       year: '2023',
-      title: 'Global Reach',
-      event: 'Expanded to serve customers across 150+ countries.',
+      title: 'Portée mondiale',
+      event: 'Expansion pour servir des clients dans plus de 150 pays.',
     },
     {
       year: '2024',
-      title: 'AI Innovation',
-      event: 'Introduced AI-powered template customization and recommendations.',
+      title: 'Innovation IA',
+      event: 'Introduction de la personnalisation et des recommandations de templates par IA.',
     },
   ],
-  cta_headline: 'Ready to Build Something Amazing?',
+  cta_headline: 'Prêt à créer quelque chose d\'exceptionnel ?',
   cta_subheadline:
-    'Browse our collection of premium templates and find the perfect starting point for your next project.',
-  cta_primary_text: 'Browse Templates',
+    'Parcourez notre collection de templates premium et trouvez le point de départ parfait pour votre prochain projet.',
+  cta_primary_text: 'Voir les templates',
   cta_primary_link: '/templates',
-  cta_secondary_text: 'Contact Us',
+  cta_secondary_text: 'Nous contacter',
   cta_secondary_link: '/contact',
 }
 
@@ -311,47 +310,46 @@ export interface ContactUsSettings {
 }
 
 const DEFAULT_CONTACT: ContactUsSettings = {
-  // ... (Keeping your original defaults)
-  hero_badge: 'Get in Touch',
-  hero_headline: "We'd Love to",
-  hero_highlight: 'Hear From You',
-  hero_subheadline: 'Have a question, feedback, or need help? Our team is ready to assist you.',
+  hero_badge: 'Contactez-nous',
+  hero_headline: 'Nous serions ravis de',
+  hero_highlight: 'vous entendre',
+  hero_subheadline: 'Une question, un feedback ou besoin d\'aide ? Notre équipe est là pour vous.',
   contact_methods: [
     {
-      title: 'Email Us',
-      description: 'Send us an email anytime',
+      title: 'Nous écrire',
+      description: 'Envoyez-nous un email à tout moment',
       value: 'hello@templatepro.com',
       action: 'mailto:hello@templatepro.com',
     },
     {
-      title: 'Call Us',
-      description: 'Mon-Fri, 9am-6pm EST',
+      title: 'Nous appeler',
+      description: 'Lun-Ven, 9h-18h (heure EST)',
       value: '+1 (555) 123-4567',
       action: 'tel:+15551234567',
     },
-    { title: 'Live Chat', description: 'Chat with our team', value: 'Available 24/7', action: '#' },
+    { title: 'Chat en direct', description: 'Discutez avec notre équipe', value: 'Disponible 24h/24', action: '#' },
     {
-      title: 'Visit Us',
-      description: 'Our headquarters',
+      title: 'Nous rendre visite',
+      description: 'Notre siège social',
       value: '123 Design Street, NYC',
       action: '#',
     },
   ],
-  form_title: 'Send us a Message',
-  form_subtitle: "Fill out the form below and we'll get back to you as soon as possible.",
+  form_title: 'Envoyez-nous un message',
+  form_subtitle: 'Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.',
   business_hours: [
-    { day: 'Monday - Friday', hours: '9:00 AM - 6:00 PM EST' },
-    { day: 'Saturday', hours: '10:00 AM - 4:00 PM EST' },
-    { day: 'Sunday', hours: 'Closed' },
+    { day: 'Lundi - Vendredi', hours: '9h00 - 18h00 (EST)' },
+    { day: 'Samedi', hours: '10h00 - 16h00 (EST)' },
+    { day: 'Dimanche', hours: 'Fermé' },
   ],
-  live_chat_note: '💬 Live chat available 24/7',
+  live_chat_note: '💬 Chat en direct disponible 24h/24',
   response_times: [
-    { label: 'Email', time: 'Within 24 hours' },
-    { label: 'Live Chat', time: 'Instant' },
-    { label: 'Phone', time: 'During business hours' },
+    { label: 'Email', time: 'Sous 24 heures' },
+    { label: 'Chat en direct', time: 'Instantané' },
+    { label: 'Téléphone', time: 'Pendant les heures d\'ouverture' },
   ],
-  location_title: 'Our Location',
-  location_subtitle: 'Visit us at our headquarters',
+  location_title: 'Notre adresse',
+  location_subtitle: 'Rendez-nous visite à notre siège social',
   location_address_line1: '123 Design Street',
   location_address_line2: 'New York, NY 10001',
   location_lat: 40.7128,
@@ -419,37 +417,36 @@ export interface PricingSectionSettings {
 }
 
 const DEFAULT_PRICING: PricingSectionSettings = {
-  // ... (Keeping your original defaults)
-  badge: 'Pricing',
-  headline: 'Simple, Transparent Pricing',
-  subheadline: 'Buy templates individually or get access to everything with a one-time payment.',
-  individual_title: 'Individual Templates',
-  individual_subtitle: 'Buy only what you need',
-  individual_price_label: 'Varies',
-  individual_price_note: 'per template',
+  badge: 'Tarifs',
+  headline: 'Tarifs simples et transparents',
+  subheadline: 'Achetez des templates individuellement ou obtenez tout avec un paiement unique.',
+  individual_title: 'Templates individuels',
+  individual_subtitle: 'Achetez seulement ce dont vous avez besoin',
+  individual_price_label: 'Variable',
+  individual_price_note: 'par template',
   individual_features: [
-    'Per-template pricing',
-    'Regular & Extended licenses',
-    '6 Months Support',
-    'Lifetime Updates',
-    'Source files included',
+    'Achat à l\'unité',
+    'Licences standard et étendue',
+    '6 mois de support',
+    'Mises à jour à vie',
+    'Fichiers sources inclus',
   ],
-  individual_cta_text: 'Browse Templates',
+  individual_cta_text: 'Parcourir',
   individual_cta_link: '/templates',
-  allaccess_title: 'All Access Pass',
-  allaccess_subtitle: 'One payment, every template',
-  allaccess_price_note: 'one-time payment',
-  allaccess_badge: 'Best Value',
+  allaccess_title: 'Pass Tout Accès',
+  allaccess_subtitle: 'Un paiement, tous les templates',
+  allaccess_price_note: 'paiement unique',
+  allaccess_badge: 'Meilleur rapport qualité-prix',
   allaccess_price: 300,
   allaccess_features: [
-    'Access to ALL templates',
-    'All future templates included',
-    'Regular license for all',
-    'Priority Support',
-    'Lifetime Updates',
-    'Source files included',
+    'Accès à TOUS les templates',
+    'Tous les futurs templates inclus',
+    'Licence standard pour tous',
+    'Support prioritaire',
+    'Mises à jour à vie',
+    'Fichiers sources inclus',
   ],
-  allaccess_cta_text: 'Get All Access',
+  allaccess_cta_text: 'Obtenir le Pass',
 }
 
 export const usePricingSection = () => {
@@ -501,34 +498,33 @@ export interface FeaturesSectionSettings {
 }
 
 const DEFAULT_FEATURES: FeaturesSectionSettings = {
-  // ... (Keeping your original defaults)
-  badge: 'Why Choose Us',
-  headline: 'Built for Success',
-  subheadline: 'Every template comes packed with features designed to help you succeed online',
+  badge: 'Pourquoi nous choisir',
+  headline: 'Conçu pour la réussite',
+  subheadline: 'Chaque template est livré avec des fonctionnalités conçues pour vous aider à réussir en ligne',
   features: [
     {
-      title: 'Lightning Fast',
-      description: 'Optimized for performance with lazy loading, code splitting, and CDN delivery.',
+      title: 'Rapide comme l\'éclair',
+      description: 'Optimisé pour la performance avec chargement différé, code splitting et livraison CDN.',
     },
     {
-      title: 'Secure & Reliable',
-      description: 'Built with security best practices and regular updates to keep you protected.',
+      title: 'Sécurisé et fiable',
+      description: 'Construit avec les meilleures pratiques de sécurité et des mises à jour régulières pour vous protéger.',
     },
     {
-      title: 'Fully Customizable',
-      description: 'Easy-to-use customization options with detailed documentation included.',
+      title: 'Entièrement personnalisable',
+      description: 'Options de personnalisation faciles à utiliser avec une documentation détaillée incluse.',
     },
     {
-      title: 'Clean Code',
-      description: 'Well-structured, commented code following industry best practices.',
+      title: 'Code propre',
+      description: 'Code bien structuré et commenté suivant les meilleures pratiques de l\'industrie.',
     },
     {
-      title: 'Premium Support',
-      description: 'Get help from our expert team with 24/7 priority support.',
+      title: 'Support premium',
+      description: 'Obtenez de l\'aide de notre équipe d\'experts avec un support prioritaire 24h/24.',
     },
     {
-      title: 'Regular Updates',
-      description: 'Continuous improvements and new features added regularly.',
+      title: 'Mises à jour régulières',
+      description: 'Améliorations continues et nouvelles fonctionnalités ajoutées régulièrement.',
     },
   ],
 }
@@ -586,18 +582,17 @@ export interface CategoriesSectionSettings {
 }
 
 const DEFAULT_CATEGORIES: CategoriesSectionSettings = {
-  // ... (Keeping your original defaults)
-  badge: 'Categories',
-  headline: 'Find Your Perfect Template',
+  badge: 'Catégories',
+  headline: 'Trouvez le template parfait',
   subheadline:
-    'Explore our curated collection of templates designed for every industry and purpose',
+    'Explorez notre collection de templates conçus pour chaque secteur d\'activité et chaque besoin',
   categories: [
-    { title: 'E-Commerce', count: '2,450+', description: 'Full-featured online stores' },
-    { title: 'Business', count: '1,820+', description: 'Corporate & professional sites' },
-    { title: 'Landing Pages', count: '3,200+', description: 'High-converting pages' },
-    { title: 'Portfolios', count: '1,560+', description: 'Showcase your work' },
-    { title: 'Creative', count: '2,100+', description: 'Unique artistic designs' },
-    { title: 'Mobile Apps', count: '980+', description: 'App landing templates' },
+    { title: 'E-Commerce', count: '2 450+', description: 'Boutiques en ligne complètes' },
+    { title: 'Business', count: '1 820+', description: 'Sites professionnels et corporate' },
+    { title: 'Landing Pages', count: '3 200+', description: 'Pages à fort taux de conversion' },
+    { title: 'Portfolios', count: '1 560+', description: 'Présentez votre travail' },
+    { title: 'Créatif', count: '2 100+', description: 'Designs artistiques uniques' },
+    { title: 'Apps Mobile', count: '980+', description: 'Templates pour landing apps' },
   ],
 }
 
@@ -654,37 +649,36 @@ export interface TestimonialsSectionSettings {
 }
 
 export const DEFAULT_TESTIMONIALS: TestimonialsSectionSettings = {
-  // ... (Keeping your original defaults)
-  badge: 'Testimonials',
-  headline: 'Loved by 50,000+ Creators',
-  subheadline: 'See why professionals trust us for their most important projects',
+  badge: 'Témoignages',
+  headline: 'Aimé par plus de 50 000 créateurs',
+  subheadline: 'Découvrez pourquoi les professionnels nous font confiance pour leurs projets les plus importants',
   testimonials: [
     {
       name: 'Sarah Chen',
-      role: 'Founder, PixelCraft Studio',
+      role: 'Fondatrice, PixelCraft Studio',
       avatar: 'SC',
-      text: 'These templates saved us months of development. The code quality is incredible — clean, well-documented, and easy to customize.',
+      text: 'Ces templates nous ont fait gagner des mois de développement. La qualité du code est incroyable — propre, bien documenté et facile à personnaliser.',
       rating: 5,
     },
     {
       name: 'Marcus Williams',
       role: 'CTO, LaunchPad Inc',
       avatar: 'MW',
-      text: "We've tried dozens of template providers. Nothing comes close to the design quality and performance optimization here.",
+      text: 'Nous avons essayé des dizaines de fournisseurs de templates. Rien n\'égale la qualité de design et l\'optimisation des performances ici.',
       rating: 5,
     },
     {
       name: 'Aisha Patel',
-      role: 'Freelance Designer',
+      role: 'Designer Freelance',
       avatar: 'AP',
-      text: "My clients are always blown away when I deliver. These templates make me look like a genius. Best investment I've made.",
+      text: 'Mes clients sont toujours impressionnés quand je livre. Ces templates me font passer pour un génie. Le meilleur investissement que j\'ai fait.',
       rating: 5,
     },
     {
       name: 'David Nguyen',
-      role: 'Product Lead, NovaTech',
+      role: 'Chef Produit, NovaTech',
       avatar: 'DN',
-      text: 'The All Access Pass is a no-brainer. Every new template they release is instantly available. Incredible value for any team.',
+      text: 'Le Pass Tout Accès est une évidence. Chaque nouveau template est immédiatement disponible. Une valeur incroyable pour toute équipe.',
       rating: 5,
     },
   ],
@@ -763,57 +757,56 @@ export interface HostingSettings {
 }
 
 export const DEFAULT_HOSTING: HostingSettings = {
-  // ... (Keeping your original defaults)
   pro_service: {
     enabled: true,
     price: 20,
-    title: 'Hire a Pro',
-    description: "Don't want to deal with hosting? Let our experts deploy your template for you.",
+    title: 'Engager un Pro',
+    description: 'Vous ne voulez pas gérer l\'hébergement ? Laissez nos experts déployer votre template pour vous.',
     features: [
-      'Professional deployment setup',
-      'Domain configuration included',
-      'SSL certificate setup',
-      '24-hour turnaround',
+      'Configuration de déploiement professionnelle',
+      'Configuration de domaine incluse',
+      'Configuration du certificat SSL',
+      'Délai de 24 heures',
     ],
-    cta_text: 'Get Pro Hosting',
+    cta_text: 'Obtenir l\'hébergement Pro',
     contact_link: '/contact',
   },
   platforms: [
     {
       id: 'lovable',
       name: 'Lovable',
-      tagline: 'Easiest — no code setup needed',
+      tagline: 'Le plus simple — aucune configuration nécessaire',
       enabled: true,
       color: 'bg-primary text-primary-foreground',
       steps: [
         {
-          title: 'Extract Your Template',
-          description: 'Unzip the downloaded template files to a folder on your computer.',
+          title: 'Extrayez votre template',
+          description: 'Décompressez les fichiers du template téléchargé dans un dossier sur votre ordinateur.',
           details: [
-            'Locate the downloaded .zip file',
-            'Extract it to a folder of your choice',
-            'Open the folder to verify all files are present',
+            'Localisez le fichier .zip téléchargé',
+            'Extrayez-le dans un dossier de votre choix',
+            'Ouvrez le dossier pour vérifier que tous les fichiers sont présents',
           ],
         },
         {
-          title: 'Create a Lovable Project',
+          title: 'Créez un projet Lovable',
           description:
-            'Go to Lovable and create a new project, then upload or import your template code.',
+            'Allez sur Lovable et créez un nouveau projet, puis téléversez ou importez le code de votre template.',
           details: [
-            'Visit lovable.dev and sign in',
-            "Click 'New Project' from the dashboard",
-            'Describe your template or paste the code to get started',
+            'Visitez lovable.dev et connectez-vous',
+            'Cliquez sur "Nouveau projet" depuis le tableau de bord',
+            'Décrivez votre template ou collez le code pour commencer',
           ],
           link_url: 'https://lovable.dev',
-          link_label: 'Open Lovable',
+          link_label: 'Ouvrir Lovable',
         },
         {
-          title: 'Publish Your Site',
-          description: 'Click the Publish button in the top-right corner to make your site live.',
+          title: 'Publiez votre site',
+          description: 'Cliquez sur le bouton Publier dans le coin supérieur droit pour mettre votre site en ligne.',
           details: [
-            "Click the 'Publish' button in the editor",
-            'Your site will be live on a .lovable.app domain',
-            'Optionally connect a custom domain in Settings → Domains',
+            'Cliquez sur le bouton "Publier" dans l\'éditeur',
+            'Votre site sera en ligne sur un domaine .lovable.app',
+            'Connectez éventuellement un domaine personnalisé dans Paramètres → Domaines',
           ],
         },
       ],
@@ -821,40 +814,40 @@ export const DEFAULT_HOSTING: HostingSettings = {
     {
       id: 'vercel',
       name: 'Vercel',
-      tagline: 'Great for React & Next.js projects',
+      tagline: 'Idéal pour les projets React et Next.js',
       enabled: true,
       color: 'bg-foreground text-background',
       steps: [
         {
-          title: 'Push to GitHub',
-          description: 'Upload your template code to a GitHub repository.',
+          title: 'Poussez sur GitHub',
+          description: 'Téléversez le code de votre template dans un dépôt GitHub.',
           details: [
-            'Create a new repository on GitHub',
-            'Initialize git in your template folder',
-            'Push the code to your repository',
+            'Créez un nouveau dépôt sur GitHub',
+            'Initialisez git dans votre dossier de template',
+            'Poussez le code vers votre dépôt',
           ],
           command: 'git init && git add . && git commit -m "Initial commit" && git push',
         },
         {
-          title: 'Import in Vercel',
-          description: 'Connect your GitHub repo to Vercel for automatic deployments.',
+          title: 'Importez dans Vercel',
+          description: 'Connectez votre dépôt GitHub à Vercel pour des déploiements automatiques.',
           details: [
-            'Go to vercel.com and sign in with GitHub',
-            "Click 'Add New Project'",
-            'Select your template repository',
-            'Vercel will auto-detect the framework settings',
+            'Allez sur vercel.com et connectez-vous avec GitHub',
+            'Cliquez sur "Ajouter un nouveau projet"',
+            'Sélectionnez votre dépôt de template',
+            'Vercel détectera automatiquement les paramètres du framework',
           ],
           link_url: 'https://vercel.com/new',
-          link_label: 'Open Vercel',
+          link_label: 'Ouvrir Vercel',
         },
         {
-          title: 'Deploy & Go Live',
-          description: 'Click Deploy and your site will be live in seconds.',
+          title: 'Déployez et lancez',
+          description: 'Cliquez sur Déployer et votre site sera en ligne en quelques secondes.',
           details: [
-            'Review the build settings (usually no changes needed)',
-            "Click 'Deploy'",
-            'Your site will be live on a .vercel.app domain',
-            'Add a custom domain in Project Settings → Domains',
+            'Vérifiez les paramètres de build (généralement aucun changement requis)',
+            'Cliquez sur "Déployer"',
+            'Votre site sera en ligne sur un domaine .vercel.app',
+            'Ajoutez un domaine personnalisé dans Paramètres du projet → Domaines',
           ],
         },
       ],
@@ -862,39 +855,39 @@ export const DEFAULT_HOSTING: HostingSettings = {
     {
       id: 'netlify',
       name: 'Netlify',
-      tagline: 'Simple drag-and-drop deployment',
+      tagline: 'Déploiement simple par glisser-déposer',
       enabled: true,
       color: 'bg-[hsl(172,60%,40%)] text-white',
       steps: [
         {
-          title: 'Build Your Template',
-          description: 'Run the build command to generate production-ready files.',
+          title: 'Construisez votre template',
+          description: 'Exécutez la commande de build pour générer les fichiers prêts pour la production.',
           details: [
-            'Open a terminal in your template folder',
-            'Install dependencies first',
-            'Run the build command to create the dist folder',
+            'Ouvrez un terminal dans votre dossier de template',
+            'Installez d\'abord les dépendances',
+            'Exécutez la commande de build pour créer le dossier dist',
           ],
           command: 'npm install && npm run build',
         },
         {
-          title: 'Deploy to Netlify',
-          description: 'Drag and drop your build folder or connect via Git.',
+          title: 'Déployez sur Netlify',
+          description: 'Glissez-déposez votre dossier de build ou connectez via Git.',
           details: [
-            'Go to app.netlify.com and sign in',
-            "Drag the 'dist' folder onto the deploy area",
-            "Or click 'Add new site' → 'Import from Git'",
+            'Allez sur app.netlify.com et connectez-vous',
+            'Glissez le dossier "dist" sur la zone de déploiement',
+            'Ou cliquez sur "Ajouter un nouveau site" → "Importer depuis Git"',
           ],
           link_url: 'https://app.netlify.com',
-          link_label: 'Open Netlify',
+          link_label: 'Ouvrir Netlify',
         },
         {
-          title: 'Configure & Go Live',
-          description: 'Set up your domain and deploy settings.',
+          title: 'Configurez et lancez',
+          description: 'Configurez votre domaine et vos paramètres de déploiement.',
           details: [
-            'Your site is live on a .netlify.app domain',
-            'Go to Site settings → Domain management',
-            'Add your custom domain',
-            'SSL is automatically configured',
+            'Votre site est en ligne sur un domaine .netlify.app',
+            'Allez dans Paramètres du site → Gestion du domaine',
+            'Ajoutez votre domaine personnalisé',
+            'Le SSL est automatiquement configuré',
           ],
         },
       ],

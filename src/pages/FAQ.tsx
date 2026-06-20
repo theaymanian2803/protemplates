@@ -14,108 +14,108 @@ const faqCategories = [
   {
     id: "templates",
     icon: FileText,
-    title: "Templates & Products",
+    title: "Templates et produits",
     questions: [
       {
-        q: "What file formats are included with each template?",
-        a: "Each template includes source files in HTML, CSS, JavaScript, and React/TypeScript formats. You'll also receive PSD/Figma design files, documentation, and all necessary assets like fonts and images.",
+        q: "Quels formats de fichiers sont inclus avec chaque template ?",
+        a: "Chaque template inclut des fichiers source aux formats HTML, CSS, JavaScript et React/TypeScript. Vous recevrez également les fichiers de conception PSD/Figma, la documentation et tous les actifs nécessaires comme les polices et les images.",
       },
       {
-        q: "Are the templates responsive and mobile-friendly?",
-        a: "Yes! All our templates are fully responsive and tested across multiple devices and screen sizes. They work seamlessly on desktop, tablet, and mobile devices.",
+        q: "Les templates sont-ils responsifs et adaptés aux mobiles ?",
+        a: "Oui ! Tous nos templates sont entièrement responsifs et testés sur plusieurs appareils et tailles d'écran. Ils fonctionnent parfaitement sur les ordinateurs de bureau, les tablettes et les appareils mobiles.",
       },
       {
-        q: "Can I customize the templates to match my brand?",
-        a: "Absolutely! Our templates are built with customization in mind. You can easily change colors, fonts, images, and content. Most templates use CSS variables or Tailwind CSS for quick theming.",
+        q: "Puis-je personnaliser les templates pour les adapter à ma marque ?",
+        a: "Absolument ! Nos templates sont conçus pour être personnalisés. Vous pouvez facilement modifier les couleurs, les polices, les images et le contenu. La plupart des templates utilisent des variables CSS ou Tailwind CSS pour un changement rapide de thème.",
       },
       {
-        q: "Do templates include documentation?",
-        a: "Yes, every template comes with comprehensive documentation that covers installation, customization, and deployment. We also provide video tutorials for popular templates.",
+        q: "Les templates incluent-ils une documentation ?",
+        a: "Oui, chaque template est livré avec une documentation complète couvrant l'installation, la personnalisation et le déploiement. Nous fournissons également des tutoriels vidéo pour les templates les plus populaires.",
       },
       {
-        q: "Are images and fonts included in the templates?",
-        a: "Demo images are for preview purposes only. However, we provide links to free stock photo resources. Fonts used are typically Google Fonts or other free-to-use typefaces that are included.",
+        q: "Les images et les polices sont-elles incluses dans les templates ?",
+        a: "Les images de démonstration sont fournies à titre d'aperçu uniquement. Cependant, nous fournissons des liens vers des ressources d'images gratuites. Les polices utilisées sont généralement des Google Fonts ou d'autres polices gratuites incluses.",
       },
     ],
   },
   {
     id: "licensing",
     icon: Shield,
-    title: "Licensing & Usage",
+    title: "Licences et utilisation",
     questions: [
       {
-        q: "What's the difference between Regular and Extended licenses?",
-        a: "A Regular License allows you to use the template for a single end product (website/app) for yourself or one client. An Extended License allows unlimited end products and can be used for items sold to multiple users.",
+        q: "Quelle est la différence entre les licences standard et étendue ?",
+        a: "Une licence standard vous permet d'utiliser le template pour un seul produit final (site web/application) pour vous-même ou un client. Une licence étendue permet des produits finaux illimités et peut être utilisée pour des articles vendus à plusieurs utilisateurs.",
       },
       {
-        q: "Can I use a template for multiple projects?",
-        a: "With a Regular License, you can only use the template for one project. If you need to use it for multiple projects, you'll need to purchase additional licenses or upgrade to an Extended License.",
+        q: "Puis-je utiliser un template pour plusieurs projets ?",
+        a: "Avec une licence standard, vous ne pouvez utiliser le template que pour un seul projet. Si vous devez l'utiliser pour plusieurs projets, vous devrez acheter des licences supplémentaires ou passer à une licence étendue.",
       },
       {
-        q: "Can I resell or redistribute the template?",
-        a: "No, you cannot resell or redistribute the template files themselves. However, you can use them to create end products for clients. The Extended License allows for more commercial flexibility.",
+        q: "Puis-je revendre ou redistribuer le template ?",
+        a: "Non, vous ne pouvez pas revendre ou redistribuer les fichiers du template eux-mêmes. Cependant, vous pouvez les utiliser pour créer des produits finaux pour vos clients. La licence étendue offre plus de flexibilité commerciale.",
       },
       {
-        q: "Do I need to credit TemplatePro when using a template?",
-        a: "No, attribution is not required for Regular or Extended licenses. However, we always appreciate a link back to our site!",
+        q: "Dois-je créditer TemplatePro lors de l'utilisation d'un template ?",
+        a: "Non, l'attribution n'est pas requise pour les licences standard ou étendue. Cependant, nous apprécions toujours un lien vers notre site !",
       },
       {
-        q: "Can I use templates for client projects?",
-        a: "Yes! You can use our templates for client projects. Each license covers one end product, so if you're building websites for multiple clients, you'll need a license for each project.",
+        q: "Puis-je utiliser les templates pour des projets clients ?",
+        a: "Oui ! Vous pouvez utiliser nos templates pour des projets clients. Chaque licence couvre un seul produit final, donc si vous créez des sites web pour plusieurs clients, vous aurez besoin d'une licence pour chaque projet.",
       },
     ],
   },
   {
     id: "payments",
     icon: CreditCard,
-    title: "Payments & Refunds",
+    title: "Paiements et remboursements",
     questions: [
       {
-        q: "What payment methods do you accept?",
-        a: "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay. All transactions are processed securely through our payment partners.",
+        q: "Quels modes de paiement acceptez-vous ?",
+        a: "Nous acceptons toutes les principales cartes de crédit (Visa, MasterCard, American Express), PayPal et Apple Pay. Toutes les transactions sont traitées de manière sécurisée via nos partenaires de paiement.",
       },
       {
-        q: "Is my payment information secure?",
-        a: "Yes, we use industry-standard SSL encryption and never store your full credit card details. All payments are processed through PCI-compliant payment processors.",
+        q: "Mes informations de paiement sont-elles sécurisées ?",
+        a: "Oui, nous utilisons un chiffrement SSL conforme aux standards de l'industrie et ne stockons jamais vos coordonnées bancaires complètes. Tous les paiements sont traités par des processeurs de paiement conformes à la norme PCI.",
       },
       {
-        q: "Do you offer refunds?",
-        a: "Yes, we offer a 30-day money-back guarantee. If you're not satisfied with your purchase, contact our support team for a full refund. Note that refunds may not apply if you've already used the template.",
+        q: "Offrez-vous des remboursements ?",
+        a: "Oui, nous offrons une garantie de remboursement de 30 jours. Si vous n'êtes pas satisfait de votre achat, contactez notre équipe de support pour un remboursement intégral. Notez que les remboursements peuvent ne pas s'appliquer si vous avez déjà utilisé le template.",
       },
       {
-        q: "Are there any hidden fees or subscriptions?",
-        a: "No hidden fees! You pay once and own the template forever. There are no recurring charges unless you opt for our optional support extension.",
+        q: "Y a-t-il des frais cachés ou des abonnements ?",
+        a: "Aucun frais caché ! Vous payez une fois et possédez le template pour toujours. Il n'y a pas de frais récurrents, sauf si vous optez pour notre extension de support optionnelle.",
       },
       {
-        q: "Do you offer discounts for bulk purchases?",
-        a: "Yes! We offer volume discounts for agencies and businesses purchasing multiple templates. Contact our sales team for custom pricing.",
+        q: "Offrez-vous des réductions pour les achats en gros ?",
+        a: "Oui ! Nous offrons des réductions sur volume pour les agences et les entreprises qui achètent plusieurs templates. Contactez notre équipe commerciale pour des devis personnalisés.",
       },
     ],
   },
   {
     id: "support",
     icon: Headphones,
-    title: "Support & Updates",
+    title: "Support et mises à jour",
     questions: [
       {
-        q: "How long is support included with my purchase?",
-        a: "Each purchase includes 6 months of technical support from the template author. You can extend support for an additional 12 months at a discounted rate during checkout.",
+        q: "Combien de temps le support est-il inclus avec mon achat ?",
+        a: "Chaque achat inclut 6 mois de support technique de la part de l'auteur du template. Vous pouvez prolonger le support pour 12 mois supplémentaires à un tarif réduit lors du paiement.",
       },
       {
-        q: "What does support cover?",
-        a: "Support covers questions about the template's features, bug fixes, and basic customization guidance. It does not include custom development, installation services, or third-party plugin support.",
+        q: "Que couvre le support ?",
+        a: "Le support couvre les questions sur les fonctionnalités du template, les corrections de bugs et les conseils de personnalisation de base. Il n'inclut pas le développement personnalisé, les services d'installation ou le support de plugins tiers.",
       },
       {
-        q: "How do I get help if I have issues?",
-        a: "You can reach out through our support ticket system, live chat, or email. Most inquiries are answered within 24 hours during business days.",
+        q: "Comment obtenir de l'aide en cas de problème ?",
+        a: "Vous pouvez nous contacter via notre système de tickets de support, le chat en direct ou par e-mail. La plupart des demandes reçoivent une réponse sous 24 heures pendant les jours ouvrés.",
       },
       {
-        q: "Do I get free updates?",
-        a: "Yes! You receive free lifetime updates for any template you purchase. Updates include bug fixes, security patches, and new features when available.",
+        q: "Est-ce que je reçois des mises à jour gratuites ?",
+        a: "Oui ! Vous recevez des mises à jour gratuites à vie pour tout template que vous achetez. Les mises à jour incluent les corrections de bugs, les correctifs de sécurité et les nouvelles fonctionnalités lorsqu'elles sont disponibles.",
       },
       {
-        q: "Can I request custom features or modifications?",
-        a: "While support doesn't cover custom development, many of our authors offer custom development services. You can contact them directly or use our custom project request feature.",
+        q: "Puis-je demander des fonctionnalités ou modifications personnalisées ?",
+        a: "Bien que le support ne couvre pas le développement personnalisé, plusieurs de nos auteurs proposent des services de développement sur mesure. Vous pouvez les contacter directement ou utiliser notre fonctionnalité de demande de projet personnalisé.",
       },
     ],
   },
@@ -136,15 +136,18 @@ const FAQ = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
               <HelpCircle className="w-4 h-4" />
               Help Center
+              Centre d'aide
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6">
               Frequently Asked{" "}
+              Foire aux{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Questions
                 Questions
               </span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Find answers to common questions about our templates, licensing, payments, and support.
+              Trouvez les réponses aux questions courantes sur nos templates, licences, paiements et support.
             </p>
           </div>
         </div>
@@ -213,20 +216,21 @@ const FAQ = () => {
           <div className="glass-card p-8 md:p-12 rounded-3xl border border-border/50 text-center max-w-3xl mx-auto">
             <MessageCircle className="w-12 h-12 text-primary mx-auto mb-4" />
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
-              Still Have Questions?
+              Encore des questions ?
             </h2>
             <p className="text-muted-foreground mb-6">
-              Can't find what you're looking for? Our support team is here to help.
+              Vous ne trouvez pas ce que vous cherchez ? Notre équipe de support est là pour vous aider.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
                 <Button variant="hero" size="lg" className="gap-2">
                   <MessageCircle className="w-5 h-5" />
                   Contact Support
+                  Contacter le support
                 </Button>
               </Link>
               <Button variant="hero-outline" size="lg">
-                Live Chat
+                Chat en direct
               </Button>
             </div>
           </div>

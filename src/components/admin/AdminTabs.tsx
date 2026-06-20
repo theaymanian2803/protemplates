@@ -27,55 +27,55 @@ export const AdminTabs = ({ activeTab, onTabChange, children }: AdminTabsProps) 
       <TabsList className="mb-6 flex-wrap">
         <TabsTrigger value="templates" className="gap-2">
           <LayoutTemplate className="w-4 h-4" />
-          Templates
+          Modèles
         </TabsTrigger>
         <TabsTrigger value="orders" className="gap-2">
           <ShoppingCart className="w-4 h-4" />
-          Orders
+          Commandes
         </TabsTrigger>
         <TabsTrigger value="coupons" className="gap-2">
           <Tag className="w-4 h-4" />
-          Coupons
+          Codes promo
         </TabsTrigger>
         <TabsTrigger value="reviews" className="gap-2">
           <Star className="w-4 h-4" />
-          Reviews
+          Avis
         </TabsTrigger>
         <TabsTrigger value="contacts" className="gap-2">
           <MessageCircle className="w-4 h-4" />
-          Contacts
+          Messages
         </TabsTrigger>
         <TabsTrigger value="hero" className="gap-2">
           <ImageIcon className="w-4 h-4" />
-          Hero Banner
+          Bannière Héro
         </TabsTrigger>
         <TabsTrigger value="pricing" className="gap-2">
           <DollarSign className="w-4 h-4" />
-          Pricing
+          Tarifs
         </TabsTrigger>
         <TabsTrigger value="about" className="gap-2">
           <Info className="w-4 h-4" />
-          About Us
+          À propos
         </TabsTrigger>
         <TabsTrigger value="features" className="gap-2">
           <Sparkles className="w-4 h-4" />
-          Features
+          Fonctionnalités
         </TabsTrigger>
         <TabsTrigger value="contact-page" className="gap-2">
           <Phone className="w-4 h-4" />
-          Contact Page
+          Contact
         </TabsTrigger>
         <TabsTrigger value="testimonials" className="gap-2">
           <Quote className="w-4 h-4" />
-          Testimonials
+          Témoignages
         </TabsTrigger>
         <TabsTrigger value="categories" className="gap-2">
           <Grid3X3 className="w-4 h-4" />
-          Categories
+          Catégories
         </TabsTrigger>
         <TabsTrigger value="refunds" className="gap-2">
           <RotateCcw className="w-4 h-4" />
-          Refunds
+          Remboursements
         </TabsTrigger>
       </TabsList>
       {children}

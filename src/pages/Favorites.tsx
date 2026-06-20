@@ -99,10 +99,10 @@ const Favorites = () => {
               <Heart className="w-8 h-8 text-primary" />
             </div>
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
-              My Favorites
+              Mes favoris
             </h1>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Your collection of saved templates. Browse, filter, and find your perfect match.
+              Votre collection de templates sauvegardés. Parcourez, filtrez et trouvez votre match parfait.
             </p>
           </div>
 
@@ -116,13 +116,13 @@ const Favorites = () => {
               <div className="glass-card max-w-md mx-auto p-8 rounded-2xl border border-border/50">
                 <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                 <h2 className="text-xl font-display font-bold text-foreground mb-2">
-                  No favorites yet
+                  Aucun favori
                 </h2>
                 <p className="text-muted-foreground mb-6">
-                  Start exploring templates and save your favorites to see them here.
+                  Explorez les templates et ajoutez vos favoris pour les retrouver ici.
                 </p>
                 <Link to="/">
-                  <Button variant="hero">Browse Templates</Button>
+                  <Button variant="hero">Parcourir</Button>
                 </Link>
               </div>
             </div>
@@ -135,7 +135,7 @@ const Favorites = () => {
                   <div className="relative flex-1 w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <Input
-                      placeholder="Search favorites..."
+                      placeholder="Rechercher dans mes favoris..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
@@ -147,12 +147,12 @@ const Favorites = () => {
                     <Filter className="w-5 h-5 text-muted-foreground hidden md:block" />
                     <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                       <SelectTrigger className="w-full md:w-[160px]">
-                        <SelectValue placeholder="Category" />
+                        <SelectValue placeholder="Catégorie" />
                       </SelectTrigger>
                       <SelectContent>
                         {categories.map((cat) => (
                           <SelectItem key={cat} value={cat}>
-                            {cat === "all" ? "All Categories" : cat}
+                            {cat === "all" ? "Toutes les catégories" : cat}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -164,14 +164,14 @@ const Favorites = () => {
                     <ArrowUpDown className="w-5 h-5 text-muted-foreground hidden md:block" />
                     <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
                       <SelectTrigger className="w-full md:w-[160px]">
-                        <SelectValue placeholder="Sort by" />
+                        <SelectValue placeholder="Trier par" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="newest">Newest</SelectItem>
-                        <SelectItem value="popular">Most Popular</SelectItem>
-                        <SelectItem value="rating">Highest Rated</SelectItem>
-                        <SelectItem value="price-low">Price: Low to High</SelectItem>
-                        <SelectItem value="price-high">Price: High to Low</SelectItem>
+                        <SelectItem value="newest">Plus récents</SelectItem>
+                        <SelectItem value="popular">Les plus populaires</SelectItem>
+                        <SelectItem value="rating">Les mieux notés</SelectItem>
+                        <SelectItem value="price-low">Prix croissant</SelectItem>
+                        <SelectItem value="price-high">Prix décroissant</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -181,8 +181,8 @@ const Favorites = () => {
               {/* Results Count */}
               <div className="flex items-center justify-between mb-6">
                 <p className="text-muted-foreground">
-                  Showing <span className="font-semibold text-foreground">{filteredTemplates.length}</span> of{" "}
-                  <span className="font-semibold text-foreground">{favorites.length}</span> favorites
+                  Affichage de <span className="font-semibold text-foreground">{filteredTemplates.length}</span> sur{" "}
+                  <span className="font-semibold text-foreground">{favorites.length}</span> favoris
                 </p>
               </div>
 
@@ -190,7 +190,7 @@ const Favorites = () => {
               {filteredTemplates.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">
-                    No templates match your search. Try adjusting your filters.
+                    Aucun template ne correspond à votre recherche. Essayez de modifier vos filtres.
                   </p>
                 </div>
               ) : (

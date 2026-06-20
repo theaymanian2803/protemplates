@@ -22,9 +22,9 @@ export const CategoriesSectionForm = () => {
     if (!form) return;
     try {
       await updateMutation.mutateAsync(form);
-      toast({ title: "Categories section updated!" });
+      toast({ title: "Section catégories mise à jour !" });
     } catch (e: any) {
-      toast({ title: "Error saving", description: e.message, variant: "destructive" });
+      toast({ title: "Erreur lors de l'enregistrement", description: e.message, variant: "destructive" });
     }
   };
 
@@ -35,18 +35,18 @@ export const CategoriesSectionForm = () => {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader><CardTitle>Section Header</CardTitle></CardHeader>
+        <CardHeader><CardTitle>En-tête de section</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label>Badge Text</Label>
+            <Label>Texte du badge</Label>
             <Input value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })} />
           </div>
           <div>
-            <Label>Headline</Label>
+            <Label>Titre</Label>
             <Input value={form.headline} onChange={(e) => setForm({ ...form, headline: e.target.value })} />
           </div>
           <div>
-            <Label>Subheadline</Label>
+            <Label>Sous-titre</Label>
             <Input value={form.subheadline} onChange={(e) => setForm({ ...form, subheadline: e.target.value })} />
           </div>
         </CardContent>
@@ -55,13 +55,13 @@ export const CategoriesSectionForm = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Categories</CardTitle>
+            <CardTitle>Catégories</CardTitle>
             <Button
               size="sm"
               variant="outline"
               onClick={() => setForm({ ...form, categories: [...form.categories, { title: "", count: "", description: "" }] })}
             >
-              <Plus className="w-4 h-4 mr-1" /> Add Category
+              <Plus className="w-4 h-4 mr-1" /> Ajouter une catégorie
             </Button>
           </div>
         </CardHeader>
@@ -69,7 +69,7 @@ export const CategoriesSectionForm = () => {
           {form.categories.map((cat, i) => (
             <div key={i} className="p-4 border border-border rounded-xl space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-muted-foreground">Category {i + 1}</span>
+                <span className="text-sm font-medium text-muted-foreground">Catégorie {i + 1}</span>
                 <Button
                   size="icon"
                   variant="ghost"
@@ -81,7 +81,7 @@ export const CategoriesSectionForm = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div>
-                  <Label>Title</Label>
+                  <Label>Titre</Label>
                   <Input
                     value={cat.title}
                     onChange={(e) => {
@@ -92,10 +92,10 @@ export const CategoriesSectionForm = () => {
                   />
                 </div>
                 <div>
-                  <Label>Count</Label>
+                  <Label>Nombre</Label>
                   <Input
                     value={cat.count}
-                    placeholder="e.g. 2,450+"
+                    placeholder="ex. 2 450+"
                     onChange={(e) => {
                       const categories = [...form.categories];
                       categories[i] = { ...categories[i], count: e.target.value };
@@ -122,7 +122,7 @@ export const CategoriesSectionForm = () => {
 
       <Button onClick={handleSave} disabled={updateMutation.isPending}>
         {updateMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-        Save Changes
+        Enregistrer les modifications
       </Button>
     </div>
   );

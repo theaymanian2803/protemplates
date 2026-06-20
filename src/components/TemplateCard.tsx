@@ -29,6 +29,7 @@ const TemplateCard = ({ id, image, title, category, price }: TemplateCardProps) 
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-[2px]">
             <div className="flex items-center gap-2 text-white font-medium text-sm tracking-wide translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
               View details <ArrowRight className="w-4 h-4" />
+              Voir les détails <ArrowRight className="w-4 h-4" />
             </div>
           </div>
         </div>
@@ -40,10 +41,10 @@ const TemplateCard = ({ id, image, title, category, price }: TemplateCardProps) 
               {title}
             </h3>
             <span className="text-sm text-muted-foreground capitalize">
-              {category || 'Website Template'}
+              {category || 'Template site web'}
             </span>
           </div>
-          <div className="font-semibold text-foreground shrink-0">${price} USD</div>
+          <div className="font-semibold text-foreground shrink-0">${price}</div>
         </div>
       </div>
     </Link>

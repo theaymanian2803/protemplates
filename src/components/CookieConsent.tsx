@@ -44,7 +44,7 @@ const CookieConsent = () => {
               </div>
               <div className="flex-1 space-y-3">
                 <div className="flex items-start justify-between">
-                  <h4 className="font-semibold text-foreground text-sm">We use cookies 🍪</h4>
+                  <h4 className="font-semibold text-foreground text-sm">Nous utilisons des cookies 🍪</h4>
                   <button
                     onClick={handleDecline}
                     className="text-muted-foreground hover:text-foreground transition-colors -mt-1 -mr-1"
@@ -53,17 +53,17 @@ const CookieConsent = () => {
                   </button>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  We use cookies to enhance your browsing experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies.{" "}
+                  Nous utilisons des cookies pour améliorer votre expérience de navigation et analyser le trafic du site. En cliquant sur \"Accepter\", vous consentez à notre utilisation des cookies.{" "}
                   <Link to="/cookies" className="text-primary hover:underline">
-                    Learn more
+                    En savoir plus
                   </Link>
                 </p>
                 <div className="flex gap-2">
                   <Button size="sm" onClick={handleAccept} className="flex-1">
-                    Accept
+                    Accepter
                   </Button>
                   <Button size="sm" variant="outline" onClick={handleDecline} className="flex-1">
-                    Decline
+                    Refuser
                   </Button>
                 </div>
               </div>

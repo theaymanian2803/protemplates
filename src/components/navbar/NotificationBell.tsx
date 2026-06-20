@@ -58,17 +58,17 @@ const NotificationBell = () => {
               onClick={() => markAllAsRead.mutate()}
             >
               <Check className="w-3 h-3 mr-1" />
-              Mark all read
+              Tout marquer comme lu
             </Button>
           )}
         </div>
 
         <ScrollArea className="max-h-80">
           {isLoading ? (
-            <div className="p-6 text-center text-sm text-muted-foreground">Loading…</div>
+            <div className="p-6 text-center text-sm text-muted-foreground">Chargement…</div>
           ) : !notifications?.length ? (
             <div className="p-6 text-center text-sm text-muted-foreground">
-              No notifications yet
+              Aucune notification pour l'instant
             </div>
           ) : (
             <div className="divide-y divide-border">

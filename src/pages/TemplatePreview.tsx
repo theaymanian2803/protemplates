@@ -51,12 +51,13 @@ const TemplatePreview = () => {
               className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 mb-8 justify-center">
               <ArrowLeft className="w-4 h-4" />
               Back to Templates
+              Retour aux templates
             </Link>
             <h1 className="text-3xl font-display font-bold text-foreground mb-4">
-              Template Not Found
+              Template introuvable
             </h1>
             <p className="text-muted-foreground">
-              The template you're looking for doesn't exist or has been removed.
+              Le template que vous recherchez n'existe pas ou a été supprimé.
             </p>
           </div>
         </div>
@@ -92,7 +93,7 @@ const TemplatePreview = () => {
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                {template.title} - Website Template
+                {template.title} - Template site web
               </h1>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
@@ -108,11 +109,12 @@ const TemplatePreview = () => {
                 <a href={liveUrl} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="gap-2">
                     Preview in browser <ExternalLink className="w-4 h-4" />
+                    Aperçu en navigateur <ExternalLink className="w-4 h-4" />
                   </Button>
                 </a>
               )}
               <Button className="bg-blue-600 hover:bg-blue-700 text-white border-none">
-                Buy ${template.price || 59} USD
+                Acheter {template.price ? `$${template.price}` : '59 $'}
               </Button>
             </div>
           </div>
@@ -151,16 +153,16 @@ const TemplatePreview = () => {
             {/* Main Content (Left Side) */}
             <div className="lg:col-span-8 space-y-12">
               <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
-                <h2 className="text-2xl font-bold mb-4">{template.title} – Web Template</h2>
+                <h2 className="text-2xl font-bold mb-4">{template.title} – Template web</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   {template.description ||
-                    'A sleek and modern template designed for professionals who value precision, aesthetics, and visual storytelling. With its minimalist structure, it helps you present your projects with clarity and build a strong digital identity.'}
+                    'Un template élégant et moderne conçu pour les professionnels qui valorisent la précision, l\'esthétique et la narration visuelle. Avec sa structure minimaliste, il vous aide à présenter vos projets avec clarté et à construire une identité numérique forte.'}
                 </p>
-                <h3 className="text-lg font-bold mb-3">Key Features</h3>
+                <h3 className="text-lg font-bold mb-3">Fonctionnalités clés</h3>
                 <ul className="space-y-2 mb-8 list-disc pl-5">
-                  <li>Fully Responsive Design optimized for all devices.</li>
-                  <li>Effortless Customization with clean, organized code.</li>
-                  <li>Smooth Animations that enhance presentation without overpowering content.</li>
+                  <li>Design entièrement responsive optimisé pour tous les appareils.</li>
+                  <li>Personnalisation facile grâce à un code propre et organisé.</li>
+                  <li>Animations fluides qui améliorent la présentation sans surcharger le contenu.</li>
                 </ul>
               </div>
 

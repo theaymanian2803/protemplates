@@ -136,17 +136,16 @@ const Templates = () => {
             <div className="relative z-10 flex flex-col items-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/80 backdrop-blur-md border border-border shadow-sm text-foreground text-sm font-semibold mb-6 transition-transform hover:scale-105 cursor-default">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Crafted with love</span>
+                <span>Créé avec amour</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 tracking-tight flex items-center justify-center gap-3">
-                Website Templates{' '}
+                Templates{' '}
                 <span className="inline-block animate-bounce origin-bottom">🎨</span>
               </h1>
 
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Grab a cup of coffee ☕ and explore our cozy collection of premium, fully
-                customizable designs. Find the perfect home for your next big idea!
+                Explorez notre collection de designs premium et personnalisables. Trouvez le template parfait pour votre prochain projet !
               </p>
             </div>
           </div>
@@ -165,10 +164,10 @@ const Templates = () => {
                 }`}>
                 <SlidersHorizontal className="w-4 h-4" />
                 <span className="hidden sm:inline">
-                  {isFiltersOpen ? 'Hide Filters' : 'Show Filters'}
+                  {isFiltersOpen ? 'Masquer les filtres' : 'Afficher les filtres'}
                 </span>
                 <span className="sm:hidden">
-                  {isFiltersOpen ? 'Close Filters' : 'Open Filters'}
+                  {isFiltersOpen ? 'Fermer les filtres' : 'Ouvrir les filtres'}
                 </span>
               </Button>
 
@@ -176,7 +175,7 @@ const Templates = () => {
               <div className="relative w-full sm:w-80">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search templates..."
+                  placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-11 bg-card border-border/60 focus-visible:ring-1 rounded-full shadow-sm w-full"
@@ -297,9 +296,9 @@ const Templates = () => {
               ) : (
                 <div className="text-center py-24 border border-dashed border-border/60 rounded-[2rem] bg-muted/20">
                   <LayoutGrid className="w-12 h-12 text-muted-foreground/40 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-foreground mb-2">No templates found</h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Aucun template trouvé</h3>
                   <p className="text-muted-foreground">
-                    Try adjusting your filters or search query to find what you're looking for.
+                    Essayez de modifier vos filtres ou votre recherche.
                   </p>
                 </div>
               )}

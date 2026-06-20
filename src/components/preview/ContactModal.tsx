@@ -10,10 +10,10 @@ import { Loader2, Send } from "lucide-react";
 import { z } from "zod";
 
 const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100),
-  email: z.string().trim().email("Invalid email address").max(255),
-  subject: z.string().trim().min(1, "Subject is required").max(200),
-  message: z.string().trim().min(1, "Message is required").max(2000),
+  name: z.string().trim().min(1, "Nom requis").max(100),
+  email: z.string().trim().email("Adresse e-mail invalide").max(255),
+  subject: z.string().trim().min(1, "Objet requis").max(200),
+  message: z.string().trim().min(1, "Message requis").max(2000),
 });
 
 interface ContactModalProps {
@@ -61,11 +61,11 @@ const ContactModal = ({ open, onOpenChange, templateId, templateTitle }: Contact
     setIsSubmitting(false);
 
     if (error) {
-      toast({ title: "Error sending message", description: error.message, variant: "destructive" });
+      toast({ title: "Erreur lors de l'envoi du message", description: error.message, variant: "destructive" });
       return;
     }
 
-    toast({ title: "Message sent!", description: "We'll get back to you soon." });
+    toast({ title: "Message envoyé !", description: "Nous vous répondrons sous peu." });
     setForm({ name: "", email: "", subject: "", message: "" });
     onOpenChange(false);
   };
@@ -74,40 +74,40 @@ const ContactModal = ({ open, onOpenChange, templateId, templateTitle }: Contact
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
+          <DialogTitle>Nous contacter</DialogTitle>
           <DialogDescription>
             {templateTitle
-              ? `Have a question about "${templateTitle}"? Send us a message.`
-              : "Have a question? Send us a message."}
+              ? `Une question à propos de "${templateTitle}" ? Envoyez-nous un message.`
+              : "Une question ? Envoyez-nous un message."}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="contact-name">Name</Label>
+            <Label htmlFor="contact-name">Nom</Label>
             <Input
               id="contact-name"
-              placeholder="Your name"
+              placeholder="Votre nom"
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
             />
             {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="contact-email">Email</Label>
+            <Label htmlFor="contact-email">E-mail</Label>
             <Input
               id="contact-email"
               type="email"
-              placeholder="your@email.com"
+              placeholder="votre@email.com"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
             />
             {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="contact-subject">Subject</Label>
+            <Label htmlFor="contact-subject">Objet</Label>
             <Input
               id="contact-subject"
-              placeholder="What's this about?"
+              placeholder="De quoi s'agit-il ?"
               value={form.subject}
               onChange={(e) => handleChange("subject", e.target.value)}
             />
@@ -117,7 +117,7 @@ const ContactModal = ({ open, onOpenChange, templateId, templateTitle }: Contact
             <Label htmlFor="contact-message">Message</Label>
             <Textarea
               id="contact-message"
-              placeholder="Your message..."
+              placeholder="Votre message..."
               rows={4}
               value={form.message}
               onChange={(e) => handleChange("message", e.target.value)}
@@ -126,7 +126,7 @@ const ContactModal = ({ open, onOpenChange, templateId, templateTitle }: Contact
           </div>
           <Button type="submit" className="w-full gap-2" disabled={isSubmitting}>
             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
           </Button>
         </form>
       </DialogContent>

@@ -71,8 +71,8 @@ const OrderItemsList = ({ orderId, orderStatus }: OrderItemsListProps) => {
       document.body.removeChild(link)
     } catch (error: any) {
       toast({
-        title: 'Download failed',
-        description: error.message || 'Could not generate download link',
+        title: 'Échec du téléchargement',
+        description: error.message || 'Impossible de générer le lien de téléchargement',
         variant: 'destructive',
       })
     } finally {
@@ -94,7 +94,7 @@ const OrderItemsList = ({ orderId, orderStatus }: OrderItemsListProps) => {
   if (!items?.length) {
     return (
       <div className="p-3 border-t text-sm text-muted-foreground">
-        No items found for this order.
+        Aucun article trouvé pour cette commande.
       </div>
     )
   }
@@ -125,10 +125,10 @@ const OrderItemsList = ({ orderId, orderStatus }: OrderItemsListProps) => {
               ) : (
                 <Download className="w-3 h-3" />
               )}
-              <span className="ml-1">Download</span>
+              <span className="ml-1">Télécharger</span>
             </Button>
           ) : !canDownload ? (
-            <span className="text-xs text-muted-foreground">Available after completion</span>
+            <span className="text-xs text-muted-foreground">Disponible après finalisation</span>
           ) : null}
         </div>
       ))}

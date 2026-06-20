@@ -32,12 +32,12 @@ async function streamChat({
 
   if (!resp.ok) {
     const data = await resp.json().catch(() => ({}));
-    onError(data.error || "Something went wrong. Please try again.");
+    onError(data.error || "Une erreur est survenue. Veuillez réessayer.");
     return;
   }
 
   if (!resp.body) {
-    onError("No response received.");
+    onError("Aucune réponse reçue.");
     return;
   }
 
@@ -109,14 +109,14 @@ const ChatBubble = () => {
     }
   }, [view, isOpen]);
 
-  const [whatsappMsg, setWhatsappMsg] = useState("Hi! I have a question about TemplatePro.");
+  const [whatsappMsg, setWhatsappMsg] = useState("Bonjour ! J'ai une question à propos de TemplatePro.");
 
   const openWhatsApp = () => {
     setView("whatsapp");
   };
 
   const getWhatsAppUrl = useCallback(() => {
-    const message = (whatsappMsg.trim() || "Hi! I have a question about TemplatePro.").slice(0, 1000);
+    const message = (whatsappMsg.trim() || "Bonjour ! J'ai une question à propos de TemplatePro.").slice(0, 1000);
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }, [whatsappMsg]);
 
@@ -176,7 +176,7 @@ const ChatBubble = () => {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "⚠️ Connection error. Please try again." },
+        { role: "assistant", content: "⚠️ Erreur de connexion. Veuillez réessayer." },
       ]);
       setIsLoading(false);
     }
@@ -207,14 +207,14 @@ const ChatBubble = () => {
               )}
               <div className="flex-1">
                 <h3 className="font-semibold text-primary-foreground text-sm">
-                  {view === "menu" ? "How can we help?" : view === "chat" ? "AI Assistant" : "WhatsApp"}
+                  {view === "menu" ? "Comment pouvons-nous vous aider ?" : view === "chat" ? "Assistant IA" : "WhatsApp"}
                 </h3>
                 <p className="text-primary-foreground/70 text-xs">
                   {view === "menu"
-                    ? "Choose a support option below"
+                    ? "Choisissez une option d'assistance ci-dessous"
                     : view === "chat"
-                    ? "Ask me anything about TemplatePro"
-                    : "Send us a message on WhatsApp"}
+                    ? "Posez-moi toutes vos questions sur TemplatePro"
+                    : "Envoyez-nous un message sur WhatsApp"}
                 </p>
               </div>
               <button onClick={handleClose} className="text-primary-foreground/80 hover:text-primary-foreground">
@@ -235,10 +235,10 @@ const ChatBubble = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-foreground text-sm">
-                      Chat with AI
+                      Discuter avec l'IA
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      Get instant answers to your questions
+                      Obtenez des réponses instantanées à vos questions
                     </div>
                   </div>
                 </button>
@@ -252,11 +252,11 @@ const ChatBubble = () => {
                     <WhatsAppIcon />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground text-sm">
+                      <div className="font-semibold text-foreground text-sm">
                       WhatsApp
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      Talk to a human for personalized help
+                      Parlez à un humain pour une aide personnalisée
                     </div>
                   </div>
                 </button>
@@ -269,7 +269,7 @@ const ChatBubble = () => {
                     <div className="text-center py-8">
                       <Bot className="w-10 h-10 text-primary/30 mx-auto mb-3" />
                       <p className="text-sm text-muted-foreground">
-                        Hi! 👋 How can I help you today?
+                        Bonjour ! 👋 Comment puis-je vous aider aujourd'hui ?
                       </p>
                     </div>
                   )}
@@ -318,7 +318,7 @@ const ChatBubble = () => {
                       ref={inputRef}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      placeholder="Type a message..."
+                      placeholder="Tapez un message..."
                       className="flex-1 text-sm rounded-xl"
                       disabled={isLoading}
                     />
@@ -342,19 +342,19 @@ const ChatBubble = () => {
                       <WhatsAppIcon />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground text-sm">TemplatePro Support</p>
+                      <p className="font-semibold text-foreground text-sm">Support TemplatePro</p>
                       <p className="text-xs text-muted-foreground">+{WHATSAPP_NUMBER}</p>
                       <p className="text-xs text-green-600 mt-0.5">● Online</p>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Your message</label>
+                    <label className="text-sm font-medium text-foreground">Votre message</label>
                     <textarea
                       value={whatsappMsg}
                       onChange={(e) => setWhatsappMsg(e.target.value)}
                       className="w-full min-h-[120px] p-3 rounded-xl border border-border/50 bg-background text-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                      placeholder="Type your message here..."
+                      placeholder="Tapez votre message ici..."
                     />
                   </div>
                 </div>
@@ -367,7 +367,7 @@ const ChatBubble = () => {
                     aria-label="Open WhatsApp chat"
                   >
                     <WhatsAppIcon />
-                    Open WhatsApp Chat
+                    Ouvrir le chat WhatsApp
                   </Button>
                 </div>
               </div>
