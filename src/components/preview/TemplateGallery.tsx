@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Template } from "@/hooks/useTemplates";
-import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Maximize2, ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TemplateGalleryProps {
@@ -141,6 +141,71 @@ interface LightboxProps {
 }
 
 const Lightbox = ({ images, index, open, onClose, onNavigate }: LightboxProps) => {
+  const [zoom, setZoom] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const ZOOM_STEP = 0.5;
+  const MAX_ZOOM = 2;
+  const MIN_ZOOM = 1;
+
+  useEffect(() => {
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+  }, [index]);
+
+  const resetZoom = () => {
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const zoomIn = () => {
+    setZoom((prev) => Math.min(MAX_ZOOM, +(prev + ZOOM_STEP).toFixed(1)));
+  };
+
+  const zoomOut = () => {
+    setZoom((prev) => {
+      const next = Math.max(MIN_ZOOM, +(prev - ZOOM_STEP).toFixed(1));
+      if (next === 1) setPosition({ x: 0, y: 0 });
+      return next;
+    });
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.deltaY < 0) zoomIn();
+    else zoomOut();
+  };
+
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (zoom === 1) setZoom(MAX_ZOOM);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoom > 1) {
+      e.preventDefault();
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && zoom > 1) {
+      setPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y,
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   if (images.length === 0) return null;
 
   return (
@@ -150,7 +215,7 @@ const Lightbox = ({ images, index, open, onClose, onNavigate }: LightboxProps) =
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center"
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center overflow-hidden"
           onClick={onClose}
         >
           {/* Close button */}
@@ -162,8 +227,13 @@ const Lightbox = ({ images, index, open, onClose, onNavigate }: LightboxProps) =
           </button>
 
           {/* Counter */}
-          <div className="absolute top-4 left-4 text-white/70 text-sm">
-            {index + 1} / {images.length}
+          <div className="absolute top-4 left-4 text-white/70 text-sm flex items-center gap-2">
+            <span>{index + 1} / {images.length}</span>
+            {zoom > 1 && (
+              <span className="text-xs text-white/50">
+                ({Math.round(zoom * 100)}%)
+              </span>
+            )}
           </div>
 
           {/* Navigation */}
@@ -184,18 +254,72 @@ const Lightbox = ({ images, index, open, onClose, onNavigate }: LightboxProps) =
             </>
           )}
 
-          {/* Image */}
-          <motion.img
+          {/* Image with zoom */}
+          <motion.div
             key={index}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            src={images[index].src}
-            alt={images[index].label}
-            className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
+            className="flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <div
+              ref={containerRef}
+              className="overflow-hidden rounded-lg select-none"
+              style={{
+                maxWidth: zoom > 1 ? "98vw" : "90vw",
+                maxHeight: zoom > 1 ? "95vh" : "85vh",
+                cursor: zoom === 1 ? "zoom-in" : (isDragging ? "grabbing" : "grab"),
+              }}
+              onWheel={handleWheel}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onClick={handleImageClick}
+            >
+              <img
+                src={images[index].src}
+                alt={images[index].label}
+                className="max-w-[90vw] max-h-[85vh] object-contain pointer-events-none transition-transform duration-200 ease-out"
+                style={{
+                  transform: zoom > 1
+                    ? `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`
+                    : "scale(1) translate(0, 0)",
+                  transformOrigin: "center",
+                }}
+                draggable={false}
+              />
+            </div>
+          </motion.div>
+
+          {/* Zoom controls */}
+          {zoom > 1 && (
+            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/60 rounded-full px-3 py-1.5 backdrop-blur-sm">
+              <button
+                onClick={(e) => { e.stopPropagation(); zoomOut(); }}
+                className="text-white/70 hover:text-white transition-colors p-1"
+              >
+                <ZoomOut className="w-4 h-4" />
+              </button>
+              <span className="text-white/70 text-xs min-w-[36px] text-center">
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                onClick={(e) => { e.stopPropagation(); zoomIn(); }}
+                className="text-white/70 hover:text-white transition-colors p-1"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); resetZoom(); }}
+                className="text-white/70 hover:text-white transition-colors p-1"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
           {/* Thumbnails */}
           {images.length > 1 && (

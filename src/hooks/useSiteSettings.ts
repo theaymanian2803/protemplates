@@ -759,7 +759,7 @@ export interface HostingSettings {
 export const DEFAULT_HOSTING: HostingSettings = {
   pro_service: {
     enabled: true,
-    price: 20,
+    price: 0,
     title: 'Engager un Pro',
     description: 'Vous ne voulez pas gérer l\'hébergement ? Laissez nos experts déployer votre template pour vous.',
     features: [
@@ -768,7 +768,7 @@ export const DEFAULT_HOSTING: HostingSettings = {
       'Configuration du certificat SSL',
       'Délai de 24 heures',
     ],
-    cta_text: 'Obtenir l\'hébergement Pro',
+    cta_text: 'Démarrer via WhatsApp',
     contact_link: '/contact',
   },
   platforms: [

@@ -22,10 +22,12 @@ import {
   FolderOpen,
   Loader2,
   Crown,
+  MessageCircle,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useHostingSettings, HostingPlatform } from "@/hooks/useSiteSettings";
-import { useNavigate } from "react-router-dom";
+
+const WHATSAPP_NUMBER = "212694784176";
 
 interface HostingWizardProps {
   open: boolean;
@@ -56,7 +58,6 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
   const { data: settings, isLoading } = useHostingSettings();
-  const navigate = useNavigate();
 
   const platforms = (settings?.platforms || []).filter((p) => p.enabled);
   const proService = settings?.pro_service;
@@ -117,7 +118,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                   </button>
                 ))}
 
-                {/* Hire a Pro */}
+                {/* Free Hosting Support via WhatsApp */}
                 {proService?.enabled && (
                   <div className="mt-2 p-4 rounded-xl border-2 border-accent/50 bg-accent/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-[10px] font-bold px-3 py-0.5 rounded-bl-lg">
@@ -140,20 +141,28 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
                         </ul>
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-baseline gap-1">
-                            <span className="text-2xl font-bold text-foreground">${proService.price}</span>
-                            <span className="text-xs text-muted-foreground">unique</span>
+                            <span className="text-2xl font-bold text-accent">Gratuit</span>
                           </div>
                           <Button
                             size="sm"
                             variant="accent"
                             className="gap-1"
                             onClick={() => {
+                              const message = templateTitle
+                                ? `Bonjour%2C%20je%20souhaite%20de%20l%27aide%20pour%20h%C3%A9berger%20mon%20template%20%22${encodeURIComponent(templateTitle)}%22`
+                                : "Bonjour%2C%20je%20souhaite%20de%20l%27aide%20pour%20h%C3%A9berger%20mon%20template";
+                              const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
                               handleClose();
-                              navigate(`/checkout/pro-hosting${templateTitle ? `?template=${encodeURIComponent(templateTitle)}` : ""}`);
+                              setTimeout(() => {
+                                const popup = window.open(url, "_blank", "noopener,noreferrer");
+                                if (!popup) {
+                                  window.location.href = url;
+                                }
+                              }, 400);
                             }}
                           >
-                            {proService.cta_text}
-                            <ArrowRight className="w-3 h-3" />
+                            <MessageCircle className="w-4 h-4" />
+                            Démarrer via WhatsApp
                           </Button>
                         </div>
                       </div>
