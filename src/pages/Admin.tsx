@@ -98,7 +98,7 @@ const Admin = () => {
         await supabase.from('template_downloads' as any).upsert({
           template_id: inserted.id,
           source_file_url: sourceFileUrl,
-        } as any)
+        }, { onConflict: 'template_id' } as any)
       }
     },
     onSuccess: () => {
@@ -126,7 +126,7 @@ const Admin = () => {
         await supabase.from('template_downloads' as any).upsert({
           template_id: id,
           source_file_url: sourceFileUrl,
-        } as any)
+        }, { onConflict: 'template_id' } as any)
       }
     },
     onSuccess: () => {
