@@ -8,13 +8,39 @@ import TemplateSidebar from '@/components/preview/TemplateSidebar'
 import TemplateTechStack from '@/components/preview/TemplateTechStack'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useAuth } from '@/contexts/AuthContext'
+import { useCart } from '@/contexts/CartContext'
+import { useToast } from '@/hooks/use-toast'
 import { useTemplate } from '@/hooks/useTemplates'
-import { ArrowLeft, ExternalLink, Home } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft, ExternalLink, Home, ShoppingBag } from 'lucide-react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const TemplatePreview = () => {
   const { id } = useParams<{ id: string }>()
   const { data: template, isLoading, error } = useTemplate(id || '')
+  const { addToCart } = useCart()
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const { toast } = useToast()
+
+  const handleBuyClick = () => {
+    addToCart({
+      id: id || '',
+      title: template?.title || 'Modèle',
+      image: template?.image_url || '',
+      price: template ? Number(template.price) : 59,
+      license: 'regular',
+    })
+    toast({
+      title: 'Ajouté au panier',
+      description: `${template?.title || 'Modèle'} a été ajouté à votre panier.`,
+    })
+    if (!user) {
+      navigate('/auth?redirect=/cart')
+    } else {
+      navigate('/cart')
+    }
+  }
 
   if (isLoading) {
     return (
@@ -50,7 +76,6 @@ const TemplatePreview = () => {
               to="/"
               className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 mb-8 justify-center">
               <ArrowLeft className="w-4 h-4" />
-              Back to Templates
               Retour aux templates
             </Link>
             <h1 className="text-3xl font-display font-bold text-foreground mb-4">
@@ -66,7 +91,7 @@ const TemplatePreview = () => {
     )
   }
 
-  const liveUrl = template.preview_url || template.demo_url
+  const liveUrl = template.demo_url
 
   return (
     <main className="min-h-screen bg-background">
@@ -108,13 +133,15 @@ const TemplatePreview = () => {
               {liveUrl && (
                 <a href={liveUrl} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="gap-2">
-                    Preview in browser <ExternalLink className="w-4 h-4" />
                     Aperçu en navigateur <ExternalLink className="w-4 h-4" />
                   </Button>
                 </a>
               )}
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white border-none">
-                Acheter {template.price ? `$${template.price}` : '59 $'}
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2"
+                onClick={handleBuyClick}>
+                <ShoppingBag className="w-4 h-4" />
+                {Number(template.price) > 0 ? `Acheter $${template.price}` : 'Obtenir gratuitement'}
               </Button>
             </div>
           </div>
@@ -174,7 +201,7 @@ const TemplatePreview = () => {
 
             {/* Sidebar (Right Side) */}
             <div className="lg:col-span-4">
-              <TemplateSidebar template={template} />
+              <TemplateSidebar />
             </div>
           </div>
 
