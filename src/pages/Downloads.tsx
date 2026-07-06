@@ -11,16 +11,19 @@ import { useToast } from '@/hooks/use-toast'
 import { usePurchasedTemplates } from '@/hooks/useDashboard'
 import { supabase } from '@/integrations/supabase/client'
 import { getDirectDownloadUrl } from '@/lib/utils'
-import { Download, FileArchive, Loader2, Package, Rocket, Search, Star } from 'lucide-react'
+import { Download, FileArchive, Loader2, Package, Rocket, Search, Star, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 
 const Downloads = () => {
   const { user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { data: purchased, isLoading } = usePurchasedTemplates()
   const { toast } = useToast()
   const [downloadingId, setDownloadingId] = useState<string | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [hostingOpen, setHostingOpen] = useState(false)
   const [hostingTitle, setHostingTitle] = useState('')
@@ -62,6 +65,22 @@ const Downloads = () => {
       })
     } finally {
       setDownloadingId(null)
+    }
+  }
+
+  const handleRemove = async (itemId: string, title: string) => {
+    if (!confirm(`Supprimer "${title}" de vos téléchargements ? Cette action est irréversible.`)) return
+    setDeletingId(itemId)
+    try {
+      const { error } = await supabase.from('order_items').delete().eq('id', itemId)
+      if (error) throw error
+      queryClient.invalidateQueries({ queryKey: ['purchased-templates'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] })
+      toast({ title: 'Template supprimé', description: `"${title}" a été retiré de vos téléchargements.` })
+    } catch (error: any) {
+      toast({ title: 'Erreur', description: error.message, variant: 'destructive' })
+    } finally {
+      setDeletingId(null)
     }
   }
 
@@ -185,6 +204,18 @@ const Downloads = () => {
                       ) : (
                         <span className="text-xs text-muted-foreground">Fichier non disponible</span>
                       )}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="gap-1 text-muted-foreground hover:text-destructive"
+                        onClick={() => handleRemove(item.id, item.template_title)}
+                        disabled={deletingId === item.id}>
+                        {deletingId === item.id ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-3 h-3" />
+                        )}
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>

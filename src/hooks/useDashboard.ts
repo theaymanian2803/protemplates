@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 
 export interface PurchasedTemplate {
+  id: string;
   template_id: string;
   template_title: string;
   license_type: string;
@@ -64,6 +65,7 @@ export const usePurchasedTemplates = () => {
       const orderMap = new Map(orders.map((o) => [o.id, o]));
 
       return (items || []).map((item) => ({
+        id: item.id,
         template_id: item.template_id,
         template_title: item.template_title,
         license_type: item.license_type,
