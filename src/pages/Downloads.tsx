@@ -72,8 +72,17 @@ const Downloads = () => {
     if (!confirm(`Supprimer "${title}" de vos téléchargements ? Cette action est irréversible.`)) return
     setDeletingId(itemId)
     try {
-      const { error } = await supabase.from('order_items').delete().eq('id', itemId)
-      if (error) throw error
+      const { data: sessionData } = await supabase.auth.getSession()
+      const accessToken = sessionData?.session?.access_token
+
+      const response = await supabase.functions.invoke('remove-purchased-template', {
+        body: { itemId },
+        headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+      })
+
+      if (response.error) throw new Error(response.error.error || response.data?.error || 'Échec de la suppression')
+      if (response.data?.error) throw new Error(response.data.error)
+
       queryClient.invalidateQueries({ queryKey: ['purchased-templates'] })
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] })
       toast({ title: 'Template supprimé', description: `"${title}" a été retiré de vos téléchargements.` })

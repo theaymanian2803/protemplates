@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.claim-free-order]
 verify_jwt = false
 
+[functions.remove-purchased-template]
+verify_jwt = false
+
 [functions.r2-upload-url]
 enabled = true
 verify_jwt = true
