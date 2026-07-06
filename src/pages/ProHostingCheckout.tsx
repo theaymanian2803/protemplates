@@ -41,7 +41,7 @@ const ProHostingCheckout = () => {
   const [notes, setNotes] = useState("");
 
   const proService = hostingSettings?.pro_service;
-  const price = proService?.price || 20;
+  const price = proService?.price ?? 0;
   const templateTitle = new URLSearchParams(window.location.search).get("template") || undefined;
 
   // Redirect if not authenticated

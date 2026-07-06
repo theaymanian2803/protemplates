@@ -107,8 +107,8 @@ serve(async (req) => {
         .from('site_settings')
         .select('value')
         .eq('key', 'hosting_platforms')
-        .single()
-      serverTotal = settingsData?.value?.pro_service?.price || 20
+        .maybeSingle()
+      serverTotal = settingsData?.value?.pro_service?.price ?? 0
     } else if (isAllAccess) {
       serverTotal = ALL_ACCESS_PRICE
     } else {

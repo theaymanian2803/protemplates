@@ -45,8 +45,10 @@ const Checkout = () => {
   )
   const validateCoupon = useValidateCoupon()
   const [hostingOpen, setHostingOpen] = useState(false)
+  const [isClaiming, setIsClaiming] = useState(false)
 
   const finalTotal = appliedCoupon ? Math.max(0, totalPrice - appliedCoupon.discount) : totalPrice
+  const isFree = finalTotal <= 0 && !isAllAccess
 
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) return
@@ -62,6 +64,48 @@ const Checkout = () => {
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null)
     setCouponCode('')
+  }
+
+  const handleClaimFreeOrder = async () => {
+    if (isAllAccess || items.length === 0) return
+    setIsClaiming(true)
+    try {
+      const { data: sessionData } = await supabase.auth.getSession()
+      const accessToken = sessionData?.session?.access_token
+
+      const response = await supabase.functions.invoke('claim-free-order', {
+        body: {
+          items: items.map((i) => ({ id: i.id, license: i.license })),
+          couponCode: appliedCoupon?.code,
+        },
+        headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+      })
+
+      if (response.error) {
+        throw new Error(response.error.error || response.data?.error || 'Échec de la commande')
+      }
+      if (response.data?.error) {
+        throw new Error(response.data.error)
+      }
+
+      setOrderId(response.data.orderId)
+      setOrderComplete(true)
+      clearCart()
+
+      toast({
+        title: 'Commande gratuite confirmée !',
+        description: 'Vos templates sont désormais disponibles dans vos téléchargements.',
+      })
+    } catch (error: any) {
+      console.error('Claim free order error:', error)
+      toast({
+        title: 'Erreur de commande',
+        description: error.message || 'Échec de la validation de la commande. Veuillez réessayer.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsClaiming(false)
+    }
   }
 
   // Redirect if not authenticated or cart is empty
@@ -87,7 +131,7 @@ const Checkout = () => {
 
   // Load PayPal SDK
   useEffect(() => {
-    if (orderComplete) return
+    if (orderComplete || isFree) return
 
     const loadPayPalScript = async () => {
       const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID
@@ -132,11 +176,11 @@ const Checkout = () => {
     }
 
     loadPayPalScript()
-  }, [toast, orderComplete])
+  }, [toast, orderComplete, isFree])
 
   // Render PayPal buttons
   useEffect(() => {
-    if (!paypalLoaded || !window.paypal || orderComplete) return
+    if (!paypalLoaded || !window.paypal || orderComplete || isFree) return
 
     const container = document.getElementById('paypal-button-container')
     if (!container) return
@@ -257,7 +301,7 @@ const Checkout = () => {
         },
       })
       .render('#paypal-button-container')
-  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon, isAllAccess])
+  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon, isAllAccess, isFree])
 
   if (orderComplete) {
     return (
@@ -332,52 +376,104 @@ const Checkout = () => {
                   <Input value={user?.email || ''} disabled className="mt-1 bg-muted/50" />
                 </div>
 
-                {paypalError && (
-                  <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/30 mb-4">
-                    <p className="text-sm text-destructive font-medium mb-2">
-                      Configuration requise
-                    </p>
-                    <p className="text-xs text-muted-foreground">{paypalError}</p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Get your Client ID from{' '}
-                      <a
-                        href="https://developer.paypal.com/dashboard/applications/sandbox"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline">
-                        PayPal Developer Dashboard
-                      </a>
-                    </p>
-                  </div>
-                )}
+                {isFree ? (
+                  <>
+                    <div className="p-4 rounded-lg bg-accent/10 border border-accent/30 mb-4">
+                      <p className="text-sm text-foreground font-medium mb-1">
+                        Commande gratuite
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Ces templates sont gratuits. Cliquez ci-dessous pour les ajouter
+                        instantanément à vos téléchargements.
+                      </p>
+                    </div>
 
-                {isLoading && (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                    <span className="ml-2 text-muted-foreground">Traitement...</span>
-                  </div>
-                )}
+                    {isClaiming && (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        <span className="ml-2 text-muted-foreground">Traitement...</span>
+                      </div>
+                    )}
 
-                <div
-                  id="paypal-button-container"
-                  className={isLoading || paypalError ? 'hidden' : ''}
-                />
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="w-full"
+                      onClick={handleClaimFreeOrder}
+                      disabled={isClaiming || isLoading}>
+                      {isClaiming ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Validation...
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle2 className="w-4 h-4 mr-2" />
+                          Obtenir gratuitement
+                        </>
+                      )}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {paypalError && (
+                      <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/30 mb-4">
+                        <p className="text-sm text-destructive font-medium mb-2">
+                          Configuration requise
+                        </p>
+                        <p className="text-xs text-muted-foreground">{paypalError}</p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Get your Client ID from{' '}
+                          <a
+                            href="https://developer.paypal.com/dashboard/applications/sandbox"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline">
+                            PayPal Developer Dashboard
+                          </a>
+                        </p>
+                      </div>
+                    )}
 
-                {!paypalLoaded && !isLoading && !paypalError && (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                    <span className="ml-2 text-muted-foreground">Chargement des options de paiement...</span>
-                  </div>
+                    {isLoading && (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        <span className="ml-2 text-muted-foreground">Traitement...</span>
+                      </div>
+                    )}
+
+                    <div
+                      id="paypal-button-container"
+                      className={isLoading || paypalError ? 'hidden' : ''}
+                    />
+
+                    {!paypalLoaded && !isLoading && !paypalError && (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                        <span className="ml-2 text-muted-foreground">Chargement des options de paiement...</span>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
 
               <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <ShieldCheck className="w-5 h-5 text-accent" />
-                  <span className="text-sm">
-                    Votre paiement est sécurisé par la protection des acheteurs PayPal
-                  </span>
-                </div>
+                {isFree ? (
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <ShieldCheck className="w-5 h-5 text-accent" />
+                    <span className="text-sm">
+                      Aucun paiement requis. Vos templates seront disponibles immédiatement dans
+                      vos téléchargements.
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <ShieldCheck className="w-5 h-5 text-accent" />
+                    <span className="text-sm">
+                      Votre paiement est sécurisé par la protection des acheteurs PayPal
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 

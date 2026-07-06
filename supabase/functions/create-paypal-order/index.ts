@@ -73,9 +73,9 @@ serve(async (req) => {
         .from('site_settings')
         .select('value')
         .eq('key', 'hosting_platforms')
-        .single()
+        .maybeSingle()
 
-      const proPrice = settingsData?.value?.pro_service?.price || 20
+      const proPrice = settingsData?.value?.pro_service?.price ?? 0
       serverTotal = proPrice
       paypalItems = [
         {

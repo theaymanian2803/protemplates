@@ -1,76 +1,9 @@
-import { useState, useRef, useEffect, useCallback, forwardRef, type ComponentPropsWithoutRef } from "react";
+import { useState, useCallback, forwardRef, type ComponentPropsWithoutRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, Loader2, ArrowLeft } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import ReactMarkdown from "react-markdown";
 
 const WHATSAPP_NUMBER = "212694784176";
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-
-type Msg = { role: "user" | "assistant"; content: string };
-
-async function streamChat({
-  messages,
-  onDelta,
-  onDone,
-  onError,
-}: {
-  messages: Msg[];
-  onDelta: (text: string) => void;
-  onDone: () => void;
-  onError: (err: string) => void;
-}) {
-  const resp = await fetch(CHAT_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-    },
-    body: JSON.stringify({ messages }),
-  });
-
-  if (!resp.ok) {
-    const data = await resp.json().catch(() => ({}));
-    onError(data.error || "Une erreur est survenue. Veuillez réessayer.");
-    return;
-  }
-
-  if (!resp.body) {
-    onError("Aucune réponse reçue.");
-    return;
-  }
-
-  const reader = resp.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    let newlineIndex: number;
-    while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
-      let line = buffer.slice(0, newlineIndex);
-      buffer = buffer.slice(newlineIndex + 1);
-      if (line.endsWith("\r")) line = line.slice(0, -1);
-      if (line.startsWith(":") || line.trim() === "") continue;
-      if (!line.startsWith("data: ")) continue;
-      const json = line.slice(6).trim();
-      if (json === "[DONE]") break;
-      try {
-        const parsed = JSON.parse(json);
-        const content = parsed.choices?.[0]?.delta?.content;
-        if (content) onDelta(content);
-      } catch {
-        buffer = line + "\n" + buffer;
-        break;
-      }
-    }
-  }
-  onDone();
-}
 
 const WhatsAppIcon = forwardRef<SVGSVGElement, ComponentPropsWithoutRef<"svg">>(
   ({ className = "", ...props }, ref) => (
@@ -88,32 +21,9 @@ const WhatsAppIcon = forwardRef<SVGSVGElement, ComponentPropsWithoutRef<"svg">>(
 
 WhatsAppIcon.displayName = "WhatsAppIcon";
 
-type View = "menu" | "chat" | "whatsapp";
-
 const ChatBubble = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [view, setView] = useState<View>("menu");
-  const [messages, setMessages] = useState<Msg[]>([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  useEffect(() => {
-    if (view === "chat" && isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300);
-    }
-  }, [view, isOpen]);
-
   const [whatsappMsg, setWhatsappMsg] = useState("Bonjour ! J'ai une question à propos de TemplatePro.");
-
-  const openWhatsApp = () => {
-    setView("whatsapp");
-  };
 
   const getWhatsAppUrl = useCallback(() => {
     const message = (whatsappMsg.trim() || "Bonjour ! J'ai une question à propos de TemplatePro.").slice(0, 1000);
@@ -135,56 +45,9 @@ const ChatBubble = () => {
     }
   };
 
-  const sendMessage = useCallback(async () => {
-    const text = input.trim();
-    if (!text || isLoading) return;
-
-    const userMsg: Msg = { role: "user", content: text };
-    const newMessages = [...messages, userMsg];
-    setMessages(newMessages);
-    setInput("");
-    setIsLoading(true);
-
-    let assistantSoFar = "";
-
-    const upsert = (chunk: string) => {
-      assistantSoFar += chunk;
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        if (last?.role === "assistant") {
-          return prev.map((m, i) =>
-            i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
-          );
-        }
-        return [...prev, { role: "assistant", content: assistantSoFar }];
-      });
-    };
-
-    try {
-      await streamChat({
-        messages: newMessages,
-        onDelta: upsert,
-        onDone: () => setIsLoading(false),
-        onError: (err) => {
-          setMessages((prev) => [
-            ...prev,
-            { role: "assistant", content: `⚠️ ${err}` },
-          ]);
-          setIsLoading(false);
-        },
-      });
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "⚠️ Erreur de connexion. Veuillez réessayer." },
-      ]);
-      setIsLoading(false);
-    }
-  }, [input, isLoading, messages]);
-
   const handleClose = () => {
     setIsOpen(false);
-    setTimeout(() => setView("menu"), 300);
+    setTimeout(() => setWhatsappMsg("Bonjour ! J'ai une question à propos de TemplatePro."), 300);
   };
 
   return (
@@ -200,21 +63,12 @@ const ChatBubble = () => {
           >
             {/* Header */}
             <div className="bg-primary px-5 py-4 flex items-center gap-3">
-              {view !== "menu" && (
-                <button onClick={() => setView("menu")} className="text-primary-foreground/80 hover:text-primary-foreground">
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
               <div className="flex-1">
                 <h3 className="font-semibold text-primary-foreground text-sm">
-                  {view === "menu" ? "Comment pouvons-nous vous aider ?" : view === "chat" ? "Assistant IA" : "WhatsApp"}
+                  WhatsApp
                 </h3>
                 <p className="text-primary-foreground/70 text-xs">
-                  {view === "menu"
-                    ? "Choisissez une option d'assistance ci-dessous"
-                    : view === "chat"
-                    ? "Posez-moi toutes vos questions sur TemplatePro"
-                    : "Envoyez-nous un message sur WhatsApp"}
+                  Envoyez-nous un message pour une aide personnalisée
                 </p>
               </div>
               <button onClick={handleClose} className="text-primary-foreground/80 hover:text-primary-foreground">
@@ -222,156 +76,43 @@ const ChatBubble = () => {
               </button>
             </div>
 
-            {/* Body */}
-            {view === "menu" ? (
-              <div className="p-5 space-y-3">
-                {/* AI Chatbot */}
-                <button
-                  onClick={() => setView("chat")}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all group text-left"
-                >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                    <Bot className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground text-sm">
-                      Discuter avec l'IA
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      Obtenez des réponses instantanées à vos questions
-                    </div>
-                  </div>
-                </button>
-
-                {/* WhatsApp */}
-                <button
-                  onClick={openWhatsApp}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-border/50 hover:border-green-500/30 hover:bg-green-500/5 transition-all group text-left"
-                >
-                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center shrink-0 text-green-600 group-hover:scale-105 transition-transform">
+            {/* WhatsApp View */}
+            <div className="flex flex-col h-[400px]">
+              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-muted/50">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center shrink-0 text-green-600">
                     <WhatsAppIcon />
                   </div>
                   <div>
-                      <div className="font-semibold text-foreground text-sm">
-                      WhatsApp
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      Parlez à un humain pour une aide personnalisée
-                    </div>
-                  </div>
-                </button>
-              </div>
-            ) : view === "chat" ? (
-              <div className="flex flex-col h-[400px]">
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                  {messages.length === 0 && (
-                    <div className="text-center py-8">
-                      <Bot className="w-10 h-10 text-primary/30 mx-auto mb-3" />
-                      <p className="text-sm text-muted-foreground">
-                        Bonjour ! 👋 Comment puis-je vous aider aujourd'hui ?
-                      </p>
-                    </div>
-                  )}
-                  {messages.map((msg, i) => (
-                    <div
-                      key={i}
-                      className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                      <div
-                        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
-                          msg.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-br-md"
-                            : "bg-muted text-foreground rounded-bl-md"
-                        }`}
-                      >
-                        {msg.role === "assistant" ? (
-                          <div className="prose prose-sm dark:prose-invert max-w-none [&>p]:mb-1 [&>p:last-child]:mb-0 [&>ul]:mt-1 [&>ol]:mt-1">
-                            <ReactMarkdown>{msg.content}</ReactMarkdown>
-                          </div>
-                        ) : (
-                          msg.content
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
-                    <div className="flex justify-start">
-                      <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-3">
-                        <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-                      </div>
-                    </div>
-                  )}
-                  <div ref={messagesEndRef} />
-                </div>
-
-                {/* Input */}
-                <div className="p-3 border-t border-border/50">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      sendMessage();
-                    }}
-                    className="flex gap-2"
-                  >
-                    <Input
-                      ref={inputRef}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder="Tapez un message..."
-                      className="flex-1 text-sm rounded-xl"
-                      disabled={isLoading}
-                    />
-                    <Button
-                      type="submit"
-                      size="icon"
-                      disabled={!input.trim() || isLoading}
-                      className="rounded-xl shrink-0"
-                    >
-                      <Send className="w-4 h-4" />
-                    </Button>
-                  </form>
-                </div>
-              </div>
-            ) : (
-              /* WhatsApp View */
-              <div className="flex flex-col h-[400px]">
-                <div className="flex-1 overflow-y-auto p-5 space-y-4">
-                  <div className="flex items-center gap-3 p-4 rounded-xl bg-muted/50">
-                    <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center shrink-0 text-green-600">
-                      <WhatsAppIcon />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground text-sm">Support TemplatePro</p>
-                      <p className="text-xs text-muted-foreground">+{WHATSAPP_NUMBER}</p>
-                      <p className="text-xs text-green-600 mt-0.5">● Online</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Votre message</label>
-                    <textarea
-                      value={whatsappMsg}
-                      onChange={(e) => setWhatsappMsg(e.target.value)}
-                      className="w-full min-h-[120px] p-3 rounded-xl border border-border/50 bg-background text-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                      placeholder="Tapez votre message ici..."
-                    />
+                    <p className="font-semibold text-foreground text-sm">Support TemplatePro</p>
+                    <p className="text-xs text-muted-foreground">+{WHATSAPP_NUMBER}</p>
+                    <p className="text-xs text-green-600 mt-0.5">● Online</p>
                   </div>
                 </div>
 
-                <div className="p-4 border-t border-border/50">
-                  <Button
-                    type="button"
-                    onClick={handleOpenWhatsAppChat}
-                    className="w-full rounded-xl bg-green-600 hover:bg-green-700 text-white gap-2"
-                    aria-label="Open WhatsApp chat"
-                  >
-                    <WhatsAppIcon />
-                    Ouvrir le chat WhatsApp
-                  </Button>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Votre message</label>
+                  <textarea
+                    value={whatsappMsg}
+                    onChange={(e) => setWhatsappMsg(e.target.value)}
+                    className="w-full min-h-[120px] p-3 rounded-xl border border-border/50 bg-background text-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    placeholder="Tapez votre message ici..."
+                  />
                 </div>
               </div>
-            )}
+
+              <div className="p-4 border-t border-border/50">
+                <Button
+                  type="button"
+                  onClick={handleOpenWhatsAppChat}
+                  className="w-full rounded-xl bg-green-600 hover:bg-green-700 text-white gap-2"
+                  aria-label="Open WhatsApp chat"
+                >
+                  <WhatsAppIcon />
+                  Ouvrir le chat WhatsApp
+                </Button>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
