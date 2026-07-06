@@ -334,8 +334,8 @@ const Checkout = () => {
                 </p>
               )}
               <div className="flex flex-wrap gap-4 justify-center">
-                <Link to="/profile">
-                  <Button variant="hero">Voir mes commandes</Button>
+                <Link to="/downloads">
+                  <Button variant="hero">Voir mes téléchargements</Button>
                 </Link>
                 <Button variant="outline" className="gap-2" onClick={() => setHostingOpen(true)}>
                   <Rocket className="w-4 h-4" /> Héberger
