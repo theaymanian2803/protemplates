@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 
 declare global {
   interface Window {
@@ -34,6 +35,7 @@ const Checkout = () => {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
   const { toast } = useToast()
+  const queryClient = useQueryClient()
 
   const [isLoading, setIsLoading] = useState(false)
   const [paypalLoaded, setPaypalLoaded] = useState(false)
@@ -91,6 +93,12 @@ const Checkout = () => {
       setOrderId(response.data.orderId)
       setOrderComplete(true)
       clearCart()
+
+      // Invalidate purchase queries so /downloads and /profile refetch fresh data
+      queryClient.invalidateQueries({ queryKey: ['purchased-templates'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] })
+      queryClient.invalidateQueries({ queryKey: ['my-orders'] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
 
       toast({
         title: 'Commande gratuite confirmée !',
