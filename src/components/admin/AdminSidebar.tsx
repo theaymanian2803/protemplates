@@ -4,16 +4,8 @@ import {
   Tag,
   MessageCircle,
   Star,
-  ImageIcon,
-  DollarSign,
-  Info,
-  Phone,
-  Sparkles,
-  Quote,
   RotateCcw,
-  Grid3X3,
   LayoutDashboard,
-  Rocket,
 } from "lucide-react";
 import {
   Sidebar,
@@ -35,20 +27,6 @@ const managementItems = [
   { title: "Avis", value: "reviews", icon: Star },
   { title: "Messages", value: "contacts", icon: MessageCircle },
   { title: "Remboursements", value: "refunds", icon: RotateCcw },
-];
-
-const contentItems = [
-  { title: "Bannière Héro", value: "hero", icon: ImageIcon },
-  { title: "Fonctionnalités", value: "features", icon: Sparkles },
-  { title: "Tarifs", value: "pricing", icon: DollarSign },
-  { title: "Catégories", value: "categories", icon: Grid3X3 },
-  { title: "Témoignages", value: "testimonials", icon: Quote },
-  { title: "Assistant Hébergement", value: "hosting", icon: Rocket },
-];
-
-const pageItems = [
-  { title: "À propos", value: "about", icon: Info },
-  { title: "Contact", value: "contact-page", icon: Phone },
 ];
 
 interface AdminSidebarProps {
@@ -106,8 +84,6 @@ export const AdminSidebar = ({ activeTab, onTabChange }: AdminSidebarProps) => {
           </div>
         )}
         {renderGroup("Gestion", managementItems)}
-        {renderGroup("Sections Accueil", contentItems)}
-        {renderGroup("Pages", pageItems)}
       </SidebarContent>
     </Sidebar>
   );

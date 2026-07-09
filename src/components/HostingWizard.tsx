@@ -20,14 +20,79 @@ import {
   Terminal,
   Upload,
   FolderOpen,
-  Loader2,
   Crown,
   MessageCircle,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useHostingSettings, HostingPlatform } from "@/hooks/useSiteSettings";
 
 const WHATSAPP_NUMBER = "212694784176";
+
+interface HostingStep {
+  title: string
+  description: string
+  details: string[]
+  command?: string
+  link_url?: string
+  link_label?: string
+}
+
+interface HostingPlatform {
+  id: string
+  name: string
+  tagline: string
+  enabled: boolean
+  color: string
+  steps: HostingStep[]
+}
+
+const platformsData: HostingPlatform[] = [
+  {
+    id: 'lovable',
+    name: 'Lovable',
+    tagline: 'Le plus simple — aucune configuration nécessaire',
+    enabled: true,
+    color: 'bg-primary text-primary-foreground',
+    steps: [
+      { title: 'Extrayez votre template', description: 'Décompressez les fichiers du template téléchargé dans un dossier sur votre ordinateur.', details: ['Localisez le fichier .zip téléchargé', 'Extrayez-le dans un dossier de votre choix', 'Ouvrez le dossier pour vérifier que tous les fichiers sont présents'] },
+      { title: 'Créez un projet Lovable', description: 'Allez sur Lovable et créez un nouveau projet, puis téléversez ou importez le code de votre template.', details: ['Visitez lovable.dev et connectez-vous', 'Cliquez sur "Nouveau projet" depuis le tableau de bord', 'Décrivez votre template ou collez le code pour commencer'], link_url: 'https://lovable.dev', link_label: 'Ouvrir Lovable' },
+      { title: 'Publiez votre site', description: 'Cliquez sur le bouton Publier dans le coin supérieur droit pour mettre votre site en ligne.', details: ['Cliquez sur le bouton "Publier" dans l\'éditeur', 'Votre site sera en ligne sur un domaine .lovable.app', 'Connectez éventuellement un domaine personnalisé dans Paramètres → Domaines'] },
+    ],
+  },
+  {
+    id: 'vercel',
+    name: 'Vercel',
+    tagline: 'Idéal pour les projets React et Next.js',
+    enabled: true,
+    color: 'bg-foreground text-background',
+    steps: [
+      { title: 'Poussez sur GitHub', description: 'Téléversez le code de votre template dans un dépôt GitHub.', details: ['Créez un nouveau dépôt sur GitHub', 'Initialisez git dans votre dossier de template', 'Poussez le code vers votre dépôt'], command: 'git init && git add . && git commit -m "Initial commit" && git push' },
+      { title: 'Importez dans Vercel', description: 'Connectez votre dépôt GitHub à Vercel pour des déploiements automatiques.', details: ['Allez sur vercel.com et connectez-vous avec GitHub', 'Cliquez sur "Ajouter un nouveau projet"', 'Sélectionnez votre dépôt de template', 'Vercel détectera automatiquement les paramètres du framework'], link_url: 'https://vercel.com/new', link_label: 'Ouvrir Vercel' },
+      { title: 'Déployez et lancez', description: 'Cliquez sur Déployer et votre site sera en ligne en quelques secondes.', details: ['Vérifiez les paramètres de build (généralement aucun changement requis)', 'Cliquez sur "Déployer"', 'Votre site sera en ligne sur un domaine .vercel.app', 'Ajoutez un domaine personnalisé dans Paramètres du projet → Domaines'] },
+    ],
+  },
+  {
+    id: 'netlify',
+    name: 'Netlify',
+    tagline: 'Déploiement simple par glisser-déposer',
+    enabled: true,
+    color: 'bg-[hsl(172,60%,40%)] text-white',
+    steps: [
+      { title: 'Construisez votre template', description: 'Exécutez la commande de build pour générer les fichiers prêts pour la production.', details: ['Ouvrez un terminal dans votre dossier de template', 'Installez d\'abord les dépendances', 'Exécutez la commande de build pour créer le dossier dist'], command: 'npm install && npm run build' },
+      { title: 'Déployez sur Netlify', description: 'Glissez-déposez votre dossier de build ou connectez via Git.', details: ['Allez sur app.netlify.com et connectez-vous', 'Glissez le dossier "dist" sur la zone de déploiement', 'Ou cliquez sur "Ajouter un nouveau site" → "Importer depuis Git"'], link_url: 'https://app.netlify.com', link_label: 'Ouvrir Netlify' },
+      { title: 'Configurez et lancez', description: 'Configurez votre domaine et vos paramètres de déploiement.', details: ['Votre site est en ligne sur un domaine .netlify.app', 'Allez dans Paramètres du site → Gestion du domaine', 'Ajoutez votre domaine personnalisé', 'Le SSL est automatiquement configuré'] },
+    ],
+  },
+]
+
+const proServiceData = {
+  enabled: true,
+  price: 0,
+  title: 'Engager un Pro',
+  description: 'Vous ne voulez pas gérer l\'hébergement ? Laissez nos experts déployer votre template pour vous.',
+  features: ['Configuration de déploiement professionnelle', 'Configuration de domaine incluse', 'Configuration du certificat SSL', 'Délai de 24 heures'],
+  cta_text: 'Démarrer via WhatsApp',
+  contact_link: '/contact',
+}
 
 interface HostingWizardProps {
   open: boolean;
@@ -57,10 +122,9 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
   const [selectedPlatform, setSelectedPlatform] = useState<HostingPlatform | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const { toast } = useToast();
-  const { data: settings, isLoading } = useHostingSettings();
 
-  const platforms = (settings?.platforms || []).filter((p) => p.enabled);
-  const proService = settings?.pro_service;
+  const platforms = platformsData.filter((p) => p.enabled);
+  const proService = proServiceData;
 
   const handleClose = () => {
     onOpenChange(false);
@@ -95,9 +159,7 @@ const HostingWizard = ({ open, onOpenChange, templateTitle }: HostingWizardProps
               </DialogDescription>
             </DialogHeader>
 
-            {isLoading ? (
-              <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>
-            ) : platforms.length === 0 ? (
+            {platforms.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-8">Aucune plateforme d'hébergement configurée.</p>
             ) : (
               <div className="grid gap-3 mt-4">

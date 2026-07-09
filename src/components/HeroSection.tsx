@@ -1,36 +1,29 @@
 import YouTubeModal from '@/components/preview/YouTubeModal'
 import { Button } from '@/components/ui/button'
-import { useHeroBanner } from '@/hooks/useSiteSettings'
 import { motion } from 'framer-motion'
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const HeroSection = () => {
-  const { data: hero } = useHeroBanner()
   const [showVideo, setShowVideo] = useState(false)
 
-  // Dynamic content from Supabase with French defaults for a Moroccan Website Selling Platform
-  const badge = hero?.badge_text || '🇲🇦 Plateforme #1 de Vente de Sites au Maroc'
-  const h1p = hero?.headline_line1_prefix || 'Achetez des '
-  const h1h = hero?.headline_line1_highlight || 'Sites Clés en Main'
-  const h2p = hero?.headline_line2_prefix || ' et Lancez Votre '
-  const h2h = hero?.headline_line2_highlight || 'Business'
-  const sub =
-    hero?.subheadline ||
-    "Découvrez notre catalogue de sites premium, optimisés pour le marché marocain. Ne perdez plus de temps avec le développement : achetez votre site professionnel et commencez à vendre dès aujourd'hui."
-  const ctaPText = hero?.cta_primary_text || 'Voir le catalogue'
-  const ctaPLink = hero?.cta_primary_link || '/templates'
-  const ctaSText = 'Comment ça marche'
-  const demoVideoId = hero?.demo_video_id || 'dQw4w9WgXcQ'
-  const heroImage = hero?.hero_image_url || ''
-
-  // French stats defaults focused on sales and Moroccan support
-  const stats = hero?.stats || [
-    { value: '500+', label: 'Sites Vendus', icon: '🛒' },
-    { value: '100%', label: 'Clés en Main', icon: '🚀' },
-    { value: '4.9★', label: 'Avis Clients', icon: '⭐' },
-    { value: '7j/7', label: 'Support Local', icon: '🤝' },
+  const badge = '🔥 Place de marché nº1 — Plus de 50 000 créateurs'
+  const h1p = "Achetez des "
+  const h1h = 'Sites Magnifiques'
+  const h2p = 'Prêts à '
+  const h2h = 'Lancer'
+  const sub = "Des templates premium, pixels parfaits, lancés en quelques minutes. Arrêtez de coder de zéro — commencez à vendre plus vite."
+  const ctaPText = 'Voir le catalogue'
+  const ctaPLink = '/templates'
+  const ctaSText = 'Voir la démo'
+  const demoVideoId = 'dQw4w9WgXcQ'
+  const heroImage = ''
+  const stats = [
+    { value: '12K+', label: 'Templates', icon: '📦' },
+    { value: '50K+', label: 'Créateurs satisfaits', icon: '🎉' },
+    { value: '4.9★', label: 'Note moyenne', icon: '⭐' },
+    { value: '24h/24', label: 'Support expert', icon: '🛟' },
   ]
 
   return (

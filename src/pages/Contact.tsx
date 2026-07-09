@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/hooks/use-toast'
-import { useContactUs } from '@/hooks/useSiteSettings'
 import { supabase } from '@/integrations/supabase/client'
 import {
   Clock,
@@ -39,12 +38,45 @@ const quickLinks = [
   },
 ]
 
+const contactData = {
+  hero_badge: 'Contactez-nous',
+  hero_headline: 'Nous serions ravis de',
+  hero_highlight: 'vous entendre',
+  hero_subheadline: 'Une question, un feedback ou besoin d\'aide ? Notre équipe est là pour vous.',
+  contact_methods: [
+    { title: 'Nous écrire', description: 'Envoyez-nous un email à tout moment', value: 'hello@templatepro.com', action: 'mailto:hello@templatepro.com' },
+    { title: 'Nous appeler', description: 'Lun-Ven, 9h-18h (heure EST)', value: '+1 (555) 123-4567', action: 'tel:+15551234567' },
+    { title: 'Chat en direct', description: 'Discutez avec notre équipe', value: 'Disponible 24h/24', action: '#' },
+    { title: 'Nous rendre visite', description: 'Notre siège social', value: '123 Design Street, NYC', action: '#' },
+  ],
+  form_title: 'Envoyez-nous un message',
+  form_subtitle: 'Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.',
+  business_hours: [
+    { day: 'Lundi - Vendredi', hours: '9h00 - 18h00 (EST)' },
+    { day: 'Samedi', hours: '10h00 - 16h00 (EST)' },
+    { day: 'Dimanche', hours: 'Fermé' },
+  ],
+  live_chat_note: '💬 Chat en direct disponible 24h/24',
+  response_times: [
+    { label: 'Email', time: 'Sous 24 heures' },
+    { label: 'Chat en direct', time: 'Instantané' },
+    { label: 'Téléphone', time: 'Pendant les heures d\'ouverture' },
+  ],
+  location_title: 'Notre adresse',
+  location_subtitle: 'Rendez-nous visite à notre siège social',
+  location_address_line1: '123 Design Street',
+  location_address_line2: 'New York, NY 10001',
+  location_lat: 40.7128,
+  location_lng: -74.006,
+  location_zoom: 15,
+}
+
 const Contact = () => {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { data: s } = useContactUs()
+  const s = contactData
 
-  const contactMethods = (s?.contact_methods || []).map((m, i) => ({
+  const contactMethods = s.contact_methods.map((m, i) => ({
     ...m,
     icon: methodIcons[i % methodIcons.length],
   }))

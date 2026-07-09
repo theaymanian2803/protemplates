@@ -2,19 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Check, Crown } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
-import { ALL_ACCESS_PRICE as DEFAULT_AA_PRICE } from "@/hooks/useAllAccessPass";
+import { ALL_ACCESS_PRICE } from "@/hooks/useAllAccessPass";
 import { motion } from "framer-motion";
-import { usePricingSection } from "@/hooks/useSiteSettings";
 
 const PricingSection = () => {
   const { setAllAccess } = useCart();
   const navigate = useNavigate();
-  const { data: ps } = usePricingSection();
 
-  const indFeatures = ps?.individual_features || ["Achat à l'unité", "Licences standard et étendue", "6 mois de support", "Mises à jour à vie", "Fichiers sources inclus"];
-  const aaFeatures = ps?.allaccess_features || ["Accès à TOUS les templates", "Tous les futurs templates inclus", "Licence standard pour tous", "Support prioritaire", "Mises à jour à vie", "Fichiers sources inclus"];
-  const indCtaLink = ps?.individual_cta_link || "/templates";
-  const aaPrice = ps?.allaccess_price ?? DEFAULT_AA_PRICE;
+  const indFeatures = ["Achat à l'unité", "Licences standard et étendue", "6 mois de support", "Mises à jour à vie", "Fichiers sources inclus"];
+  const aaFeatures = ["Accès à TOUS les templates", "Tous les futurs templates inclus", "Licence standard pour tous", "Support prioritaire", "Mises à jour à vie", "Fichiers sources inclus"];
+  const indCtaLink = "/templates";
+  const aaPrice = ALL_ACCESS_PRICE;
 
   const handleBuyAllAccess = () => {
     setAllAccess(true);

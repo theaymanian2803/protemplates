@@ -1,20 +1,12 @@
-﻿import { AboutUsSectionForm } from '@/components/admin/AboutUsSectionForm'
-import { AdminSidebar } from '@/components/admin/AdminSidebar'
-import { CategoriesSectionForm } from '@/components/admin/CategoriesSectionForm'
+﻿import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { ContactList } from '@/components/admin/ContactList'
-import { ContactUsSectionForm } from '@/components/admin/ContactUsSectionForm'
 import { CouponList } from '@/components/admin/CouponList'
-import { FeaturesSectionForm } from '@/components/admin/FeaturesSectionForm'
-import { HeroBannerForm } from '@/components/admin/HeroBannerForm'
-import { HostingPlatformsForm } from '@/components/admin/HostingPlatformsForm'
 import { OrderDetails } from '@/components/admin/OrderDetails'
 import { OrderList } from '@/components/admin/OrderList'
-import { PricingSectionForm } from '@/components/admin/PricingSectionForm'
 import RefundRequestList from '@/components/admin/RefundRequestList'
 import { ReviewList } from '@/components/admin/ReviewList'
 import { TemplateForm } from '@/components/admin/TemplateForm'
 import { TemplateList } from '@/components/admin/TemplateList'
-import { TestimonialsSectionForm } from '@/components/admin/TestimonialsSectionForm'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import {
@@ -268,23 +260,6 @@ const Admin = () => {
     )
   }
 
-  const sectionGroup: Record<string, string> = {
-    templates: 'Gestion',
-    orders: 'Gestion',
-    coupons: 'Gestion',
-    reviews: 'Gestion',
-    contacts: 'Gestion',
-    refunds: 'Gestion',
-    hero: 'Sections page d\'accueil',
-    features: 'Sections page d\'accueil',
-    pricing: 'Sections page d\'accueil',
-    categories: 'Sections page d\'accueil',
-    testimonials: 'Sections page d\'accueil',
-    hosting: 'Sections page d\'accueil',
-    about: 'Pages',
-    'contact-page': 'Pages',
-  }
-
   const sectionTitle: Record<string, string> = {
     templates: 'Templates',
     orders: 'Commandes',
@@ -292,14 +267,6 @@ const Admin = () => {
     reviews: 'Avis',
     contacts: 'Messages',
     refunds: 'Remboursements',
-    hero: 'Bannière Hero',
-    features: 'Section fonctionnalités',
-    pricing: 'Section tarifs',
-    categories: 'Section catégories',
-    testimonials: 'Section témoignages',
-    hosting: 'Assistant hébergement',
-    about: 'À propos',
-    'contact-page': 'Page de contact',
   }
 
   return (
@@ -323,9 +290,7 @@ const Admin = () => {
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <span className="text-muted-foreground text-sm">
-                          {sectionGroup[activeTab] || 'Général'}
-                        </span>
+                        <span className="text-muted-foreground text-sm">Gestion</span>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
@@ -428,47 +393,6 @@ const Admin = () => {
                 {activeTab === 'refunds' && (
                   <div className="glass-card p-6 rounded-2xl border border-border/50">
                     <RefundRequestList />
-                  </div>
-                )}
-
-                {activeTab === 'hero' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <HeroBannerForm />
-                  </div>
-                )}
-                {activeTab === 'pricing' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <PricingSectionForm />
-                  </div>
-                )}
-                {activeTab === 'about' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <AboutUsSectionForm />
-                  </div>
-                )}
-                {activeTab === 'features' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <FeaturesSectionForm />
-                  </div>
-                )}
-                {activeTab === 'contact-page' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <ContactUsSectionForm />
-                  </div>
-                )}
-                {activeTab === 'testimonials' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <TestimonialsSectionForm />
-                  </div>
-                )}
-                {activeTab === 'categories' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <CategoriesSectionForm />
-                  </div>
-                )}
-                {activeTab === 'hosting' && (
-                  <div className="glass-card p-6 rounded-2xl border border-border/50">
-                    <HostingPlatformsForm />
                   </div>
                 )}
               </div>

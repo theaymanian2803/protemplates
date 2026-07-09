@@ -1,16 +1,19 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { useTestimonialsSection } from "@/hooks/useSiteSettings";
 
 const colorClasses = [
   "bg-primary/10 text-primary",
   "bg-accent/10 text-accent",
 ];
 
-const TestimonialsSection = () => {
-  const { data: settings } = useTestimonialsSection();
+const testimonials = [
+  { name: 'Sarah Chen', role: 'Fondatrice, PixelCraft Studio', avatar: 'SC', text: 'Ces templates nous ont fait gagner des mois de développement. La qualité du code est incroyable — propre, bien documenté et facile à personnaliser.', rating: 5 },
+  { name: 'Marcus Williams', role: 'CTO, LaunchPad Inc', avatar: 'MW', text: 'Nous avons essayé des dizaines de fournisseurs de templates. Rien n\'égale la qualité de design et l\'optimisation des performances ici.', rating: 5 },
+  { name: 'Aisha Patel', role: 'Designer Freelance', avatar: 'AP', text: 'Mes clients sont toujours impressionnés quand je livre. Ces templates me font passer pour un génie. Le meilleur investissement que j\'ai fait.', rating: 5 },
+  { name: 'David Nguyen', role: 'Chef Produit, NovaTech', avatar: 'DN', text: 'Le Pass Tout Accès est une évidence. Chaque nouveau template est immédiatement disponible. Une valeur incroyable pour toute équipe.', rating: 5 },
+];
 
-  const testimonials = settings?.testimonials || [];
+const TestimonialsSection = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">

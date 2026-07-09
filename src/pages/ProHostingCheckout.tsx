@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useHostingSettings } from "@/hooks/useSiteSettings";
 import {
   ArrowLeft,
   ShieldCheck,
@@ -27,11 +26,20 @@ declare global {
   }
 }
 
+const proService = {
+  enabled: true,
+  price: 0,
+  title: 'Engager un Pro',
+  description: 'Vous ne voulez pas gérer l\'hébergement ? Laissez nos experts déployer votre template pour vous.',
+  features: ['Configuration de déploiement professionnelle', 'Configuration de domaine incluse', 'Configuration du certificat SSL', 'Délai de 24 heures'],
+  cta_text: 'Démarrer via WhatsApp',
+  contact_link: '/contact',
+}
+
 const ProHostingCheckout = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { data: hostingSettings } = useHostingSettings();
 
   const [isLoading, setIsLoading] = useState(false);
   const [paypalLoaded, setPaypalLoaded] = useState(false);
@@ -40,8 +48,7 @@ const ProHostingCheckout = () => {
   const [orderId, setOrderId] = useState<string | null>(null);
   const [notes, setNotes] = useState("");
 
-  const proService = hostingSettings?.pro_service;
-  const price = proService?.price ?? 0;
+  const price = proService.price ?? 0;
   const templateTitle = new URLSearchParams(window.location.search).get("template") || undefined;
 
   // Redirect if not authenticated
@@ -275,12 +282,7 @@ const ProHostingCheckout = () => {
                 <Separator className="my-4" />
 
                 <div className="space-y-2 mb-4">
-                  {(proService?.features || [
-                    "Installation complète",
-                    "Configuration du domaine",
-                    "Installation du certificat SSL",
-                    "Délai de 24 heures",
-                  ]).map((feature, i) => (
+                  {proService.features.map((feature, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-foreground">
                       <Check className="w-4 h-4 text-accent shrink-0" />
                       {feature}

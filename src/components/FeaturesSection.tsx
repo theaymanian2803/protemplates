@@ -2,7 +2,6 @@ import {
   Zap, Shield, Palette, Code2, HeadphonesIcon, RefreshCw, LucideIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useFeaturesSection } from "@/hooks/useSiteSettings";
 
 const iconMap: Record<string, LucideIcon> = {
   "Lightning Fast": Zap,
@@ -15,10 +14,17 @@ const iconMap: Record<string, LucideIcon> = {
 
 const fallbackIcons = [Zap, Shield, Palette, Code2, HeadphonesIcon, RefreshCw];
 
-const FeaturesSection = () => {
-  const { data: s } = useFeaturesSection();
+const featuresData = [
+  { title: 'Rapide comme l\'éclair', description: 'Optimisé pour la performance avec chargement différé, code splitting et livraison CDN.' },
+  { title: 'Sécurisé et fiable', description: 'Construit avec les meilleures pratiques de sécurité et des mises à jour régulières pour vous protéger.' },
+  { title: 'Entièrement personnalisable', description: 'Options de personnalisation faciles à utiliser avec une documentation détaillée incluse.' },
+  { title: 'Code propre', description: 'Code bien structuré et commenté suivant les meilleures pratiques de l\'industrie.' },
+  { title: 'Support premium', description: 'Obtenez de l\'aide de notre équipe d\'experts avec un support prioritaire 24h/24.' },
+  { title: 'Mises à jour régulières', description: 'Améliorations continues et nouvelles fonctionnalités ajoutées régulièrement.' },
+]
 
-  const features = (s?.features || []).map((f, i) => ({
+const FeaturesSection = () => {
+  const features = featuresData.map((f, i) => ({
     ...f,
     icon: iconMap[f.title] || fallbackIcons[i % fallbackIcons.length],
   }));
@@ -36,13 +42,13 @@ const FeaturesSection = () => {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">
-            {s?.badge || "Pourquoi nous choisir"}
+            Pourquoi nous choisir
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-            {s?.headline || "Conçu pour la réussite"}
+            Conçu pour la réussite
           </h2>
           <p className="text-lg text-muted-foreground">
-            {s?.subheadline || "Chaque template est conçu avec des fonctionnalités pour vous aider à réussir en ligne"}
+            Chaque template est conçu avec des fonctionnalités pour vous aider à réussir en ligne
           </p>
         </motion.div>
 

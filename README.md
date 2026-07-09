@@ -1,73 +1,43 @@
-# Welcome to your Lovable project
+# ProTemplates
 
-## Project info
+A ready-to-use React + TypeScript + shadcn/ui template with Supabase, React Query, and more.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 One-click deploy
 
-## How can I edit this code?
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/theaymanian2803/protemplates)
 
-There are several ways of editing your application.
+Click the button above — no terminal, no config. Your site will be live in under a minute.
 
-**Use Lovable**
+## 📦 How to use this template
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Option 1: GitHub Template (recommended)
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Click **"Use this template"** at the top of this repo
+2. Name your new repo
+3. Click the **Deploy with Vercel** button above
+4. Your site is live
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Option 2: Clone locally
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 🛠 Tech stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Vite** — fast dev & build
+- **React 18** + TypeScript
+- **shadcn/ui** — component library
+- **Tailwind CSS** — styling
+- **Supabase** — backend / auth
+- **React Query** — data fetching
+- **React Router** — routing
+- **Zustand** — state management
+- **Framer Motion** — animations
 
-**Use GitHub Codespaces**
+## 🌐 Custom domain
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+After deploying on Vercel, go to your project dashboard → **Domains** → add your custom domain.

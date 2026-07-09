@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useAboutUs } from "@/hooks/useSiteSettings";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -39,13 +38,76 @@ const valueColors = [
   "bg-violet-500/10 text-violet-500",
 ];
 
-const AboutUs = () => {
-  const { data: s } = useAboutUs();
+const aboutData = {
+  hero_badge: 'À propos de TemplatePro',
+  hero_headline: 'Nous construisons l\'avenir du',
+  hero_highlight: 'Design Web',
+  hero_subheadline: "Notre mission est de rendre le design web professionnel accessible à tous — des fondateurs solo aux équipes enterprise.",
+  hero_cta_primary_text: 'Voir les templates',
+  hero_cta_primary_link: '/templates',
+  hero_cta_secondary_text: 'Nous contacter',
+  hero_cta_secondary_link: '/contact',
+  stats: [
+    { value: '50K+', label: 'Templates vendus' },
+    { value: '12K+', label: 'Clients satisfaits' },
+    { value: '500+', label: 'Auteurs premium' },
+    { value: '150+', label: 'Pays desservis' },
+  ],
+  mission_badge: 'Notre mission',
+  mission_headline: 'Permettre aux créateurs de lancer plus vite et de mieux construire',
+  mission_paragraphs: [
+    'TemplatePro est né en 2018 d\'une simple frustration : pourquoi le design web de qualité devrait-il être réservé à ceux qui ont de gros budgets ou des compétences spécialisées ?',
+    'Nous hébergeons plus de 500 auteurs talentueux dans le monde entier, offrant des templates dans les domaines de l\'e-commerce, des portfolios, des landing pages, des tableaux de bord et bien plus — chacun vérifié pour la qualité du design, le code propre et l\'expérience utilisateur exceptionnelle.',
+  ],
+  mission_image_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&h=500&fit=crop',
+  awards: [
+    { title: 'Meilleure place de marché', subtitle: 'Web Awards 2023' },
+    { title: '98% de satisfaction', subtitle: 'Avis clients' },
+  ],
+  values_badge: 'Nos valeurs',
+  values_headline: 'Nos valeurs fondamentales',
+  values_subheadline: 'Ces principes guident tout ce que nous faisons — de la sélection des templates au soutien de notre communauté mondiale de créateurs.',
+  values: [
+    { title: 'Qualité avant tout', description: 'Chaque template est soumis à une révision rigoureuse — design pixel-parfait, code propre et réactivité irréprochable.' },
+    { title: 'Axé sur la communauté', description: 'Nous permettons aux designers et développeurs du monde entier de montrer leur créativité et de bâtir des carrières prospères.' },
+    { title: 'Innovation', description: 'Rester en avance sur les tendances du design avec des templates de pointe qui aident les entreprises à se démarquer en ligne.' },
+    { title: 'Réussite client', description: 'Votre réussite est notre priorité. Support dédié et ressources pour vous aider à lancer plus vite.' },
+    { title: 'Confiance et sécurité', description: 'Transactions sécurisées, code sous licence et garantie de remboursement sur chaque achat.' },
+    { title: 'Conviviale pour les développeurs', description: 'Code propre et bien documenté, construit avec des frameworks modernes. Facile à personnaliser et à étendre.' },
+  ],
+  team_badge: 'L\'équipe',
+  team_headline: 'Rencontrez notre équipe',
+  team_subheadline: 'Les passionnés derrière TemplatePro qui travaillent sans relâche pour vous offrir les meilleurs templates.',
+  team: [
+    { name: 'Sarah Chen', role: 'Fondatrice & PDG', bio: 'Ancienne responsable design chez Figma. Passionnée par la démocratisation du design web pour tous.', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face' },
+    { name: 'Marcus Johnson', role: 'Directeur du Design', bio: 'Designer primé avec plus de 10 ans d\'expérience dans la création d\'expériences numériques magnifiques.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face' },
+    { name: 'Emily Rodriguez', role: 'Développeuse principale', bio: 'Développeuse full-stack obsédée par la performance, l\'accessibilité et l\'architecture propre.', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face' },
+    { name: 'David Kim', role: 'Responsable Réussite Client', bio: 'Veille à ce que chaque client vive une expérience exceptionnelle, de l\'achat au lancement.', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face' },
+  ],
+  milestones_badge: 'Notre parcours',
+  milestones_headline: 'Étapes clés',
+  milestones: [
+    { year: '2018', title: 'Le début', event: 'TemplatePro fondé avec la vision de démocratiser le design web.' },
+    { year: '2019', title: 'Premier jalon', event: 'Atteint 1 000 templates et 5 000 clients dans le monde.' },
+    { year: '2021', title: 'Économie des créateurs', event: 'Lancement du programme partenaire auteur avec plus de 200 créateurs inscrits.' },
+    { year: '2023', title: 'Portée mondiale', event: 'Expansion pour servir des clients dans plus de 150 pays.' },
+    { year: '2024', title: 'Innovation IA', event: 'Introduction de la personnalisation et des recommandations de templates par IA.' },
+  ],
+  cta_headline: 'Prêt à créer quelque chose d\'exceptionnel ?',
+  cta_subheadline: 'Parcourez notre collection de templates premium et trouvez le point de départ parfait pour votre prochain projet.',
+  cta_primary_text: 'Voir les templates',
+  cta_primary_link: '/templates',
+  cta_secondary_text: 'Nous contacter',
+  cta_secondary_link: '/contact',
+}
 
-  const stats = (s?.stats || []).map((st, i) => ({ ...st, icon: statIcons[i % statIcons.length] }));
-  const values = (s?.values || []).map((v, i) => ({ ...v, icon: valueIcons[i % valueIcons.length], color: valueColors[i % valueColors.length] }));
-  const team = s?.team || [];
-  const milestones = s?.milestones || [];
+const AboutUs = () => {
+  const s = aboutData
+
+  const stats = s.stats.map((st, i) => ({ ...st, icon: statIcons[i % statIcons.length] }));
+  const values = s.values.map((v, i) => ({ ...v, icon: valueIcons[i % valueIcons.length], color: valueColors[i % valueColors.length] }));
+  const team = s.team;
+  const milestones = s.milestones;
 
   return (
     <main className="min-h-screen bg-background">
