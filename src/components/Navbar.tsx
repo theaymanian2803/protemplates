@@ -1,7 +1,20 @@
 import { useCategories } from '@/hooks/useTemplates'
+import ThemeToggle from '@/components/ThemeToggle'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useAuth } from '@/contexts/AuthContext'
+import { useCart } from '@/contexts/CartContext'
+import { useFavorites } from '@/contexts/FavoritesContext'
 import {
   ArrowRight,
   ChevronDown,
+  ChevronRight,
   Layers,
   ShoppingCart,
   Rocket,
@@ -22,31 +35,16 @@ import {
   Star,
   CreditCard,
   FileBarChart,
-} from 'lucide-react'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import ThemeToggle from '@/components/ThemeToggle'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useAuth } from '@/contexts/AuthContext'
-import { useCart } from '@/contexts/CartContext'
-import { useFavorites } from '@/contexts/FavoritesContext'
-import {
   Heart,
   LogOut,
   Menu,
   Search,
   Settings,
   User,
-  ChevronRight,
   X,
 } from 'lucide-react'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 // Map categories to icons
 const categoryIconMap: Record<string, typeof ShoppingCart> = {
