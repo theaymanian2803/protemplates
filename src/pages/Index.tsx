@@ -1,29 +1,25 @@
 import CategoriesSection from '@/components/CategoriesSection'
 import CTASection from '@/components/CTASection'
-import FeaturesSection from '@/components/FeaturesSection'
+import FeaturedThemes from '@/components/FeaturedThemes'
 import Footer from '@/components/Footer'
 import HeroSection from '@/components/HeroSection'
-import LogoCloud from '@/components/LogoCloud'
+import MarketplaceStats from '@/components/MarketplaceStats'
 import Navbar from '@/components/Navbar'
-import ParallaxBanner from '@/components/ParallaxBanner'
-import PricingSection from '@/components/PricingSection'
-import ShowcaseBanner from '@/components/ShowcaseBanner'
+import PromoBanner from '@/components/PromoBanner'
 import TemplatesSection from '@/components/TemplatesSection'
-import TestimonialsSection from '@/components/TestimonialsSection'
+import UniqueThemesBanner from '@/components/UniqueThemesBanner'
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
-      <LogoCloud />
-      <ShowcaseBanner />
+      <PromoBanner />
       <CategoriesSection />
+      <UniqueThemesBanner />
+      <FeaturedThemes />
+      <MarketplaceStats />
       <TemplatesSection />
-      <ParallaxBanner />
-      <FeaturesSection />
-      <TestimonialsSection />
-      <PricingSection />
       <CTASection />
       <Footer />
     </main>

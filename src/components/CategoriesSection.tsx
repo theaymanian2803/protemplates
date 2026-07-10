@@ -1,86 +1,82 @@
-import { 
-  ShoppingCart, 
-  Briefcase, 
-  Layout, 
-  FileText, 
-  Palette, 
-  Smartphone,
-  LucideIcon,
-  Layers
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-
-const iconMap: Record<string, LucideIcon> = {
-  "E-Commerce": ShoppingCart,
-  "Business": Briefcase,
-  "Landing Pages": Layout,
-  "Portfolios": FileText,
-  "Creative": Palette,
-  "Mobile Apps": Smartphone,
-};
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useTemplates } from '@/hooks/useTemplates'
 
 const categoriesData = [
-  { title: 'E-Commerce', count: '2 450+', description: 'Boutiques en ligne complètes' },
-  { title: 'Business', count: '1 820+', description: 'Sites professionnels et corporate' },
-  { title: 'Landing Pages', count: '3 200+', description: 'Pages à fort taux de conversion' },
-  { title: 'Portfolios', count: '1 560+', description: 'Présentez votre travail' },
-  { title: 'Créatif', count: '2 100+', description: 'Designs artistiques uniques' },
-  { title: 'Apps Mobile', count: '980+', description: 'Templates pour landing apps' },
-];
+  { title: 'WordPress Themes', desc: 'Thousands of WordPress themes', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-blue-500', icon: '' },
+  { title: 'eCommerce Templates', desc: 'Beautiful website templates', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-orange-500', icon: '🛒' },
+  { title: 'Site Templates', desc: 'HTML and website templates', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-purple-500', icon: '📄' },
+  { title: 'Marketing Templates', desc: 'Email, newsletter and landing page templates', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-yellow-500', icon: '📈' },
+  { title: 'CMS Templates', desc: 'Over 1,700 CMS website templates', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-teal-500', icon: '⚙️' },
+  { title: 'Blogging', desc: 'Blogger templates and themes', newest: 'Newest', bestsellers: 'Bestsellers', color: 'bg-pink-500', icon: '✍️' },
+]
+
+const CategoryCard = ({ category, index }: { category: typeof categoriesData[0]; index: number }) => {
+  const { data: templates } = useTemplates({ category: category.title, limit: 3 })
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+      {/* Header */}
+      <div className="p-5 text-center">
+        <h3 className="text-xl font-bold text-gray-900 mb-1">{category.title}</h3>
+        <p className="text-sm text-gray-500 mb-2">{category.desc}</p>
+        <div className="flex items-center justify-center gap-3 text-xs">
+          <Link to={`/templates?category=${encodeURIComponent(category.title)}&sort=newest`} className="text-green-600 hover:underline font-medium">
+            {category.newest}
+          </Link>
+          <span className="text-gray-300">|</span>
+          <Link to={`/templates?category=${encodeURIComponent(category.title)}&sort=bestsellers`} className="text-green-600 hover:underline font-medium">
+            {category.bestsellers}
+          </Link>
+        </div>
+      </div>
+
+      {/* Preview images */}
+      <div className="px-3 pb-3">
+        <div className="grid grid-cols-3 gap-1.5">
+          {templates?.slice(0, 3).map((t) => (
+            <Link key={t.id} to={`/template/${t.id}`} className="block aspect-[4/3] rounded overflow-hidden bg-gray-100">
+              <img src={t.image_url || '/placeholder.svg'} alt={t.title} className="w-full h-full object-cover hover:scale-105 transition-transform" loading="lazy" />
+            </Link>
+          ))}
+          {!templates && Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="aspect-[4/3] rounded bg-gray-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 const CategoriesSection = () => {
   return (
-    <section id="categories" className="py-24 relative">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16"
-        >
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Catégories</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-            Trouvez le template parfait
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Explorez notre collection de templates conçus pour chaque secteur d'activité et chaque besoin
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categoriesData.map((category, index) => {
-            const Icon = iconMap[category.title] || Layers;
-            const colorClass = index % 2 === 0 ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent";
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
-              >
-                <Link
-                  to={`/templates?category=${encodeURIComponent(category.title)}`}
-                  className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 cursor-pointer block"
-                >
-                  <div className={`w-14 h-14 rounded-xl ${colorClass} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-display text-xl font-bold text-foreground">{category.title}</h3>
-                    <span className="text-sm font-medium text-primary">{category.count}</span>
-                  </div>
-                  <p className="text-muted-foreground">{category.description}</p>
-                </Link>
-              </motion.div>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {categoriesData.map((category, index) => (
+            <CategoryCard key={category.title} category={category} index={index} />
+          ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-10">
+          <Link to="/templates">
+            <button className="px-8 py-3 bg-green-600 text-white font-semibold text-sm rounded-md hover:bg-green-700 transition-colors">
+              View all categories
+            </button>
+          </Link>
+        </motion.div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default CategoriesSection;
+export default CategoriesSection

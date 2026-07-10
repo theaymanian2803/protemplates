@@ -1,151 +1,108 @@
-import YouTubeModal from '@/components/preview/YouTubeModal'
-import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
-import { ArrowRight, Play, Sparkles } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+const popularTags = ['WordPress', 'React', 'Admin Dashboard', 'Landing Page', 'eCommerce', 'Portfolio']
 
 const HeroSection = () => {
-  const [showVideo, setShowVideo] = useState(false)
+  const [query, setQuery] = useState('')
+  const navigate = useNavigate()
 
-  const badge = '🔥 Place de marché nº1 — Plus de 50 000 créateurs'
-  const h1p = "Achetez des "
-  const h1h = 'Sites Magnifiques'
-  const h2p = 'Prêts à '
-  const h2h = 'Lancer'
-  const sub = "Des templates premium, pixels parfaits, lancés en quelques minutes. Arrêtez de coder de zéro — commencez à vendre plus vite."
-  const ctaPText = 'Voir le catalogue'
-  const ctaPLink = '/templates'
-  const ctaSText = 'Voir la démo'
-  const demoVideoId = 'dQw4w9WgXcQ'
-  const heroImage = ''
-  const stats = [
-    { value: '12K+', label: 'Templates', icon: '📦' },
-    { value: '50K+', label: 'Créateurs satisfaits', icon: '🎉' },
-    { value: '4.9★', label: 'Note moyenne', icon: '⭐' },
-    { value: '24h/24', label: 'Support expert', icon: '🛟' },
+  const onSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const params = new URLSearchParams()
+    if (query.trim()) params.set('q', query.trim())
+    navigate(`/templates?${params.toString()}`)
+  }
+
+  const collageItems = [
+    { color: 'bg-emerald-600', label: '#1 Best Selling', sub: 'WooCommerce Theme', w: 'w-44', h: 'h-28', rotate: '-rotate-3', top: 'top-0', left: 'left-0' },
+    { color: 'bg-slate-800', label: 'uncode', sub: 'Creative Theme', w: 'w-40', h: 'h-24', rotate: 'rotate-2', top: 'top-4', left: 'left-44' },
+    { color: 'bg-amber-500', label: 'The Best', sub: 'Creative Theme', w: 'w-36', h: 'h-22', rotate: '-rotate-1', top: 'top-28', left: 'left-2' },
+    { color: 'bg-indigo-600', label: 'Portfolio', sub: 'Agency Theme', w: 'w-38', h: 'h-24', rotate: 'rotate-3', top: 'top-24', left: 'left-36' },
+    { color: 'bg-rose-500', label: 'Magazine', sub: 'Blog Theme', w: 'w-32', h: 'h-20', rotate: '-rotate-2', top: 'top-44', left: 'left-10' },
+    { color: 'bg-cyan-600', label: 'Startup', sub: 'SaaS Theme', w: 'w-34', h: 'h-20', rotate: 'rotate-1', top: 'top-40', left: 'left-40' },
   ]
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24 pb-16">
-      {/* Dynamic Image Layer with Better Contrast and Cool Slow Zoom */}
-      {heroImage && (
-        <div className="absolute inset-0 z-0 overflow-hidden bg-background">
-          <motion.img
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            src={heroImage}
-            alt="Hero background"
-            className="w-full h-full object-cover object-center"
-          />
+    <section className="relative overflow-hidden pt-24 pb-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-center gap-12 max-w-7xl mx-auto">
+          {/* Left: Text + Search */}
+          <div className="flex-1 max-w-xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mb-4">
+              Professional WordPress Themes & Website Templates for any project
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-base text-gray-500 mb-8 leading-relaxed">
+              Discover thousands of easy to customize themes, templates & CMS products, made by world-class developers.
+            </motion.p>
 
-          {/* Elegant overlay to fix the "too bright" issue and make text pop */}
-          <div className="absolute inset-0 bg-background/10 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/0 to-transparent" />
+            <motion.form
+              onSubmit={onSearch}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-6">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="e.g. responsive WordPress"
+                className="flex-1 h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="h-12 px-5 bg-green-600 text-white font-semibold text-sm flex items-center gap-2 hover:bg-green-700 transition-colors">
+                <Search className="w-4 h-4" />
+                Search
+              </button>
+            </motion.form>
 
-          {/* Subtle soft blur orbs for depth */}
-          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[100px] animate-pulse" />
-          <div
-            className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-purple-500/10 blur-[100px] animate-pulse"
-            style={{ animationDelay: '2s' }}
-          />
-        </div>
-      )}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap gap-2">
+              {popularTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => navigate(`/templates?q=${encodeURIComponent(tag)}`)}
+                  className="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:border-green-500 hover:text-green-600 transition-colors">
+                  {tag}
+                </button>
+              ))}
+            </motion.div>
+          </div>
 
-      {/* Main Content Layer (Text & Actions) */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
-          {/* Animated Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/90 border border-border/50 shadow-sm mb-8 backdrop-blur-md cursor-default hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="text-sm font-medium text-foreground tracking-tight">{badge}</span>
-          </motion.div>
-
-          {/* Balanced, Elegant Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 leading-[1.1] tracking-tight">
-            {h1p}
-            <span className="text-red-400 dark:text-blue-500">{h1h}</span>
-            <br className="hidden sm:block" />
-            {h2p}
-            <span className="text-purple-600 dark:text-purple-500">{h2h}</span>
-            <span className="inline-block animate-bounce origin-bottom ml-3">🚀</span>
-          </motion.h1>
-
-          {/* Cozy Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed px-4">
-            {sub}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Link to={ctaPLink}>
-              <Button
-                size="lg"
-                className="group h-12 text-base px-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white border-none shadow-md transition-all hover:shadow-lg">
-                {ctaPText}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Button
-              variant="outline"
-              size="lg"
-              className="group h-12 text-base px-8 rounded-xl bg-background/50 backdrop-blur-sm border-border/60 hover:bg-background shadow-sm transition-all"
-              onClick={() => setShowVideo(true)}>
-              <Play className="w-4 h-4 mr-2 text-muted-foreground group-hover:text-foreground transition-colors" />
-              {ctaSText}
-            </Button>
-          </motion.div>
-
-          {/* Floating Stats Row */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="text-center py-5 px-3 rounded-2xl bg-card/80 backdrop-blur-md border border-border/50 shadow-sm transition-all duration-300 hover:shadow-md">
-                <div className="text-2xl md:text-3xl mb-2 transition-transform hover:scale-110">
-                  {stat.icon}
+          {/* Right: Image Collage */}
+          <div className="flex-1 relative hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative w-full h-72">
+              {collageItems.map((item, i) => (
+                <div
+                  key={i}
+                  className={`absolute ${item.w} ${item.h} ${item.color} rounded-lg shadow-lg ${item.rotate} ${item.top} ${item.left} flex flex-col items-center justify-center text-white overflow-hidden`}>
+                  <span className="text-[10px] font-bold uppercase tracking-wide opacity-80">{item.label}</span>
+                  <span className="text-xs font-semibold opacity-90">{item.sub}</span>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20" />
                 </div>
-                <div className="font-bold text-foreground text-base md:text-lg tracking-tight leading-tight">
-                  {stat.value}
-                </div>
-                <div className="text-[11px] md:text-xs text-muted-foreground font-medium uppercase tracking-wider mt-1">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
-
-      {/* Demo Video Modal */}
-      {demoVideoId && (
-        <YouTubeModal youtubeId={demoVideoId} open={showVideo} onOpenChange={setShowVideo} />
-      )}
     </section>
   )
 }
