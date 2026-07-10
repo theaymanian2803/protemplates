@@ -2,31 +2,18 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ExternalLink } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useTemplates } from '@/hooks/useTemplates'
+import { useTemplates, useCategories } from '@/hooks/useTemplates'
 import { Skeleton } from '@/components/ui/skeleton'
 
-const categoryTabs = [
-  'All categories',
-  'Site Templates',
-  'WordPress',
-  'CMS Themes',
-  'eCommerce',
-  'Blogging',
-  'Marketing',
-  'Forums',
-  'Muse Templates',
-  'Joomla!',
-  'Courses',
-  'Template Kits',
-  'UI Templates',
-]
-
 const TemplatesSection = () => {
-  const [activeCategory, setActiveCategory] = useState('All categories')
+  const { data: categories } = useCategories()
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const { data: templates, isLoading } = useTemplates({
-    category: activeCategory === 'All categories' ? undefined : activeCategory,
+    category: activeCategory || undefined,
     limit: 8,
   })
+
+  const categoryTabs = ['All categories', ...(categories || [])]
 
   return (
     <section className="py-20 bg-gray-50">
@@ -54,9 +41,9 @@ const TemplatesSection = () => {
           {categoryTabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveCategory(tab)}
+              onClick={() => setActiveCategory(tab === 'All categories' ? null : tab)}
               className={`px-5 py-2.5 rounded-full text-xs font-medium transition-colors ${
-                activeCategory === tab
+                (tab === 'All categories' && activeCategory === null) || activeCategory === tab
                   ? 'bg-orange-500 text-white'
                   : 'bg-white text-gray-600 border border-gray-200 hover:border-orange-400 hover:text-orange-500'
               }`}>
