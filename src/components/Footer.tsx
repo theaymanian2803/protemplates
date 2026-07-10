@@ -2,29 +2,29 @@ import { Twitter, Instagram, Linkedin, Github, Youtube, Mail } from 'lucide-reac
 import { Link } from 'react-router-dom'
 
 const footerLinks: Record<string, { label: string; to: string }[]> = {
-  About: [
+  Browse: [
+    { label: 'All Templates', to: '/templates' },
+    { label: 'Featured Themes', to: '/templates?featured=true' },
+    { label: 'Best Sellers', to: '/templates?sort=bestsellers' },
+    { label: 'Newest Items', to: '/templates?sort=newest' },
+  ],
+  Company: [
     { label: 'About Us', to: '/about' },
-    { label: 'How it works', to: '/about' },
-    { label: 'Careers', to: '/about' },
-    { label: 'Press kit', to: '/about' },
+    { label: 'Contact Us', to: '/contact' },
+    { label: 'FAQ', to: '/faq' },
+    { label: 'Become an Author', to: '/auth' },
   ],
-  'Help & Support': [
-    { label: 'Help center', to: '/faq' },
-    { label: 'Contact us', to: '/contact' },
-    { label: 'Licensing', to: '/license' },
+  'Help & Legal': [
+    { label: 'Help Center', to: '/faq' },
+    { label: 'License', to: '/license' },
     { label: 'Refunds', to: '/refunds' },
+    { label: 'Privacy Policy', to: '/privacy' },
   ],
-  Categories: [
-    { label: 'Web Themes & Templates', to: '/templates' },
-    { label: 'Code', to: '/templates?category=Code' },
-    { label: 'UI Kits', to: '/templates?category=UI%20Kits' },
-    { label: 'Admin Templates', to: '/templates?category=Admin%20Templates' },
-  ],
-  Community: [
-    { label: 'Become an author', to: '/auth' },
-    { label: 'Authors portal', to: '/dashboard' },
-    { label: 'Blog', to: '/about' },
-    { label: 'Affiliate program', to: '/about' },
+  Account: [
+    { label: 'Dashboard', to: '/dashboard' },
+    { label: 'My Downloads', to: '/downloads' },
+    { label: 'Favorites', to: '/favorites' },
+    { label: 'Shopping Cart', to: '/cart' },
   ],
 }
 
