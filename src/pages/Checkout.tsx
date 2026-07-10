@@ -94,7 +94,6 @@ const Checkout = () => {
       setOrderComplete(true)
       clearCart()
 
-      // Invalidate purchase queries so /downloads and /profile refetch fresh data
       queryClient.invalidateQueries({ queryKey: ['purchased-templates'] })
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] })
       queryClient.invalidateQueries({ queryKey: ['my-orders'] })
@@ -116,7 +115,6 @@ const Checkout = () => {
     }
   }
 
-  // Redirect if not authenticated or cart is empty
   useEffect(() => {
     if (loading) return
 
@@ -137,14 +135,12 @@ const Checkout = () => {
 
   const [paypalError, setPaypalError] = useState<string | null>(null)
 
-  // Load PayPal SDK
   useEffect(() => {
     if (orderComplete || isFree) return
 
     const loadPayPalScript = async () => {
       const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID
 
-      // Check if client ID is missing or is the placeholder value
       if (
         !clientId ||
         clientId === 'YOUR_PAYPAL_SANDBOX_CLIENT_ID' ||
@@ -186,7 +182,6 @@ const Checkout = () => {
     loadPayPalScript()
   }, [toast, orderComplete, isFree])
 
-  // Render PayPal buttons
   useEffect(() => {
     if (!paypalLoaded || !window.paypal || orderComplete || isFree) return
 
@@ -218,7 +213,6 @@ const Checkout = () => {
               headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
             })
 
-            // Polished Error Handling for Create Order
             if (response.error) {
               let errorMsg = response.error.message || 'Échec de la création de la commande'
               if (errorMsg.includes('non-2xx')) {
@@ -260,7 +254,6 @@ const Checkout = () => {
               headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
             })
 
-            // Polished Error Handling for Capture/Declines
             if (response.error) {
               let errorMsg = response.error.message || 'Échec de la validation du paiement'
               if (errorMsg.includes('non-2xx')) {
@@ -313,35 +306,35 @@ const Checkout = () => {
 
   if (orderComplete) {
     return (
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-white">
         <Navbar />
         <div className="pt-24 pb-16">
           <div className="container mx-auto px-4 max-w-2xl">
-            <div className="glass-card p-8 rounded-2xl border border-border/50 text-center">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
-                <CheckCircle2 className="w-10 h-10 text-accent" />
+            <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange-50 flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-orange-500" />
               </div>
-              <h1 className="font-display text-3xl font-bold text-foreground mb-4">
+              <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
                 Merci pour votre achat !
               </h1>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-gray-500 mb-6 leading-[1.7]">
                 Votre commande a été passée avec succès. Vous recevrez un e-mail de confirmation
                 sous peu.
               </p>
               {orderId && (
-                <p className="text-sm text-muted-foreground mb-8">
-                  Order ID: <span className="font-mono text-foreground">{orderId}</span>
+                <p className="text-sm text-gray-400 mb-8">
+                  Order ID: <span className="font-mono text-gray-900">{orderId}</span>
                 </p>
               )}
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/downloads">
-                  <Button variant="hero">Voir mes téléchargements</Button>
+                  <Button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold">Voir mes téléchargements</Button>
                 </Link>
-                <Button variant="outline" className="gap-2" onClick={() => setHostingOpen(true)}>
+                <Button variant="outline" className="gap-2 border-gray-300 text-gray-700 hover:border-orange-300" onClick={() => setHostingOpen(true)}>
                   <Rocket className="w-4 h-4" /> Héberger
                 </Button>
                 <Link to="/templates">
-                  <Button variant="ghost">Continuer</Button>
+                  <Button variant="ghost" className="text-gray-600">Continuer</Button>
                 </Link>
               </div>
             </div>
@@ -354,43 +347,43 @@ const Checkout = () => {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
 
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <Link
             to="/cart"
-            className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
+            className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Retour au panier
           </Link>
 
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-8">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
             Paiement
           </h1>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left Column - Payment */}
             <div className="space-y-6">
-              <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <h2 className="font-semibold text-lg text-foreground mb-4 flex items-center gap-2">
-                  <CreditCard className="w-5 h-5" />
+              <div className="bg-white p-6 rounded-xl border border-gray-200">
+                <h2 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-orange-500" />
                   Moyen de paiement
                 </h2>
 
                 <div className="mb-6">
-                  <Label className="text-muted-foreground">E-mail</Label>
-                  <Input value={user?.email || ''} disabled className="mt-1 bg-muted/50" />
+                  <Label className="text-gray-500">E-mail</Label>
+                  <Input value={user?.email || ''} disabled className="mt-1 bg-gray-50" />
                 </div>
 
                 {isFree ? (
                   <>
-                    <div className="p-4 rounded-lg bg-accent/10 border border-accent/30 mb-4">
-                      <p className="text-sm text-foreground font-medium mb-1">
+                    <div className="p-4 rounded-lg bg-orange-50 border border-orange-200 mb-4">
+                      <p className="text-sm text-gray-900 font-medium mb-1">
                         Commande gratuite
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-gray-500">
                         Ces templates sont gratuits. Cliquez ci-dessous pour les ajouter
                         instantanément à vos téléchargements.
                       </p>
@@ -398,15 +391,14 @@ const Checkout = () => {
 
                     {isClaiming && (
                       <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                        <span className="ml-2 text-muted-foreground">Traitement...</span>
+                        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+                        <span className="ml-2 text-gray-500">Traitement...</span>
                       </div>
                     )}
 
                     <Button
-                      variant="hero"
                       size="lg"
-                      className="w-full"
+                      className="w-full bg-orange-500 text-white hover:bg-orange-600 font-semibold"
                       onClick={handleClaimFreeOrder}
                       disabled={isClaiming || isLoading}>
                       {isClaiming ? (
@@ -425,18 +417,18 @@ const Checkout = () => {
                 ) : (
                   <>
                     {paypalError && (
-                      <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/30 mb-4">
-                        <p className="text-sm text-destructive font-medium mb-2">
+                      <div className="p-4 rounded-lg bg-red-50 border border-red-200 mb-4">
+                        <p className="text-sm text-red-600 font-medium mb-2">
                           Configuration requise
                         </p>
-                        <p className="text-xs text-muted-foreground">{paypalError}</p>
-                        <p className="text-xs text-muted-foreground mt-2">
+                        <p className="text-xs text-gray-500">{paypalError}</p>
+                        <p className="text-xs text-gray-500 mt-2">
                           Get your Client ID from{' '}
                           <a
                             href="https://developer.paypal.com/dashboard/applications/sandbox"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-primary hover:underline">
+                            className="text-orange-500 hover:underline">
                             PayPal Developer Dashboard
                           </a>
                         </p>
@@ -445,8 +437,8 @@ const Checkout = () => {
 
                     {isLoading && (
                       <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                        <span className="ml-2 text-muted-foreground">Traitement...</span>
+                        <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+                        <span className="ml-2 text-gray-500">Traitement...</span>
                       </div>
                     )}
 
@@ -457,26 +449,26 @@ const Checkout = () => {
 
                     {!paypalLoaded && !isLoading && !paypalError && (
                       <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                        <span className="ml-2 text-muted-foreground">Chargement des options de paiement...</span>
+                        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+                        <span className="ml-2 text-gray-500">Chargement des options de paiement...</span>
                       </div>
                     )}
                   </>
                 )}
               </div>
 
-              <div className="glass-card p-6 rounded-2xl border border-border/50">
+              <div className="bg-white p-6 rounded-xl border border-gray-200">
                 {isFree ? (
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <ShieldCheck className="w-5 h-5 text-accent" />
+                  <div className="flex items-center gap-3 text-gray-500">
+                    <ShieldCheck className="w-5 h-5 text-orange-500" />
                     <span className="text-sm">
                       Aucun paiement requis. Vos templates seront disponibles immédiatement dans
                       vos téléchargements.
                     </span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <ShieldCheck className="w-5 h-5 text-accent" />
+                  <div className="flex items-center gap-3 text-gray-500">
+                    <ShieldCheck className="w-5 h-5 text-orange-500" />
                     <span className="text-sm">
                       Votre paiement est sécurisé par la protection des acheteurs PayPal
                     </span>
@@ -487,20 +479,20 @@ const Checkout = () => {
 
             {/* Right Column - Order Summary */}
             <div>
-              <div className="glass-card p-6 rounded-2xl border border-border/50 sticky top-24">
-                <h2 className="font-semibold text-lg text-foreground mb-4">Récapitulatif de la commande</h2>
+              <div className="bg-white p-6 rounded-xl border border-gray-200 sticky top-24">
+                <h2 className="font-bold text-lg text-gray-900 mb-4">Récapitulatif de la commande</h2>
 
                 <div className="space-y-4 mb-6">
                   {isAllAccess ? (
                     <div className="flex gap-4 items-center">
-                      <div className="w-16 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <CreditCard className="w-6 h-6 text-primary" />
+                      <div className="w-16 h-12 rounded-lg bg-orange-50 flex items-center justify-center">
+                        <CreditCard className="w-6 h-6 text-orange-500" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-foreground text-sm">Pass Tout Accès</h3>
-                        <p className="text-xs text-muted-foreground">Accès à tous les templates</p>
+                        <h3 className="font-medium text-gray-900 text-sm">Pass Tout Accès</h3>
+                        <p className="text-xs text-gray-500">Accès à tous les templates</p>
                       </div>
-                      <span className="font-semibold text-foreground">${totalPrice}</span>
+                      <span className="font-bold text-gray-900">${totalPrice}</span>
                     </div>
                   ) : (
                     items.map((item) => (
@@ -511,14 +503,14 @@ const Checkout = () => {
                           className="w-16 h-12 object-cover rounded-lg"
                         />
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-foreground text-sm truncate">
+                          <h3 className="font-medium text-gray-900 text-sm truncate">
                             {item.title}
                           </h3>
-                          <p className="text-xs text-muted-foreground capitalize">
+                          <p className="text-xs text-gray-500 capitalize">
                             {item.license} Licence
                           </p>
                         </div>
-                        <span className="font-semibold text-foreground">${item.price}</span>
+                        <span className="font-bold text-gray-900">${item.price}</span>
                       </div>
                     ))
                   )}
@@ -528,15 +520,15 @@ const Checkout = () => {
 
                 {/* Coupon Code */}
                 <div className="space-y-2">
-                  <Label className="text-sm text-muted-foreground">Code promo</Label>
+                  <Label className="text-sm text-gray-500">Code promo</Label>
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between p-2 rounded-lg bg-accent/10 border border-accent/30">
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-orange-50 border border-orange-200">
                       <div className="flex items-center gap-2">
-                        <Tag className="w-4 h-4 text-accent" />
-                        <span className="font-mono text-sm font-medium text-foreground">
+                        <Tag className="w-4 h-4 text-orange-500" />
+                        <span className="font-mono text-sm font-medium text-gray-900">
                           {appliedCoupon.code}
                         </span>
-                        <span className="text-sm text-accent">-${appliedCoupon.discount}</span>
+                        <span className="text-sm text-orange-500">-${appliedCoupon.discount}</span>
                       </div>
                       <Button
                         variant="ghost"
@@ -558,7 +550,8 @@ const Checkout = () => {
                         variant="outline"
                         size="sm"
                         onClick={handleApplyCoupon}
-                        disabled={validateCoupon.isPending || !couponCode.trim()}>
+                        disabled={validateCoupon.isPending || !couponCode.trim()}
+                        className="border-gray-300 text-gray-700 hover:border-orange-300">
                         {validateCoupon.isPending ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
                         ) : (
@@ -573,29 +566,29 @@ const Checkout = () => {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Sous-total</span>
-                    <span className="text-foreground">${totalPrice}</span>
+                    <span className="text-gray-500">Sous-total</span>
+                    <span className="text-gray-900">${totalPrice}</span>
                   </div>
                   {appliedCoupon && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-accent">Réduction</span>
-                      <span className="text-accent">-${appliedCoupon.discount}</span>
+                      <span className="text-orange-500">Réduction</span>
+                      <span className="text-orange-500">-${appliedCoupon.discount}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Taxe</span>
-                    <span className="text-foreground">$0.00</span>
+                    <span className="text-gray-500">Taxe</span>
+                    <span className="text-gray-900">$0.00</span>
                   </div>
                 </div>
 
                 <Separator className="my-4" />
 
                 <div className="flex justify-between">
-                  <span className="font-semibold text-foreground">Total</span>
-                  <span className="font-bold text-2xl text-primary">${finalTotal}</span>
+                  <span className="font-bold text-gray-900">Total</span>
+                  <span className="font-extrabold text-2xl text-orange-500">${finalTotal}</span>
                 </div>
 
-                <p className="text-xs text-muted-foreground text-center mt-4">
+                <p className="text-xs text-gray-400 text-center mt-4">
                   En effectuant cet achat, vous acceptez nos conditions d'utilisation
                 </p>
               </div>

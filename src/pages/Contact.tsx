@@ -44,7 +44,7 @@ const contactData = {
   hero_highlight: 'vous entendre',
   hero_subheadline: 'Une question, un feedback ou besoin d\'aide ? Notre équipe est là pour vous.',
   contact_methods: [
-    { title: 'Nous écrire', description: 'Envoyez-nous un email à tout moment', value: 'hello@templatepro.com', action: 'mailto:hello@templatepro.com' },
+    { title: 'Nous écrire', description: 'Envoyez-nous un email à tout moment', value: 'hello@unccodestore.com', action: 'mailto:hello@unccodestore.com' },
     { title: 'Nous appeler', description: 'Lun-Ven, 9h-18h (heure EST)', value: '+1 (555) 123-4567', action: 'tel:+15551234567' },
     { title: 'Chat en direct', description: 'Discutez avec notre équipe', value: 'Disponible 24h/24', action: '#' },
     { title: 'Nous rendre visite', description: 'Notre siège social', value: '123 Design Street, NYC', action: '#' },
@@ -117,30 +117,27 @@ const Contact = () => {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-blob-float" />
-        <div
-          className="absolute bottom-10 right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-blob-float"
-          style={{ animationDelay: '2s' }}
-        />
+        <div className="absolute top-20 left-20 w-72 h-72 bg-orange-100 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-20 w-96 h-96 bg-orange-100 rounded-full blur-3xl" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-500 font-medium text-sm mb-6">
               <Mail className="w-4 h-4" />
               {s?.hero_badge || 'Contactez-nous'}
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-[1.1]">
               {s?.hero_headline || "Nous serions ravis de"}{' '}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className="text-orange-500">
                 {s?.hero_highlight || 'vous entendre'}
               </span>
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-gray-500 leading-[1.7]">
               {s?.hero_subheadline ||
                 'Une question, un feedback ou besoin d\'aide ? Notre équipe est là pour vous.'}
             </p>
@@ -156,13 +153,13 @@ const Contact = () => {
               <a
                 key={index}
                 href={method.action}
-                className="glass-card p-6 rounded-2xl border border-border/50 hover:shadow-lg hover:border-primary/30 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <method.icon className="w-6 h-6 text-primary" />
+                className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-lg hover:border-orange-200 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4 group-hover:bg-orange-100 transition-colors">
+                  <method.icon className="w-6 h-6 text-orange-500" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">{method.title}</h3>
-                <p className="text-sm text-muted-foreground mb-2">{method.description}</p>
-                <p className="text-sm font-medium text-primary">{method.value}</p>
+                <h3 className="font-bold text-gray-900 mb-1">{method.title}</h3>
+                <p className="text-sm text-gray-500 mb-2">{method.description}</p>
+                <p className="text-sm font-medium text-orange-500">{method.value}</p>
               </a>
             ))}
           </div>
@@ -175,11 +172,11 @@ const Contact = () => {
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
             <div className="lg:col-span-3">
-              <div className="glass-card p-8 rounded-3xl border border-border/50">
-                <h2 className="text-2xl font-display font-bold text-foreground mb-2">
+              <div className="bg-white p-8 rounded-xl border border-gray-200">
+                <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
                   {s?.form_title || 'Envoyez-nous un message'}
                 </h2>
-                <p className="text-muted-foreground mb-8">
+                <p className="text-gray-500 mb-8 leading-[1.7]">
                   {s?.form_subtitle ||
                     "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais."}
                 </p>
@@ -238,9 +235,8 @@ const Contact = () => {
                   </div>
                   <Button
                     type="submit"
-                    variant="hero"
                     size="lg"
-                    className="w-full gap-2"
+                    className="w-full gap-2 bg-orange-500 text-white hover:bg-orange-600 font-semibold"
                     disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>Envoi en cours...</>
@@ -257,20 +253,20 @@ const Contact = () => {
 
             {/* Sidebar Info */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <h3 className="font-semibold text-foreground mb-4">Liens rapides</h3>
+              <div className="bg-white p-6 rounded-xl border border-gray-200">
+                <h3 className="font-bold text-gray-900 mb-4">Liens rapides</h3>
                 <div className="space-y-3">
                   {quickLinks.map((link, index) => (
                     <Link
                       key={index}
                       to={link.href}
-                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted transition-colors group">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <link.icon className="w-5 h-5 text-primary" />
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                      <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 transition-colors">
+                        <link.icon className="w-5 h-5 text-orange-500" />
                       </div>
                       <div>
-                        <div className="font-medium text-foreground">{link.title}</div>
-                        <div className="text-sm text-muted-foreground">{link.description}</div>
+                        <div className="font-medium text-gray-900">{link.title}</div>
+                        <div className="text-sm text-gray-500">{link.description}</div>
                       </div>
                     </Link>
                   ))}
@@ -278,36 +274,36 @@ const Contact = () => {
               </div>
 
               {/* Business Hours */}
-              <div className="glass-card p-6 rounded-2xl border border-border/50">
+              <div className="bg-white p-6 rounded-xl border border-gray-200">
                 <div className="flex items-center gap-2 mb-4">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <h3 className="font-semibold text-foreground">Horaires d'ouverture</h3>
+                  <Clock className="w-5 h-5 text-orange-500" />
+                  <h3 className="font-bold text-gray-900">Horaires d'ouverture</h3>
                 </div>
                 <div className="space-y-2 text-sm">
                   {(s?.business_hours || []).map((h, i) => (
                     <div key={i} className="flex justify-between">
-                      <span className="text-muted-foreground">{h.day}</span>
-                      <span className="text-foreground">{h.hours}</span>
+                      <span className="text-gray-500">{h.day}</span>
+                      <span className="text-gray-900">{h.hours}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 p-3 rounded-lg bg-primary/10 text-sm">
-                  <span className="text-primary font-medium">
+                <div className="mt-4 p-3 rounded-lg bg-orange-50 text-sm">
+                  <span className="text-orange-500 font-medium">
                     {s?.live_chat_note || '💬 Chat en direct disponible 24h/24 et 7j/7'}
                   </span>
                 </div>
               </div>
 
               {/* Response Time */}
-              <div className="glass-card p-6 rounded-2xl border border-border/50">
-                <h3 className="font-semibold text-foreground mb-4">Délai de réponse estimé</h3>
+              <div className="bg-white p-6 rounded-xl border border-gray-200">
+                <h3 className="font-bold text-gray-900 mb-4">Délai de réponse estimé</h3>
                 <div className="space-y-3">
                   {(s?.response_times || []).map((r, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div
-                        className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-primary' : i === 1 ? 'bg-accent' : 'bg-secondary'}`}
+                        className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-orange-500' : i === 1 ? 'bg-amber-500' : 'bg-gray-300'}`}
                       />
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-gray-500">
                         {r.label}: {r.time}
                       </span>
                     </div>
@@ -320,18 +316,18 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-display font-bold text-foreground mb-2">
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
               {s?.location_title || 'Notre adresse'}
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-gray-500">
               {s?.location_subtitle || 'Rendez-nous visite'}
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 rounded-3xl overflow-hidden border border-border/50 h-[400px]">
+            <div className="lg:col-span-2 rounded-xl overflow-hidden border border-gray-200 h-[400px]">
               <iframe
                 title="Our location"
                 width="100%"
@@ -340,20 +336,20 @@ const Contact = () => {
                 src={`https://www.openstreetmap.org/export/embed.html?bbox=${(s?.location_lng ?? -74.006) - 0.015},${(s?.location_lat ?? 40.7128) - 0.01},${(s?.location_lng ?? -74.006) + 0.015},${(s?.location_lat ?? 40.7128) + 0.01}&layer=mapnik&marker=${s?.location_lat ?? 40.7128},${s?.location_lng ?? -74.006}`}
               />
             </div>
-            <div className="flex flex-col justify-center glass-card p-8 rounded-3xl border border-border/50">
-              <MapPin className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">Adresse</h3>
-              <p className="text-muted-foreground mb-1">
+            <div className="flex flex-col justify-center bg-white p-8 rounded-xl border border-gray-200">
+              <MapPin className="w-10 h-10 text-orange-500 mb-4" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Adresse</h3>
+              <p className="text-gray-500 mb-1">
                 {s?.location_address_line1 || '123 Design Street'}
               </p>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-gray-500 mb-6">
                 {s?.location_address_line2 || 'New York, NY 10001'}
               </p>
               <a
                 href={`https://www.openstreetmap.org/?mlat=${s?.location_lat ?? 40.7128}&mlon=${s?.location_lng ?? -74.006}#map=${s?.location_zoom ?? 15}/${s?.location_lat ?? 40.7128}/${s?.location_lng ?? -74.006}`}
                 target="_blank"
                 rel="noopener noreferrer">
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2 border-gray-300 text-gray-700 hover:border-orange-300">
                   <MapPin className="w-4 h-4" /> Itinéraire
                 </Button>
               </a>

@@ -56,7 +56,7 @@ const faqCategories = [
         a: "Non, vous ne pouvez pas revendre ou redistribuer les fichiers du template eux-mêmes. Cependant, vous pouvez les utiliser pour créer des produits finaux pour vos clients. La licence étendue offre plus de flexibilité commerciale.",
       },
       {
-        q: "Dois-je créditer TemplatePro lors de l'utilisation d'un template ?",
+        q: "Dois-je créditer Unccodestore lors de l'utilisation d'un template ?",
         a: "Non, l'attribution n'est pas requise pour les licences standard ou étendue. Cependant, nous apprécions toujours un lien vers notre site !",
       },
       {
@@ -123,30 +123,27 @@ const faqCategories = [
 
 const FAQ = () => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-blob-float" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-blob-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-20 right-10 w-72 h-72 bg-orange-100 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-orange-100 rounded-full blur-3xl" />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-500 font-medium text-sm mb-6">
               <HelpCircle className="w-4 h-4" />
-              Help Center
               Centre d'aide
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6">
-              Frequently Asked{" "}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-[1.1]">
               Foire aux{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Questions
+              <span className="text-orange-500">
                 Questions
               </span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-500 leading-[1.7]">
               Trouvez les réponses aux questions courantes sur nos templates, licences, paiements et support.
             </p>
           </div>
@@ -154,17 +151,17 @@ const FAQ = () => {
       </section>
 
       {/* Category Navigation */}
-      <section className="py-8 border-y border-border/50 sticky top-16 bg-background/80 backdrop-blur-md z-40">
+      <section className="py-8 border-y border-gray-200 sticky top-16 bg-white/80 backdrop-blur-md z-40">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4">
             {faqCategories.map((category) => (
               <a
                 key={category.id}
                 href={`#${category.id}`}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted hover:bg-primary/10 hover:text-primary transition-colors"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 hover:bg-orange-50 hover:text-orange-500 transition-colors"
               >
                 <category.icon className="w-4 h-4" />
-                <span className="font-medium text-sm">{category.title}</span>
+                <span className="font-medium text-sm text-gray-700">{category.title}</span>
               </a>
             ))}
           </div>
@@ -181,10 +178,10 @@ const FAQ = () => {
               className="mb-16 last:mb-0 scroll-mt-40"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <category.icon className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
+                  <category.icon className="w-6 h-6 text-orange-500" />
                 </div>
-                <h2 className="text-2xl font-display font-bold text-foreground">
+                <h2 className="text-2xl font-extrabold text-gray-900">
                   {category.title}
                 </h2>
               </div>
@@ -194,12 +191,12 @@ const FAQ = () => {
                   <AccordionItem
                     key={index}
                     value={`${category.id}-${index}`}
-                    className="glass-card border border-border/50 rounded-xl px-6 data-[state=open]:shadow-md transition-shadow"
+                    className="bg-white border border-gray-200 rounded-xl px-6 data-[state=open]:shadow-md transition-shadow"
                   >
-                    <AccordionTrigger className="text-left font-medium text-foreground hover:text-primary py-4">
+                    <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-orange-500 py-4">
                       {item.q}
                     </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground pb-4">
+                    <AccordionContent className="text-gray-500 pb-4 leading-[1.7]">
                       {item.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -211,25 +208,24 @@ const FAQ = () => {
       </section>
 
       {/* Still Have Questions CTA */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="glass-card p-8 md:p-12 rounded-3xl border border-border/50 text-center max-w-3xl mx-auto">
-            <MessageCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
+          <div className="bg-white p-8 md:p-12 rounded-xl border border-gray-200 text-center max-w-3xl mx-auto">
+            <MessageCircle className="w-12 h-12 text-orange-500 mx-auto mb-4" />
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-4">
               Encore des questions ?
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-gray-500 mb-6 leading-[1.7]">
               Vous ne trouvez pas ce que vous cherchez ? Notre équipe de support est là pour vous aider.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
-                <Button variant="hero" size="lg" className="gap-2">
+                <Button size="lg" className="gap-2 bg-orange-500 text-white hover:bg-orange-600 font-semibold">
                   <MessageCircle className="w-5 h-5" />
-                  Contact Support
                   Contacter le support
                 </Button>
               </Link>
-              <Button variant="hero-outline" size="lg">
+              <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:border-orange-300">
                 Chat en direct
               </Button>
             </div>

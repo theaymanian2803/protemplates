@@ -101,7 +101,7 @@ const Auth = () => {
         } else {
           toast({
             title: "Compte créé !",
-            description: "Bienvenue sur TemplatePro !",
+            description: "Bienvenue sur Unccodestore !",
           });
           navigate("/");
         }
@@ -147,24 +147,24 @@ const Auth = () => {
   if (isForgotPassword) {
     if (resetEmailSent) {
       return (
-        <main className="min-h-screen bg-background">
+        <main className="min-h-screen bg-white">
           <Navbar />
           
           <div className="pt-24 pb-16">
             <div className="container mx-auto px-4 max-w-md">
-              <div className="glass-card p-8 rounded-2xl border border-border/50 shadow-lg text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-primary" />
+              <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-50 flex items-center justify-center">
+                  <CheckCircle className="w-8 h-8 text-orange-500" />
                 </div>
-                <h1 className="text-2xl font-display font-bold text-foreground mb-2">
+                <h1 className="text-2xl font-extrabold text-gray-900 mb-2">
                   Vérifiez votre email
                 </h1>
-                <p className="text-muted-foreground mb-6">
-                  Nous avons envoyé un lien de réinitialisation à <strong className="text-foreground">{email}</strong>
+                <p className="text-gray-500 mb-6">
+                  Nous avons envoyé un lien de réinitialisation à <strong className="text-gray-900">{email}</strong>
                 </p>
                 <Button
                   variant="outline"
-                  className="gap-2"
+                  className="gap-2 border-gray-300 text-gray-700 hover:border-orange-300"
                   onClick={() => {
                     setIsForgotPassword(false);
                     setResetEmailSent(false);
@@ -184,26 +184,26 @@ const Auth = () => {
     }
 
     return (
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-white">
         <Navbar />
         
         <div className="pt-24 pb-16">
           <div className="container mx-auto px-4 max-w-md">
             <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
                 Mot de passe oublié ?
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-500">
                 Entrez votre email et nous vous enverrons un lien de réinitialisation
               </p>
             </div>
 
-            <div className="glass-card p-8 rounded-2xl border border-border/50 shadow-lg">
+            <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
               <form onSubmit={handleForgotPassword} className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <Input
                       id="email"
                       type="email"
@@ -213,19 +213,18 @@ const Auth = () => {
                         setEmail(e.target.value);
                         setErrors((prev) => ({ ...prev, email: undefined }));
                       }}
-                      className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
+                      className={`pl-10 ${errors.email ? 'border-red-500' : ''}`}
                     />
                   </div>
                   {errors.email && (
-                    <p className="text-sm text-destructive">{errors.email}</p>
+                    <p className="text-sm text-red-500">{errors.email}</p>
                   )}
                 </div>
 
                 <Button
                   type="submit"
-                  variant="hero"
                   size="lg"
-                  className="w-full gap-2"
+                  className="w-full gap-2 bg-orange-500 text-white hover:bg-orange-600 font-semibold"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -246,7 +245,7 @@ const Auth = () => {
                     setIsForgotPassword(false);
                     setErrors({});
                   }}
-                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-orange-500 font-medium hover:underline inline-flex items-center gap-1"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Retour à la connexion
@@ -262,17 +261,17 @@ const Auth = () => {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
       
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-md">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
               {isLogin ? "Bon retour" : "Créer un compte"}
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-500">
               {isLogin 
                 ? "Connectez-vous pour accéder à vos favoris et achats" 
                 : "Rejoignez-nous pour sauvegarder vos favoris et suivre vos commandes"}
@@ -280,13 +279,13 @@ const Auth = () => {
           </div>
 
           {/* Form Card */}
-          <div className="glass-card p-8 rounded-2xl border border-border/50 shadow-lg">
+          <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-5">
               {!isLogin && (
                 <div className="space-y-2">
                   <Label htmlFor="displayName">Nom d'affichage</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <Input
                       id="displayName"
                       type="text"
@@ -302,7 +301,7 @@ const Auth = () => {
               <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <Input
                       id="email"
                       type="email"
@@ -312,11 +311,11 @@ const Auth = () => {
                       setEmail(e.target.value);
                       setErrors((prev) => ({ ...prev, email: undefined }));
                     }}
-                    className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
+                    className={`pl-10 ${errors.email ? 'border-red-500' : ''}`}
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email}</p>
+                  <p className="text-sm text-red-500">{errors.email}</p>
                 )}
               </div>
 
@@ -330,14 +329,14 @@ const Auth = () => {
                         setIsForgotPassword(true);
                         setErrors({});
                       }}
-                      className="text-sm text-primary hover:underline"
+                      className="text-sm text-orange-500 hover:underline"
                     >
                       Mot de passe oublié ?
                     </button>
                   )}
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -347,27 +346,26 @@ const Auth = () => {
                       setPassword(e.target.value);
                       setErrors((prev) => ({ ...prev, password: undefined }));
                     }}
-                    className={`pl-10 pr-10 ${errors.password ? 'border-destructive' : ''}`}
+                    className={`pl-10 pr-10 ${errors.password ? 'border-red-500' : ''}`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">{errors.password}</p>
+                  <p className="text-sm text-red-500">{errors.password}</p>
                 )}
               </div>
 
               <Button
                 type="submit"
-                variant="hero"
                 size="lg"
-                className="w-full gap-2"
+                className="w-full gap-2 bg-orange-500 text-white hover:bg-orange-600 font-semibold"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -382,7 +380,7 @@ const Auth = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-muted-foreground">
+              <p className="text-gray-500">
                 {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
                 <button
                   type="button"
@@ -390,7 +388,7 @@ const Auth = () => {
                     setIsLogin(!isLogin);
                     setErrors({});
                   }}
-                  className="text-primary font-medium hover:underline"
+                  className="text-orange-500 font-medium hover:underline"
                 >
                   {isLogin ? "S'inscrire" : "Se connecter"}
                 </button>

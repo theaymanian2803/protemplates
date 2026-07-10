@@ -9,28 +9,28 @@ const Cart = () => {
   const { items, removeFromCart, updateLicense, totalPrice, clearCart } = useCart();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-white">
       <Navbar />
       
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-8">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
             Panier
           </h1>
 
           {items.length === 0 ? (
             <div className="text-center py-16">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-muted flex items-center justify-center">
-                <ShoppingBag className="w-12 h-12 text-muted-foreground" />
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center">
+                <ShoppingBag className="w-12 h-12 text-gray-400" />
               </div>
-              <h2 className="text-2xl font-semibold text-foreground mb-2">Votre panier est vide</h2>
-              <p className="text-muted-foreground mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Votre panier est vide</h2>
+              <p className="text-gray-500 mb-6">
                 Parcourez nos templates et ajoutez des articles à votre panier
               </p>
-              <Link to="/#templates">
-                <Button variant="hero" size="lg">
+              <Link to="/templates">
+                <Button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold gap-2">
                   Parcourir
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -41,7 +41,7 @@ const Cart = () => {
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="glass-card p-4 rounded-2xl border border-border/50 flex gap-4"
+                    className="bg-white p-4 rounded-xl border border-gray-200 flex gap-4"
                   >
                     <Link to={`/template/${item.id}`}>
                       <img
@@ -52,7 +52,7 @@ const Cart = () => {
                     </Link>
                     <div className="flex-1">
                       <Link to={`/template/${item.id}`}>
-                        <h3 className="font-semibold text-foreground hover:text-primary transition-colors">
+                        <h3 className="font-bold text-gray-900 hover:text-orange-500 transition-colors">
                           {item.title}
                         </h3>
                       </Link>
@@ -61,8 +61,8 @@ const Cart = () => {
                           onClick={() => updateLicense(item.id, "regular")}
                           className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                             item.license === "regular"
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "border-border text-muted-foreground hover:border-primary"
+                              ? "bg-orange-500 text-white border-orange-500"
+                              : "border-gray-300 text-gray-600 hover:border-orange-300"
                           }`}
                         >
                           Standard 59$
@@ -71,8 +71,8 @@ const Cart = () => {
                           onClick={() => updateLicense(item.id, "extended")}
                           className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                             item.license === "extended"
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "border-border text-muted-foreground hover:border-primary"
+                              ? "bg-orange-500 text-white border-orange-500"
+                              : "border-gray-300 text-gray-600 hover:border-orange-300"
                           }`}
                         >
                           Étendue 299$
@@ -80,10 +80,10 @@ const Cart = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold text-xl text-primary">${item.price}</div>
+                      <div className="font-bold text-xl text-gray-900">${item.price}</div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="mt-2 text-muted-foreground hover:text-destructive transition-colors"
+                        className="mt-2 text-gray-400 hover:text-red-500 transition-colors"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -91,39 +91,39 @@ const Cart = () => {
                   </div>
                 ))}
 
-                <Button variant="ghost" onClick={clearCart} className="text-muted-foreground">
+                <Button variant="ghost" onClick={clearCart} className="text-gray-500 hover:text-red-500">
                   Vider le panier
                 </Button>
               </div>
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <div className="glass-card p-6 rounded-2xl border border-border/50 sticky top-24">
-                  <h2 className="font-semibold text-lg text-foreground mb-4">Récapitulatif</h2>
+                <div className="bg-white p-6 rounded-xl border border-gray-200 sticky top-24">
+                  <h2 className="font-bold text-lg text-gray-900 mb-4">Récapitulatif</h2>
                   
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Sous-total ({items.length} article(s))</span>
-                      <span className="text-foreground">${totalPrice}</span>
+                      <span className="text-gray-500">Sous-total ({items.length} article(s))</span>
+                      <span className="text-gray-900">${totalPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Réduction</span>
-                      <span className="text-accent">-$0</span>
+                      <span className="text-gray-500">Réduction</span>
+                      <span className="text-orange-500">-$0</span>
                     </div>
-                    <div className="border-t border-border pt-3 flex justify-between">
-                      <span className="font-semibold text-foreground">Total</span>
-                      <span className="font-bold text-2xl text-primary">${totalPrice}</span>
+                    <div className="border-t border-gray-200 pt-3 flex justify-between">
+                      <span className="font-bold text-gray-900">Total</span>
+                      <span className="font-extrabold text-2xl text-orange-500">${totalPrice}</span>
                     </div>
                   </div>
 
                   <Link to="/checkout">
-                    <Button variant="hero" size="lg" className="w-full">
+                    <Button className="w-full bg-orange-500 text-white hover:bg-orange-600 font-semibold gap-2">
                       Passer à la caisse
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-4 h-4" />
                     </Button>
                   </Link>
 
-                  <p className="text-xs text-muted-foreground text-center mt-4">
+                  <p className="text-xs text-gray-400 text-center mt-4">
                     Paiement sécurisé par Stripe
                   </p>
                 </div>
