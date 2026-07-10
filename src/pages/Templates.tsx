@@ -75,9 +75,8 @@ const Templates = () => {
     if (filters.onSale) {
       list = list.filter((t) => Number(t.price) < 100)
     }
-
     if (filters.rating !== null) {
-      list = list.filter((t) => t.rating >= filters.rating!)
+      list = list.filter((t) => Number(t.rating) >= filters.rating!)
     }
 
     if (filters.sales.length > 0) {
@@ -97,19 +96,19 @@ const Templates = () => {
     // Sort
     switch (sortBy) {
       case 'best_sellers':
-        list = [...list].sort((a, b) => (b.sales ?? 0) - (a.sales ?? 0))
+        list = [...list].sort((a, b) => Number(b.sales ?? 0) - Number(a.sales ?? 0))
         break
       case 'newest':
         list = [...list].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         break
       case 'best_rated':
-        list = [...list].sort((a, b) => b.rating - a.rating)
+        list = [...list].sort((a, b) => Number(b.rating) - Number(a.rating))
         break
       case 'price':
-        list = [...list].sort((a, b) => a.price - b.price)
+        list = [...list].sort((a, b) => Number(a.price) - Number(b.price))
         break
       case 'trending':
-        list = [...list].sort((a, b) => (b.sales ?? 0) * b.rating - (a.sales ?? 0) * a.rating)
+        list = [...list].sort((a, b) => Number(b.sales ?? 0) * Number(b.rating) - Number(a.sales ?? 0) * Number(a.rating))
         break
     }
 
