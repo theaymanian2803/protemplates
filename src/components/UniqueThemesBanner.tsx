@@ -7,16 +7,16 @@ const UniqueThemesBanner = () => {
   const { data: templates } = useTemplates({ limit: 6 })
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-12 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center gap-16 max-w-7xl mx-auto">
           {/* Left: Thumbnail grid */}
           <div className="flex-1">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="grid grid-cols-3 gap-3">
+              className="grid grid-cols-3 gap-4">
               {templates?.slice(0, 6).map((t, i) => (
                 <motion.div
                   key={t.id}
@@ -40,7 +40,7 @@ const UniqueThemesBanner = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
+              className="text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold text-gray-900 leading-[1.25] mb-6">
               Unique themes and templates for every budget and every project.
             </motion.h2>
             <motion.div
@@ -49,7 +49,7 @@ const UniqueThemesBanner = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}>
               <Link to="/templates">
-                <button className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold text-sm rounded-md hover:bg-green-700 transition-colors">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-orange-500 text-white font-semibold text-sm rounded-md hover:bg-orange-600 transition-colors">
                   View all themes
                   <ArrowRight className="w-4 h-4" />
                 </button>
