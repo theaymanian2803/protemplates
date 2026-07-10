@@ -1,8 +1,7 @@
-import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { useCategories } from '@/hooks/useTemplates'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 export interface ShopFilterState {

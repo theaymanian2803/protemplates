@@ -4,7 +4,6 @@ import ShopPromoBanner from '@/components/shop/ShopPromoBanner'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Pagination,
   PaginationContent,
@@ -15,7 +14,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Template, useCategories, useTemplates } from '@/hooks/useTemplates'
+import { Template, useTemplates } from '@/hooks/useTemplates'
 import { Filter, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -23,6 +22,7 @@ import { useSearchParams } from 'react-router-dom'
 const ITEMS_PER_PAGE = 10
 
 type SortOption = 'best_match' | 'best_sellers' | 'newest' | 'best_rated' | 'trending' | 'price'
+type ViewMode = 'list' | 'grid'
 
 const Templates = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -36,10 +36,10 @@ const Templates = () => {
   const [searchQuery, setSearchQuery] = useState(initialQuery)
   const [page, setPage] = useState(parseInt(searchParams.get('page') || '1', 10))
   const [sortBy, setSortBy] = useState<SortOption>('best_match')
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const { data: allTemplates, isLoading } = useTemplates({ limit: 200 })
-  const { data: liveCategories } = useCategories()
 
   useEffect(() => {
     setPage(1)
@@ -49,10 +49,12 @@ const Templates = () => {
     if (!allTemplates) return []
     let list = allTemplates as Template[]
 
+    // Category filter
     if (filters.category) {
       list = list.filter((t) => t.category === filters.category)
     }
 
+    // Search query filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       list = list.filter(
@@ -63,6 +65,7 @@ const Templates = () => {
       )
     }
 
+    // Price range filter
     if (filters.minPrice) {
       const min = parseFloat(filters.minPrice)
       if (!isNaN(min)) list = list.filter((t) => Number(t.price) >= min)
@@ -72,16 +75,22 @@ const Templates = () => {
       if (!isNaN(max)) list = list.filter((t) => Number(t.price) <= max)
     }
 
+    // On Sale filter - templates with extended_price or price below original were on sale
     if (filters.onSale) {
-      list = list.filter((t) => Number(t.price) < 100)
+      list = list.filter(
+        (t) => t.extended_price !== null && Number(t.extended_price) > Number(t.price),
+      )
     }
+
+    // Rating filter
     if (filters.rating !== null) {
       list = list.filter((t) => Number(t.rating) >= filters.rating!)
     }
 
+    // Sales filter
     if (filters.sales.length > 0) {
       list = list.filter((t) => {
-        const s = t.sales ?? 0
+        const s = Number(t.sales ?? 0)
         return filters.sales.some((bucket) => {
           if (bucket === 'none') return s === 0
           if (bucket === 'low') return s > 0 && s < 50
@@ -133,6 +142,7 @@ const Templates = () => {
     return counts
   }, [allTemplates])
 
+  // Sync URL when filters/search change
   useEffect(() => {
     const params: Record<string, string> = {}
     if (filters.category) params.category = filters.category
@@ -144,6 +154,11 @@ const Templates = () => {
   const clearAll = () => {
     setFilters({ ...defaultFilters, category: null })
     setSearchQuery('')
+  }
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    setPage(1)
   }
 
   const handlePageChange = (p: number) => {
@@ -174,6 +189,8 @@ const Templates = () => {
     return parts.length > 0 ? parts.join(' / ') : 'All Categories'
   }, [searchQuery, filters.category])
 
+  const hasActiveFilters = filters.category || searchQuery.trim() || filters.minPrice || filters.maxPrice || filters.onSale || filters.sales.length > 0 || filters.rating !== null
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -182,7 +199,7 @@ const Templates = () => {
         <div className="container mx-auto px-4 max-w-[1400px]">
           {/* Full-width search bar */}
           <div className="mb-6">
-            <form className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+            <form onSubmit={handleSearch} className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
               <input
                 type="text"
                 value={searchQuery}
@@ -200,7 +217,8 @@ const Templates = () => {
               )}
               <button
                 type="submit"
-                className="h-12 px-8 bg-green-600 text-white font-semibold text-sm hover:bg-green-700 transition-colors">
+                className="h-12 px-8 bg-green-600 text-white font-semibold text-sm hover:bg-green-700 transition-colors flex items-center gap-2">
+                <Search className="w-4 h-4" />
                 Search
               </button>
             </form>
@@ -219,23 +237,34 @@ const Templates = () => {
                 className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-50">
                 <Filter className="w-4 h-4" />
                 Filter & Refine
+                {hasActiveFilters && (
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold">
+                    !
+                  </span>
+                )}
               </button>
-              <span className="hidden lg:flex items-center gap-2 text-sm font-medium text-gray-700">
-                <X className="w-4 h-4" />
+              <span className="hidden lg:flex items-center gap-2 text-sm font-semibold text-gray-900">
+                <Filter className="w-4 h-4" />
                 Filter & Refine
               </span>
             </div>
 
             <div className="flex items-center gap-4">
               <span className="text-xs text-gray-500 hidden md:block">Price is in US dollars and excludes tax and handling fees</span>
-              <div className="flex items-center gap-1">
-                <button className="p-2 text-gray-400 hover:text-gray-700">
+              {/* View toggle */}
+              <div className="flex items-center gap-1 border border-gray-300 rounded overflow-hidden">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'}`}>
                   <List className="w-4 h-4" />
                 </button>
-                <button className="p-2 text-gray-400 hover:text-gray-700">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'}`}>
                   <LayoutGrid className="w-4 h-4" />
                 </button>
               </div>
+              {/* Sort buttons */}
               <div className="flex items-center gap-1 border border-gray-300 rounded overflow-hidden">
                 {(['best_match', 'best_sellers', 'newest', 'best_rated', 'trending', 'price'] as SortOption[]).map((opt) => (
                   <button
@@ -261,18 +290,29 @@ const Templates = () => {
                   onChange={setFilters}
                   totalCounts={categoryCounts}
                 />
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAll}
+                    className="mt-4 w-full py-2 text-sm font-medium text-orange-500 border border-orange-300 rounded hover:bg-orange-50 transition-colors">
+                    Clear all filters
+                  </button>
+                )}
               </div>
             </div>
 
             {/* Right content */}
             <div className="flex-1 min-w-0">
-              {/* Results count */}
+              {/* Results count with breadcrumb links */}
               <div className="mb-4 text-sm text-gray-600">
                 <span className="font-bold text-gray-900">{totalCount}</span> items in{' '}
-                <span className="text-orange-500 hover:underline cursor-pointer">All Categories</span>
+                <button
+                  onClick={() => setFilters({ ...filters, category: null })}
+                  className="text-orange-500 hover:underline">
+                  All Categories
+                </button>
                 {filters.category && <> / <span className="text-gray-900">{filters.category}</span></>}
                 {searchQuery && <> <span className="text-gray-500">Term: '{searchQuery}'</span></>}
-                {(filters.category || searchQuery) && (
+                {hasActiveFilters && (
                   <button onClick={clearAll} className="ml-2 text-orange-500 hover:underline">
                     Clear all
                   </button>
@@ -299,14 +339,25 @@ const Templates = () => {
                   ))}
                 </div>
               ) : pagedTemplates.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  {pagedTemplates.map((template, index) => (
-                    <div key={template.id} className="flex flex-col gap-4">
-                      {index === 1 && <ShopPromoBanner />}
-                      <ShopProductCard template={template} query={searchQuery} />
-                    </div>
-                  ))}
-                </div>
+                viewMode === 'list' ? (
+                  <div className="flex flex-col gap-4">
+                    {pagedTemplates.map((template, index) => (
+                      <div key={template.id} className="flex flex-col gap-4">
+                        {index === 1 && <ShopPromoBanner />}
+                        <ShopProductCard template={template} query={searchQuery} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {pagedTemplates.map((template, index) => (
+                      <div key={template.id} className="contents">
+                        {index === 1 && <div className="sm:col-span-2 lg:col-span-3"><ShopPromoBanner /></div>}
+                        <ShopProductCard template={template} query={searchQuery} cardView />
+                      </div>
+                    ))}
+                  </div>
+                )
               ) : (
                 <div className="flex flex-col items-center justify-center py-24 border border-dashed border-gray-300 rounded-lg bg-gray-50 text-center">
                   <LayoutGrid className="w-10 h-10 text-gray-400 mb-3" />
@@ -380,6 +431,13 @@ const Templates = () => {
               </button>
             </div>
             <ShopFilters filters={filters} onChange={setFilters} totalCounts={categoryCounts} />
+            {hasActiveFilters && (
+              <button
+                onClick={clearAll}
+                className="w-full mt-3 py-2 text-sm font-medium text-orange-500 border border-orange-300 rounded hover:bg-orange-50 transition-colors">
+                Clear all filters
+              </button>
+            )}
             <Button
               onClick={() => setMobileFiltersOpen(false)}
               className="w-full mt-4 h-11 font-semibold bg-green-600 hover:bg-green-700">

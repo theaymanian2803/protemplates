@@ -33,6 +33,7 @@ const formatDate = (iso: string) => {
 interface ShopProductCardProps {
   template: Template
   query?: string
+  cardView?: boolean
 }
 
 const HighlightText = ({ text, query }: { text: string; query?: string }) => {
@@ -59,7 +60,7 @@ const HighlightText = ({ text, query }: { text: string; query?: string }) => {
   )
 }
 
-const ShopProductCard = ({ template, query }: ShopProductCardProps) => {
+const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) => {
   const { addToCart, isInCart } = useCart()
   const { isFavorite, toggleFavorite } = useFavorites()
   const author = resolveAuthor(template.id)
@@ -101,9 +102,68 @@ const ShopProductCard = ({ template, query }: ShopProductCardProps) => {
     e.stopPropagation()
     if (template.demo_url) {
       window.open(template.demo_url, '_blank', 'noopener,noreferrer')
+    } else {
+      window.open(`/template/${template.id}`, '_blank', 'noopener,noreferrer')
     }
   }
 
+  // Grid card view
+  if (cardView) {
+    return (
+      <Link to={`/template/${template.id}`} className="group block h-full">
+        <article className="flex flex-col h-full bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+          <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-100">
+            <img
+              src={template.image_url || '/placeholder.svg'}
+              alt={template.title}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute top-3 left-3 px-2 py-1 rounded bg-white/90 backdrop-blur-sm text-[11px] font-semibold text-gray-900 border border-gray-200">
+              {template.category || 'Template'}
+            </span>
+          </div>
+          <div className="flex flex-col p-4 flex-1">
+            <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mb-1 group-hover:text-orange-500 transition-colors">
+              <HighlightText text={template.title} query={query} />
+            </h3>
+            <p className="text-xs text-gray-500 mb-2">by {author}</p>
+            <div className="flex items-center gap-1.5 mb-3">
+              <span className="font-bold text-gray-900 text-sm">${Number(template.price).toFixed(0)}</span>
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star
+                    key={s}
+                    className={`w-3 h-3 ${s < Math.round(Number(template.rating)) ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
+                  />
+                ))}
+              </div>
+              <span className="text-[10px] text-gray-400">({formatSales(template.sales ?? 0)})</span>
+            </div>
+            <div className="flex items-center gap-2 mt-auto">
+              <button
+                onClick={handleAddToCart}
+                className={`w-9 h-9 shrink-0 rounded border flex items-center justify-center transition-colors ${
+                  inCart
+                    ? 'bg-orange-500 text-white border-orange-500'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-orange-500 hover:text-orange-500'
+                }`}>
+                <ShoppingCart className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handlePreview}
+                className="flex-1 h-9 rounded border border-orange-500 text-orange-500 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-orange-500 hover:text-white transition-colors">
+                <ExternalLink className="w-3 h-3" />
+                Live Preview
+              </button>
+            </div>
+          </div>
+        </article>
+      </Link>
+    )
+  }
+
+  // List view (default)
   return (
     <article className="group flex flex-col md:flex-row bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       {/* Thumbnail */}
@@ -126,13 +186,16 @@ const ShopProductCard = ({ template, query }: ShopProductCardProps) => {
           </Link>
         </h3>
         <p className="text-sm text-gray-500 mb-3">
-          by <span className="text-gray-700">{author}</span> in <span className="text-gray-700">{template.category || 'All'}</span>
+          by <span className="text-gray-700">{author}</span> in{' '}
+          <Link to={`/templates?category=${encodeURIComponent(template.category || '')}`} className="text-gray-700 hover:text-orange-500">
+            {template.category || 'All'}
+          </Link>
         </p>
 
         <ul className="flex flex-col gap-1.5 mt-auto">
           {features.map((f, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-              <span className="text-gray-400 mt-0.5">•</span>
+              <span className="text-gray-400 mt-0.5">&bull;</span>
               <span><HighlightText text={f} query={query} /></span>
             </li>
           ))}
@@ -154,15 +217,14 @@ const ShopProductCard = ({ template, query }: ShopProductCardProps) => {
         <div className="text-right mb-3">
           <div className="text-2xl font-bold text-gray-900">${Number(template.price).toFixed(0)}</div>
           <div className="text-xs text-gray-500 mt-1">{formatSales(template.sales ?? 0)} Sales</div>
-          {template.rating > 0 && (
-            <div className="flex items-center justify-end gap-1 mt-1">
+          {Number(template.rating) > 0 && (
+            <div className="flex items-center justify-end gap-0.5 mt-1">
               {Array.from({ length: 5 }).map((_, s) => (
                 <Star
                   key={s}
-                  className={`w-3 h-3 ${s < Math.round(template.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
+                  className={`w-3 h-3 ${s < Math.round(Number(template.rating)) ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
                 />
               ))}
-              <span className="text-xs text-gray-500 ml-1">({template.sales})</span>
             </div>
           )}
           <div className="text-xs text-gray-400 mt-2">Last updated: {formatDate(template.updated_at)}</div>
