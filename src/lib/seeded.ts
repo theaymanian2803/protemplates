@@ -31,3 +31,13 @@ export function getDisplaySales(templateId: string, realSales?: number | null): 
 export function getDisplayReviewCount(templateId: string, realCount?: number | null): number {
   return getPlaceholderReviewCount(templateId) + (Number(realCount) || 0)
 }
+
+export function getPlaceholderRating(templateId: string): number {
+  const rand = seededRandom(templateId)
+  return rand() > 0.45 ? 5 : 4.5
+}
+
+export function getDisplayRating(templateId: string, realRating?: number | null): number {
+  const r = Number(realRating) || 0
+  return r > 0 ? r : getPlaceholderRating(templateId)
+}

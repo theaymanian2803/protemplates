@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/pagination'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Template, useTemplates } from '@/hooks/useTemplates'
+import { getDisplayRating, getDisplaySales } from '@/lib/seeded'
 import { Filter, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -82,15 +83,15 @@ const Templates = () => {
       )
     }
 
-    // Rating filter
+    // Rating filter (use display rating = placeholder fallback + real)
     if (filters.rating !== null) {
-      list = list.filter((t) => Number(t.rating) >= filters.rating!)
+      list = list.filter((t) => getDisplayRating(t.id, t.rating) >= filters.rating!)
     }
 
-    // Sales filter
+    // Sales filter (use display sales = placeholder + real)
     if (filters.sales.length > 0) {
       list = list.filter((t) => {
-        const s = Number(t.sales ?? 0)
+        const s = getDisplaySales(t.id, t.sales)
         return filters.sales.some((bucket) => {
           if (bucket === 'none') return s === 0
           if (bucket === 'low') return s > 0 && s < 50
@@ -105,19 +106,19 @@ const Templates = () => {
     // Sort
     switch (sortBy) {
       case 'best_sellers':
-        list = [...list].sort((a, b) => Number(b.sales ?? 0) - Number(a.sales ?? 0))
+        list = [...list].sort((a, b) => getDisplaySales(b.id, b.sales) - getDisplaySales(a.id, a.sales))
         break
       case 'newest':
         list = [...list].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         break
       case 'best_rated':
-        list = [...list].sort((a, b) => Number(b.rating) - Number(a.rating))
+        list = [...list].sort((a, b) => getDisplayRating(b.id, b.rating) - getDisplayRating(a.id, a.rating))
         break
       case 'price':
         list = [...list].sort((a, b) => Number(a.price) - Number(b.price))
         break
       case 'trending':
-        list = [...list].sort((a, b) => Number(b.sales ?? 0) * Number(b.rating) - Number(a.sales ?? 0) * Number(a.rating))
+        list = [...list].sort((a, b) => getDisplaySales(b.id, b.sales) * getDisplayRating(b.id, b.rating) - getDisplaySales(a.id, a.sales) * getDisplayRating(a.id, a.rating))
         break
     }
 

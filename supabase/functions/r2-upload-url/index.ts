@@ -16,7 +16,12 @@ serve(async (req) => {
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) throw new Error('Unauthorized')
 
-    const { fileName, contentType } = await req.json()
+    const { fileName, contentType, folder } = await req.json()
+
+    // Optional folder namespacing (e.g. 'sources' for downloadable .zip files)
+    // so source files don't collide with image keys. Strips any leading slashes.
+    const sanitizedFolder = folder ? folder.replace(/^\/+|\/+$/g, '') : ''
+    const objectKey = sanitizedFolder ? `${sanitizedFolder}/${fileName}` : fileName
 
     const s3Client = new S3Client({
       region: 'auto',
@@ -30,7 +35,7 @@ serve(async (req) => {
 
     const command = new PutObjectCommand({
       Bucket: Deno.env.get('R2_BUCKET_NAME'),
-      Key: fileName,
+      Key: objectKey,
       ContentType: contentType,
     })
 

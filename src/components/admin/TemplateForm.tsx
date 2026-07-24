@@ -11,6 +11,7 @@ import { z } from 'zod'
 
 // Import the new R2 Image Uploader
 import { R2ImageUpload } from './R2ImageUpload'
+import { R2FileUpload } from './R2FileUpload'
 
 const templateSchema = z.object({
   title: z.string().min(1, 'Le titre est requis').max(100),
@@ -217,9 +218,16 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
           </p>
         </div>
 
-        {/* Source File Download URL */}
+        {/* Source File Upload (R2) or manual URL */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="sourceFileUrl">URL de téléchargement du fichier source *</Label>
+          <Label>Fichier source * (envoyé à l'acheteur après l'achat)</Label>
+          <R2FileUpload value={sourceFileUrl} onChange={setSourceFileUrl} />
+          {errors.source_file_url && (
+            <p className="text-sm text-destructive">{errors.source_file_url}</p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Ou collez un lien externe manuellement (Google Drive, Mega, etc.) :
+          </p>
           <Input
             id="sourceFileUrl"
             value={sourceFileUrl}
@@ -227,12 +235,6 @@ export const TemplateForm = ({ template, onSubmit, onCancel, isLoading }: Templa
             placeholder="https://drive.google.com/file/d/..."
             className={errors.source_file_url ? 'border-destructive' : ''}
           />
-          {errors.source_file_url && (
-            <p className="text-sm text-destructive">{errors.source_file_url}</p>
-          )}
-          <p className="text-xs text-muted-foreground">
-            Lien de téléchargement externe (Google Drive, Mega, etc.) remis à l'utilisateur après l'achat
-          </p>
         </div>
       </div>
 

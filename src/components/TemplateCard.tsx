@@ -3,9 +3,9 @@ import { ShoppingCart, Star, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
 import {
-  seededRandom,
   getDisplayReviewCount,
   getDisplaySales,
+  getDisplayRating,
   formatSales,
 } from '@/lib/seeded'
 
@@ -23,11 +23,6 @@ interface TemplateCardProps {
   youtubeId?: string | null
   authorName?: string
   authorAvatar?: string
-}
-
-function getPlaceholderRating(templateId: string): number {
-  const rand = seededRandom(templateId)
-  return rand() > 0.45 ? 5 : 4.5
 }
 
 const initials = (name: string) =>
@@ -63,6 +58,7 @@ const TemplateCard = ({
   const { addToCart, isInCart } = useCart()
   const displaySales = getDisplaySales(id, sales)
   const displayReviewCount = getDisplayReviewCount(id, reviewCount)
+  const displayRating = getDisplayRating(id, rating)
   const author = authorName
     ? { name: authorName, avatarInitials: initials(authorName) || 'US' }
     : resolveAuthor(id, title)
@@ -156,7 +152,7 @@ const TemplateCard = ({
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="flex items-center gap-1 font-semibold text-foreground">
                 <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                {rating ? rating.toFixed(1) : getPlaceholderRating(id).toFixed(1)}
+                {displayRating.toFixed(1)}
               </span>
               <span className="text-border">·</span>
               <span className="flex items-center gap-0.5">
