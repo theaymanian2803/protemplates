@@ -56,40 +56,6 @@ html {
     --glass-bg: hsla(0, 0%, 100%, 0.85);
     --glass-border: hsla(0, 0%, 90%, 0.8);
   }
-
-  .dark {
-    --glass-bg: hsla(0, 0%, 8%, 0.85);
-    --glass-border: hsla(0, 0%, 18%, 0.8);
-
-    --sidebar-background: 0 0% 99%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 145 70% 36%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 145 15% 95%;
-    --sidebar-accent-foreground: 0 0% 8%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 145 70% 36%;
-  }
-
-  .dark {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 145 70% 42%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 145 50% 60%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 0 75% 55%;
-    --accent-foreground: 0 0% 100%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 145 70% 42%;
-  }
 }
 
 @layer base {

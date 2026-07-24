@@ -15,6 +15,27 @@ const TemplatesSection = () => {
 
   const categoryTabs = ['All categories', ...(categories || [])]
 
+  function seededRandom(seed: string) {
+    let s = 0
+    for (let i = 0; i < seed.length; i++) {
+      s = ((s << 5) - s + seed.charCodeAt(i)) | 0
+    }
+    return () => {
+      s = (s * 16807 + 0) % 2147483647
+      return (s - 1) / 2147483646
+    }
+  }
+
+  function getPlaceholderReviewCount(templateId: string): number {
+    const rand = seededRandom(templateId + '_rc')
+    return Math.floor(rand() * 7) + 7
+  }
+
+  function getPlaceholderRating(templateId: string): number {
+    const rand = seededRandom(templateId)
+    return rand() > 0.45 ? 5 : 4.5
+  }
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -97,11 +118,11 @@ const TemplatesSection = () => {
                             {Array.from({ length: 5 }).map((_, s) => (
                               <Star
                                 key={s}
-                                className={`w-3 h-3 ${s < Math.round(template.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-200'}`}
+                                className={`w-3 h-3 ${s < Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400 text-amber-400' : getPlaceholderRating(template.id) % 1 !== 0 && s === Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400/50 text-amber-400' : 'text-gray-200'}`}
                               />
                             ))}
                           </div>
-                          <span className="text-[10px] text-gray-400">({template.sales})</span>
+                          <span className="text-[10px] text-gray-400">({getPlaceholderReviewCount(template.id)})</span>
                         </div>
                         <button
                           onClick={(e) => {

@@ -1,5 +1,4 @@
 import { useCategories } from '@/hooks/useTemplates'
-import ThemeToggle from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -222,7 +221,7 @@ const Navbar = () => {
                     <MegaMenuItem icon={Users} title="About Us" desc="Our story and mission" to="/about" onClick={() => setOpenMegaMenu(null)} />
                     <MegaMenuItem icon={Mail} title="Contact Us" desc="Get in touch with us" to="/contact" onClick={() => setOpenMegaMenu(null)} />
                     <MegaMenuItem icon={HelpCircle} title="FAQ" desc="Frequently asked questions" to="/faq" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Rocket} title="Become an Author" desc="Start selling your templates" to="/auth" onClick={() => setOpenMegaMenu(null)} />
+
                   </div>
                 </div>
               )}
@@ -255,8 +254,6 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            <ThemeToggle />
-
             {user ? (
               <>
                 <Link
@@ -345,19 +342,11 @@ const Navbar = () => {
               </>
             )}
 
-            <Link to="/auth">
-              <Button
-                size="sm"
-                className="bg-orange-500 text-white hover:bg-orange-600 rounded-lg px-5 font-semibold group">
-                <Sparkles className="w-4 h-4 mr-1 group-hover:rotate-12 transition-transform" />
-                Start Selling
-              </Button>
-            </Link>
+
           </div>
 
           {/* Mobile Actions */}
           <div className="lg:hidden flex items-center gap-1 shrink-0">
-            <ThemeToggle />
             <Link to="/cart" className="relative p-2" aria-label="Cart">
               <ShoppingCart className="w-5 h-5 text-gray-700" />
               {totalItems > 0 && (
@@ -418,7 +407,7 @@ const Navbar = () => {
               <MobileNavLink to="/about" onClick={() => setIsOpen(false)}>About Us</MobileNavLink>
               <MobileNavLink to="/contact" onClick={() => setIsOpen(false)}>Contact Us</MobileNavLink>
               <MobileNavLink to="/faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
-              <MobileNavLink to="/auth" onClick={() => setIsOpen(false)}>Become an Author</MobileNavLink>
+
 
               {/* Help & Legal */}
               <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-1">Help & Legal</p>
@@ -470,14 +459,7 @@ const Navbar = () => {
                     </Button>
                   </Link>
                 )}
-                <Link to="/auth" className="w-full" onClick={() => setIsOpen(false)}>
-                  <Button
-                    size="sm"
-                    className="w-full bg-orange-500 text-white hover:bg-orange-600 font-semibold">
-                    <Sparkles className="w-4 h-4 mr-1" />
-                    Start Selling
-                  </Button>
-                </Link>
+
               </div>
             </div>
           </div>

@@ -12,7 +12,6 @@ const footerLinks: Record<string, { label: string; to: string }[]> = {
     { label: 'About Us', to: '/about' },
     { label: 'Contact Us', to: '/contact' },
     { label: 'FAQ', to: '/faq' },
-    { label: 'Become an Author', to: '/auth' },
   ],
   'Help & Legal': [
     { label: 'Help Center', to: '/faq' },
@@ -42,8 +41,8 @@ const Footer = () => {
               <span className="font-extrabold text-xl tracking-tight">Unccodestore</span>
             </Link>
             <p className="text-neutral-400 mb-6 max-w-xs leading-relaxed">
-              The marketplace for premium website templates and source code. Build faster, sell
-              smarter — launching 2027.
+              The marketplace for premium website templates and source code. Build faster, launch
+              sooner — coming 2027.
             </p>
             <div className="flex items-center gap-3">
               {[

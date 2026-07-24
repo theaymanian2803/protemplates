@@ -2,6 +2,12 @@ import { useCart } from '@/contexts/CartContext'
 import { ShoppingCart, Star, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
+import {
+  seededRandom,
+  getDisplayReviewCount,
+  getDisplaySales,
+  formatSales,
+} from '@/lib/seeded'
 
 interface TemplateCardProps {
   id: string
@@ -11,6 +17,7 @@ interface TemplateCardProps {
   price: number
   rating?: number
   sales?: number
+  reviewCount?: number
   featured?: boolean
   demoUrl?: string | null
   youtubeId?: string | null
@@ -18,10 +25,9 @@ interface TemplateCardProps {
   authorAvatar?: string
 }
 
-const formatSales = (n?: number) => {
-  if (!n && n !== 0) return '0'
-  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`
-  return `${n}`
+function getPlaceholderRating(templateId: string): number {
+  const rand = seededRandom(templateId)
+  return rand() > 0.45 ? 5 : 4.5
 }
 
 const initials = (name: string) =>
@@ -49,11 +55,14 @@ const TemplateCard = ({
   price,
   rating = 0,
   sales = 0,
+  reviewCount,
   demoUrl,
   authorName,
   authorAvatar,
 }: TemplateCardProps) => {
   const { addToCart, isInCart } = useCart()
+  const displaySales = getDisplaySales(id, sales)
+  const displayReviewCount = getDisplayReviewCount(id, reviewCount)
   const author = authorName
     ? { name: authorName, avatarInitials: initials(authorName) || 'US' }
     : resolveAuthor(id, title)
@@ -96,7 +105,7 @@ const TemplateCard = ({
             <span className="px-2.5 py-1 rounded-md bg-background/90 backdrop-blur-sm text-xs font-semibold text-foreground border border-border/50 shadow-sm">
               {category || 'Template'}
             </span>
-            {sales > 100 && (
+            {displaySales > 100 && (
               <span className="px-2 py-1 rounded-md bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wide shadow-sm">
                 Hot
               </span>
@@ -142,15 +151,19 @@ const TemplateCard = ({
             <span className="text-xs font-medium text-muted-foreground">{author.name}</span>
           </div>
 
-          {/* Rating + sales + price */}
+          {/* Rating + reviews + sales + price */}
           <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="flex items-center gap-1 font-semibold text-foreground">
                 <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                {rating ? rating.toFixed(1) : 'New'}
+                {rating ? rating.toFixed(1) : getPlaceholderRating(id).toFixed(1)}
               </span>
               <span className="text-border">·</span>
-              <span>{formatSales(sales)} sales</span>
+              <span className="flex items-center gap-0.5">
+                ({displayReviewCount})
+              </span>
+              <span className="text-border">·</span>
+              <span>{formatSales(displaySales)} sales</span>
             </div>
             <div className="font-extrabold text-foreground text-lg tracking-tight">
               ${Number(price).toFixed(0)}

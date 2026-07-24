@@ -5,7 +5,28 @@ import { useTemplates } from '@/hooks/useTemplates'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const FeaturedThemes = () => {
-  const { data: templates, isLoading } = useTemplates({ featured: true, limit: 4 })
+  const { data: templates, isLoading } = useTemplates({ category: 'sass', limit: 4 })
+
+  function seededRandom(seed: string) {
+    let s = 0
+    for (let i = 0; i < seed.length; i++) {
+      s = ((s << 5) - s + seed.charCodeAt(i)) | 0
+    }
+    return () => {
+      s = (s * 16807 + 0) % 2147483647
+      return (s - 1) / 2147483646
+    }
+  }
+
+  function getPlaceholderReviewCount(templateId: string): number {
+    const rand = seededRandom(templateId + '_rc')
+    return Math.floor(rand() * 7) + 7
+  }
+
+  function getPlaceholderRating(templateId: string): number {
+    const rand = seededRandom(templateId)
+    return rand() > 0.45 ? 5 : 4.5
+  }
 
   return (
     <section className="py-20 bg-gray-50">
@@ -18,7 +39,7 @@ const FeaturedThemes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="text-3xl lg:text-[2.2rem] font-extrabold text-gray-900 leading-[1.25] mb-4">
-              Featured themes
+              SaaS Themes
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -26,16 +47,16 @@ const FeaturedThemes = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="text-base text-gray-500 mb-8 leading-[1.7]">
-              Every week, our staff personally hand-pick some of the best new website themes from our collection.
+              Hand-picked SaaS templates built for modern web applications.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}>
-              <Link to="/templates?featured=true">
+              <Link to="/templates?category=sass">
                 <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-orange-500 text-white font-semibold text-sm rounded-md hover:bg-orange-600 transition-colors">
-                  View all featured themes
+                  View all SaaS themes
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
@@ -88,11 +109,11 @@ const FeaturedThemes = () => {
                                 {Array.from({ length: 5 }).map((_, s) => (
                                   <Star
                                     key={s}
-                                    className={`w-3 h-3 ${s < Math.round(template.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-200'}`}
+                                    className={`w-3 h-3 ${s < Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400 text-amber-400' : getPlaceholderRating(template.id) % 1 !== 0 && s === Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400/50 text-amber-400' : 'text-gray-200'}`}
                                   />
                                 ))}
                               </div>
-                              <span className="text-[10px] text-gray-400">({template.sales})</span>
+                              <span className="text-[10px] text-gray-400">({getPlaceholderReviewCount(template.id)})</span>
                             </div>
                             <button className="text-[11px] font-semibold text-gray-500 border border-gray-200 rounded px-2.5 py-1.5 hover:border-orange-400 hover:text-orange-500 transition-colors">
                               Live Preview

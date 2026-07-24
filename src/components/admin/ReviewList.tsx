@@ -90,6 +90,9 @@ export const ReviewList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
+      queryClient.invalidateQueries({ queryKey: ["templates-paginated"] });
+      queryClient.invalidateQueries({ queryKey: ["template"] });
       toast({ title: "Statut de l'avis mis à jour" });
     },
     onError: (error: Error) => {
@@ -106,6 +109,9 @@ export const ReviewList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
+      queryClient.invalidateQueries({ queryKey: ["templates-paginated"] });
+      queryClient.invalidateQueries({ queryKey: ["template"] });
       toast({ title: "Avis supprimé avec succès" });
       setDeletingId(null);
     },
@@ -132,6 +138,9 @@ export const ReviewList = () => {
       setSelectedIds(new Set());
       queryClient.invalidateQueries({ queryKey: ["admin-reviews"] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
+      queryClient.invalidateQueries({ queryKey: ["templates-paginated"] });
+      queryClient.invalidateQueries({ queryKey: ["template"] });
     } catch (error: any) {
       toast({ title: "Action groupée échouée", description: error.message, variant: "destructive" });
     } finally {
@@ -183,7 +192,7 @@ export const ReviewList = () => {
       {pendingCount > 0 && (
         <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-sm">
           <Clock className="w-4 h-4 text-yellow-500" />
-          <span className="font-medium text-yellow-600 dark:text-yellow-400">
+          <span className="font-medium text-yellow-600">
             {pendingCount} avis en attente d'approbation
           </span>
         </div>

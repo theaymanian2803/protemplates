@@ -193,6 +193,15 @@ serve(async (req) => {
       console.error('Order Items Table Error:', itemsError)
     }
 
+    // Increment sales counter for each purchased template
+    for (const v of verifiedItems) {
+      const { error: salesError } = await supabaseAdmin.rpc('increment_template_sales', {
+        template_uuid: v.id,
+        step: 1,
+      })
+      if (salesError) console.error('Failed to increment sales:', salesError)
+    }
+
     return new Response(
       JSON.stringify({ success: true, orderId: order.id, free: true }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

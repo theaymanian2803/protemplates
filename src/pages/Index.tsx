@@ -1,11 +1,11 @@
 import CategoriesSection from '@/components/CategoriesSection'
-import CTASection from '@/components/CTASection'
 import FeaturedThemes from '@/components/FeaturedThemes'
 import Footer from '@/components/Footer'
 import HeroSection from '@/components/HeroSection'
-import MarketplaceStats from '@/components/MarketplaceStats'
 import Navbar from '@/components/Navbar'
 import PromoBanner from '@/components/PromoBanner'
+import ReviewsSection from '@/components/ReviewsSection'
+import SpaThemes from '@/components/SpaThemes'
 import TemplatesSection from '@/components/TemplatesSection'
 import UniqueThemesBanner from '@/components/UniqueThemesBanner'
 
@@ -18,9 +18,9 @@ const Index = () => {
       <CategoriesSection />
       <UniqueThemesBanner />
       <FeaturedThemes />
-      <MarketplaceStats />
       <TemplatesSection />
-      <CTASection />
+      <ReviewsSection />
+      <SpaThemes />
       <Footer />
     </main>
   )

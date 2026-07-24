@@ -205,6 +205,7 @@ const Favorites = () => {
                       price={Number(template.price)}
                       rating={Number(template.rating)}
                       sales={template.sales}
+                      reviewCount={template.review_count}
                       youtubeId={template.youtube_id}
                     />
                   ))}

@@ -4,6 +4,11 @@ import { ExternalLink, Heart, ShoppingCart, Star } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
 import { Template } from '@/hooks/useTemplates'
+import {
+  getDisplayReviewCount,
+  getDisplaySales,
+  formatSales,
+} from '@/lib/seeded'
 
 const authorPool = ['Nimbus Studio', 'Pixel Forge', 'Lumen Labs', 'Cobalt Co.', 'Atlas Dev', 'North Peak']
 
@@ -11,11 +16,6 @@ const resolveAuthor = (id: string) => {
   let hash = 0
   for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) >>> 0
   return authorPool[hash % authorPool.length]
-}
-
-const formatSales = (n: number) => {
-  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`
-  return `${n}`
 }
 
 const formatDate = (iso: string) => {
@@ -138,7 +138,8 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
                   />
                 ))}
               </div>
-              <span className="text-[10px] text-gray-400">({formatSales(template.sales ?? 0)})</span>
+              <span className="text-[10px] text-gray-400">({getDisplayReviewCount(template.id, template.review_count)})</span>
+              <span className="text-[10px] text-gray-400">· {formatSales(getDisplaySales(template.id, template.sales))} sales</span>
             </div>
             <div className="flex items-center gap-2 mt-auto">
               <button
@@ -216,7 +217,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
 
         <div className="text-right mb-3">
           <div className="text-2xl font-bold text-gray-900">${Number(template.price).toFixed(0)}</div>
-          <div className="text-xs text-gray-500 mt-1">{formatSales(template.sales ?? 0)} Sales</div>
+          <div className="text-xs text-gray-500 mt-1">{formatSales(getDisplaySales(template.id, template.sales))} Sales · ({getDisplayReviewCount(template.id, template.review_count)}) reviews</div>
           {Number(template.rating) > 0 && (
             <div className="flex items-center justify-end gap-0.5 mt-1">
               {Array.from({ length: 5 }).map((_, s) => (

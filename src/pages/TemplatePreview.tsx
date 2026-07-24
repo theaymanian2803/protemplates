@@ -98,7 +98,7 @@ const TemplatePreview = () => {
       <Navbar />
 
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-[1200px]">
+        <div className="container mx-auto px-4 max-w-[1200px] overflow-hidden">
           {/* Header Section mimicking Webflow Details Page */}
           <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 gap-6">
             <div>
@@ -117,7 +117,7 @@ const TemplatePreview = () => {
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
                 {template.title} - Template site web
               </h1>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -129,16 +129,16 @@ const TemplatePreview = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 min-w-0">
               {liveUrl && (
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="gap-2">
+                <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                  <Button variant="outline" className="gap-2 w-full sm:w-auto text-xs sm:text-sm">
                     Aperçu en navigateur <ExternalLink className="w-4 h-4" />
                   </Button>
                 </a>
               )}
               <Button
-                className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
                 onClick={handleBuyClick}>
                 <ShoppingBag className="w-4 h-4" />
                 {Number(template.price) > 0 ? `Acheter $${template.price}` : 'Obtenir gratuitement'}
@@ -179,7 +179,7 @@ const TemplatePreview = () => {
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Main Content (Left Side) */}
             <div className="lg:col-span-8 space-y-12">
-              <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
+              <div className="prose prose-sm md:prose-base max-w-none">
                 <h2 className="text-2xl font-bold mb-4">{template.title} – Template web</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   {template.description ||

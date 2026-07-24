@@ -40,6 +40,7 @@ const RelatedTemplates = () => {
               price={Number(template.price)}
               rating={Number(template.rating)}
               sales={template.sales}
+              reviewCount={template.review_count}
               featured={template.featured}
               youtubeId={template.youtube_id}
             />

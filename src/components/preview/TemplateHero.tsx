@@ -7,6 +7,7 @@ import { Template } from "@/hooks/useTemplates";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { getDisplaySales } from "@/lib/seeded";
 import YouTubeModal from "./YouTubeModal";
 
 interface TemplateHeroProps {
@@ -18,6 +19,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
   const { user } = useAuth();
   const isInFavorites = isFavorite(template.id);
   const [videoOpen, setVideoOpen] = useState(false);
+  const displaySales = getDisplaySales(template.id, template.sales);
 
   const handleFavoriteClick = async () => {
     if (!user) {
@@ -105,7 +107,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
 
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2">
-          {template.sales > 1000 && (
+          {displaySales > 1000 && (
             <Badge className="bg-primary text-primary-foreground">Meilleure vente</Badge>
           )}
           {template.featured && (
@@ -132,7 +134,7 @@ const TemplateHero = ({ template }: TemplateHeroProps) => {
           </div>
           <div className="flex items-center gap-1 text-muted-foreground">
             <Download className="w-4 h-4" />
-            <span>{template.sales.toLocaleString()} téléchargements</span>
+            <span>{displaySales.toLocaleString()} téléchargements</span>
           </div>
         </div>
       </div>

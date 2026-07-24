@@ -12,6 +12,7 @@ export interface Template {
   gallery_images: string[];
   rating: number;
   sales: number;
+  review_count?: number;
   featured: boolean;
   tech_stack: string[];
   features: string[];

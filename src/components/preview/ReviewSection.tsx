@@ -12,6 +12,10 @@ import {
   useSubmitReview,
   useDeleteReview,
 } from "@/hooks/useReviews";
+import {
+  seededRandom,
+  getPlaceholderReviewCount,
+} from "@/lib/seeded";
 
 interface ReviewSectionProps {
   templateId: string;
@@ -55,6 +59,47 @@ const StarRating = ({
   );
 };
 
+const placeholderNames = [
+  'Youssef Ait Baha', 'Fatima Zahra Benali', 'Omar El Fassi', 'Salma Idrissi',
+  'Amine Chakir', 'Nadia Tazi', 'Karim Bensouda', 'Laila Moussaoui',
+  'Hamza Filali', 'Meryem Ait Ouakrim',
+]
+
+const placeholderTexts = [
+  'Beautifully designed, exactly what I needed for my business.',
+  'Clean code and great documentation. Highly recommend!',
+  'The template saved me weeks of work. Looks premium.',
+  'Customer support was excellent. Very responsive team.',
+  'Perfect fit for my project. Modern and well-structured.',
+  'Love the attention to detail. Worth every penny.',
+  'Easy to customize and deploy. Great experience overall.',
+  'This template exceeded my expectations. Very polished.',
+  'Fantastic quality. I will definitely buy more templates here.',
+  'Smooth setup process and beautiful design out of the box.',
+]
+
+function getPlaceholderReviews(templateId: string) {
+  const count = getPlaceholderReviewCount(templateId)
+  const rand = seededRandom(templateId)
+  return Array.from({ length: count }, (_, i) => {
+    const rating = rand() > 0.45 ? 5 : 4.5
+    const nameIdx = Math.floor(rand() * placeholderNames.length)
+    const textIdx = Math.floor(rand() * placeholderTexts.length)
+    const daysAgo = Math.floor(rand() * 60) + 1
+    const date = new Date()
+    date.setDate(date.getDate() - daysAgo)
+    return {
+      id: `placeholder-${i}`,
+      display_name: placeholderNames[nameIdx],
+      rating,
+      comment: placeholderTexts[textIdx],
+      created_at: date.toISOString(),
+      user_id: '',
+      status: 'approved' as const,
+    }
+  })
+}
+
 const ReviewSection = ({ templateId }: ReviewSectionProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -68,9 +113,12 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
   const [comment, setComment] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
+  const placeholders = getPlaceholderReviews(templateId);
+  const displayReviews = [...placeholders, ...reviews];
+
   const avgRating =
-    reviews.length > 0
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    displayReviews.length > 0
+      ? displayReviews.reduce((sum, r) => sum + r.rating, 0) / displayReviews.length
       : 0;
 
   const handleSubmit = async () => {
@@ -115,13 +163,13 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
         <h3 className="text-xl font-display font-bold text-foreground flex items-center gap-2">
           <MessageSquare className="w-5 h-5 text-primary" />
           Avis
-          {reviews.length > 0 && (
+          {displayReviews.length > 0 && (
             <span className="text-sm font-normal text-muted-foreground">
-              ({reviews.length})
+              ({displayReviews.length})
             </span>
           )}
         </h3>
-        {reviews.length > 0 && (
+        {displayReviews.length > 0 && (
           <div className="flex items-center gap-2">
             <StarRating rating={Math.round(avgRating)} />
             <span className="text-sm font-semibold text-foreground">
@@ -191,7 +239,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {userReview && !isEditing && userReview.status === "pending" && (
         <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-sm">
           <Clock className="w-4 h-4 text-yellow-500" />
-          <span className="text-yellow-600 dark:text-yellow-400">
+          <span className="text-yellow-600">
             Votre avis est en attente d'approbation par l'administrateur.
           </span>
         </div>
@@ -227,14 +275,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {/* Reviews list */}
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Chargement des avis...</p>
-      ) : reviews.length === 0 ? (
-        <p className="text-sm text-muted-foreground text-center py-4">
-          Aucun avis pour le moment. Soyez le premier à donner votre avis !
-        </p>
       ) : (
         <div className="space-y-4">
-          {reviews
-            .filter((r) => r.user_id !== user?.id)
+          {displayReviews
+            .filter((r) => !user || r.user_id !== user.id)
             .map((review) => (
               <div
                 key={review.id}

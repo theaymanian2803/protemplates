@@ -218,6 +218,7 @@ const Dashboard = () => {
                     price={Number(t.price)}
                     rating={t.rating ?? 0}
                     sales={t.sales ?? 0}
+                    reviewCount={t.review_count}
                   />
                 ))}
               </div>
