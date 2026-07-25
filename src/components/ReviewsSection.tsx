@@ -110,40 +110,59 @@ const ReviewsSection = () => {
   })
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-stone-50 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -right-32 w-80 h-80 rounded-full bg-amber-100/30 blur-3xl" />
-        <div className="absolute bottom-20 -left-32 w-80 h-80 rounded-full bg-orange-100/20 blur-3xl" />
-      </div>
+    <section className="relative overflow-hidden py-24 text-[#f5f1ea]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, #221b16 0%, #1a1614 100%)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
+          backgroundSize: '88px 88px',
+        }}
+      />
+      {/* ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(90% 60% at 50% 0%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 55%)',
+        }}
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="relative container mx-auto px-4 z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-14">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-100 mb-6">
-              <Quote className="w-4 h-4 text-amber-600" />
-              <span className="text-sm font-semibold text-amber-700">What Buyers Say</span>
+              className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-amber-200/90">
+              <Quote className="w-3.5 h-3.5" />
+              What Buyers Say
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.08 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.15] mb-4">
-              Trusted by Moroccan Buyers
+              transition={{ delay: 0.06 }}
+              className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] leading-[1.08] tracking-tight mb-4">
+              Trusted by Moroccan <span className="text-amber-400">Buyers</span>
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.16 }}
-              className="text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
+              transition={{ delay: 0.12 }}
+              className="text-base text-[#a89c8c] max-w-xl mx-auto leading-relaxed">
               Real feedback from our growing community of creators and entrepreneurs.
             </motion.p>
           </div>
@@ -152,49 +171,51 @@ const ReviewsSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading
               ? Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="rounded-xl bg-white border border-gray-200 p-6 space-y-4">
+                  <div key={i} className="rounded-xl bg-[#211a15] border border-white/10 p-6 space-y-4">
                     <div className="flex items-center gap-3">
-                      <Skeleton className="w-10 h-10 rounded-full" />
+                      <Skeleton className="w-10 h-10 rounded-full bg-white/5" />
                       <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 w-2/3" />
-                        <Skeleton className="h-3 w-1/3" />
+                        <Skeleton className="h-4 w-2/3 bg-white/5" />
+                        <Skeleton className="h-3 w-1/3 bg-white/5" />
                       </div>
                     </div>
-                    <Skeleton className="h-3 w-full" />
-                    <Skeleton className="h-3 w-4/5" />
-                    <div className="flex items-center gap-2 pt-2">
-                      <Skeleton className="w-16 h-10 rounded-lg" />
-                      <div className="space-y-1 flex-1">
-                        <Skeleton className="h-3 w-3/4" />
-                        <Skeleton className="h-2.5 w-1/2" />
-                      </div>
-                    </div>
+                    <Skeleton className="h-3 w-full bg-white/5" />
+                    <Skeleton className="h-3 w-4/5 bg-white/5" />
                   </div>
                 ))
               : reviews?.map((review, index) => (
                   <motion.div
                     key={review.id}
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 22 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.06, duration: 0.4 }}
-                    className="group rounded-xl bg-white border border-gray-200 p-6 hover:shadow-lg hover:border-amber-200 transition-all duration-300">
+                    className="group relative rounded-xl bg-[#211a15] border border-white/10 p-6 hover:border-amber-400/40 transition-colors duration-300">
+                    {/* hover glow */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background:
+                          'radial-gradient(70% 60% at 100% 0%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 60%)',
+                      }}
+                    />
                     {/* Reviewer info */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                    <div className="relative flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-[#1a1614] font-bold text-sm shrink-0">
                         {review.name.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 truncate">{review.name}</p>
+                        <p className="text-sm font-semibold text-[#f5f1ea] truncate">{review.name}</p>
                         <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-gray-400" />
-                          <span className="text-xs text-gray-400">Morocco</span>
+                          <MapPin className="w-3 h-3 text-[#a89c8c]/60" />
+                          <span className="text-xs text-[#a89c8c]/70">Morocco</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Stars */}
-                    <div className="flex items-center gap-1 mb-3">
+                    <div className="relative flex items-center gap-1 mb-3">
                       {Array.from({ length: 5 }).map((_, s) => (
                         <Star
                           key={s}
@@ -203,19 +224,19 @@ const ReviewsSection = () => {
                               ? 'fill-amber-400 text-amber-400'
                               : review.rating % 1 !== 0 && s === Math.floor(review.rating)
                               ? 'fill-amber-400/50 text-amber-400'
-                              : 'text-gray-200'
+                              : 'text-white/15'
                           }`}
                         />
                       ))}
-                      <span className="text-xs font-medium text-gray-500 ml-1">{review.rating}</span>
+                      <span className="text-xs font-medium text-[#a89c8c] ml-1">{review.rating}</span>
                     </div>
 
                     {/* Review text */}
-                    <p className="text-sm text-gray-600 leading-relaxed mb-5">"{review.text}"</p>
+                    <p className="relative text-sm text-[#d8cfc1] leading-relaxed mb-5">"{review.text}"</p>
 
                     {/* Template info */}
-                    <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                      <div className="w-12 h-9 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                    <div className="relative flex items-center gap-3 pt-4 border-t border-white/10">
+                      <div className="w-12 h-9 rounded-lg overflow-hidden bg-[#1a1614] shrink-0">
                         <img
                           src={review.image_url || '/placeholder.svg'}
                           alt={review.title}
@@ -224,7 +245,7 @@ const ReviewsSection = () => {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-medium text-gray-900 truncate">{review.title}</p>
+                        <p className="text-xs font-medium text-[#f5f1ea] truncate">{review.title}</p>
                         <div className="flex items-center gap-1 mt-0.5">
                           <div className="flex items-center gap-0.5">
                             {Array.from({ length: 5 }).map((_, s) => (
@@ -233,12 +254,12 @@ const ReviewsSection = () => {
                                 className={`w-2.5 h-2.5 ${
                                   s < Math.floor(review.rating)
                                     ? 'fill-amber-400 text-amber-400'
-                                    : 'text-gray-200'
+                                    : 'text-white/15'
                                 }`}
                               />
                             ))}
                           </div>
-                          <span className="text-[10px] text-gray-400">
+                          <span className="text-[10px] text-[#a89c8c]/70">
                             {review.rating} ({review.reviewCount} reviews)
                           </span>
                         </div>

@@ -1,61 +1,62 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, Star } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTemplates } from '@/hooks/useTemplates'
-import { Skeleton } from '@/components/ui/skeleton'
+import ThemeCard, { ThemeCardSkeleton } from '@/components/ThemeCard'
 
 const FeaturedThemes = () => {
   const { data: templates, isLoading } = useTemplates({ category: 'sass', limit: 4 })
 
-  function seededRandom(seed: string) {
-    let s = 0
-    for (let i = 0; i < seed.length; i++) {
-      s = ((s << 5) - s + seed.charCodeAt(i)) | 0
-    }
-    return () => {
-      s = (s * 16807 + 0) % 2147483647
-      return (s - 1) / 2147483646
-    }
-  }
-
-  function getPlaceholderReviewCount(templateId: string): number {
-    const rand = seededRandom(templateId + '_rc')
-    return Math.floor(rand() * 7) + 7
-  }
-
-  function getPlaceholderRating(templateId: string): number {
-    const rand = seededRandom(templateId)
-    return rand() > 0.45 ? 5 : 4.5
-  }
-
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-start gap-16 max-w-7xl mx-auto">
+    <section className="relative overflow-hidden py-20 text-[#f5f1ea]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, #221b16 0%, #1a1614 100%)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
+          backgroundSize: '88px 88px',
+        }}
+      />
+
+      <div className="relative container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-start gap-14 max-w-7xl mx-auto">
           {/* Left: Text */}
-          <div className="lg:w-1/3">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+          <div className="lg:w-1/3 lg:sticky lg:top-24">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl lg:text-[2.2rem] font-extrabold text-gray-900 leading-[1.25] mb-4">
-              SaaS Themes
+              className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-amber-200/90">
+              Featured
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] leading-[1.05] tracking-tight mb-4">
+              SaaS <span className="text-amber-400">Themes</span>
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-base text-gray-500 mb-8 leading-[1.7]">
-              Hand-picked SaaS templates built for modern web applications.
+              transition={{ delay: 0.08 }}
+              className="text-base text-[#a89c8c] mb-8 leading-[1.7]">
+              Hand-picked SaaS templates built for modern web applications — clean React + TypeScript you can extend.
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}>
+              transition={{ delay: 0.16 }}>
               <Link to="/templates?category=sass">
-                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-orange-500 text-white font-semibold text-sm rounded-md hover:bg-orange-600 transition-colors">
+                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-500 text-[#1a1614] font-semibold text-sm rounded-lg hover:bg-amber-400 transition-colors shadow-[0_0_30px_-8px_rgba(245,158,11,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50">
                   View all SaaS themes
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -64,64 +65,12 @@ const FeaturedThemes = () => {
           </div>
 
           {/* Right: 2x2 Grid of theme cards */}
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {isLoading
-                ? Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="rounded-lg overflow-hidden bg-white border border-gray-200">
-                      <Skeleton className="aspect-[16/10] w-full" />
-                      <div className="p-4 space-y-2">
-                        <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-3 w-1/2" />
-                        <div className="flex justify-between pt-2">
-                          <Skeleton className="h-4 w-16" />
-                          <Skeleton className="h-6 w-20" />
-                        </div>
-                      </div>
-                    </div>
-                  ))
+                ? Array.from({ length: 4 }).map((_, i) => <ThemeCardSkeleton key={i} />)
                 : templates?.slice(0, 4).map((template, index) => (
-                    <motion.div
-                      key={template.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.06 }}
-                      className="group rounded-lg overflow-hidden bg-white border border-gray-200 hover:shadow-lg transition-shadow">
-                      <Link to={`/template/${template.id}`} className="block">
-                        <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                          <img
-                            src={template.image_url || '/placeholder.svg'}
-                            alt={template.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div className="p-5">
-                          <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-orange-500 transition-colors">
-                            {template.title}
-                          </h3>
-                          <p className="text-xs text-gray-400 mb-4">by Unccodestore</p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-bold text-gray-900">${Number(template.price).toFixed(0)}</span>
-                              <div className="flex items-center gap-0.5">
-                                {Array.from({ length: 5 }).map((_, s) => (
-                                  <Star
-                                    key={s}
-                                    className={`w-3 h-3 ${s < Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400 text-amber-400' : getPlaceholderRating(template.id) % 1 !== 0 && s === Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400/50 text-amber-400' : 'text-gray-200'}`}
-                                  />
-                                ))}
-                              </div>
-                              <span className="text-[10px] text-gray-400">({getPlaceholderReviewCount(template.id)})</span>
-                            </div>
-                            <button className="text-[11px] font-semibold text-gray-500 border border-gray-200 rounded px-2.5 py-1.5 hover:border-orange-400 hover:text-orange-500 transition-colors">
-                              Live Preview
-                            </button>
-                          </div>
-                        </div>
-                      </Link>
-                    </motion.div>
+                    <ThemeCard key={template.id} template={template} index={index} />
                   ))}
             </div>
           </div>

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Star, ExternalLink } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useTemplates, useCategories } from '@/hooks/useTemplates'
-import { Skeleton } from '@/components/ui/skeleton'
+import ThemeCard, { ThemeCardSkeleton } from '@/components/ThemeCard'
+import { ArrowUpRight } from 'lucide-react'
 
 const TemplatesSection = () => {
   const { data: categories } = useCategories()
@@ -15,41 +15,38 @@ const TemplatesSection = () => {
 
   const categoryTabs = ['All categories', ...(categories || [])]
 
-  function seededRandom(seed: string) {
-    let s = 0
-    for (let i = 0; i < seed.length; i++) {
-      s = ((s << 5) - s + seed.charCodeAt(i)) | 0
-    }
-    return () => {
-      s = (s * 16807 + 0) % 2147483647
-      return (s - 1) / 2147483646
-    }
-  }
-
-  function getPlaceholderReviewCount(templateId: string): number {
-    const rand = seededRandom(templateId + '_rc')
-    return Math.floor(rand() * 7) + 7
-  }
-
-  function getPlaceholderRating(templateId: string): number {
-    const rand = seededRandom(templateId)
-    return rand() > 0.45 ? 5 : 4.5
-  }
-
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="relative overflow-hidden py-20 text-[#f5f1ea]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, #1a1614 0%, #221b16 100%)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
+          backgroundSize: '88px 88px',
+        }}
+      />
+
+      <div className="relative container mx-auto px-4">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-[2.4rem] font-extrabold text-gray-900 tracking-tight mb-4 leading-[1.25]">
-            Check out our newest themes and templates
+          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-5 text-[11px] font-medium tracking-wide text-amber-200/90">
+            Newest arrivals
+          </span>
+          <h2 className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] tracking-tight mb-4 leading-[1.1]">
+            Fresh from the <span className="text-amber-400">darkroom</span>
           </h2>
-          <p className="text-base text-gray-500 leading-[1.7]">
-            We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you'll always find something that catches your eye.
+          <p className="text-base text-[#a89c8c] leading-[1.7]">
+            We carefully review new entries from our community one by one so they meet high-quality design and functionality standards. From multipurpose themes to niche templates — you'll always find something worth keeping.
           </p>
         </motion.div>
 
@@ -59,89 +56,29 @@ const TemplatesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-2.5 mb-12">
-          {categoryTabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveCategory(tab === 'All categories' ? null : tab)}
-              className={`px-5 py-2.5 rounded-full text-xs font-medium transition-colors ${
-                (tab === 'All categories' && activeCategory === null) || activeCategory === tab
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-orange-400 hover:text-orange-500'
-              }`}>
-              {tab}
-            </button>
-          ))}
+          {categoryTabs.map((tab) => {
+            const active = (tab === 'All categories' && activeCategory === null) || activeCategory === tab
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveCategory(tab === 'All categories' ? null : tab)}
+                className={`px-5 py-2.5 rounded-full text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 ${
+                  active
+                    ? 'bg-amber-500 text-[#1a1614]'
+                    : 'bg-white/[0.04] text-[#d8cfc1] border border-white/10 hover:border-amber-400/40 hover:text-amber-200'
+                }`}>
+                {tab}
+              </button>
+            )
+          })}
         </motion.div>
 
         {/* Theme Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {isLoading
-            ? Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="rounded-lg overflow-hidden bg-white border border-gray-200">
-                  <Skeleton className="aspect-[16/10] w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-3 w-1/2" />
-                    <div className="flex justify-between pt-2">
-                      <Skeleton className="h-4 w-16" />
-                      <Skeleton className="h-6 w-20" />
-                    </div>
-                  </div>
-                </div>
-              ))
+            ? Array.from({ length: 8 }).map((_, i) => <ThemeCardSkeleton key={i} />)
             : templates?.slice(0, 8).map((template, index) => (
-                <motion.div
-                  key={template.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.04 }}
-                  className="group rounded-lg overflow-hidden bg-white border border-gray-200 hover:shadow-lg transition-shadow">
-                  <Link to={`/template/${template.id}`} className="block">
-                    <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                      <img
-                        src={template.image_url || '/placeholder.svg'}
-                        alt={template.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-orange-500 transition-colors">
-                        {template.title}
-                      </h3>
-                      <p className="text-xs text-gray-400 mb-4">by Unccodestore</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-bold text-gray-900">${Number(template.price).toFixed(0)}</span>
-                          <div className="flex items-center gap-0.5">
-                            {Array.from({ length: 5 }).map((_, s) => (
-                              <Star
-                                key={s}
-                                className={`w-3 h-3 ${s < Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400 text-amber-400' : getPlaceholderRating(template.id) % 1 !== 0 && s === Math.floor(getPlaceholderRating(template.id)) ? 'fill-amber-400/50 text-amber-400' : 'text-gray-200'}`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-[10px] text-gray-400">({getPlaceholderReviewCount(template.id)})</span>
-                        </div>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            if (template.demo_url) {
-                              window.open(template.demo_url, '_blank', 'noopener,noreferrer')
-                            } else {
-                              window.open(`/template/${template.id}`, '_self')
-                            }
-                          }}
-                          className="text-[11px] font-semibold text-gray-500 border border-gray-200 rounded px-2.5 py-1.5 hover:border-orange-400 hover:text-orange-500 transition-colors flex items-center gap-1">
-                          <ExternalLink className="w-3 h-3" />
-                          Live Preview
-                        </button>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
+                <ThemeCard key={template.id} template={template} index={index} />
               ))}
         </div>
 
@@ -151,10 +88,11 @@ const TemplatesSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-center mt-14">
-          <Link to="/templates">
-            <button className="px-10 py-3.5 bg-orange-500 text-white font-semibold text-sm rounded-md hover:bg-orange-600 transition-colors">
-              View more new items
-            </button>
+          <Link
+            to="/templates"
+            className="inline-flex items-center gap-2 px-8 py-3.5 border border-amber-400/40 text-amber-300 font-semibold text-sm rounded-lg hover:bg-amber-400/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40">
+            View more new items
+            <ArrowUpRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </div>
