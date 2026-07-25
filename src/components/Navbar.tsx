@@ -363,32 +363,31 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile search row */}
-        <form onSubmit={onSearch} className="md:hidden pb-3">
-          <div className="flex w-full items-center rounded-lg border border-gray-200 bg-gray-50 focus-within:border-orange-400 focus-within:bg-white transition-colors overflow-hidden">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search templates, themes, source code…"
-              className="flex-1 h-11 px-4 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
-              aria-label="Search"
-            />
-            <button
-              type="submit"
-              className="h-11 px-4 flex items-center justify-center text-gray-400 hover:text-orange-500 transition-colors border-l border-gray-200"
-              aria-label="Submit search">
-              <Search className="w-5 h-5" />
-            </button>
-          </div>
-        </form>
-
         {/* Mobile Menu */}
         {isOpen && (
           <div className="lg:hidden pb-6 animate-fade-up max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-1">
+              {/* Mobile search inside hamburger */}
+              <form onSubmit={onSearch} className="px-3 pt-4 pb-1">
+                <div className="flex w-full items-center rounded-lg border border-gray-200 bg-gray-50 focus-within:border-orange-400 focus-within:bg-white transition-colors overflow-hidden">
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search templates, themes, source code…"
+                    className="flex-1 h-11 px-4 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
+                    aria-label="Search"
+                  />
+                  <button
+                    type="submit"
+                    className="h-11 px-4 flex items-center justify-center text-gray-400 hover:text-orange-500 transition-colors border-l border-gray-200"
+                    aria-label="Submit search">
+                    <Search className="w-5 h-5" />
+                  </button>
+                </div>
+              </form>
               {/* Browse section */}
-              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-1">Browse</p>
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-3 mb-1">Browse</p>
               <MobileNavLink to="/templates" onClick={() => setIsOpen(false)}>All Templates</MobileNavLink>
               <MobileNavLink to="/templates?featured=true" onClick={() => setIsOpen(false)}>Featured Themes</MobileNavLink>
               <MobileNavLink to="/templates?sort=bestsellers" onClick={() => setIsOpen(false)}>Best Sellers</MobileNavLink>
