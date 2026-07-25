@@ -25,7 +25,7 @@ const HeroSection = () => {
 
   const collageItems = [
     {
-      color: 'bg-orange-500',
+      color: 'from-orange-500 to-red-600',
       label: '#1 Best Selling',
       sub: 'WooCommerce Theme',
       w: 'w-48',
@@ -35,7 +35,7 @@ const HeroSection = () => {
       left: 'left-0',
     },
     {
-      color: 'bg-slate-800',
+      color: 'from-slate-700 to-slate-900',
       label: 'uncode',
       sub: 'Creative Theme',
       w: 'w-44',
@@ -45,7 +45,7 @@ const HeroSection = () => {
       left: 'left-52',
     },
     {
-      color: 'bg-amber-500',
+      color: 'from-amber-400 to-orange-600',
       label: 'The Best',
       sub: 'Creative Theme',
       w: 'w-40',
@@ -55,7 +55,7 @@ const HeroSection = () => {
       left: 'left-4',
     },
     {
-      color: 'bg-indigo-600',
+      color: 'from-indigo-500 to-indigo-700',
       label: 'Portfolio',
       sub: 'Agency Theme',
       w: 'w-44',
@@ -65,7 +65,7 @@ const HeroSection = () => {
       left: 'left-48',
     },
     {
-      color: 'bg-rose-500',
+      color: 'from-rose-400 to-rose-600',
       label: 'Magazine',
       sub: 'Blog Theme',
       w: 'w-36',
@@ -75,7 +75,7 @@ const HeroSection = () => {
       left: 'left-16',
     },
     {
-      color: 'bg-cyan-600',
+      color: 'from-cyan-500 to-cyan-700',
       label: 'Startup',
       sub: 'SaaS Theme',
       w: 'w-40',
@@ -96,8 +96,8 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold text-gray-900 leading-[1.2] tracking-tight mb-6">
-              Professional Coding Themes & Website Templates for any project
+              className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.05] tracking-tight mb-6">
+              Professional Coding <span className="text-orange-500">Themes</span> & Website <span className="text-orange-500">Templates</span> for any project
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -155,7 +155,7 @@ const HeroSection = () => {
               {collageItems.map((item, i) => (
                 <div
                   key={i}
-                  className={`absolute ${item.w} ${item.h} ${item.color} rounded-lg shadow-lg ${item.rotate} ${item.top} ${item.left} flex flex-col items-center justify-center text-white overflow-hidden`}>
+                  className={`absolute ${item.w} ${item.h} bg-gradient-to-br ${item.color} rounded-lg shadow-lg ${item.rotate} ${item.top} ${item.left} flex flex-col items-center justify-center text-white overflow-hidden`}>
                   <span className="text-[10px] font-bold uppercase tracking-wide opacity-80">
                     {item.label}
                   </span>
