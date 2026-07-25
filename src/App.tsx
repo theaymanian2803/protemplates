@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 import CookieConsent from "./components/CookieConsent";
 import ChatBubble from "./components/ChatBubble";
 import Privacy from "./pages/Privacy";
@@ -44,7 +45,7 @@ const App = () => (
             <Sonner />
             <ScrollToTop />
             <BrowserRouter>
-              <ScrollToTop />
+              <ScrollToTopOnNavigate />
               <CookieConsent />
               <ChatBubble />
               <Routes>
