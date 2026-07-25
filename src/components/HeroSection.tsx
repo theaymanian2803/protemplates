@@ -45,7 +45,7 @@ const HeroSection = () => {
       left: 'left-52',
     },
     {
-      color: 'from-amber-400 to-orange-600',
+      color: 'from-amber-500 to-orange-600',
       label: 'The Best',
       sub: 'Creative Theme',
       w: 'w-40',
@@ -65,7 +65,7 @@ const HeroSection = () => {
       left: 'left-48',
     },
     {
-      color: 'from-rose-400 to-rose-600',
+      color: 'from-rose-500 to-rose-600',
       label: 'Magazine',
       sub: 'Blog Theme',
       w: 'w-36',
@@ -75,7 +75,7 @@ const HeroSection = () => {
       left: 'left-16',
     },
     {
-      color: 'from-cyan-500 to-cyan-700',
+      color: 'from-cyan-600 to-cyan-700',
       label: 'Startup',
       sub: 'SaaS Theme',
       w: 'w-40',
@@ -113,12 +113,13 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-8">
+              className="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-8 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 focus-within:shadow-md transition-all">
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="e.g. responsive WordPress"
+                aria-label="Search templates"
                 className="flex-1 h-14 px-5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
               />
               <button
@@ -138,7 +139,7 @@ const HeroSection = () => {
                 <button
                   key={tag}
                   onClick={() => navigate(`/templates?q=${encodeURIComponent(tag)}`)}
-                  className="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:border-orange-400 hover:text-orange-500 transition-colors">
+                  className="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:border-orange-400 hover:text-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:border-orange-400 transition-colors">
                   {tag}
                 </button>
               ))}
