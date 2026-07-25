@@ -15,6 +15,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Inter', 'system-ui', 'sans-serif'],
+        slab: ['"Zilla Slab"', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
