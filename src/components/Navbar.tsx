@@ -132,8 +132,8 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Center Search — prominent */}
-          <form onSubmit={onSearch} className="hidden md:flex flex-1 max-w-xl">
+          {/* Center Search — desktop only, matches lg nav breakpoint */}
+          <form onSubmit={onSearch} className="hidden lg:flex flex-1 max-w-xl">
             <div className="flex w-full items-center rounded-lg border border-gray-200 bg-gray-50 focus-within:border-orange-400 focus-within:bg-white transition-colors overflow-hidden">
               <input
                 type="text"
