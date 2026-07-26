@@ -25,27 +25,18 @@ const SpaThemes = () => {
   if (!isLoading && (!templates || templates.length === 0)) return null
 
   return (
-    <section className="relative overflow-hidden py-24 text-[#f5f1ea]">
+    <section className="relative overflow-hidden py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, #1a1614 0%, #221b16 100%)' }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
-          backgroundSize: '88px 88px',
-        }}
+        style={{ background: 'linear-gradient(180deg, #FBFBFA 0%, #FBFBFA 100%)' }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(80% 50% at 50% 100%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 55%)',
+            'radial-gradient(80% 50% at 50% 100%, rgba(239,122,82,0.04) 0%, rgba(239,122,82,0) 55%)',
         }}
       />
 
@@ -57,7 +48,7 @@ const SpaThemes = () => {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-amber-200/90">
+              className="inline-flex items-center gap-2 rounded-full border border-[#e85a2d]/25 bg-[#e85a2d]/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-[#e85a2d]/90">
               <Sparkles className="w-3.5 h-3.5" />
               Wellness category
             </motion.div>
@@ -67,8 +58,8 @@ const SpaThemes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.06 }}
-              className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] leading-[1.08] tracking-tight mb-4">
-              Spa &amp; <span className="text-amber-400">Wellness</span> Themes
+              className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.08] tracking-tight mb-4">
+              Spa &amp; <span className="text-[#e85a2d]">Wellness</span> Themes
             </motion.h2>
 
             <motion.p
@@ -76,7 +67,7 @@ const SpaThemes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.12 }}
-              className="text-base text-[#a89c8c] max-w-xl mx-auto leading-relaxed">
+              className="text-base text-[#787774] max-w-xl mx-auto leading-relaxed">
               Calm, elegant templates designed for wellness, beauty, and spa businesses — with clean code you can own.
             </motion.p>
           </div>
@@ -98,7 +89,7 @@ const SpaThemes = () => {
             transition={{ delay: 0.2 }}
             className="text-center mt-12">
             <Link to="/templates?category=E-commerce&q=spa">
-              <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-500 text-[#1a1614] font-semibold text-sm rounded-lg hover:bg-amber-400 transition-colors shadow-[0_0_30px_-8px_rgba(245,158,11,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50">
+              <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
                 View all spa themes
                 <ArrowRight className="w-4 h-4" />
               </button>

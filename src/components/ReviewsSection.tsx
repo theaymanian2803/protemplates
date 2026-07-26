@@ -110,20 +110,11 @@ const ReviewsSection = () => {
   })
 
   return (
-    <section className="relative overflow-hidden py-24 text-[#f5f1ea]">
+    <section className="relative overflow-hidden py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: 'linear-gradient(180deg, #221b16 0%, #1a1614 100%)' }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
-          backgroundSize: '88px 88px',
-        }}
+        style={{ background: 'linear-gradient(180deg, #FBFBFA 0%, #FBFBFA 100%)' }}
       />
       {/* ambient glow */}
       <div
@@ -131,7 +122,7 @@ const ReviewsSection = () => {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(90% 60% at 50% 0%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 55%)',
+            'radial-gradient(90% 60% at 50% 0%, rgba(239,122,82,0.04) 0%, rgba(239,122,82,0) 55%)',
         }}
       />
 
@@ -143,7 +134,7 @@ const ReviewsSection = () => {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-amber-200/90">
+              className="inline-flex items-center gap-2 rounded-full border border-[#e85a2d]/25 bg-[#e85a2d]/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-[#e85a2d]/90">
               <Quote className="w-3.5 h-3.5" />
               What Buyers Say
             </motion.div>
@@ -153,8 +144,8 @@ const ReviewsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.06 }}
-              className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] leading-[1.08] tracking-tight mb-4">
-              Trusted by Moroccan <span className="text-amber-400">Buyers</span>
+              className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.08] tracking-tight mb-4">
+              Trusted by Moroccan <span className="text-[#e85a2d]">Buyers</span>
             </motion.h2>
 
             <motion.p
@@ -162,7 +153,7 @@ const ReviewsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.12 }}
-              className="text-base text-[#a89c8c] max-w-xl mx-auto leading-relaxed">
+              className="text-base text-[#787774] max-w-xl mx-auto leading-relaxed">
               Real feedback from our growing community of creators and entrepreneurs.
             </motion.p>
           </div>
@@ -171,16 +162,16 @@ const ReviewsSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading
               ? Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="rounded-xl bg-[#211a15] border border-white/10 p-6 space-y-4">
+                  <div key={i} className="rounded-xl bg-white border border-[#EAEAEA] p-6 space-y-4">
                     <div className="flex items-center gap-3">
-                      <Skeleton className="w-10 h-10 rounded-full bg-white/5" />
+                      <Skeleton className="w-10 h-10 rounded-full bg-[#F5F4F0]" />
                       <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 w-2/3 bg-white/5" />
-                        <Skeleton className="h-3 w-1/3 bg-white/5" />
+                        <Skeleton className="h-4 w-2/3 bg-[#F5F4F0]" />
+                        <Skeleton className="h-3 w-1/3 bg-[#F5F4F0]" />
                       </div>
                     </div>
-                    <Skeleton className="h-3 w-full bg-white/5" />
-                    <Skeleton className="h-3 w-4/5 bg-white/5" />
+                    <Skeleton className="h-3 w-full bg-[#F5F4F0]" />
+                    <Skeleton className="h-3 w-4/5 bg-[#F5F4F0]" />
                   </div>
                 ))
               : reviews?.map((review, index) => (
@@ -190,26 +181,26 @@ const ReviewsSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.06, duration: 0.4 }}
-                    className="group relative rounded-xl bg-[#211a15] border border-white/10 p-6 hover:border-amber-400/40 transition-colors duration-300">
+                    className="group relative rounded-xl bg-white border border-[#EAEAEA] p-6 hover:border-[#e85a2d]/40 transition-colors duration-300">
                     {/* hover glow */}
                     <div
                       aria-hidden
                       className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
                         background:
-                          'radial-gradient(70% 60% at 100% 0%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 60%)',
+                          'radial-gradient(70% 60% at 100% 0%, rgba(239,122,82,0.04) 0%, rgba(239,122,82,0) 60%)',
                       }}
                     />
                     {/* Reviewer info */}
                     <div className="relative flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-[#1a1614] font-bold text-sm shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ef7a52] to-[#d94523] flex items-center justify-center text-white font-bold text-sm shrink-0">
                         {review.name.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-[#f5f1ea] truncate">{review.name}</p>
+                        <p className="text-sm font-semibold text-[#111111] truncate">{review.name}</p>
                         <div className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-[#a89c8c]/60" />
-                          <span className="text-xs text-[#a89c8c]/70">Morocco</span>
+                          <MapPin className="w-3 h-3 text-[#787774]/60" />
+                          <span className="text-xs text-[#787774]/70">Morocco</span>
                         </div>
                       </div>
                     </div>
@@ -221,22 +212,22 @@ const ReviewsSection = () => {
                           key={s}
                           className={`w-4 h-4 ${
                             s < Math.floor(review.rating)
-                              ? 'fill-amber-400 text-amber-400'
+                              ? 'fill-[#e85a2d] text-[#e85a2d]'
                               : review.rating % 1 !== 0 && s === Math.floor(review.rating)
-                              ? 'fill-amber-400/50 text-amber-400'
-                              : 'text-white/15'
+                              ? 'fill-[#e85a2d]/50 text-[#e85a2d]'
+                              : 'text-[#EAEAEA]'
                           }`}
                         />
                       ))}
-                      <span className="text-xs font-medium text-[#a89c8c] ml-1">{review.rating}</span>
+                      <span className="text-xs font-medium text-[#787774] ml-1">{review.rating}</span>
                     </div>
 
                     {/* Review text */}
-                    <p className="relative text-sm text-[#d8cfc1] leading-relaxed mb-5">"{review.text}"</p>
+                    <p className="relative text-sm text-[#2F3437] leading-relaxed mb-5">"{review.text}"</p>
 
                     {/* Template info */}
-                    <div className="relative flex items-center gap-3 pt-4 border-t border-white/10">
-                      <div className="w-12 h-9 rounded-lg overflow-hidden bg-[#1a1614] shrink-0">
+                    <div className="relative flex items-center gap-3 pt-4 border-t border-[#EAEAEA]">
+                      <div className="w-12 h-9 rounded-lg overflow-hidden bg-[#F5F4F0] shrink-0">
                         <img
                           src={review.image_url || '/placeholder.svg'}
                           alt={review.title}
@@ -245,7 +236,7 @@ const ReviewsSection = () => {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-medium text-[#f5f1ea] truncate">{review.title}</p>
+                        <p className="text-xs font-medium text-[#111111] truncate">{review.title}</p>
                         <div className="flex items-center gap-1 mt-0.5">
                           <div className="flex items-center gap-0.5">
                             {Array.from({ length: 5 }).map((_, s) => (
@@ -253,13 +244,13 @@ const ReviewsSection = () => {
                                 key={s}
                                 className={`w-2.5 h-2.5 ${
                                   s < Math.floor(review.rating)
-                                    ? 'fill-amber-400 text-amber-400'
-                                    : 'text-white/15'
+                                    ? 'fill-[#e85a2d] text-[#e85a2d]'
+                                    : 'text-[#EAEAEA]'
                                 }`}
                               />
                             ))}
                           </div>
-                          <span className="text-[10px] text-[#a89c8c]/70">
+                          <span className="text-[10px] text-[#787774]/70">
                             {review.rating} ({review.reviewCount} reviews)
                           </span>
                         </div>

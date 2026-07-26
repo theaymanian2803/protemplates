@@ -24,14 +24,6 @@ const CTASection = () => {
         <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
       </div>
 
-      {/* Dot pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div style={{ scale }} className="max-w-3xl mx-auto text-center">

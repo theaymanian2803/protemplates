@@ -4,18 +4,19 @@
 
 ## World
 
-The darkroom studio — the developer's workshop where raw source is developed into a finished product. The hero treats one template as a lit artifact, developed like a photograph. The category default (a bright marketplace grid of scattered colorful tiles) is the rut this world refuses.
+The developer's clean workshop — a bright, open marketplace where curated templates are presented as crafted artifacts on a warm, breathable ground. Refuses the dark, moody aesthetic the category defaults to. Light is ambient and even, not dramatic.
 
 ## Color strategy
 
-Committed. A single warm signal — the brand orange evolved into a warm amber light — carries the hero, lit directionally against a deep warm charcoal ground. Light comes from one direction. No scattered accents on a neutral field; fields own whole regions.
+Restrained. A warm off-white ground carries the page. The cold orange accent appears sparingly — in brand marks, active states, and one directional glow per section. No section owns color; color punctuates.
 
 ## Palette
 
-- Ground: warm charcoal / espresso — `#1a1614` base, layered toward `#221b16`.
-- Light / artifact glow: amber-orange — `#f59e0b` → `#f97316`.
-- Ink (text on dark): warm white `#f5f1ea`, muted `#a89c8c`.
-- Hairlines: `rgba(245, 241, 234, 0.08)` drafting notation.
+- Ground: warm off-white — `#FBFBFA` base, with `#F5F4F0` for subtle section differentiation.
+- Surface (cards): pure white `#FFFFFF` with `1px solid #EAEAEA` borders.
+- Accent: cold orange — `#e85a2d` (brand-500), `#ef7a52` (brand-400).
+- Ink (text): charcoal `#111111`, secondary `#2F3437`, muted `#787774`.
+- Borders: ultra-light `#EAEAEA`.
 
 ## Typography
 
@@ -25,10 +26,10 @@ Committed. A single warm signal — the brand orange evolved into a warm amber l
 
 ## Layout devices
 
-- Full-bleed atmospheric ground, overlapping radial + linear gradients lit from one corner.
-- Faint hairline drafting grid as atmospheric notation (low opacity, large pitch).
-- One lit artifact, not a collage: the focal element carries directional shadow and a soft amber halo.
-- Generous negative space; the artifact and headline breathe.
+- Warm off-white ground with generous breathing room between sections.
+- White cards with ultra-light `#EAEAEA` borders — clean, flat, no heavy shadows.
+- Cold orange accent used sparingly for brand marks, active states, and subtle directional glows.
+- Macro-whitespace: sections separated by `py-24` to `py-32`.
 
 ## Motion
 
@@ -37,6 +38,7 @@ Committed. A single warm signal — the brand orange evolved into a warm amber l
 
 ## What this world does not use
 
+- Dark, moody backgrounds or heavy dramatic lighting.
 - Scattered colorful tile collages (the category rut).
-- Near-black + single neon accent + glowing edges (the tech rut).
-- Stock marketing gradients as background fill devoid of light direction.
+- Grid patterns, dot patterns, or texture overlays as background decoration.
+- Heavy drop shadows or 3D glassmorphism.

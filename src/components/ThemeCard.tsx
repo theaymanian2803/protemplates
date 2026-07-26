@@ -41,18 +41,18 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
-      className="group relative rounded-xl overflow-hidden bg-[#211a15] border border-white/10 hover:border-amber-400/40 transition-colors">
-      {/* amber hover halo */}
+      className="group relative rounded-xl overflow-hidden bg-white border border-[#EAEAEA] hover:border-[#e85a2d]/40 transition-colors">
+      {/* brand hover halo */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            'radial-gradient(70% 60% at 100% 0%, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0) 60%)',
+            'radial-gradient(70% 60% at 100% 0%, rgba(232,90,45,0.08) 0%, rgba(232,90,45,0) 60%)',
         }}
       />
       <Link to={`/template/${template.id}`} className="block">
-        <div className="relative aspect-[16/10] overflow-hidden bg-[#1a1614]">
+        <div className="relative aspect-[16/10] overflow-hidden bg-[#F5F4F0]">
           {template.image_url && imgOk ? (
             <img
               src={template.image_url}
@@ -67,19 +67,19 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
               className="w-full h-full"
               style={{
                 background:
-                  'linear-gradient(135deg, rgba(249,115,22,0.18) 0%, rgba(26,22,20,1) 70%)',
+                  'linear-gradient(135deg, rgba(232,90,45,0.10) 0%, rgba(245,244,240,1) 70%)',
               }}
             />
           )}
         </div>
         <div className="relative p-5">
-          <h3 className="font-slab font-bold text-[#f5f1ea] text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-amber-300 transition-colors">
+          <h3 className="font-slab font-bold text-[#111111] text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#e85a2d] transition-colors">
             {template.title}
           </h3>
-          <p className="text-xs text-[#a89c8c]/70 mb-4">by Unccodestore</p>
+          <p className="text-xs text-[#787774]/70 mb-4">by Unccodestore</p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-[#f5f1ea]">
+              <span className="text-xs font-bold text-[#111111]">
                 ${Number(template.price).toFixed(0)}
               </span>
               <div className="flex items-center gap-0.5">
@@ -90,16 +90,16 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
                       key={s}
                       className={`w-3 h-3 ${
                         s < Math.floor(r)
-                          ? 'fill-amber-400 text-amber-400'
+                          ? 'fill-[#e85a2d] text-[#e85a2d]'
                           : r % 1 !== 0 && s === Math.floor(r)
-                          ? 'fill-amber-400/50 text-amber-400'
-                          : 'text-white/15'
+                          ? 'fill-[#e85a2d]/50 text-[#e85a2d]'
+                          : 'text-[#EAEAEA]'
                       }`}
                     />
                   )
                 })}
               </div>
-              <span className="text-[10px] text-[#a89c8c]/70">
+              <span className="text-[10px] text-[#787774]/70">
                 ({getPlaceholderReviewCount(template.id)})
               </span>
             </div>
@@ -113,7 +113,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
                   window.open(`/template/${template.id}`, '_self')
                 }
               }}
-              className="text-[11px] font-semibold text-[#d8cfc1] border border-white/15 rounded px-2.5 py-1.5 hover:border-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40">
+              className="text-[11px] font-semibold text-[#2F3437] border border-[#EAEAEA] rounded px-2.5 py-1.5 hover:border-[#e85a2d] hover:text-[#e85a2d] transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
               <ExternalLink className="w-3 h-3" />
               Live Preview
             </button>
@@ -125,14 +125,14 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
 }
 
 export const ThemeCardSkeleton = () => (
-  <div className="rounded-xl overflow-hidden bg-[#211a15] border border-white/10">
-    <Skeleton className="aspect-[16/10] w-full bg-white/5" />
+  <div className="rounded-xl overflow-hidden bg-white border border-[#EAEAEA]">
+    <Skeleton className="aspect-[16/10] w-full bg-[#F5F4F0]" />
     <div className="p-5 space-y-2">
-      <Skeleton className="h-4 w-3/4 bg-white/5" />
-      <Skeleton className="h-3 w-1/2 bg-white/5" />
+      <Skeleton className="h-4 w-3/4 bg-[#F5F4F0]" />
+      <Skeleton className="h-3 w-1/2 bg-[#F5F4F0]" />
       <div className="flex justify-between pt-2">
-        <Skeleton className="h-4 w-16 bg-white/5" />
-        <Skeleton className="h-6 w-20 bg-white/5" />
+        <Skeleton className="h-4 w-16 bg-[#F5F4F0]" />
+        <Skeleton className="h-6 w-20 bg-[#F5F4F0]" />
       </div>
     </div>
   </div>

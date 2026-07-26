@@ -4,20 +4,18 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 /*
-  THESIS: the developer's darkroom — one template developed from raw source,
-  lit like a photograph. Refuses the bright marketplace collage of scattered
-  colorful tiles the category ships.
-  OWN-WORLD: warm charcoal ground lit from one corner by an amber signal;
-  a single floating template artifact with directional shadow and halo;
-  slab-serif display (Zilla Slab) for permanence / ownership; hairline
-  drafting grid as atmospheric notation.
+  THESIS: the developer's bright studio — one template developed from raw source,
+  presented on a warm-white ground with cold orange directional light.
+  OWN-WORLD: warm off-white ground lit from the top-right by a cold orange signal;
+  a single floating template artifact with soft directional shadow and warm halo;
+  slab-serif display (Zilla Slab) for permanence / ownership.
   STORY: visitor sees one crafted template being developed and understands
   instantly this is a curated place where you own real code. "Buy once, own
   forever" lands because the artifact feels crafted, not stock. Search is
-  the lit focal instrument.
-  FIRST VIEWPORT: full-bleed warm dark gradient, headline top-left at full
-  display scale, the search instrument directly beneath as the lit action,
-  one floating artifact developing to the right with directional amber glow.
+  the focused instrument on the bright ground.
+  FIRST VIEWPORT: full-bleed warm white gradient, headline top-left at full
+  display scale, the search instrument directly beneath as the primary action,
+  one floating artifact developing to the right with subtle directional glow.
   FORM: Persuade, committed color, slab display — pinned by the brief,
   roll skipped.
 */
@@ -43,24 +41,14 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#1a1614] text-[#f5f1ea]">
-      {/* Atmosphere — lit from the top-right corner */}
+    <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111]">
+      {/* Atmosphere — subtle cold-orange radial on the warm white ground */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(120% 90% at 85% 0%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0.08) 32%, rgba(26,22,20,0) 60%), radial-gradient(80% 60% at 100% 10%, rgba(245,158,11,0.18) 0%, rgba(26,22,20,0) 50%), linear-gradient(180deg, #221b16 0%, #1a1614 100%)',
-        }}
-      />
-      {/* Hairline drafting grid — atmospheric notation */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
-          backgroundSize: '88px 88px',
+            'radial-gradient(120% 90% at 85% 0%, rgba(239,122,82,0.07) 0%, rgba(239,122,82,0.02) 32%, rgba(251,251,250,0) 60%), radial-gradient(80% 60% at 100% 10%, rgba(232,90,45,0.05) 0%, rgba(251,251,250,0) 50%), linear-gradient(180deg, #FBFBFA 0%, #F8F7F5 100%)',
         }}
       />
 
@@ -72,7 +60,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-7 text-[11px] font-medium tracking-wide text-amber-200/90">
+              className="inline-flex items-center gap-2 rounded-full border border-[#ef7a52]/20 bg-[#ef7a52]/5 px-3 py-1.5 mb-7 text-[11px] font-medium tracking-wide text-[#e85a2d]">
               <Sparkles className="w-3.5 h-3.5" />
               Curated modern-stack templates
             </motion.div>
@@ -81,40 +69,40 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="font-slab font-bold text-4xl md:text-6xl lg:text-[4.4rem] leading-[1.02] tracking-tight text-[#f5f1ea] mb-6">
+              className="font-slab font-bold text-4xl md:text-6xl lg:text-[4.4rem] leading-[1.02] tracking-tight text-[#111111] mb-6">
               Buy once.
               <br />
-              <span className="text-amber-400">Own forever.</span>
+              <span className="text-[#ef7a52]">Own forever.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.12 }}
-              className="text-lg text-[#a89c8c] mb-9 leading-[1.6] max-w-lg">
+              className="text-lg text-[#787774] mb-9 leading-[1.6] max-w-lg">
               Production-ready React, TypeScript &amp; Tailwind templates with
               clean, maintainable source code you actually keep — not rent.
             </motion.p>
 
-            {/* The lit instrument */}
+            {/* The search instrument */}
             <motion.form
               onSubmit={onSearch}
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.22 }}
-              className="flex items-center bg-white/[0.04] backdrop-blur-sm border border-amber-300/20 rounded-xl shadow-[0_0_0_1px_rgba(245,158,11,0.05),0_24px_60px_-20px_rgba(249,115,22,0.45)] overflow-hidden mb-7 transition-all focus-within:border-amber-400/50 focus-within:shadow-[0_0_0_1px_rgba(245,158,11,0.25),0_28px_70px_-18px_rgba(249,115,22,0.6)]">
-              <Search className="w-5 h-5 text-amber-300/70 ml-5 shrink-0" />
+              className="flex items-center bg-white border border-[#EAEAEA] rounded-xl shadow-[0_0_0_1px_rgba(239,122,82,0.04),0_24px_60px_-20px_rgba(0,0,0,0.06)] overflow-hidden mb-7 transition-all focus-within:border-[#ef7a52]/40 focus-within:shadow-[0_0_0_1px_rgba(239,122,82,0.12),0_28px_70px_-18px_rgba(239,122,82,0.12)]">
+              <Search className="w-5 h-5 text-[#787774] ml-5 shrink-0" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search templates, themes, source code…"
                 aria-label="Search templates"
-                className="flex-1 h-16 px-4 bg-transparent text-base text-[#f5f1ea] placeholder:text-[#a89c8c]/70 focus:outline-none"
+                className="flex-1 h-16 px-4 bg-transparent text-base text-[#111111] placeholder:text-[#787774]/70 focus:outline-none"
               />
               <button
                 type="submit"
-                className="h-16 px-7 bg-amber-500 text-[#1a1614] font-semibold text-sm flex items-center gap-2 hover:bg-amber-400 transition-colors">
+                className="h-16 px-7 bg-[#e85a2d] text-white font-semibold text-sm flex items-center gap-2 hover:bg-[#ef7a52] transition-colors">
                 Search
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -125,12 +113,12 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.32 }}
               className="flex flex-wrap items-center gap-2.5">
-              <span className="text-xs text-[#a89c8c]/70 mr-1">Popular:</span>
+              <span className="text-xs text-[#787774]/70 mr-1">Popular:</span>
               {popularTags.map((tag) => (
                 <button
                   key={tag}
                   onClick={() => navigate(`/templates?q=${encodeURIComponent(tag)}`)}
-                  className="px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-xs font-medium text-[#d8cfc1] hover:border-amber-400/40 hover:text-amber-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:border-amber-400/40 transition-colors">
+                  className="px-3.5 py-1.5 rounded-full bg-white border border-[#EAEAEA] text-xs font-medium text-[#111111] hover:border-[#ef7a52]/30 hover:text-[#e85a2d] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ef7a52]/30 focus-visible:border-[#ef7a52]/30 transition-colors">
                   {tag}
                 </button>
               ))}
@@ -144,59 +132,49 @@ const HeroSection = () => {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex-1 relative hidden lg:block w-full">
             <div className="relative max-w-md ml-auto">
-              {/* directional amber halo */}
+              {/* subtle cold-orange halo */}
               <div
                 aria-hidden
-                className="absolute -inset-10 rounded-[2rem] blur-2xl opacity-60"
+                className="absolute -inset-10 rounded-[2rem] blur-2xl opacity-40"
                 style={{
                   background:
-                    'radial-gradient(60% 60% at 70% 20%, rgba(249,115,22,0.45) 0%, rgba(249,115,22,0) 70%)',
+                    'radial-gradient(60% 60% at 70% 20%, rgba(239,122,82,0.12) 0%, rgba(239,122,82,0) 70%)',
                 }}
               />
               {/* the artifact — a browser-window template card */}
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#211a15] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.8),0_0_0_1px_rgba(245,158,11,0.08)]">
+              <div className="relative rounded-2xl overflow-hidden border border-[#EAEAEA] bg-white shadow-[0_40px_90px_-30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(239,122,82,0.04)]">
                 {/* browser bar */}
-                <div className="flex items-center gap-2 px-4 h-10 border-b border-white/10 bg-white/[0.02]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400/60" />
-                  <span className="ml-3 text-[11px] text-[#a89c8c]/70 font-mono truncate">
+                <div className="flex items-center gap-2 px-4 h-10 border-b border-[#EAEAEA] bg-[#FBFBFA]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#EAEAEA]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#EAEAEA]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#ef7a52]/60" />
+                  <span className="ml-3 text-[11px] text-[#787774] font-mono truncate">
                     unccodestore.com/template/bolt-saas
                   </span>
                 </div>
                 {/* faux template screenshot */}
-                <div className="relative aspect-[4/3] bg-gradient-to-br from-[#2a2018] to-[#1a1614] p-5">
+                <div className="relative aspect-[4/3] bg-gradient-to-br from-[#F4F3F1] to-[#FBFBFA] p-5">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="h-2.5 w-20 rounded-full bg-amber-400/70" />
+                    <div className="h-2.5 w-20 rounded-full bg-[#ef7a52]/60" />
                     <div className="flex gap-1.5">
-                      <span className="h-6 w-12 rounded-md bg-white/[0.05] border border-white/5" />
-                      <span className="h-6 w-12 rounded-md bg-amber-500/90" />
+                      <span className="h-6 w-12 rounded-md bg-white border border-[#EAEAEA]" />
+                      <span className="h-6 w-12 rounded-md bg-[#ef7a52]/80" />
                     </div>
                   </div>
-                  <div className="h-5 w-2/3 rounded-full bg-white/20 mb-2" />
-                  <div className="h-3 w-1/2 rounded-full bg-white/10 mb-6" />
+                  <div className="h-5 w-2/3 rounded-full bg-[#111111]/10 mb-2" />
+                  <div className="h-3 w-1/2 rounded-full bg-[#111111]/5 mb-6" />
                   <div className="grid grid-cols-3 gap-2.5">
-                    <div className="aspect-square rounded-lg bg-gradient-to-br from-amber-500/30 to-orange-600/10 border border-amber-400/10" />
-                    <div className="aspect-square rounded-lg bg-white/[0.04] border border-white/5" />
-                    <div className="aspect-square rounded-lg bg-white/[0.04] border border-white/5" />
+                    <div className="aspect-square rounded-lg bg-gradient-to-br from-[#ef7a52]/10 to-[#ef7a52]/5 border border-[#ef7a52]/10" />
+                    <div className="aspect-square rounded-lg bg-white border border-[#EAEAEA]" />
+                    <div className="aspect-square rounded-lg bg-white border border-[#EAEAEA]" />
                   </div>
-                  {/* faint developing hairlines */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 opacity-[0.06]"
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px)',
-                      backgroundSize: '100% 22px',
-                    }}
-                  />
                 </div>
                 {/* ownership strip */}
-                <div className="flex items-center justify-between px-4 h-12 border-t border-white/10 bg-white/[0.02]">
-                  <span className="text-[11px] text-[#a89c8c] font-mono">
+                <div className="flex items-center justify-between px-4 h-12 border-t border-[#EAEAEA] bg-[#FBFBFA]">
+                  <span className="text-[11px] text-[#787774] font-mono">
                     Bolt · SaaS Starter
                   </span>
-                  <span className="text-[11px] font-semibold text-amber-300">
+                  <span className="text-[11px] font-semibold text-[#e85a2d]">
                     Own the source
                   </span>
                 </div>
@@ -206,7 +184,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 0.5, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute -left-24 top-10 hidden xl:block text-[10px] font-mono leading-relaxed text-amber-200/30 select-none">
+                className="absolute -left-24 top-10 hidden xl:block text-[10px] font-mono leading-relaxed text-[#787774]/25 select-none">
                 <div>const Own = () =&gt; {`{`}</div>
                 <div className="pl-3">return &lt;Source code /&gt;</div>
                 <div>{`}`}</div>
@@ -220,22 +198,22 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="relative max-w-7xl mx-auto mt-16 lg:mt-20 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 text-xs text-[#a89c8c]/80">
+          className="relative max-w-7xl mx-auto mt-16 lg:mt-20 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 text-xs text-[#787774]/80">
           <span className="inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ef7a52]" />
             Downloadable source — yours to keep
           </span>
           <span className="hidden sm:inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400/60" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ef7a52]/50" />
             One-time purchase, no subscription lock-in
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400/40" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ef7a52]/30" />
             Or $300 All-Access, unlimited
           </span>
           <Link
             to="/templates"
-            className="sm:ml-auto inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 font-medium transition-colors">
+            className="sm:ml-auto inline-flex items-center gap-1.5 text-[#e85a2d] hover:text-[#ef7a52] font-medium transition-colors">
             Browse the catalog
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>

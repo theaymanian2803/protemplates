@@ -21,33 +21,33 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay: index * 0.06 }}
-      className="group relative bg-[#211a15] border border-white/10 rounded-xl overflow-hidden hover:border-amber-400/40 transition-colors">
-      {/* amber corner glow on hover */}
+      className="group relative bg-white border border-[#EAEAEA] rounded-xl overflow-hidden hover:border-[#e85a2d]/40 transition-colors">
+      {/* brand corner glow on hover */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            'radial-gradient(70% 60% at 100% 0%, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0) 60%)',
+            'radial-gradient(70% 60% at 100% 0%, rgba(239,122,82,0.06) 0%, rgba(239,122,82,0) 60%)',
         }}
       />
       {/* Header */}
       <div className="relative px-6 pt-6 pb-4">
         <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="font-slab text-lg font-bold text-[#f5f1ea] leading-snug">{category.title}</h3>
-          <ArrowUpRight className="w-4 h-4 text-[#a89c8c]/50 group-hover:text-amber-400 transition-colors shrink-0" />
+          <h3 className="font-slab text-lg font-bold text-[#111111] leading-snug">{category.title}</h3>
+          <ArrowUpRight className="w-4 h-4 text-[#787774]/50 group-hover:text-[#e85a2d] transition-colors shrink-0" />
         </div>
-        <p className="text-sm text-[#a89c8c] leading-relaxed mb-4">{category.desc}</p>
+        <p className="text-sm text-[#787774] leading-relaxed mb-4">{category.desc}</p>
         <div className="flex items-center gap-3 text-xs">
           <Link
             to={`/templates?category=${encodeURIComponent(category.title)}&sort=newest`}
-            className="text-amber-300/90 hover:text-amber-200 font-medium transition-colors">
+            className="text-[#e85a2d] hover:text-[#d14e24] font-medium transition-colors">
             Newest
           </Link>
-          <span className="h-3 w-px bg-white/15" />
+          <span className="h-3 w-px bg-[#EAEAEA]" />
           <Link
             to={`/templates?category=${encodeURIComponent(category.title)}&sort=bestsellers`}
-            className="text-amber-300/90 hover:text-amber-200 font-medium transition-colors">
+            className="text-[#e85a2d] hover:text-[#d14e24] font-medium transition-colors">
             Bestsellers
           </Link>
         </div>
@@ -60,7 +60,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
             <Link
               key={t.id}
               to={`/template/${t.id}`}
-              className="block aspect-[4/3] rounded-lg overflow-hidden bg-[#1a1614] border border-white/5">
+              className="block aspect-[4/3] rounded-lg overflow-hidden bg-[#F4F4F2] border border-[#EAEAEA]">
               <img
                 src={t.image_url || '/placeholder.svg'}
                 alt={t.title}
@@ -70,7 +70,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
           ))}
           {isLoading &&
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="aspect-[4/3] rounded-lg bg-[#1a1614] border border-white/5 animate-pulse" />
+              <div key={i} className="aspect-[4/3] rounded-lg bg-[#F4F4F2] border border-[#EAEAEA] animate-pulse" />
             ))}
         </div>
       </div>
@@ -80,17 +80,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
 
 const CategoriesSection = () => {
   return (
-    <section className="relative overflow-hidden bg-[#1a1614] py-20 text-[#f5f1ea]">
-      {/* faint hairline grid */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(245,241,234,1) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,234,1) 1px, transparent 1px)',
-          backgroundSize: '88px 88px',
-        }}
-      />
+    <section className="relative overflow-hidden bg-[#FBFBFA] py-20 text-[#111111]">
 
       <div className="relative container mx-auto px-4">
         <div className="max-w-2xl mb-12">
@@ -98,7 +88,7 @@ const CategoriesSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 mb-5 text-[11px] font-medium tracking-wide text-amber-200/90">
+            className="inline-flex items-center gap-2 rounded-full border border-[#ef7a52]/20 bg-[#ef7a52]/5 px-3 py-1.5 mb-5 text-[11px] font-medium tracking-wide text-[#e85a2d]">
             Browse by craft
           </motion.span>
           <motion.h2
@@ -106,8 +96,8 @@ const CategoriesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.05 }}
-            className="font-slab font-bold text-3xl md:text-5xl text-[#f5f1ea] leading-[1.05] tracking-tight">
-            Categories, <span className="text-amber-400">developed</span> with care.
+            className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.05] tracking-tight">
+            Categories, <span className="text-[#e85a2d]">developed</span> with care.
           </motion.h2>
         </div>
 
@@ -124,7 +114,7 @@ const CategoriesSection = () => {
           className="text-center mt-14">
           <Link
             to="/templates"
-            className="inline-flex items-center gap-2 px-8 py-3.5 border border-amber-400/40 text-amber-300 font-semibold text-sm rounded-lg hover:bg-amber-400/10 transition-colors">
+            className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#f5f5f3] transition-colors">
             View all categories
             <ArrowUpRight className="w-4 h-4" />
           </Link>
