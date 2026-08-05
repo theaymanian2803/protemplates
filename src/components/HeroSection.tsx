@@ -1,23 +1,16 @@
 import { motion } from 'framer-motion'
 import { Search, ArrowRight, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import BeforeAfterSlider from '@/components/BeforeAfterSlider'
 
 /*
   THESIS: the developer's bright studio — one template developed from raw source,
-  presented on a warm-white ground with cold orange directional light.
-  OWN-WORLD: warm off-white ground lit from the top-right by a cold orange signal;
-  a single floating template artifact with soft directional shadow and warm halo;
-  slab-serif display (Zilla Slab) for permanence / ownership.
-  STORY: visitor sees one crafted template being developed and understands
-  instantly this is a curated place where you own real code. "Buy once, own
-  forever" lands because the artifact feels crafted, not stock. Search is
-  the focused instrument on the bright ground.
-  FIRST VIEWPORT: full-bleed warm white gradient, headline top-left at full
-  display scale, the search instrument directly beneath as the primary action,
-  one floating artifact developing to the right with subtle directional glow.
-  FORM: Persuade, committed color, slab display — pinned by the brief,
-  roll skipped.
+  presented on a warm-white ground with cold orange directional light. The hero
+  now carries faded floating "tech chips" behind the copy so the first viewport
+  reads as full and lived-in, and the before/after artifact grows in place on
+  hover (anchored right, expanding leftward, hiding the copy) so visitors can
+  see the full landing-page redesigns big before they drag.
 */
 
 const popularTags = [
@@ -29,9 +22,53 @@ const popularTags = [
   'Portfolio',
 ]
 
+const chips = [
+  { label: 'React', top: '11%', left: '5%', rot: -8, dur: 7.5, pal: 'a', fade: 0.55 },
+  { label: 'TypeScript', top: '20%', left: '74%', rot: 6, dur: 8.5, pal: 'b', fade: 0.5 },
+  { label: 'Tailwind', top: '64%', left: '9%', rot: 7, dur: 9, pal: 'a', fade: 0.5 },
+  { label: 'Next.js', top: '83%', left: '70%', rot: -9, dur: 7, pal: 'c', fade: 0.6 },
+  { label: 'shadcn/ui', top: '38%', left: '88%', rot: 10, dur: 8.2, pal: 'b', fade: 0.45 },
+  { label: 'Framer Motion', top: '89%', left: '34%', rot: -5, dur: 9.5, pal: 'a', fade: 0.4 },
+  { label: 'Supabase', top: '13%', left: '42%', rot: 10, dur: 7.8, pal: 'c', fade: 0.5 },
+  { label: 'Radix UI', top: '56%', left: '83%', rot: -7, dur: 8.7, pal: 'b', fade: 0.45 },
+  { label: 'Zustand', top: '30%', left: '7%', rot: 14, dur: 9.2, pal: 'a', fade: 0.5 },
+  { label: 'Vite', top: '76%', left: '52%', rot: -12, dur: 8, pal: 'c', fade: 0.45 },
+] as const
+
+const chipPalette: Record<string, string> = {
+  a: 'text-[#8B7FB8]/80 border-[#8B7FB8]/40 bg-[#8B7FB8]/5',
+  b: 'text-[#6D62A0]/85 border-[#6D62A0]/35 bg-[#6D62A0]/5',
+  c: 'text-[#ef7a52]/85 border-[#ef7a52]/35 bg-[#ef7a52]/5',
+}
+
 const HeroSection = () => {
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+
+  // hover-to-expand the before/after comparison (only on hover-capable devices)
+  const [canHover, setCanHover] = useState(true)
+  const [compareHover, setCompareHover] = useState(false)
+  const leaveTimer = useRef<number | undefined>(undefined)
+  const cancelLeave = () => {
+    if (leaveTimer.current !== undefined) {
+      clearTimeout(leaveTimer.current)
+      leaveTimer.current = undefined
+    }
+  }
+  const onHoverEnter = () => {
+    cancelLeave()
+    setCompareHover(true)
+  }
+  const onHoverLeave = () => {
+    cancelLeave()
+    leaveTimer.current = window.setTimeout(() => setCompareHover(false), 180)
+  }
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      setCanHover(window.matchMedia('(hover: hover)').matches)
+    }
+    return () => cancelLeave()
+  }, [])
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +76,25 @@ const HeroSection = () => {
     if (query.trim()) params.set('q', query.trim())
     navigate(`/templates?${params.toString()}`)
   }
+
+  const widgetClasses = [
+    'relative w-full max-w-xl mx-auto z-30',
+    'flex flex-col w-full',
+  ]
+  if (canHover) {
+    widgetClasses.push(
+      'lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:max-w-none',
+      'lg:transition-[width] lg:duration-[700ms] lg:ease-[cubic-bezier(0.16,1,0.3,1)] lg:will-change-[width]',
+      compareHover ? 'lg:w-[min(1080px,calc(100%_-_2rem))]' : 'lg:w-[32rem]',
+    )
+  }
+  const widgetClassName = widgetClasses.join(' ')
+
+  const textClasses = canHover
+    ? `flex-1 max-w-2xl lg:transition-[opacity,transform] lg:duration-500 lg:ease-out ${
+        compareHover ? 'lg:opacity-0 lg:-translate-x-3' : 'lg:opacity-100'
+      }`
+    : 'flex-1 max-w-2xl'
 
   return (
     <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111]">
@@ -52,10 +108,33 @@ const HeroSection = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-4 pt-28 pb-24 md:pt-36 md:pb-32">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-14 lg:gap-20 max-w-7xl mx-auto">
+      {/* Faded floating tech chips — ambient "full" layer */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {chips.map((c, i) => (
+          <motion.div
+            key={c.label}
+            className="absolute"
+            style={{ top: c.top, left: c.left }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: c.fade, scale: 1, rotate: c.rot, y: [0, -12, 0] }}
+            transition={{
+              opacity: { delay: 0.4 + i * 0.08, duration: 0.7 },
+              scale: { delay: 0.4 + i * 0.08, duration: 0.7 },
+              rotate: { delay: 0.4 + i * 0.08, duration: 0.7 },
+              y: { repeat: Infinity, duration: c.dur, ease: 'easeInOut', delay: 0.4 * i },
+            }}>
+            <span
+              className={`block whitespace-nowrap rounded-full border px-3 py-1.5 text-[11px] font-semibold shadow-[0_2px_10px_-4px_rgba(0,0,0,0.08)] ${chipPalette[c.pal]}`}>
+              {c.label}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="relative container mx-auto px-4 pt-28 pb-24 md:pt-36 md:pb-32 z-10">
+        <div className="relative flex flex-col lg:flex-row items-start lg:items-center gap-14 lg:gap-20 max-w-7xl mx-auto">
           {/* Left: Headline + lit search instrument */}
-          <div className="flex-1 max-w-2xl">
+          <div className={textClasses}>
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -125,71 +204,49 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Right: one lit artifact — a template developed like a photograph */}
+          {/* Right: before/after comparison artifact — grows in place on hover */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.94, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-1 relative hidden lg:block w-full">
-            <div className="relative max-w-md ml-auto">
-              {/* subtle cold-orange halo */}
-              <div
-                aria-hidden
-                className="absolute -inset-10 rounded-[2rem] blur-2xl opacity-40"
-                style={{
-                  background:
-                    'radial-gradient(60% 60% at 70% 20%, rgba(239,122,82,0.12) 0%, rgba(239,122,82,0) 70%)',
-                }}
-              />
-              {/* the artifact — a browser-window template card */}
-              <div className="relative rounded-2xl overflow-hidden border border-[#EAEAEA] bg-white shadow-[0_40px_90px_-30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(239,122,82,0.04)]">
-                {/* browser bar */}
-                <div className="flex items-center gap-2 px-4 h-10 border-b border-[#EAEAEA] bg-[#FBFBFA]">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#EAEAEA]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#EAEAEA]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ef7a52]/60" />
-                  <span className="ml-3 text-[11px] text-[#787774] font-mono truncate">
-                    unccodestore.com/template/bolt-saas
-                  </span>
-                </div>
-                {/* faux template screenshot */}
-                <div className="relative aspect-[4/3] bg-gradient-to-br from-[#F4F3F1] to-[#FBFBFA] p-5">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="h-2.5 w-20 rounded-full bg-[#ef7a52]/60" />
-                    <div className="flex gap-1.5">
-                      <span className="h-6 w-12 rounded-md bg-white border border-[#EAEAEA]" />
-                      <span className="h-6 w-12 rounded-md bg-[#ef7a52]/80" />
-                    </div>
-                  </div>
-                  <div className="h-5 w-2/3 rounded-full bg-[#111111]/10 mb-2" />
-                  <div className="h-3 w-1/2 rounded-full bg-[#111111]/5 mb-6" />
-                  <div className="grid grid-cols-3 gap-2.5">
-                    <div className="aspect-square rounded-lg bg-gradient-to-br from-[#ef7a52]/10 to-[#ef7a52]/5 border border-[#ef7a52]/10" />
-                    <div className="aspect-square rounded-lg bg-white border border-[#EAEAEA]" />
-                    <div className="aspect-square rounded-lg bg-white border border-[#EAEAEA]" />
-                  </div>
-                </div>
-                {/* ownership strip */}
-                <div className="flex items-center justify-between px-4 h-12 border-t border-[#EAEAEA] bg-[#FBFBFA]">
-                  <span className="text-[11px] text-[#787774] font-mono">
-                    Bolt · SaaS Starter
-                  </span>
-                  <span className="text-[11px] font-semibold text-[#e85a2d]">
-                    Own the source
-                  </span>
-                </div>
-              </div>
-              {/* floating code hairlines as atmosphere */}
+            className={widgetClassName}
+            onMouseEnter={onHoverEnter}
+            onMouseLeave={onHoverLeave}>
+            {/* subtle cold-orange halo */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-10 rounded-[2rem] blur-2xl opacity-40"
+              style={{
+                background:
+                  'radial-gradient(60% 60% at 70% 20%, rgba(239,122,82,0.12) 0%, rgba(239,122,82,0) 70%)',
+              }}
+            />
+
+            <BeforeAfterSlider
+              beforeSrc="/image_1.png.png"
+              afterSrc="/image_2.png.png"
+              interactive={canHover ? compareHover : true}
+              className="relative"
+            />
+
+            {/* hover hint — only when compact, on hover-capable devices */}
+            {canHover && !compareHover && (
               <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 0.5, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute -left-24 top-10 hidden xl:block text-[10px] font-mono leading-relaxed text-[#787774]/25 select-none">
-                <div>const Own = () =&gt; {`{`}</div>
-                <div className="pl-3">return &lt;Source code /&gt;</div>
-                <div>{`}`}</div>
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.05, duration: 0.5 }}
+                className="absolute top-1/2 -translate-y-1/2 -left-44 hidden lg:flex items-center gap-2 pointer-events-none">
+                <span className="whitespace-nowrap rounded-full border border-[#ef7a52]/30 bg-white/80 px-3 py-1.5 text-xs font-semibold text-[#e85a2d] shadow-[0_4px_14px_-6px_rgba(232,90,45,0.4)] backdrop-blur-sm">
+                  Hover to compare
+                </span>
+                <motion.span
+                  animate={{ x: [0, 8, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+                  className="text-[#e85a2d]">
+                  <ArrowRight className="w-9 h-9" strokeWidth={2.6} />
+                </motion.span>
               </motion.div>
-            </div>
+            )}
           </motion.div>
         </div>
 
