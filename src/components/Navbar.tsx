@@ -161,11 +161,13 @@ const Navbar = () => {
           {/* Desktop Nav with Mega Menus */}
           <div className="hidden lg:flex items-center gap-1 shrink-0">
             {/* Browse Templates Mega Menu — full-viewport panel */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenMegaMenu('browse')}
-              onMouseLeave={() => setOpenMegaMenu(null)}>
-              <button className="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-[#2F3437] hover:text-[#111111] transition-colors">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setOpenMegaMenu(openMegaMenu === 'browse' ? null : 'browse')}
+                aria-expanded={openMegaMenu === 'browse'}
+                aria-haspopup="true"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'browse' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
                 Browse
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'browse' ? 'rotate-180' : ''}`} />
               </button>
@@ -213,11 +215,13 @@ const Navbar = () => {
             </div>
 
             {/* Company Mega Menu — centered small panel */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenMegaMenu('company')}
-              onMouseLeave={() => setOpenMegaMenu(null)}>
-              <button className="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-[#2F3437] hover:text-[#111111] transition-colors">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setOpenMegaMenu(openMegaMenu === 'company' ? null : 'company')}
+                aria-expanded={openMegaMenu === 'company'}
+                aria-haspopup="true"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'company' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
                 Company
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'company' ? 'rotate-180' : ''}`} />
               </button>
@@ -233,11 +237,13 @@ const Navbar = () => {
             </div>
 
             {/* Help & Legal Mega Menu — centered small panel */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenMegaMenu('legal')}
-              onMouseLeave={() => setOpenMegaMenu(null)}>
-              <button className="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-[#2F3437] hover:text-[#111111] transition-colors">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setOpenMegaMenu(openMegaMenu === 'legal' ? null : 'legal')}
+                aria-expanded={openMegaMenu === 'legal'}
+                aria-haspopup="true"
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'legal' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
                 Help & Legal
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'legal' ? 'rotate-180' : ''}`} />
               </button>
