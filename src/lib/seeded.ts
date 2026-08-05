@@ -10,6 +10,18 @@ export function seededRandom(seed: string): () => number {
   }
 }
 
+export function seededShuffle<T>(items: readonly T[], seed: string): T[] {
+  const arr = [...items]
+  const rand = seededRandom(seed)
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1))
+    const tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+  }
+  return arr
+}
+
 export function getPlaceholderReviewCount(templateId: string): number {
   const rand = seededRandom(templateId + '_rc')
   return Math.floor(rand() * 14) + 7

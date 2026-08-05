@@ -14,6 +14,7 @@ import {
 } from "@/hooks/useReviews";
 import {
   seededRandom,
+  seededShuffle,
   getPlaceholderReviewCount,
 } from "@/lib/seeded";
 
@@ -62,7 +63,10 @@ const StarRating = ({
 const placeholderNames = [
   'Youssef Ait Baha', 'Fatima Zahra Benali', 'Omar El Fassi', 'Salma Idrissi',
   'Amine Chakir', 'Nadia Tazi', 'Karim Bensouda', 'Laila Moussaoui',
-  'Hamza Filali', 'Meryem Ait Ouakrim',
+  'Hamza Filali', 'Meryem Ait Ouakrim', 'Rachid Tlemcani', 'Houda Chaoui',
+  'Mehdi Zeroual', 'Siham Benchekroun', 'Aicha Boukhari', 'Ilyas Benjelloun',
+  'Kenza El Amrani', 'Tariq Ziani', 'Sofia Berrada', 'Anas Oulhaj',
+  'Ghita El Mansouri', 'Yassine Bouziane', 'Ines Chraibi', 'Adil Sekkat',
 ]
 
 const placeholderTexts = [
@@ -76,23 +80,46 @@ const placeholderTexts = [
   'This template exceeded my expectations. Very polished.',
   'Fantastic quality. I will definitely buy more templates here.',
   'Smooth setup process and beautiful design out of the box.',
+  'The layout adapts perfectly on every device I tested.',
+  'Setup was straightforward and the code is super clean.',
+  'My clients constantly compliment this design. Love it.',
+  'The included documentation answered every question I had.',
+  'Fast, modern, and incredibly easy to work with.',
+  'I customized everything in under an hour. Impressive.',
+  'A polished product from start to finish.',
+  'Great value for the price. Highly professional.',
+  'The design system is thoughtful and consistent.',
+  'Performance is excellent, loads very fast.',
+  'I love how flexible the components are.',
+  'Very intuitive for someone with basic coding skills.',
+  'The attention to mobile experience is outstanding.',
+  'Elegant and functional, exactly what I wanted.',
+  'Saved me so much time, worth every dirham.',
+  'Support helped me quickly when I got stuck.',
+  'Beautiful typography and spacing throughout.',
+  'Built with best practices, everything is organized.',
+  'My website looks ten times more professional now.',
+  'Updates are frequent and the project is well maintained.',
 ]
 
 function getPlaceholderReviews(templateId: string) {
   const count = getPlaceholderReviewCount(templateId)
-  const rand = seededRandom(templateId)
+  const names = seededShuffle(placeholderNames, `${templateId}-names`)
+  const texts = seededShuffle(placeholderTexts, `${templateId}-texts`)
   return Array.from({ length: count }, (_, i) => {
-    const rating = rand() > 0.45 ? 5 : 4.5
-    const nameIdx = Math.floor(rand() * placeholderNames.length)
-    const textIdx = Math.floor(rand() * placeholderTexts.length)
+    const rand = seededRandom(`${templateId}-review-${i}`)
+    const roll = rand()
+    const rating = roll > 0.55 ? 5 : roll > 0.25 ? 4.5 : 4
+    const nameIdx = i % names.length
+    const textIdx = i % texts.length
     const daysAgo = Math.floor(rand() * 60) + 1
     const date = new Date()
     date.setDate(date.getDate() - daysAgo)
     return {
       id: `placeholder-${i}`,
-      display_name: placeholderNames[nameIdx],
+      display_name: names[nameIdx],
       rating,
-      comment: placeholderTexts[textIdx],
+      comment: texts[textIdx],
       created_at: date.toISOString(),
       user_id: '',
       status: 'approved' as const,

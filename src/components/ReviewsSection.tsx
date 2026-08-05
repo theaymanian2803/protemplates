@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/integrations/supabase/client'
 import type { Template } from '@/hooks/useTemplates'
 import { Skeleton } from '@/components/ui/skeleton'
+import { seededRandom, seededShuffle } from '@/lib/seeded'
 
 const moroccanNames = [
   'Youssef Ait Baha',
@@ -21,6 +22,26 @@ const moroccanNames = [
   'Mehdi Zeroual',
   'Siham Benchekroun',
   'Aicha Boukhari',
+  'Ilyas Benjelloun',
+  'Kenza El Amrani',
+  'Tariq Ziani',
+  'Sofia Berrada',
+  'Anas Oulhaj',
+  'Ghita El Mansouri',
+  'Yassine Bouziane',
+  'Ines Chraibi',
+  'Adil Sekkat',
+  'Zineb El Idrissi',
+  'Sami Rahal',
+  'Nisrine Alami',
+  'Oussama Tazi',
+  'Hafsa Bennani',
+  'Mohammed Ouazzani',
+  'Dounia Faris',
+  'Reda Lamrani',
+  'Kaoutar Benkirane',
+  'Walid Chtouki',
+  'Marwa Essakalli',
 ]
 
 const reviewTexts = [
@@ -34,15 +55,27 @@ const reviewTexts = [
   'This template exceeded my expectations. Very polished.',
   'Fantastic quality. I will definitely buy more templates here.',
   'Smooth setup process and beautiful design out of the box.',
+  'The layout adapts perfectly on every device I tested.',
+  'Setup was straightforward and the code is super clean.',
+  'My clients constantly compliment this design. Love it.',
+  'The included documentation answered every question I had.',
+  'Fast, modern, and incredibly easy to work with.',
+  'I customized everything in under an hour. Impressive.',
+  'A polished product from start to finish.',
+  'Great value for the price. Highly professional.',
+  'The design system is thoughtful and consistent.',
+  'Performance is excellent, loads very fast.',
+  'I love how flexible the components are.',
+  'Very intuitive for someone with basic coding skills.',
+  'The attention to mobile experience is outstanding.',
+  'Elegant and functional, exactly what I wanted.',
+  'Saved me so much time, worth every dirham.',
+  'Support helped me quickly when I got stuck.',
+  'Beautiful typography and spacing throughout.',
+  'Built with best practices, everything is organized.',
+  'My website looks ten times more professional now.',
+  'Updates are frequent and the project is well maintained.',
 ]
-
-function seededRandom(seed: number) {
-  let s = seed
-  return () => {
-    s = (s * 16807 + 0) % 2147483647
-    return (s - 1) / 2147483646
-  }
-}
 
 const ReviewsSection = () => {
   const { data: templates, isLoading } = useQuery({
@@ -64,14 +97,30 @@ const ReviewsSection = () => {
     queryKey: ['landing-real-reviews', templateIds],
     queryFn: async () => {
       if (templateIds.length === 0) return []
-      const { data, error } = await supabase
+      const { data: reviews, error } = await supabase
         .from('reviews')
-        .select('id, template_id, rating, comment, display_name, created_at')
+        .select('id, template_id, rating, comment, user_id, created_at')
         .in('template_id', templateIds)
         .eq('status', 'approved')
 
       if (error) throw error
-      return data ?? []
+
+      const reviewsList = reviews ?? []
+      const userIds = [...new Set(reviewsList.map((r) => r.user_id))]
+      let profiles: { user_id: string; display_name: string | null }[] = []
+      if (userIds.length > 0) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('user_id, display_name')
+          .in('user_id', userIds)
+        profiles = data ?? []
+      }
+      const profileMap = new Map(profiles.map((p) => [p.user_id, p.display_name]))
+
+      return reviewsList.map((r) => ({
+        ...r,
+        display_name: profileMap.get(r.user_id) || 'Anonymous',
+      }))
     },
     enabled: templateIds.length > 0,
   })
@@ -83,20 +132,33 @@ const ReviewsSection = () => {
     reviewsByTemplate.set(r.template_id, list)
   })
 
+  const shuffledNames = seededShuffle(moroccanNames, 'landing-names-v1')
+  const shuffledTexts = seededShuffle(reviewTexts, 'landing-texts-v1')
+  const usedPairs = new Set<string>()
+
   const reviews = templates?.map((t, i) => {
-    const rand = seededRandom(i * 7919 + 42)
-    const hasHalf = rand() > 0.5
-    const seededRating = hasHalf ? 4.5 : 5
+    const rand = seededRandom(`${t.id}-landing`)
+    const roll = rand()
+    const seededRating = roll > 0.55 ? 5 : roll > 0.25 ? 4.5 : 4
     const seededCount = Math.floor(rand() * 7) + 7
-    const nameIdx = Math.floor(rand() * moroccanNames.length)
-    const textIdx = Math.floor(rand() * reviewTexts.length)
 
     const real = reviewsByTemplate.get(t.id) || []
-    const allRatings = [seededRating, ...real.map(r => r.rating)]
+    const allRatings = [seededRating, ...real.map((r) => r.rating)]
     const avgRating = allRatings.reduce((a, b) => a + b, 0) / allRatings.length
     const totalReviewCount = seededCount + real.length
 
     const topReal = real[0]
+
+    const nameIdx = i % shuffledNames.length
+    let textIdx = i % shuffledTexts.length
+    let pairKey = `${nameIdx}:${textIdx}`
+    let guard = 0
+    while (usedPairs.has(pairKey) && guard < shuffledTexts.length) {
+      textIdx = (textIdx + 1) % shuffledTexts.length
+      pairKey = `${nameIdx}:${textIdx}`
+      guard++
+    }
+    usedPairs.add(pairKey)
 
     return {
       id: t.id,
@@ -104,8 +166,8 @@ const ReviewsSection = () => {
       image_url: t.image_url,
       rating: Math.round(avgRating * 2) / 2,
       reviewCount: totalReviewCount,
-      name: topReal?.display_name || moroccanNames[nameIdx],
-      text: topReal?.comment || reviewTexts[textIdx],
+      name: topReal?.display_name || shuffledNames[nameIdx],
+      text: topReal?.comment || shuffledTexts[textIdx],
     }
   })
 
