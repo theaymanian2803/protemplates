@@ -119,8 +119,9 @@ const PromoBanner = () => {
               </ul>
               <Link
                 to="/auth"
-                className="block w-full py-3 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+                className="flex w-full items-center justify-center gap-2 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
                 Get All-Access
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </motion.div>

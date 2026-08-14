@@ -76,6 +76,7 @@ const TemplateCardDeck = () => {
           const isFront = i === items.length - 1
           const style = {
             zIndex: i + 1,
+            transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
             '--rest': `translate(${spec.restX}%, ${spec.restY}px) rotate(${spec.restRot}deg)`,
             '--spread': `translate(${spec.spreadX}%, ${spec.restY + spec.lift}px) rotate(${spec.spreadRot}deg) scale(1.04)`,
           } as React.CSSProperties
@@ -85,7 +86,7 @@ const TemplateCardDeck = () => {
               to={item.href}
               aria-label={`View template: ${item.title}`}
               style={style}
-              className="absolute inset-0 m-auto block w-[72%] rounded-xl border border-[#EAEAEA] bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.22)] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] [transform:var(--rest)] group-hover:[transform:var(--spread)] group-hover:shadow-[0_32px_80px_-28px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+              className="absolute inset-0 m-auto block w-[72%] rounded-xl border border-[#EAEAEA] bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.22)] overflow-hidden transition-all duration-300 [transform:var(--rest)] group-hover:[transform:var(--spread)] group-hover:shadow-[0_32px_80px_-28px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
               <img
                 src={item.src}
                 alt={item.title}
@@ -116,12 +117,6 @@ const TemplateCardDeck = () => {
             </Link>
           )
         })}
-      </div>
-
-      {/* hint */}
-      <div className="pointer-events-none mt-6 flex items-center justify-center gap-2 text-xs text-[#787774]/80">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#ef7a52]" />
-        Hover the deck — click a card to preview the template
       </div>
     </div>
   )
