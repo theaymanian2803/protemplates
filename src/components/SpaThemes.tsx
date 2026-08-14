@@ -88,11 +88,11 @@ const SpaThemes = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-center mt-12">
-            <Link to="/templates?category=E-commerce&q=spa">
-              <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                View all spa themes
-                <ArrowRight className="w-4 h-4" />
-              </button>
+            <Link
+              to="/templates?category=E-commerce&q=spa"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+              View all spa themes
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>
         </div>

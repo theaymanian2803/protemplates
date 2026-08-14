@@ -114,7 +114,7 @@ const CategoriesSection = () => {
           className="text-center mt-14">
           <Link
             to="/templates"
-            className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#f5f5f3] transition-colors">
+            className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#f5f5f3] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
             View all categories
             <ArrowUpRight className="w-4 h-4" />
           </Link>

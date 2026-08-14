@@ -71,11 +71,11 @@ const PromoBanner = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.24 }}
               className="flex items-center gap-5">
-              <Link to="/auth">
-                <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d14e24] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)]">
-                  Start now
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+                Start now
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-slab text-3xl font-bold text-[#111111]">$300</span>
@@ -117,10 +117,10 @@ const PromoBanner = () => {
                   </li>
                 ))}
               </ul>
-              <Link to="/auth" className="block">
-                <button className="w-full py-3 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d14e24] transition-colors">
-                  Get All-Access
-                </button>
+              <Link
+                to="/auth"
+                className="block w-full py-3 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+                Get All-Access
               </Link>
             </div>
           </motion.div>

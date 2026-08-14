@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
@@ -36,49 +37,51 @@ import ProHostingCheckout from "./pages/ProHostingCheckout";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <FavoritesProvider>
-        <CartProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <ScrollToTop />
-            <BrowserRouter>
-              <ScrollToTopOnNavigate />
-              <CookieConsent />
-              <ChatBubble />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/templates" element={<Templates />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/template/:id" element={<TemplatePreview />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/cookies" element={<Cookies />} />
-                <Route path="/license" element={<License />} />
-                <Route path="/refunds" element={<Refunds />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/downloads" element={<Downloads />} />
-                <Route path="/checkout/pro-hosting" element={<ProHostingCheckout />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </CartProvider>
-      </FavoritesProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+  <MotionConfig reducedMotion="user">
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <ScrollToTop />
+              <BrowserRouter>
+                <ScrollToTopOnNavigate />
+                <CookieConsent />
+                <ChatBubble />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/templates" element={<Templates />} />
+                  <Route path="/about" element={<AboutUs />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/template/:id" element={<TemplatePreview />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/cookies" element={<Cookies />} />
+                  <Route path="/license" element={<License />} />
+                  <Route path="/refunds" element={<Refunds />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/downloads" element={<Downloads />} />
+                  <Route path="/checkout/pro-hosting" element={<ProHostingCheckout />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </CartProvider>
+        </FavoritesProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </MotionConfig>
 );
 
 export default App;
