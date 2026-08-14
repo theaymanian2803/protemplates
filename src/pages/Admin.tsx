@@ -22,6 +22,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToast } from '@/hooks/use-toast'
 import { useAdminRole } from '@/hooks/useAdminRole'
+import { useIsMobile } from '@/hooks/use-mobile'
 import {
   Order,
   OrderStatus,
@@ -32,7 +33,7 @@ import {
 import { Template, useTemplates } from '@/hooks/useTemplates'
 import { supabase } from '@/integrations/supabase/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { DollarSign, Loader2, Package, Plus, Search, ShieldAlert } from 'lucide-react'
+import { DollarSign, Loader2, MonitorSmartphone, Package, Plus, Search, ShieldAlert } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -53,6 +54,7 @@ const Admin = () => {
   const navigate = useNavigate()
   const { toast } = useToast()
   const queryClient = useQueryClient()
+  const isMobile = useIsMobile()
 
   const updateOrderStatus = useUpdateOrderStatus()
   const deleteOrder = useDeleteOrder()
@@ -237,12 +239,36 @@ const Admin = () => {
     )
   }
 
+  if (isMobile) {
+    return (
+      <main className="min-h-screen bg-background">
+        <Navbar />
+        <div className="pt-24 pb-16">
+          <div className="container mx-auto">
+            <div className="max-w-md mx-auto text-center">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <MonitorSmartphone className="w-10 h-10 text-primary" />
+              </div>
+              <h1 className="text-2xl font-bold text-foreground mb-2">Non disponible sur mobile</h1>
+              <p className="text-muted-foreground mb-6">
+                Le panneau d'administration est accessible uniquement sur tablette et ordinateur
+                (écran de 768px et plus).
+              </p>
+              <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    )
+  }
+
   if (!isAdmin) {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto">
             <div className="max-w-md mx-auto text-center">
               <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShieldAlert className="w-10 h-10 text-destructive" />

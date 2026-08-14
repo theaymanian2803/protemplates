@@ -7,7 +7,7 @@ const brands = [
 const LogoCloud = () => {
   return (
     <section className="py-12 border-y border-border/50 relative overflow-hidden">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

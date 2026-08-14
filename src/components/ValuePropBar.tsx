@@ -22,7 +22,7 @@ const benefits = [
 const ValuePropBar = () => {
   return (
     <section className="border-y border-border/60 bg-muted/30">
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto py-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
           {benefits.map((b, i) => (
             <motion.div

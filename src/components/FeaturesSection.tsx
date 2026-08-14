@@ -33,7 +33,7 @@ const FeaturesSection = () => {
     <section id="features" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 hero-gradient-bg opacity-50" />
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

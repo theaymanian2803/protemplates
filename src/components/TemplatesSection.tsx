@@ -23,7 +23,7 @@ const TemplatesSection = () => {
         style={{ background: 'linear-gradient(180deg, #FBFBFA 0%, #FBFBFA 100%)' }}
       />
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative container mx-auto">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

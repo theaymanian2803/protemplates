@@ -125,7 +125,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FBFBFA]/92 backdrop-blur-md border-b border-[#EAEAEA] text-[#111111]">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
@@ -438,7 +438,6 @@ const Navbar = () => {
                   <MobileNavLink to="/downloads" onClick={() => setIsOpen(false)}>My Downloads</MobileNavLink>
                   <MobileNavLink to="/favorites" onClick={() => setIsOpen(false)}>Favorites {favorites.length > 0 && `(${favorites.length})`}</MobileNavLink>
                   <MobileNavLink to="/profile" onClick={() => setIsOpen(false)}>Settings</MobileNavLink>
-                  {isAdmin && <MobileNavLink to="/admin" onClick={() => setIsOpen(false)}>Admin</MobileNavLink>}
                 </>
               )}
 

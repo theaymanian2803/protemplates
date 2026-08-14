@@ -125,7 +125,7 @@ const Contact = () => {
         <div className="absolute top-20 left-20 w-72 h-72 bg-orange-100 rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-20 w-96 h-96 bg-orange-100 rounded-full blur-3xl" />
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-500 font-medium text-sm mb-6">
               <Mail className="w-4 h-4" />
@@ -147,7 +147,7 @@ const Contact = () => {
 
       {/* Contact Methods */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {contactMethods.map((method, index) => (
               <a
@@ -168,7 +168,7 @@ const Contact = () => {
 
       {/* Contact Form & Info */}
       <section className="py-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
             <div className="lg:col-span-3">
@@ -317,7 +317,7 @@ const Contact = () => {
 
       {/* Map Section */}
       <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
               {s?.location_title || 'Notre adresse'}

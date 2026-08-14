@@ -40,7 +40,7 @@ const Footer = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-4 z-10">
+      <div className="relative container mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 pb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
@@ -126,7 +126,7 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="relative border-t border-[#EAEAEA] z-10">
-        <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[#787774]/60 text-sm">
+        <div className="container mx-auto py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[#787774]/60 text-sm">
           <p>&copy; 2027 Unccodestore. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">Privacy</Link>

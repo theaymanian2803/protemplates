@@ -131,7 +131,7 @@ const FAQ = () => {
         <div className="absolute top-20 right-10 w-72 h-72 bg-orange-100 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-orange-100 rounded-full blur-3xl" />
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-500 font-medium text-sm mb-6">
               <HelpCircle className="w-4 h-4" />
@@ -152,7 +152,7 @@ const FAQ = () => {
 
       {/* Category Navigation */}
       <section className="py-8 border-y border-gray-200 sticky top-16 bg-white/80 backdrop-blur-md z-40">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="flex flex-wrap justify-center gap-4">
             {faqCategories.map((category) => (
               <a
@@ -170,7 +170,7 @@ const FAQ = () => {
 
       {/* FAQ Sections */}
       <section className="py-16">
-        <div className="container mx-auto px-4 max-w-4xl">
+        <div className="container mx-auto max-w-4xl">
           {faqCategories.map((category, categoryIndex) => (
             <div
               key={category.id}
@@ -209,7 +209,7 @@ const FAQ = () => {
 
       {/* Still Have Questions CTA */}
       <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="bg-white p-8 md:p-12 rounded-xl border border-gray-200 text-center max-w-3xl mx-auto">
             <MessageCircle className="w-12 h-12 text-orange-500 mx-auto mb-4" />
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-4">

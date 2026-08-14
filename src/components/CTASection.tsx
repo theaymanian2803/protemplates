@@ -25,7 +25,7 @@ const CTASection = () => {
       </div>
 
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto relative z-10">
         <motion.div style={{ scale }} className="max-w-3xl mx-auto text-center">
           <motion.span
             initial={{ opacity: 0, y: 16 }}

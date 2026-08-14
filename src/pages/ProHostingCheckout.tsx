@@ -159,7 +159,7 @@ const ProHostingCheckout = () => {
       <main className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 max-w-2xl">
+          <div className="container mx-auto max-w-2xl">
             <div className="glass-card p-8 rounded-2xl border border-border/50 text-center">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 flex items-center justify-center">
                 <CheckCircle2 className="w-10 h-10 text-accent" />
@@ -195,7 +195,7 @@ const ProHostingCheckout = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <Link to="/dashboard" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Retour au tableau de bord

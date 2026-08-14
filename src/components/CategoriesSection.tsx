@@ -82,7 +82,7 @@ const CategoriesSection = () => {
   return (
     <section className="relative overflow-hidden bg-[#FBFBFA] py-20 text-[#111111]">
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative container mx-auto">
         <div className="max-w-2xl mb-12">
           <motion.span
             initial={{ opacity: 0, y: 10 }}

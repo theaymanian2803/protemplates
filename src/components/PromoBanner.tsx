@@ -22,7 +22,7 @@ const PromoBanner = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-14 max-w-7xl mx-auto">
           {/* Left: pitch */}
           <div className="flex-1">

@@ -119,7 +119,7 @@ const AboutUs = () => {
         <div className="absolute top-40 -left-32 w-[500px] h-[500px] rounded-full bg-orange-50 blur-3xl" />
         <div className="absolute top-20 -right-32 w-[400px] h-[400px] rounded-full bg-orange-50 blur-3xl" />
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center max-w-4xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-500 font-medium text-sm mb-8">
               <Sparkles className="w-4 h-4" />
@@ -161,7 +161,7 @@ const AboutUs = () => {
 
       {/* ── Stats ── */}
       <section className="py-16 border-y border-gray-200 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, i) => (
               <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="text-center group">
@@ -178,7 +178,7 @@ const AboutUs = () => {
 
       {/* ── Mission ── */}
       <section className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-500 font-medium text-xs mb-6 uppercase tracking-wider">
@@ -220,7 +220,7 @@ const AboutUs = () => {
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gray-50" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_50%_100%,rgba(249,115,22,0.04),transparent)]" />
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-500 font-medium text-xs mb-6 uppercase tracking-wider">
               {s?.values_badge || "Nos valeurs"}
@@ -244,7 +244,7 @@ const AboutUs = () => {
 
       {/* ── Timeline ── */}
       <section className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-500 font-medium text-xs mb-6 uppercase tracking-wider">
               {s?.milestones_badge || "Notre parcours"}
@@ -272,7 +272,7 @@ const AboutUs = () => {
       {/* ── Team ── */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gray-50" />
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-500 font-medium text-xs mb-6 uppercase tracking-wider">
               {s?.team_badge || "L'équipe"}
@@ -304,7 +304,7 @@ const AboutUs = () => {
 
       {/* ── CTA ── */}
       <section className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="relative rounded-xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.1),transparent)]" />

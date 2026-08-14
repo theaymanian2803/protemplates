@@ -15,7 +15,7 @@ const FeaturedThemes = () => {
         style={{ background: 'linear-gradient(180deg, #FBFBFA 0%, #FBFBFA 100%)' }}
       />
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative container mx-auto">
         <div className="flex flex-col lg:flex-row items-start gap-14 max-w-7xl mx-auto">
           {/* Left: Text */}
           <div className="lg:w-1/3 lg:sticky lg:top-24">

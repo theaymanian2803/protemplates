@@ -12,7 +12,7 @@ const MarketplaceStats = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12 max-w-7xl mx-auto">
           {/* Left: Thumbnail collage */}
           <div className="flex-1 hidden lg:block">

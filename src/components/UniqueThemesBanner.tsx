@@ -18,7 +18,7 @@ const UniqueThemesBanner = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-4">
+      <div className="relative container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16 max-w-7xl mx-auto">
           {/* Left: Thumbnail grid — lit artifact wall */}
           <div className="flex-1 w-full">

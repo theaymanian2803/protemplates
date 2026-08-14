@@ -6,7 +6,7 @@ const Cookies = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-3xl">
+        <div className="container mx-auto max-w-3xl">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Politique des cookies</h1>
           <p className="text-muted-foreground mb-12">Dernière mise à jour : mars 2026</p>
 

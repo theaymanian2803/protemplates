@@ -50,7 +50,7 @@ const TemplatePreview = () => {
       <main className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 max-w-7xl">
+          <div className="container mx-auto max-w-7xl">
             <Skeleton className="h-6 w-48 mb-4" />
             <Skeleton className="h-10 w-96 mb-6" />
             <Skeleton className="h-[70vh] w-full rounded-xl mb-12" />
@@ -74,7 +74,7 @@ const TemplatePreview = () => {
       <main className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 text-center">
+          <div className="container mx-auto text-center">
             <Link
               to="/"
               className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 mb-8 justify-center">
@@ -101,7 +101,7 @@ const TemplatePreview = () => {
       <Navbar />
 
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-[1200px] overflow-hidden">
+        <div className="container mx-auto max-w-[1200px] overflow-hidden">
           {/* Header Section mimicking Webflow Details Page */}
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-6">
             <div className="flex-1 min-w-0">

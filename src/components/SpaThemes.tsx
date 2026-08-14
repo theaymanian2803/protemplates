@@ -40,7 +40,7 @@ const SpaThemes = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-4 z-10">
+      <div className="relative container mx-auto z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-14">

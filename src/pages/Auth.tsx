@@ -151,7 +151,7 @@ const Auth = () => {
           <Navbar />
           
           <div className="pt-24 pb-16">
-            <div className="container mx-auto px-4 max-w-md">
+            <div className="container mx-auto max-w-md">
               <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-50 flex items-center justify-center">
                   <CheckCircle className="w-8 h-8 text-orange-500" />
@@ -188,7 +188,7 @@ const Auth = () => {
         <Navbar />
         
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 max-w-md">
+          <div className="container mx-auto max-w-md">
             <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
                 Mot de passe oublié ?
@@ -265,7 +265,7 @@ const Auth = () => {
       <Navbar />
       
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-md">
+        <div className="container mx-auto max-w-md">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">

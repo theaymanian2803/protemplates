@@ -309,7 +309,7 @@ const Checkout = () => {
       <main className="min-h-screen bg-white">
         <Navbar />
         <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 max-w-2xl">
+          <div className="container mx-auto max-w-2xl">
             <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange-50 flex items-center justify-center">
                 <CheckCircle2 className="w-10 h-10 text-orange-500" />
@@ -351,7 +351,7 @@ const Checkout = () => {
       <Navbar />
 
       <div className="pt-24 pb-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <Link
             to="/cart"
             className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-6">

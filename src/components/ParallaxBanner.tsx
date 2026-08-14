@@ -33,7 +33,7 @@ const ParallaxBanner = () => {
         backgroundSize: "60px 60px",
       }} />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto relative z-10">
         <motion.div
           style={{ opacity }}
           className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto"
