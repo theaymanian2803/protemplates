@@ -39,7 +39,7 @@ const UniqueThemesBanner = () => {
                     src={t.image_url || '/placeholder.svg'}
                     alt={t.title}
                     loading="lazy"
-                    className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div
                     aria-hidden

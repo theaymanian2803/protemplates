@@ -1,7 +1,7 @@
 import { useCart } from '@/contexts/CartContext'
-import { ShoppingCart, Star, ExternalLink } from 'lucide-react'
+import { ArrowRight, ShoppingCart, Star } from 'lucide-react'
 import { toast } from 'sonner'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   getDisplayReviewCount,
   getDisplaySales,
@@ -19,7 +19,6 @@ interface TemplateCardProps {
   sales?: number
   reviewCount?: number
   featured?: boolean
-  demoUrl?: string | null
   youtubeId?: string | null
   authorName?: string
   authorAvatar?: string
@@ -51,11 +50,11 @@ const TemplateCard = ({
   rating = 0,
   sales = 0,
   reviewCount,
-  demoUrl,
   authorName,
   authorAvatar,
 }: TemplateCardProps) => {
   const { addToCart, isInCart } = useCart()
+  const navigate = useNavigate()
   const displaySales = getDisplaySales(id, sales)
   const displayReviewCount = getDisplayReviewCount(id, reviewCount)
   const displayRating = getDisplayRating(id, rating)
@@ -74,14 +73,10 @@ const TemplateCard = ({
     toast.success('Added to cart', { description: title })
   }
 
-  const handlePreview = (e: React.MouseEvent) => {
+  const handleReadMore = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    if (demoUrl) {
-      window.open(demoUrl, '_blank', 'noopener,noreferrer')
-    } else {
-      window.open(`/template/${id}`, '_self')
-    }
+    navigate(`/template/${id}`)
   }
 
   return (
@@ -108,13 +103,13 @@ const TemplateCard = ({
             )}
           </div>
 
-          {/* Hover overlay: Live Preview + cart icon */}
+          {/* Hover overlay: Read more + cart icon */}
           <div className="absolute inset-0 bg-foreground/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">
             <button
-              onClick={handlePreview}
+              onClick={handleReadMore}
               className="inline-flex items-center gap-2 px-4 h-10 rounded-lg bg-background text-foreground text-sm font-semibold shadow-md hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all">
-              <ExternalLink className="w-4 h-4" />
-              Live Preview
+              <ArrowRight className="w-4 h-4" />
+              Read more
             </button>
             <button
               onClick={handleAddToCart}

@@ -1,8 +1,8 @@
 import { useCart } from '@/contexts/CartContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
-import { ExternalLink, Heart, ShoppingCart, Star } from 'lucide-react'
+import { ArrowRight, Heart, ShoppingCart, Star } from 'lucide-react'
 import { toast } from 'sonner'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Template } from '@/hooks/useTemplates'
 import {
   getDisplayReviewCount,
@@ -63,6 +63,7 @@ const HighlightText = ({ text, query }: { text: string; query?: string }) => {
 const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) => {
   const { addToCart, isInCart } = useCart()
   const { isFavorite, toggleFavorite } = useFavorites()
+  const navigate = useNavigate()
   const author = resolveAuthor(template.id)
   const inCart = isInCart(template.id)
   const isFav = isFavorite(template.id)
@@ -97,14 +98,10 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
     toggleFavorite(template.id)
   }
 
-  const handlePreview = (e: React.MouseEvent) => {
+  const handleReadMore = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    if (template.demo_url) {
-      window.open(template.demo_url, '_blank', 'noopener,noreferrer')
-    } else {
-      window.open(`/template/${template.id}`, '_blank', 'noopener,noreferrer')
-    }
+    navigate(`/template/${template.id}`)
   }
 
   // Grid card view
@@ -152,10 +149,10 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
                 <ShoppingCart className="w-4 h-4" />
               </button>
               <button
-                onClick={handlePreview}
+                onClick={handleReadMore}
                 className="flex-1 h-9 rounded border border-orange-500 text-orange-500 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-orange-500 hover:text-white transition-colors">
-                <ExternalLink className="w-3 h-3" />
-                Live Preview
+                <ArrowRight className="w-3 h-3" />
+                Read more
               </button>
             </div>
           </div>
@@ -242,10 +239,10 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
             <ShoppingCart className="w-4 h-4" />
           </button>
           <button
-            onClick={handlePreview}
+            onClick={handleReadMore}
             className="flex-1 h-10 rounded border-2 border-orange-500 text-orange-500 font-semibold text-sm flex items-center justify-center gap-1.5 hover:bg-orange-500 hover:text-white transition-colors">
-            <ExternalLink className="w-3.5 h-3.5" />
-            Live Preview
+            <ArrowRight className="w-3.5 h-3.5" />
+            Read more
           </button>
         </div>
       </div>

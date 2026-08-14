@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { ExternalLink, Star } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { ArrowRight, ShoppingCart, Star } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+import { useCart } from '@/contexts/CartContext'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export type Template = {
@@ -34,6 +36,31 @@ const getPlaceholderReviewCount = (templateId: string): number => {
 
 const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number }) => {
   const [imgOk, setImgOk] = useState(true)
+  const { addToCart, isInCart } = useCart()
+  const navigate = useNavigate()
+
+  const handleReadMore = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    navigate(`/template/${template.id}`)
+  }
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isInCart(template.id)) {
+      toast.info('Already in your cart', { description: template.title })
+      return
+    }
+    addToCart({
+      id: template.id,
+      title: template.title,
+      image: template.image_url || '',
+      price: Number(template.price),
+      license: 'regular',
+    })
+    toast.success('Added to cart', { description: template.title })
+  }
 
   return (
     <motion.div
@@ -59,7 +86,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
               alt={template.title}
               loading="lazy"
               onError={() => setImgOk(false)}
-              className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <div
@@ -76,7 +103,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
           <h3 className="font-slab font-bold text-[#111111] text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#e85a2d] transition-colors">
             {template.title}
           </h3>
-          <p className="text-xs text-[#787774]/70 mb-4">by Unccodestore</p>
+          <p className="text-xs text-[#787774] mb-4">by Unccodestore</p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold text-[#111111]">
@@ -99,24 +126,24 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
                   )
                 })}
               </div>
-              <span className="text-[10px] text-[#787774]/70">
+              <span className="text-[10px] text-[#787774]">
                 ({getPlaceholderReviewCount(template.id)})
               </span>
             </div>
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                if (template.demo_url) {
-                  window.open(template.demo_url, '_blank', 'noopener,noreferrer')
-                } else {
-                  window.open(`/template/${template.id}`, '_self')
-                }
-              }}
-              className="text-[11px] font-semibold text-[#2F3437] border border-[#EAEAEA] rounded px-2.5 py-1.5 hover:border-[#e85a2d] hover:text-[#e85a2d] transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
-              <ExternalLink className="w-3 h-3" />
-              Live Preview
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleReadMore}
+                className="text-[11px] font-semibold text-[#2F3437] border border-[#EAEAEA] rounded px-2.5 py-1.5 hover:border-[#e85a2d] hover:text-[#e85a2d] transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
+                Read more
+                <ArrowRight className="w-3 h-3" />
+              </button>
+              <button
+                onClick={handleAddToCart}
+                aria-label={isInCart(template.id) ? 'In cart' : 'Add to cart'}
+                className="w-8 h-8 flex items-center justify-center rounded border border-[#EAEAEA] text-[#2F3437] hover:border-[#e85a2d] hover:text-[#e85a2d] hover:bg-[#ef7a52]/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
+                <ShoppingCart className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
       </Link>

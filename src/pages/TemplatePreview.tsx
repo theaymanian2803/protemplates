@@ -103,8 +103,8 @@ const TemplatePreview = () => {
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-[1200px] overflow-hidden">
           {/* Header Section mimicking Webflow Details Page */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 gap-6">
-            <div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-6">
+            <div className="flex-1 min-w-0">
               {/* Breadcrumbs */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                 <Link to="/" className="hover:text-foreground flex items-center gap-1">
@@ -120,8 +120,8 @@ const TemplatePreview = () => {
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                {template.title} - Template site web
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">
+                {template.title}
               </h1>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
@@ -132,7 +132,7 @@ const TemplatePreview = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 min-w-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 shrink-0">
               {liveUrl && (
                 <Button
                   variant="outline"
@@ -165,7 +165,7 @@ const TemplatePreview = () => {
               <iframe
                 src={liveUrl}
                 className="w-full flex-1 border-none bg-background"
-                title={`${template.title} Live Preview`}
+                title={`${template.title} — Aperçu`}
                 sandbox="allow-scripts allow-same-origin allow-forms"
               />
             </div>

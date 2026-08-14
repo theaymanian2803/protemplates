@@ -65,7 +65,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
                 src={t.image_url || '/placeholder.svg'}
                 alt={t.title}
                 loading="lazy"
-                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 hover:opacity-100 hover:scale-105 transition-all duration-500" />
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
             </Link>
           ))}
           {isLoading &&
