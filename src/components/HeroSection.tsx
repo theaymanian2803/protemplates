@@ -1,16 +1,15 @@
+import TemplateCardDeck from '@/components/TemplateCardDeck'
 import { motion } from 'framer-motion'
-import { Search, ArrowRight, Sparkles } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { ArrowRight, Search, Sparkles } from 'lucide-react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import BeforeAfterSlider from '@/components/BeforeAfterSlider'
 
 /*
   THESIS: the developer's bright studio — one template developed from raw source,
   presented on a warm-white ground with cold orange directional light. The hero
-  now carries faded floating "tech chips" behind the copy so the first viewport
-  reads as full and lived-in, and the before/after artifact grows in place on
-  hover (anchored right, expanding leftward, hiding the copy) so visitors can
-  see the full landing-page redesigns big before they drag.
+  carries faded floating "tech chips" behind the copy. The right column showcases
+  the catalog as a cascading deck of template cards (see TemplateCardDeck) that
+  spreads out on hover.
 */
 
 const popularTags = [
@@ -30,9 +29,6 @@ const chips = [
   { label: 'shadcn/ui', top: '38%', left: '88%', rot: 10, dur: 8.2, pal: 'b', fade: 0.45 },
   { label: 'Framer Motion', top: '89%', left: '34%', rot: -5, dur: 9.5, pal: 'a', fade: 0.4 },
   { label: 'Supabase', top: '13%', left: '42%', rot: 10, dur: 7.8, pal: 'c', fade: 0.5 },
-  { label: 'Radix UI', top: '56%', left: '83%', rot: -7, dur: 8.7, pal: 'b', fade: 0.45 },
-  { label: 'Zustand', top: '30%', left: '7%', rot: 14, dur: 9.2, pal: 'a', fade: 0.5 },
-  { label: 'Vite', top: '76%', left: '52%', rot: -12, dur: 8, pal: 'c', fade: 0.45 },
 ] as const
 
 const chipPalette: Record<string, string> = {
@@ -45,56 +41,12 @@ const HeroSection = () => {
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
 
-  // hover-to-expand the before/after comparison (only on hover-capable devices)
-  const [canHover, setCanHover] = useState(true)
-  const [compareHover, setCompareHover] = useState(false)
-  const leaveTimer = useRef<number | undefined>(undefined)
-  const cancelLeave = () => {
-    if (leaveTimer.current !== undefined) {
-      clearTimeout(leaveTimer.current)
-      leaveTimer.current = undefined
-    }
-  }
-  const onHoverEnter = () => {
-    cancelLeave()
-    setCompareHover(true)
-  }
-  const onHoverLeave = () => {
-    cancelLeave()
-    leaveTimer.current = window.setTimeout(() => setCompareHover(false), 180)
-  }
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      setCanHover(window.matchMedia('(hover: hover)').matches)
-    }
-    return () => cancelLeave()
-  }, [])
-
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault()
     const params = new URLSearchParams()
     if (query.trim()) params.set('q', query.trim())
     navigate(`/templates?${params.toString()}`)
   }
-
-  const widgetClasses = [
-    'relative w-full max-w-xl mx-auto z-30',
-    'flex flex-col w-full',
-  ]
-  if (canHover) {
-    widgetClasses.push(
-      'lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:max-w-none',
-      'lg:transition-[width] lg:duration-[700ms] lg:ease-[cubic-bezier(0.16,1,0.3,1)] lg:will-change-[width]',
-      compareHover ? 'lg:w-[min(1080px,calc(100%_-_2rem))]' : 'lg:w-[32rem]',
-    )
-  }
-  const widgetClassName = widgetClasses.join(' ')
-
-  const textClasses = canHover
-    ? `flex-1 max-w-2xl lg:transition-[opacity,transform] lg:duration-500 lg:ease-out ${
-        compareHover ? 'lg:opacity-0 lg:-translate-x-3' : 'lg:opacity-100'
-      }`
-    : 'flex-1 max-w-2xl'
 
   return (
     <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111]">
@@ -134,7 +86,7 @@ const HeroSection = () => {
       <div className="relative container mx-auto px-4 pt-28 pb-24 md:pt-36 md:pb-32 z-10">
         <div className="relative flex flex-col lg:flex-row items-start lg:items-center gap-14 lg:gap-20 max-w-7xl mx-auto">
           {/* Left: Headline + lit search instrument */}
-          <div className={textClasses}>
+          <div className="flex-1 max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -159,8 +111,8 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.12 }}
               className="text-lg text-[#787774] mb-9 leading-[1.6] max-w-lg">
-              Production-ready React, TypeScript &amp; Tailwind templates with
-              clean, maintainable source code you actually keep — not rent.
+              Production-ready React, TypeScript &amp; Tailwind templates with clean, maintainable
+              source code you actually keep — not rent.
             </motion.p>
 
             {/* The search instrument */}
@@ -181,7 +133,7 @@ const HeroSection = () => {
               />
               <button
                 type="submit"
-                className="h-16 px-7 bg-[#e85a2d] text-white font-semibold text-sm flex items-center gap-2 hover:bg-[#ef7a52] transition-colors">
+                className="h-16 px-7 bg-[#e85a2d] text-white font-semibold text-sm flex items-center gap-2 hover:bg-[#ef7a52] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ef7a52]/50">
                 Search
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -204,49 +156,13 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Right: before/after comparison artifact — grows in place on hover */}
+          {/* Right: cascading deck of template cards */}
           <motion.div
-            initial={{ opacity: 0, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className={widgetClassName}
-            onMouseEnter={onHoverEnter}
-            onMouseLeave={onHoverLeave}>
-            {/* subtle cold-orange halo */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -inset-10 rounded-[2rem] blur-2xl opacity-40"
-              style={{
-                background:
-                  'radial-gradient(60% 60% at 70% 20%, rgba(239,122,82,0.12) 0%, rgba(239,122,82,0) 70%)',
-              }}
-            />
-
-            <BeforeAfterSlider
-              beforeSrc="/image_1.png.png"
-              afterSrc="/image_2.png.png"
-              interactive={canHover ? compareHover : true}
-              className="relative"
-            />
-
-            {/* hover hint — only when compact, on hover-capable devices */}
-            {canHover && !compareHover && (
-              <motion.div
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.05, duration: 0.5 }}
-                className="absolute top-1/2 -translate-y-1/2 -left-44 hidden lg:flex items-center gap-2 pointer-events-none">
-                <span className="whitespace-nowrap rounded-full border border-[#ef7a52]/30 bg-white/80 px-3 py-1.5 text-xs font-semibold text-[#e85a2d] shadow-[0_4px_14px_-6px_rgba(232,90,45,0.4)] backdrop-blur-sm">
-                  Hover to compare
-                </span>
-                <motion.span
-                  animate={{ x: [0, 8, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-                  className="text-[#e85a2d]">
-                  <ArrowRight className="w-9 h-9" strokeWidth={2.6} />
-                </motion.span>
-              </motion.div>
-            )}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:flex-1 flex justify-center">
+            <TemplateCardDeck />
           </motion.div>
         </div>
 

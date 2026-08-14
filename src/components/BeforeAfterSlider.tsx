@@ -8,6 +8,12 @@ interface BeforeAfterSliderProps {
   afterAlt?: string
   className?: string
   interactive?: boolean
+  /** Fill the parent's height instead of using a fixed aspect ratio. */
+  fill?: boolean
+  /** Override the default aspect ratio used when `fill` is false. */
+  aspectClassName?: string
+  /** Object-fit of the two comparison images. */
+  fit?: 'cover' | 'contain'
 }
 
 const BeforeAfterSlider = ({
@@ -17,7 +23,11 @@ const BeforeAfterSlider = ({
   afterAlt = 'After — enhanced design',
   className = '',
   interactive = true,
+  fill = false,
+  aspectClassName,
+  fit = 'cover',
 }: BeforeAfterSliderProps) => {
+  const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover'
   const containerRef = useRef<HTMLDivElement>(null)
   const draggingRef = useRef(false)
   const [pos, setPos] = useState(50)
@@ -69,7 +79,7 @@ const BeforeAfterSlider = ({
 
   return (
     <div
-      className={`relative rounded-2xl overflow-hidden border border-[#EAEAEA] bg-white shadow-[0_40px_90px_-30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(239,122,82,0.04)] ${className}`}>
+      className={`relative rounded-2xl overflow-hidden border border-[#EAEAEA] bg-white shadow-[0_40px_90px_-30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(239,122,82,0.04)] ${fill ? 'flex flex-col h-full' : ''} ${className}`}>
       {/* browser bar */}
       <div className="flex items-center gap-2 px-4 h-10 border-b border-[#EAEAEA] bg-[#FBFBFA]">
         <span className="w-2.5 h-2.5 rounded-full bg-[#EAEAEA]" />
@@ -93,7 +103,7 @@ const BeforeAfterSlider = ({
       {/* comparison area */}
       <div
         ref={containerRef}
-        className={`relative aspect-[16/10] overflow-hidden select-none bg-[#F5F4F0] ${interactive ? 'cursor-ew-resize touch-none' : 'pointer-events-none'}`}
+        className={`relative overflow-hidden select-none bg-[#F5F4F0] ${fill ? 'flex-1' : aspectClassName ?? 'aspect-[16/10]'} ${interactive ? 'cursor-ew-resize touch-none' : 'pointer-events-none'}`}
         {...(interactive ? {
           onPointerDown: handlePointerDown,
           onPointerMove: handlePointerMove,
@@ -105,7 +115,7 @@ const BeforeAfterSlider = ({
           src={afterSrc}
           alt={afterAlt}
           draggable={false}
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          className={`pointer-events-none absolute inset-0 h-full w-full ${fitClass}`}
         />
         {/* before — clipped to the left of the divider */}
         <div
@@ -115,7 +125,7 @@ const BeforeAfterSlider = ({
             src={beforeSrc}
             alt={beforeAlt}
             draggable={false}
-            className="absolute inset-0 h-full w-full object-cover"
+            className={`absolute inset-0 h-full w-full ${fitClass}`}
           />
         </div>
 
