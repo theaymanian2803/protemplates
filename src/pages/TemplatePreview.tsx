@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
+import FullScreenPreview from '@/components/preview/FullScreenPreview'
 import RelatedTemplates from '@/components/preview/RelatedTemplates'
 import ReviewSection from '@/components/preview/ReviewSection'
 import TemplateFeatures from '@/components/preview/TemplateFeatures'
@@ -12,7 +13,8 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
 import { useToast } from '@/hooks/use-toast'
 import { useTemplate } from '@/hooks/useTemplates'
-import { ArrowLeft, ExternalLink, Home, ShoppingBag } from 'lucide-react'
+import { ArrowLeft, Home, Maximize2, ShoppingBag } from 'lucide-react'
+import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const TemplatePreview = () => {
@@ -22,6 +24,7 @@ const TemplatePreview = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
   const { toast } = useToast()
+  const [previewOpen, setPreviewOpen] = useState(false)
 
   const handleBuyClick = () => {
     addToCart({
@@ -131,11 +134,12 @@ const TemplatePreview = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 min-w-0">
               {liveUrl && (
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-                  <Button variant="outline" className="gap-2 w-full sm:w-auto text-xs sm:text-sm">
-                    Aperçu en navigateur <ExternalLink className="w-4 h-4" />
-                  </Button>
-                </a>
+                <Button
+                  variant="outline"
+                  className="gap-2 w-full sm:w-auto text-xs sm:text-sm"
+                  onClick={() => setPreviewOpen(true)}>
+                  Aperçu en plein écran <Maximize2 className="w-4 h-4" />
+                </Button>
               )}
               <Button
                 className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
@@ -210,6 +214,15 @@ const TemplatePreview = () => {
       </div>
 
       <Footer />
+
+      {liveUrl && (
+        <FullScreenPreview
+          url={liveUrl}
+          title={template.title}
+          open={previewOpen}
+          onClose={() => setPreviewOpen(false)}
+        />
+      )}
     </main>
   )
 }
