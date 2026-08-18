@@ -66,6 +66,12 @@ const getCategoryIcon = (cat: string) => {
   return categoryIconMap[cat] || LayoutDashboard
 }
 
+const userMenuItemClasses =
+  'cursor-pointer text-[#2F3437] hover:bg-[#EDEBE4] hover:text-[#111111] focus:bg-[#EDEBE4] focus:text-[#111111] transition-colors'
+
+const signOutMenuItemClasses =
+  'cursor-pointer text-red-600 hover:bg-red-50 hover:text-red-600 focus:bg-red-50 focus:text-red-600 transition-colors'
+
 const MegaMenuItem = ({
   icon: Icon,
   title,
@@ -301,26 +307,26 @@ const Navbar = () => {
                       <p className="text-xs text-[#787774]">Signed in</p>
                     </div>
                     <DropdownMenuSeparator className="bg-[#EAEAEA]" />
-                    <DropdownMenuItem asChild className="cursor-pointer hover:bg-[#F5F4F0] focus:bg-[#F5F4F0] text-[#2F3437]">
+                    <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/dashboard">
                         <LayoutDashboard className="w-4 h-4 mr-2" />
                         Dashboard
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer hover:bg-[#F5F4F0] focus:bg-[#F5F4F0] text-[#2F3437]">
+                    <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/downloads">
                         <Download className="w-4 h-4 mr-2" />
                         My downloads
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer hover:bg-[#F5F4F0] focus:bg-[#F5F4F0] text-[#2F3437]">
+                    <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/profile">
                         <Settings className="w-4 h-4 mr-2" />
                         Settings
                       </Link>
                     </DropdownMenuItem>
                     {isAdmin && (
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-[#F5F4F0] focus:bg-[#F5F4F0] text-[#2F3437]">
+                      <DropdownMenuItem asChild className={userMenuItemClasses}>
                         <Link to="/admin">
                           <Shield className="w-4 h-4 mr-2" />
                           Admin
@@ -328,7 +334,7 @@ const Navbar = () => {
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator className="bg-[#EAEAEA]" />
-                    <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-500 hover:bg-red-50 focus:bg-red-50">
+                    <DropdownMenuItem onClick={handleSignOut} className={signOutMenuItemClasses}>
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign out
                     </DropdownMenuItem>
