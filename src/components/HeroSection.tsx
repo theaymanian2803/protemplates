@@ -1,4 +1,4 @@
-import TemplateCardDeck from '@/components/TemplateCardDeck'
+import HeroProductWall from '@/components/HeroProductWall'
 import { motion } from 'framer-motion'
 import { ArrowRight, Search, Sparkles } from 'lucide-react'
 import { useState } from 'react'
@@ -8,8 +8,8 @@ import { Link, useNavigate } from 'react-router-dom'
   THESIS: the developer's bright studio — one template developed from raw source,
   presented on a warm-white ground with cold orange directional light. The hero
   carries faded floating "tech chips" behind the copy. The right column showcases
-  the catalog as a cascading deck of template cards (see TemplateCardDeck) that
-  spreads out on hover.
+  the catalog as an editorial product wall (see HeroProductWall) rendered from a
+  static manifest so the hero paints instantly with zero network request.
 */
 
 const popularTags = [
@@ -157,13 +157,13 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Right: cascading deck of template cards — hidden on mobile, shown md+ */}
+          {/* Right: editorial product wall — static, zero fetch, hidden on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden md:flex w-full lg:flex-1 justify-center">
-            <TemplateCardDeck />
+            className="hidden md:flex w-full lg:flex-1 justify-center relative">
+            <HeroProductWall />
           </motion.div>
         </div>
 

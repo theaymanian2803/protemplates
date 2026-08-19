@@ -499,7 +499,7 @@ const MobileNavLink = ({
   <Link
     to={to}
     onClick={onClick}
-    className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#2F3437] hover:text-[#111111] hover:bg-[#F5F4F0] transition-all">
+    className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#2F3437] hover:text-[#111111] hover:bg-[#FBE4DA] hover:shadow-[inset_0_0_0_1px_rgba(232,90,45,0.15)] transition-all">
     {children}
     <ChevronRight className="w-4 h-4 text-[#787774]/60" />
   </Link>

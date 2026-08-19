@@ -7,32 +7,41 @@ import { MotionConfig } from "framer-motion";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
 import Index from "./pages/Index";
-import TemplatePreview from "./pages/TemplatePreview";
-import Templates from "./pages/Templates";
-import AboutUs from "./pages/AboutUs";
-import FAQ from "./pages/FAQ";
-import Contact from "./pages/Contact";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import Auth from "./pages/Auth";
-import ResetPassword from "./pages/ResetPassword";
-import Favorites from "./pages/Favorites";
-import Profile from "./pages/Profile";
-import Admin from "./pages/Admin";
-import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 import CookieConsent from "./components/CookieConsent";
 import ChatBubble from "./components/ChatBubble";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Cookies from "./pages/Cookies";
-import License from "./pages/License";
-import Refunds from "./pages/Refunds";
-import Dashboard from "./pages/Dashboard";
-import Downloads from "./pages/Downloads";
-import ProHostingCheckout from "./pages/ProHostingCheckout";
+
+const TemplatePreview = lazy(() => import("./pages/TemplatePreview"));
+const Templates = lazy(() => import("./pages/Templates"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Admin = lazy(() => import("./pages/Admin"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Cookies = lazy(() => import("./pages/Cookies"));
+const License = lazy(() => import("./pages/License"));
+const Refunds = lazy(() => import("./pages/Refunds"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Downloads = lazy(() => import("./pages/Downloads"));
+const ProHostingCheckout = lazy(() => import("./pages/ProHostingCheckout"));
+
+const PageLoader = () => (
+  <div className="flex min-h-[60vh] items-center justify-center">
+    <Loader2 className="h-8 w-8 animate-spin text-[#e85a2d]" />
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -52,28 +61,28 @@ const App = () => (
                 <ChatBubble />
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/templates" element={<Templates />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/admin" element={<Admin />} />
-                  <Route path="/template/:id" element={<TemplatePreview />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                  <Route path="/terms" element={<Terms />} />
-                  <Route path="/cookies" element={<Cookies />} />
-                  <Route path="/license" element={<License />} />
-                  <Route path="/refunds" element={<Refunds />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/downloads" element={<Downloads />} />
-                  <Route path="/checkout/pro-hosting" element={<ProHostingCheckout />} />
+                  <Route path="/templates" element={<Suspense fallback={<PageLoader />}><Templates /></Suspense>} />
+                  <Route path="/about" element={<Suspense fallback={<PageLoader />}><AboutUs /></Suspense>} />
+                  <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
+                  <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
+                  <Route path="/cart" element={<Suspense fallback={<PageLoader />}><Cart /></Suspense>} />
+                  <Route path="/checkout" element={<Suspense fallback={<PageLoader />}><Checkout /></Suspense>} />
+                  <Route path="/auth" element={<Suspense fallback={<PageLoader />}><Auth /></Suspense>} />
+                  <Route path="/reset-password" element={<Suspense fallback={<PageLoader />}><ResetPassword /></Suspense>} />
+                  <Route path="/favorites" element={<Suspense fallback={<PageLoader />}><Favorites /></Suspense>} />
+                  <Route path="/profile" element={<Suspense fallback={<PageLoader />}><Profile /></Suspense>} />
+                  <Route path="/admin" element={<Suspense fallback={<PageLoader />}><Admin /></Suspense>} />
+                  <Route path="/template/:id" element={<Suspense fallback={<PageLoader />}><TemplatePreview /></Suspense>} />
+                  <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
+                  <Route path="/terms" element={<Suspense fallback={<PageLoader />}><Terms /></Suspense>} />
+                  <Route path="/cookies" element={<Suspense fallback={<PageLoader />}><Cookies /></Suspense>} />
+                  <Route path="/license" element={<Suspense fallback={<PageLoader />}><License /></Suspense>} />
+                  <Route path="/refunds" element={<Suspense fallback={<PageLoader />}><Refunds /></Suspense>} />
+                  <Route path="/dashboard" element={<Suspense fallback={<PageLoader />}><Dashboard /></Suspense>} />
+                  <Route path="/downloads" element={<Suspense fallback={<PageLoader />}><Downloads /></Suspense>} />
+                  <Route path="/checkout/pro-hosting" element={<Suspense fallback={<PageLoader />}><ProHostingCheckout /></Suspense>} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
+                  <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 </Routes>
               </BrowserRouter>
             </TooltipProvider>
