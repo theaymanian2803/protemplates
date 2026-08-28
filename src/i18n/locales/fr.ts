@@ -103,6 +103,8 @@ export default {
     trust2: 'Achat unique, sans abonnement',
     trust3: 'Ou All-Access à 300 $, illimité',
     browseCatalog: 'Parcourir le catalogue',
+    discoverMore: 'Découvrir plus',
+    allCollections: 'Toutes les collections',
   },
   promo: {
     badge: 'Pass All-Access',

@@ -103,6 +103,8 @@ export default {
     trust2: 'شراء لمرة واحدة، بدون اشتراك',
     trust3: 'أو بطاقة الوصول الشامل بـ 300$، غير محدود',
     browseCatalog: 'تصفح الكتالوج',
+    discoverMore: 'اكتشف المزيد',
+    allCollections: 'كل المجموعات',
   },
   promo: {
     badge: 'بطاقة الوصول الشامل',
