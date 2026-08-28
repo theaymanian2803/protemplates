@@ -1,19 +1,21 @@
 import { useTemplates } from "@/hooks/useTemplates";
 import TemplateCard from "@/components/TemplateCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 const RelatedTemplates = () => {
   const { data: templates, isLoading } = useTemplates({ limit: 4 });
+  const { t } = useTranslation();
 
   return (
     <div className="mt-16 space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-display font-bold text-foreground">
-            Vous aimerez aussi
+            {t("related.title")}
           </h2>
           <p className="text-muted-foreground mt-1">
-            Des modèles similaires de notre collection
+            {t("related.subtitle")}
           </p>
         </div>
       </div>

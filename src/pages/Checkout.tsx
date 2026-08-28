@@ -23,6 +23,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 
 declare global {
   interface Window {
@@ -36,6 +37,7 @@ const Checkout = () => {
   const navigate = useNavigate()
   const { toast } = useToast()
   const queryClient = useQueryClient()
+  const { t } = useTranslation()
 
   const [isLoading, setIsLoading] = useState(false)
   const [paypalLoaded, setPaypalLoaded] = useState(false)
@@ -57,9 +59,16 @@ const Checkout = () => {
     try {
       const result = await validateCoupon.mutateAsync({ code: couponCode, orderTotal: totalPrice })
       setAppliedCoupon({ code: result.coupon.code, discount: result.discount })
-      toast({ title: 'Code promo appliqué !', description: `Vous avez économisé $${result.discount}` })
+      toast({
+        title: t('checkout.couponApplied'),
+        description: t('checkout.couponSaved', { amount: result.discount }),
+      })
     } catch (error: any) {
-      toast({ title: 'Code promo invalide', description: error.message, variant: 'destructive' })
+      toast({
+        title: t('checkout.couponInvalid'),
+        description: error.message,
+        variant: 'destructive',
+      })
     }
   }
 
@@ -84,7 +93,7 @@ const Checkout = () => {
       })
 
       if (response.error) {
-        throw new Error(response.error.error || response.data?.error || 'Échec de la commande')
+        throw new Error(response.error.error || response.data?.error || t('checkout.orderFailed'))
       }
       if (response.data?.error) {
         throw new Error(response.data.error)
@@ -100,14 +109,14 @@ const Checkout = () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] })
 
       toast({
-        title: 'Commande gratuite confirmée !',
-        description: 'Vos templates sont désormais disponibles dans vos téléchargements.',
+        title: t('checkout.freeOrderConfirmed'),
+        description: t('checkout.freeOrderConfirmedDesc'),
       })
     } catch (error: any) {
       console.error('Claim free order error:', error)
       toast({
-        title: 'Erreur de commande',
-        description: error.message || 'Échec de la validation de la commande. Veuillez réessayer.',
+        title: t('checkout.orderError'),
+        description: error.message || t('checkout.orderValidationFailed'),
         variant: 'destructive',
       })
     } finally {
@@ -120,8 +129,8 @@ const Checkout = () => {
 
     if (!user) {
       toast({
-        title: 'Connexion requise',
-        description: 'Veuillez vous connecter pour continuer.',
+        title: t('checkout.loginRequired'),
+        description: t('checkout.loginRequiredDesc'),
         variant: 'destructive',
       })
       navigate('/auth?redirect=/checkout')
@@ -131,7 +140,7 @@ const Checkout = () => {
     if (items.length === 0 && !isAllAccess && !orderComplete) {
       navigate('/cart')
     }
-  }, [user, loading, items, navigate, toast, orderComplete])
+  }, [user, loading, items, navigate, toast, orderComplete, t])
 
   const [paypalError, setPaypalError] = useState<string | null>(null)
 
@@ -147,9 +156,7 @@ const Checkout = () => {
         clientId.startsWith('YOUR_')
       ) {
         console.error('PayPal Client ID not configured properly')
-        setPaypalError(
-          'PayPal n\'est pas configuré. Ajoutez votre ID client PayPal au fichier .env.'
-        )
+        setPaypalError(t('checkout.paypalNotConfigured'))
         return
       }
 
@@ -162,10 +169,10 @@ const Checkout = () => {
       }
       script.onerror = () => {
         console.error('Failed to load PayPal SDK')
-        setPaypalError('Échec du chargement de PayPal. Vérifiez votre ID client.')
+        setPaypalError(t('checkout.paypalLoadFailed'))
         toast({
-          title: 'Erreur de paiement',
-          description: 'Échec du chargement du système de paiement.',
+          title: t('checkout.paymentError'),
+          description: t('checkout.paymentSystemLoadFailed'),
           variant: 'destructive',
         })
       }
@@ -180,7 +187,7 @@ const Checkout = () => {
     }
 
     loadPayPalScript()
-  }, [toast, orderComplete, isFree])
+  }, [toast, orderComplete, isFree, t])
 
   useEffect(() => {
     if (!paypalLoaded || !window.paypal || orderComplete || isFree) return
@@ -214,9 +221,9 @@ const Checkout = () => {
             })
 
             if (response.error) {
-              let errorMsg = response.error.message || 'Échec de la création de la commande'
+              let errorMsg = response.error.message || t('checkout.orderCreationFailed')
               if (errorMsg.includes('non-2xx')) {
-                errorMsg = 'Système de paiement indisponible. Veuillez réessayer plus tard.'
+                errorMsg = t('checkout.paymentSystemUnavailable')
               }
               throw new Error(response.error.error || response.data?.error || errorMsg)
             }
@@ -229,8 +236,8 @@ const Checkout = () => {
           } catch (error: any) {
             console.error('Create order error:', error)
             toast({
-              title: 'Erreur de commande',
-              description: error.message || 'Échec de la création de la commande. Veuillez réessayer.',
+              title: t('checkout.orderError'),
+              description: error.message || t('checkout.orderCreationFailedRetry'),
               variant: 'destructive',
             })
             throw error
@@ -255,10 +262,9 @@ const Checkout = () => {
             })
 
             if (response.error) {
-              let errorMsg = response.error.message || 'Échec de la validation du paiement'
+              let errorMsg = response.error.message || t('checkout.paymentValidationFailed')
               if (errorMsg.includes('non-2xx')) {
-                errorMsg =
-                  'Votre banque ou carte a refusé le paiement. Vérifiez vos fonds ou essayez une autre carte.'
+                errorMsg = t('checkout.paymentDeclined')
               }
               throw new Error(response.error.error || response.data?.error || errorMsg)
             }
@@ -272,14 +278,14 @@ const Checkout = () => {
             clearCart()
 
             toast({
-              title: 'Paiement réussi !',
-              description: 'Votre commande a été passée avec succès.',
+              title: t('checkout.paymentSuccess'),
+              description: t('checkout.orderPlacedSuccess'),
             })
           } catch (error: any) {
             console.error('Capture error:', error)
             toast({
-              title: 'Erreur de paiement',
-              description: error.message || 'Échec du traitement du paiement. Veuillez réessayer.',
+              title: t('checkout.paymentError'),
+              description: error.message || t('checkout.paymentProcessingFailed'),
               variant: 'destructive',
             })
           } finally {
@@ -289,20 +295,20 @@ const Checkout = () => {
         onError: (err: any) => {
           console.error('PayPal error:', err)
           toast({
-            title: 'Erreur de paiement',
-            description: 'Une erreur est survenue avec PayPal. Veuillez réessayer.',
+            title: t('checkout.paymentError'),
+            description: t('checkout.paypalGenericError'),
             variant: 'destructive',
           })
         },
         onCancel: () => {
           toast({
-            title: 'Paiement annulé',
-            description: 'Vous avez annulé le paiement.',
+            title: t('checkout.paymentCancelled'),
+            description: t('checkout.paymentCancelledDesc'),
           })
         },
       })
       .render('#paypal-button-container')
-  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon, isAllAccess, isFree])
+  }, [paypalLoaded, items, finalTotal, clearCart, toast, orderComplete, appliedCoupon, isAllAccess, isFree, t])
 
   if (orderComplete) {
     return (
@@ -315,26 +321,26 @@ const Checkout = () => {
                 <CheckCircle2 className="w-10 h-10 text-orange-500" />
               </div>
               <h1 className="text-3xl font-extrabold text-gray-900 mb-4">
-                Merci pour votre achat !
+                {t('checkout.thanksTitle')}
               </h1>
               <p className="text-gray-500 mb-6 leading-[1.7]">
-                Votre commande a été passée avec succès. Vous recevrez un e-mail de confirmation
-                sous peu.
+                {t('checkout.thanksDesc')}
               </p>
               {orderId && (
                 <p className="text-sm text-gray-400 mb-8">
-                  Order ID: <span className="font-mono text-gray-900">{orderId}</span>
+                  {t('checkout.orderIdLabel')}{' '}
+                  <span className="font-mono text-gray-900">{orderId}</span>
                 </p>
               )}
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/downloads">
-                  <Button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold">Voir mes téléchargements</Button>
+                  <Button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold">{t('checkout.viewDownloads')}</Button>
                 </Link>
                 <Button variant="outline" className="gap-2 border-gray-300 text-gray-700 hover:border-orange-300" onClick={() => setHostingOpen(true)}>
-                  <Rocket className="w-4 h-4" /> Héberger
+                  <Rocket className="w-4 h-4" /> {t('checkout.host')}
                 </Button>
                 <Link to="/templates">
-                  <Button variant="ghost" className="text-gray-600">Continuer</Button>
+                  <Button variant="ghost" className="text-gray-600">{t('checkout.continue')}</Button>
                 </Link>
               </div>
             </div>
@@ -356,11 +362,11 @@ const Checkout = () => {
             to="/cart"
             className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour au panier
+            {t('checkout.backToCart')}
           </Link>
 
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
-            Paiement
+            {t('checkout.title')}
           </h1>
 
           <div className="grid lg:grid-cols-2 gap-8">
@@ -369,11 +375,11 @@ const Checkout = () => {
               <div className="bg-white p-6 rounded-xl border border-gray-200">
                 <h2 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-orange-500" />
-                  Moyen de paiement
+                  {t('checkout.paymentMethod')}
                 </h2>
 
                 <div className="mb-6">
-                  <Label className="text-gray-500">E-mail</Label>
+                  <Label className="text-gray-500">{t('checkout.email')}</Label>
                   <Input value={user?.email || ''} disabled className="mt-1 bg-gray-50" />
                 </div>
 
@@ -381,18 +387,17 @@ const Checkout = () => {
                   <>
                     <div className="p-4 rounded-lg bg-orange-50 border border-orange-200 mb-4">
                       <p className="text-sm text-gray-900 font-medium mb-1">
-                        Commande gratuite
+                        {t('checkout.freeOrder')}
                       </p>
                       <p className="text-xs text-gray-500">
-                        Ces templates sont gratuits. Cliquez ci-dessous pour les ajouter
-                        instantanément à vos téléchargements.
+                        {t('checkout.freeOrderDesc')}
                       </p>
                     </div>
 
                     {isClaiming && (
                       <div className="flex items-center justify-center py-8">
                         <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
-                        <span className="ml-2 text-gray-500">Traitement...</span>
+                        <span className="ml-2 text-gray-500">{t('checkout.processing')}</span>
                       </div>
                     )}
 
@@ -404,12 +409,12 @@ const Checkout = () => {
                       {isClaiming ? (
                         <>
                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Validation...
+                          {t('checkout.validating')}
                         </>
                       ) : (
                         <>
                           <CheckCircle2 className="w-4 h-4 mr-2" />
-                          Obtenir gratuitement
+                          {t('checkout.getFree')}
                         </>
                       )}
                     </Button>
@@ -419,11 +424,11 @@ const Checkout = () => {
                     {paypalError && (
                       <div className="p-4 rounded-lg bg-red-50 border border-red-200 mb-4">
                         <p className="text-sm text-red-600 font-medium mb-2">
-                          Configuration requise
+                          {t('checkout.configurationRequired')}
                         </p>
                         <p className="text-xs text-gray-500">{paypalError}</p>
                         <p className="text-xs text-gray-500 mt-2">
-                          Get your Client ID from{' '}
+                          {t('checkout.getClientIdFrom')}{' '}
                           <a
                             href="https://developer.paypal.com/dashboard/applications/sandbox"
                             target="_blank"
@@ -438,7 +443,7 @@ const Checkout = () => {
                     {isLoading && (
                       <div className="flex items-center justify-center py-8">
                         <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
-                        <span className="ml-2 text-gray-500">Traitement...</span>
+                        <span className="ml-2 text-gray-500">{t('checkout.processing')}</span>
                       </div>
                     )}
 
@@ -450,7 +455,7 @@ const Checkout = () => {
                     {!paypalLoaded && !isLoading && !paypalError && (
                       <div className="flex items-center justify-center py-8">
                         <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-                        <span className="ml-2 text-gray-500">Chargement des options de paiement...</span>
+                        <span className="ml-2 text-gray-500">{t('checkout.loadingPaymentOptions')}</span>
                       </div>
                     )}
                   </>
@@ -462,15 +467,14 @@ const Checkout = () => {
                   <div className="flex items-center gap-3 text-gray-500">
                     <ShieldCheck className="w-5 h-5 text-orange-500" />
                     <span className="text-sm">
-                      Aucun paiement requis. Vos templates seront disponibles immédiatement dans
-                      vos téléchargements.
+                      {t('checkout.noPaymentRequired')}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-3 text-gray-500">
                     <ShieldCheck className="w-5 h-5 text-orange-500" />
                     <span className="text-sm">
-                      Votre paiement est sécurisé par la protection des acheteurs PayPal
+                      {t('checkout.securePayment')}
                     </span>
                   </div>
                 )}
@@ -480,7 +484,7 @@ const Checkout = () => {
             {/* Right Column - Order Summary */}
             <div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 sticky top-24">
-                <h2 className="font-bold text-lg text-gray-900 mb-4">Récapitulatif de la commande</h2>
+                <h2 className="font-bold text-lg text-gray-900 mb-4">{t('checkout.orderSummary')}</h2>
 
                 <div className="space-y-4 mb-6">
                   {isAllAccess ? (
@@ -489,8 +493,8 @@ const Checkout = () => {
                         <CreditCard className="w-6 h-6 text-orange-500" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 text-sm">Pass Tout Accès</h3>
-                        <p className="text-xs text-gray-500">Accès à tous les templates</p>
+                        <h3 className="font-medium text-gray-900 text-sm">{t('checkout.allAccessPass')}</h3>
+                        <p className="text-xs text-gray-500">{t('checkout.allAccessDesc')}</p>
                       </div>
                       <span className="font-bold text-gray-900">${totalPrice}</span>
                     </div>
@@ -507,7 +511,7 @@ const Checkout = () => {
                             {item.title}
                           </h3>
                           <p className="text-xs text-gray-500 capitalize">
-                            {item.license} Licence
+                            {t('checkout.license', { license: item.license })}
                           </p>
                         </div>
                         <span className="font-bold text-gray-900">${item.price}</span>
@@ -520,7 +524,7 @@ const Checkout = () => {
 
                 {/* Coupon Code */}
                 <div className="space-y-2">
-                  <Label className="text-sm text-gray-500">Code promo</Label>
+                  <Label className="text-sm text-gray-500">{t('checkout.couponLabel')}</Label>
                   {appliedCoupon ? (
                     <div className="flex items-center justify-between p-2 rounded-lg bg-orange-50 border border-orange-200">
                       <div className="flex items-center gap-2">
@@ -541,7 +545,7 @@ const Checkout = () => {
                   ) : (
                     <div className="flex gap-2">
                       <Input
-                        placeholder="Entrez votre code promo"
+                        placeholder={t('checkout.couponPlaceholder')}
                         value={couponCode}
                         onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                         className="flex-1"
@@ -555,7 +559,7 @@ const Checkout = () => {
                         {validateCoupon.isPending ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
                         ) : (
-                          'Appliquer'
+                          t('checkout.apply')
                         )}
                       </Button>
                     </div>
@@ -566,17 +570,17 @@ const Checkout = () => {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Sous-total</span>
+                    <span className="text-gray-500">{t('checkout.subtotal')}</span>
                     <span className="text-gray-900">${totalPrice}</span>
                   </div>
                   {appliedCoupon && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-orange-500">Réduction</span>
+                      <span className="text-orange-500">{t('checkout.discount')}</span>
                       <span className="text-orange-500">-${appliedCoupon.discount}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Taxe</span>
+                    <span className="text-gray-500">{t('checkout.tax')}</span>
                     <span className="text-gray-900">$0.00</span>
                   </div>
                 </div>
@@ -584,12 +588,12 @@ const Checkout = () => {
                 <Separator className="my-4" />
 
                 <div className="flex justify-between">
-                  <span className="font-bold text-gray-900">Total</span>
+                  <span className="font-bold text-gray-900">{t('checkout.total')}</span>
                   <span className="font-extrabold text-2xl text-orange-500">${finalTotal}</span>
                 </div>
 
                 <p className="text-xs text-gray-400 text-center mt-4">
-                  En effectuant cet achat, vous acceptez nos conditions d'utilisation
+                  {t('checkout.termsNote')}
                 </p>
               </div>
             </div>

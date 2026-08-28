@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useTemplates } from '@/hooks/useTemplates'
 
 const categoriesData = [
-  { title: 'WordPress Themes', desc: 'Thousands of WordPress themes' },
-  { title: 'eCommerce Templates', desc: 'Beautiful website templates' },
-  { title: 'Site Templates', desc: 'HTML and website templates' },
-  { title: 'Marketing Templates', desc: 'Email, newsletter & landing pages' },
-  { title: 'CMS Templates', desc: 'Over 1,700 CMS website templates' },
-  { title: 'Blogging', desc: 'Blogger templates and themes' },
+  { title: 'WordPress Themes', descKey: 'categories.wpThemesDesc' },
+  { title: 'eCommerce Templates', descKey: 'categories.ecommerceDesc' },
+  { title: 'Site Templates', descKey: 'categories.siteTemplatesDesc' },
+  { title: 'Marketing Templates', descKey: 'categories.marketingDesc' },
+  { title: 'CMS Templates', descKey: 'categories.cmsDesc' },
+  { title: 'Blogging', descKey: 'categories.bloggingDesc' },
 ]
 
 const CategoryCard = ({ category, index }: { category: typeof categoriesData[0]; index: number }) => {
   const { data: templates, isLoading } = useTemplates({ category: category.title, limit: 3 })
+  const { t } = useTranslation()
 
   return (
     <motion.div
@@ -37,18 +39,18 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
           <h3 className="font-slab text-lg font-bold text-[#111111] leading-snug">{category.title}</h3>
           <ArrowUpRight className="w-4 h-4 text-[#787774]/50 group-hover:text-[#e85a2d] transition-colors shrink-0" />
         </div>
-        <p className="text-sm text-[#787774] leading-relaxed mb-4">{category.desc}</p>
+        <p className="text-sm text-[#787774] leading-relaxed mb-4">{t(category.descKey)}</p>
         <div className="flex items-center gap-3 text-xs">
           <Link
             to={`/templates?category=${encodeURIComponent(category.title)}&sort=newest`}
             className="text-[#e85a2d] hover:text-[#d14e24] font-medium transition-colors">
-            Newest
+            {t('categories.newest')}
           </Link>
           <span className="h-3 w-px bg-[#EAEAEA]" />
           <Link
             to={`/templates?category=${encodeURIComponent(category.title)}&sort=bestsellers`}
             className="text-[#e85a2d] hover:text-[#d14e24] font-medium transition-colors">
-            Bestsellers
+            {t('categories.bestsellers')}
           </Link>
         </div>
       </div>
@@ -79,6 +81,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
 }
 
 const CategoriesSection = () => {
+  const { t } = useTranslation()
   return (
     <section className="relative overflow-hidden bg-[#FBFBFA] py-20 text-[#111111]">
 
@@ -89,7 +92,7 @@ const CategoriesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 rounded-full border border-[#ef7a52]/20 bg-[#ef7a52]/5 px-3 py-1.5 mb-5 text-[11px] font-medium tracking-wide text-[#e85a2d]">
-            Browse by craft
+            {t('categories.badge')}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -97,7 +100,7 @@ const CategoriesSection = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.05 }}
             className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.05] tracking-tight">
-            Categories, <span className="text-[#e85a2d]">developed</span> with care.
+            {t('categories.title1')} <span className="text-[#e85a2d]">{t('categories.title2')}</span> {t('categories.title3')}
           </motion.h2>
         </div>
 
@@ -115,7 +118,7 @@ const CategoriesSection = () => {
           <Link
             to="/templates"
             className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#f5f5f3] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
-            View all categories
+            {t('categories.viewAll')}
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </motion.div>

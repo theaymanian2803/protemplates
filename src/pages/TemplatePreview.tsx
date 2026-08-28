@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast'
 import { useTemplate } from '@/hooks/useTemplates'
 import { ArrowLeft, Home, Maximize2, ShoppingBag } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const TemplatePreview = () => {
@@ -24,19 +25,22 @@ const TemplatePreview = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
   const { toast } = useToast()
+  const { t } = useTranslation()
   const [previewOpen, setPreviewOpen] = useState(false)
 
   const handleBuyClick = () => {
     addToCart({
       id: id || '',
-      title: template?.title || 'Modèle',
+      title: template?.title || t('preview.fallbackTitle'),
       image: template?.image_url || '',
       price: template ? Number(template.price) : 59,
       license: 'regular',
     })
     toast({
-      title: 'Ajouté au panier',
-      description: `${template?.title || 'Modèle'} a été ajouté à votre panier.`,
+      title: t('preview.addedToCart'),
+      description: t('preview.addedToCartDesc', {
+        title: template?.title || t('preview.fallbackTitle'),
+      }),
     })
     if (!user) {
       navigate('/auth?redirect=/cart')
@@ -79,13 +83,13 @@ const TemplatePreview = () => {
               to="/"
               className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 mb-8 justify-center">
               <ArrowLeft className="w-4 h-4" />
-              Retour aux templates
+              {t('preview.backToTemplates')}
             </Link>
             <h1 className="text-3xl font-display font-bold text-foreground mb-4">
-              Template introuvable
+              {t('preview.notFoundTitle')}
             </h1>
             <p className="text-muted-foreground">
-              Le template que vous recherchez n'existe pas ou a été supprimé.
+              {t('preview.notFoundDesc')}
             </p>
           </div>
         </div>
@@ -112,7 +116,7 @@ const TemplatePreview = () => {
                 </Link>
                 <span>›</span>
                 <Link to="/templates" className="hover:text-foreground">
-                  Templates
+                  {t('preview.templates')}
                 </Link>
                 <span>›</span>
                 <span className="text-foreground font-medium truncate max-w-[200px]">
@@ -127,7 +131,7 @@ const TemplatePreview = () => {
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
                   {template.title.charAt(0)}
                 </div>
-                <span>Template Pro Studio</span>
+                <span>{t('preview.studioName')}</span>
               </div>
             </div>
 
@@ -138,14 +142,16 @@ const TemplatePreview = () => {
                   variant="outline"
                   className="gap-2 w-full sm:w-auto text-xs sm:text-sm"
                   onClick={() => setPreviewOpen(true)}>
-                  Aperçu en plein écran <Maximize2 className="w-4 h-4" />
+                  {t('preview.fullscreenPreview')} <Maximize2 className="w-4 h-4" />
                 </Button>
               )}
               <Button
                 className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
                 onClick={handleBuyClick}>
                 <ShoppingBag className="w-4 h-4" />
-                {Number(template.price) > 0 ? `Acheter $${template.price}` : 'Obtenir gratuitement'}
+                {Number(template.price) > 0
+                  ? t('preview.buyFor', { price: template.price })
+                  : t('preview.getForFree')}
               </Button>
             </div>
           </div>
@@ -165,7 +171,7 @@ const TemplatePreview = () => {
               <iframe
                 src={liveUrl}
                 className="w-full flex-1 border-none bg-background"
-                title={`${template.title} — Aperçu`}
+                title={t('preview.previewTitle', { title: template.title })}
                 sandbox="allow-scripts allow-same-origin allow-forms"
               />
             </div>
@@ -173,7 +179,7 @@ const TemplatePreview = () => {
             <div className="w-full h-[70vh] min-h-[600px] border border-border shadow-lg rounded-lg overflow-hidden bg-muted mb-12 relative flex items-center justify-center">
               <img
                 src={template.image_url || '/placeholder.svg'}
-                alt={`${template.title} Preview`}
+                alt={t('preview.previewImageAlt', { title: template.title })}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -184,16 +190,17 @@ const TemplatePreview = () => {
             {/* Main Content (Left Side) */}
             <div className="lg:col-span-8 space-y-12">
               <div className="prose prose-sm md:prose-base max-w-none">
-                <h2 className="text-2xl font-bold mb-4">{template.title} – Template web</h2>
+                <h2 className="text-2xl font-bold mb-4">
+                  {t('preview.webTemplateTitle', { title: template.title })}
+                </h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  {template.description ||
-                    'Un template élégant et moderne conçu pour les professionnels qui valorisent la précision, l\'esthétique et la narration visuelle. Avec sa structure minimaliste, il vous aide à présenter vos projets avec clarté et à construire une identité numérique forte.'}
+                  {template.description || t('preview.fallbackDescription')}
                 </p>
-                <h3 className="text-lg font-bold mb-3">Fonctionnalités clés</h3>
+                <h3 className="text-lg font-bold mb-3">{t('preview.keyFeatures')}</h3>
                 <ul className="space-y-2 mb-8 list-disc pl-5">
-                  <li>Design entièrement responsive optimisé pour tous les appareils.</li>
-                  <li>Personnalisation facile grâce à un code propre et organisé.</li>
-                  <li>Animations fluides qui améliorent la présentation sans surcharger le contenu.</li>
+                  <li>{t('preview.feature1')}</li>
+                  <li>{t('preview.feature2')}</li>
+                  <li>{t('preview.feature3')}</li>
                 </ul>
               </div>
 

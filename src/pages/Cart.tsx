@@ -4,9 +4,11 @@ import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Trash2, ShoppingBag, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
-  const { items, removeFromCart, updateLicense, totalPrice, clearCart } = useCart();
+  const { items, removeFromCart, totalPrice, clearCart } = useCart();
+  const { t } = useTranslation();
 
   return (
     <main className="min-h-screen bg-white">
@@ -15,7 +17,7 @@ const Cart = () => {
       <div className="pt-24 pb-16">
         <div className="container mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
-            Panier
+            {t('cart.title')}
           </h1>
 
           {items.length === 0 ? (
@@ -23,13 +25,13 @@ const Cart = () => {
               <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center">
                 <ShoppingBag className="w-12 h-12 text-gray-400" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Votre panier est vide</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('cart.emptyTitle')}</h2>
               <p className="text-gray-500 mb-6">
-                Parcourez nos templates et ajoutez des articles à votre panier
+                {t('cart.emptyDesc')}
               </p>
               <Link to="/templates">
                 <Button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold gap-2">
-                  Parcourir
+                  {t('cart.browse')}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -41,7 +43,7 @@ const Cart = () => {
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white p-4 rounded-xl border border-gray-200 flex gap-4"
+                    className="bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-4"
                   >
                     <Link to={`/template/${item.id}`}>
                       <img
@@ -56,34 +58,13 @@ const Cart = () => {
                           {item.title}
                         </h3>
                       </Link>
-                      <div className="mt-2 flex gap-2">
-                        <button
-                          onClick={() => updateLicense(item.id, "regular")}
-                          className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                            item.license === "regular"
-                              ? "bg-orange-500 text-white border-orange-500"
-                              : "border-gray-300 text-gray-600 hover:border-orange-300"
-                          }`}
-                        >
-                          Standard 59$
-                        </button>
-                        <button
-                          onClick={() => updateLicense(item.id, "extended")}
-                          className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                            item.license === "extended"
-                              ? "bg-orange-500 text-white border-orange-500"
-                              : "border-gray-300 text-gray-600 hover:border-orange-300"
-                          }`}
-                        >
-                          Étendue 299$
-                        </button>
-                      </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex flex-col items-end gap-3">
                       <div className="font-bold text-xl text-gray-900">${item.price}</div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="mt-2 text-gray-400 hover:text-red-500 transition-colors"
+                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        aria-label={t('cart.remove', { title: item.title })}
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -91,40 +72,43 @@ const Cart = () => {
                   </div>
                 ))}
 
-                <Button variant="ghost" onClick={clearCart} className="text-gray-500 hover:text-red-500">
-                  Vider le panier
+                <Button
+                  onClick={clearCart}
+                  className="bg-orange-500 text-white hover:bg-orange-600 font-semibold"
+                >
+                  {t('cart.clear')}
                 </Button>
               </div>
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
                 <div className="bg-white p-6 rounded-xl border border-gray-200 sticky top-24">
-                  <h2 className="font-bold text-lg text-gray-900 mb-4">Récapitulatif</h2>
+                  <h2 className="font-bold text-lg text-gray-900 mb-4">{t('cart.summary')}</h2>
                   
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Sous-total ({items.length} article(s))</span>
+                      <span className="text-gray-500">{t('cart.subtotal', { count: items.length })}</span>
                       <span className="text-gray-900">${totalPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Réduction</span>
+                      <span className="text-gray-500">{t('cart.discount')}</span>
                       <span className="text-orange-500">-$0</span>
                     </div>
                     <div className="border-t border-gray-200 pt-3 flex justify-between">
-                      <span className="font-bold text-gray-900">Total</span>
+                      <span className="font-bold text-gray-900">{t('cart.total')}</span>
                       <span className="font-extrabold text-2xl text-orange-500">${totalPrice}</span>
                     </div>
                   </div>
 
                   <Link to="/checkout">
                     <Button className="w-full bg-orange-500 text-white hover:bg-orange-600 font-semibold gap-2">
-                      Passer à la caisse
+                      {t('cart.checkout')}
                       <ArrowRight className="w-4 h-4" />
                     </Button>
                   </Link>
 
                   <p className="text-xs text-gray-400 text-center mt-4">
-                    Paiement sécurisé par Stripe
+                    {t('cart.secure')}
                   </p>
                 </div>
               </div>

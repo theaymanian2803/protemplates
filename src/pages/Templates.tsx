@@ -17,6 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Template, useTemplates } from '@/hooks/useTemplates'
 import { getDisplayRating, getDisplaySales } from '@/lib/seeded'
 import { Filter, LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
@@ -26,6 +27,7 @@ type SortOption = 'best_match' | 'best_sellers' | 'newest' | 'best_rated' | 'tre
 type ViewMode = 'list' | 'grid'
 
 const Templates = () => {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const initialCategory = searchParams.get('category')
   const initialQuery = searchParams.get('q') ?? ''
@@ -185,10 +187,10 @@ const Templates = () => {
 
   const breadcrumbText = useMemo(() => {
     const parts = []
-    if (searchQuery.trim()) parts.push(`Term: '${searchQuery.trim()}'`)
+    if (searchQuery.trim()) parts.push(t('templatesPage.termWithQuery', { query: searchQuery.trim() }))
     if (filters.category) parts.push(filters.category)
-    return parts.length > 0 ? parts.join(' / ') : 'All Categories'
-  }, [searchQuery, filters.category])
+    return parts.length > 0 ? parts.join(' / ') : t('templatesPage.allCategories')
+  }, [searchQuery, filters.category, t])
 
   const hasActiveFilters = filters.category || searchQuery.trim() || filters.minPrice || filters.maxPrice || filters.onSale || filters.sales.length > 0 || filters.rating !== null
 
@@ -205,7 +207,7 @@ const Templates = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search templates..."
+                placeholder={t('templatesPage.searchPlaceholder')}
                 className="flex-1 h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
               />
               {searchQuery && (
@@ -220,14 +222,14 @@ const Templates = () => {
                 type="submit"
                 className="h-12 px-8 bg-green-600 text-white font-semibold text-sm hover:bg-green-700 transition-colors flex items-center gap-2">
                 <Search className="w-4 h-4" />
-                Search
+                {t('templatesPage.search')}
               </button>
             </form>
           </div>
 
           {/* Breadcrumb subtitle */}
           <div className="mb-6">
-            <p className="text-sm text-gray-600">{breadcrumbText} Websites and Templates</p>
+            <p className="text-sm text-gray-600">{t('templatesPage.websitesAndTemplates', { breadcrumb: breadcrumbText })}</p>
           </div>
 
           {/* Filter & Refine header */}
@@ -237,7 +239,7 @@ const Templates = () => {
                 onClick={() => setMobileFiltersOpen(true)}
                 className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-50">
                 <Filter className="w-4 h-4" />
-                Filter & Refine
+                {t('templatesPage.filterRefine')}
                 {hasActiveFilters && (
                   <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold">
                     !
@@ -246,12 +248,12 @@ const Templates = () => {
               </button>
               <span className="hidden lg:flex items-center gap-2 text-sm font-semibold text-gray-900">
                 <Filter className="w-4 h-4" />
-                Filter & Refine
+                {t('templatesPage.filterRefine')}
               </span>
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-xs text-gray-500 hidden md:block">Price is in US dollars and excludes tax and handling fees</span>
+              <span className="text-xs text-gray-500 hidden md:block">{t('templatesPage.priceDisclaimer')}</span>
               {/* View toggle */}
               <div className="flex items-center gap-1 border border-gray-300 rounded overflow-hidden">
                 <button
@@ -274,7 +276,7 @@ const Templates = () => {
                     className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                       sortBy === opt ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
                     }`}>
-                    {opt === 'best_match' ? 'Best match' : opt === 'best_sellers' ? 'Best sellers' : opt === 'newest' ? 'Newest' : opt === 'best_rated' ? 'Best rated' : opt === 'trending' ? 'Trending' : 'Price'}
+                    {opt === 'best_match' ? t('templatesPage.sortBestMatch') : opt === 'best_sellers' ? t('templatesPage.sortBestSellers') : opt === 'newest' ? t('templatesPage.sortNewest') : opt === 'best_rated' ? t('templatesPage.sortBestRated') : opt === 'trending' ? t('templatesPage.sortTrending') : t('templatesPage.sortPrice')}
                   </button>
                 ))}
               </div>
@@ -295,27 +297,26 @@ const Templates = () => {
                   <button
                     onClick={clearAll}
                     className="mt-4 w-full py-2 text-sm font-medium text-orange-500 border border-orange-300 rounded hover:bg-orange-50 transition-colors">
-                    Clear all filters
+                    {t('templatesPage.clearAllFilters')}
                   </button>
                 )}
               </div>
             </div>
-
-            {/* Right content */}
             <div className="flex-1 min-w-0">
               {/* Results count with breadcrumb links */}
               <div className="mb-4 text-sm text-gray-600">
-                <span className="font-bold text-gray-900">{totalCount}</span> items in{' '}
+                <span className="font-bold text-gray-900">{totalCount}</span>{' '}
+                {t('templatesPage.itemsIn', { count: totalCount })}{' '}
                 <button
                   onClick={() => setFilters({ ...filters, category: null })}
                   className="text-orange-500 hover:underline">
-                  All Categories
+                  {t('templatesPage.allCategories')}
                 </button>
                 {filters.category && <> / <span className="text-gray-900">{filters.category}</span></>}
-                {searchQuery && <> <span className="text-gray-500">Term: '{searchQuery}'</span></>}
+                {searchQuery && <> <span className="text-gray-500">{t('templatesPage.termWithQuery', { query: searchQuery })}</span></>}
                 {hasActiveFilters && (
                   <button onClick={clearAll} className="ml-2 text-orange-500 hover:underline">
-                    Clear all
+                    {t('templatesPage.clearAll')}
                   </button>
                 )}
               </div>
@@ -362,13 +363,13 @@ const Templates = () => {
               ) : (
                 <div className="flex flex-col items-center justify-center py-24 border border-dashed border-gray-300 rounded-lg bg-gray-50 text-center">
                   <LayoutGrid className="w-10 h-10 text-gray-400 mb-3" />
-                  <h3 className="text-base font-bold text-gray-900 mb-1">No items match your search</h3>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">{t('templatesPage.noItems')}</h3>
                   <p className="text-sm text-gray-500 mb-4">
-                    Try removing a filter or browsing all templates.
+                    {t('templatesPage.noItemsDesc')}
                   </p>
                   <Button onClick={clearAll} size="sm" variant="outline">
                     <SlidersHorizontal className="w-4 h-4 mr-1" />
-                    Reset filters
+                    {t('templatesPage.resetFilters')}
                   </Button>
                 </div>
               )}
@@ -424,7 +425,7 @@ const Templates = () => {
             className="absolute top-0 left-0 h-full w-80 max-w-[85vw] bg-white p-5 overflow-y-auto"
             onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
-              <h2 className="font-bold text-gray-900">Filter & Refine</h2>
+              <h2 className="font-bold text-gray-900">{t('templatesPage.filterRefine')}</h2>
               <button
                 onClick={() => setMobileFiltersOpen(false)}
                 className="w-8 h-8 rounded flex items-center justify-center hover:bg-gray-100">
@@ -436,13 +437,13 @@ const Templates = () => {
               <button
                 onClick={clearAll}
                 className="w-full mt-3 py-2 text-sm font-medium text-orange-500 border border-orange-300 rounded hover:bg-orange-50 transition-colors">
-                Clear all filters
+                {t('templatesPage.clearAllFilters')}
               </button>
             )}
             <Button
               onClick={() => setMobileFiltersOpen(false)}
               className="w-full mt-4 h-11 font-semibold bg-green-600 hover:bg-green-700">
-              Show {totalCount} results
+              {t('templatesPage.showResults', { count: totalCount })}
             </Button>
           </div>
         </div>

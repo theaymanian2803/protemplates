@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Star, Quote, MapPin } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/integrations/supabase/client'
 import type { Template } from '@/hooks/useTemplates'
@@ -44,40 +45,41 @@ const moroccanNames = [
   'Marwa Essakalli',
 ]
 
-const reviewTexts = [
-  'Beautifully designed, exactly what I needed for my business.',
-  'Clean code and great documentation. Highly recommend!',
-  'The template saved me weeks of work. Looks premium.',
-  'Customer support was excellent. Very responsive team.',
-  'Perfect fit for my project. Modern and well-structured.',
-  'Love the attention to detail. Worth every penny.',
-  'Easy to customize and deploy. Great experience overall.',
-  'This template exceeded my expectations. Very polished.',
-  'Fantastic quality. I will definitely buy more templates here.',
-  'Smooth setup process and beautiful design out of the box.',
-  'The layout adapts perfectly on every device I tested.',
-  'Setup was straightforward and the code is super clean.',
-  'My clients constantly compliment this design. Love it.',
-  'The included documentation answered every question I had.',
-  'Fast, modern, and incredibly easy to work with.',
-  'I customized everything in under an hour. Impressive.',
-  'A polished product from start to finish.',
-  'Great value for the price. Highly professional.',
-  'The design system is thoughtful and consistent.',
-  'Performance is excellent, loads very fast.',
-  'I love how flexible the components are.',
-  'Very intuitive for someone with basic coding skills.',
-  'The attention to mobile experience is outstanding.',
-  'Elegant and functional, exactly what I wanted.',
-  'Saved me so much time, worth every dirham.',
-  'Support helped me quickly when I got stuck.',
-  'Beautiful typography and spacing throughout.',
-  'Built with best practices, everything is organized.',
-  'My website looks ten times more professional now.',
-  'Updates are frequent and the project is well maintained.',
+const reviewTextKeys = [
+  'reviews.text1',
+  'reviews.text2',
+  'reviews.text3',
+  'reviews.text4',
+  'reviews.text5',
+  'reviews.text6',
+  'reviews.text7',
+  'reviews.text8',
+  'reviews.text9',
+  'reviews.text10',
+  'reviews.text11',
+  'reviews.text12',
+  'reviews.text13',
+  'reviews.text14',
+  'reviews.text15',
+  'reviews.text16',
+  'reviews.text17',
+  'reviews.text18',
+  'reviews.text19',
+  'reviews.text20',
+  'reviews.text21',
+  'reviews.text22',
+  'reviews.text23',
+  'reviews.text24',
+  'reviews.text25',
+  'reviews.text26',
+  'reviews.text27',
+  'reviews.text28',
+  'reviews.text29',
+  'reviews.text30',
 ]
 
 const ReviewsSection = () => {
+  const { t } = useTranslation()
   const { data: templates, isLoading } = useQuery({
     queryKey: ['landing-templates-for-reviews'],
     queryFn: async () => {
@@ -119,7 +121,7 @@ const ReviewsSection = () => {
 
       return reviewsList.map((r) => ({
         ...r,
-        display_name: profileMap.get(r.user_id) || 'Anonymous',
+        display_name: profileMap.get(r.user_id) || t('reviews.anonymous'),
       }))
     },
     enabled: templateIds.length > 0,
@@ -133,16 +135,16 @@ const ReviewsSection = () => {
   })
 
   const shuffledNames = seededShuffle(moroccanNames, 'landing-names-v1')
-  const shuffledTexts = seededShuffle(reviewTexts, 'landing-texts-v1')
+  const shuffledTexts = seededShuffle(reviewTextKeys, 'landing-texts-v1')
   const usedPairs = new Set<string>()
 
-  const reviews = templates?.map((t, i) => {
-    const rand = seededRandom(`${t.id}-landing`)
+  const reviews = templates?.map((tmpl, i) => {
+    const rand = seededRandom(`${tmpl.id}-landing`)
     const roll = rand()
     const seededRating = roll > 0.55 ? 5 : roll > 0.25 ? 4.5 : 4
     const seededCount = Math.floor(rand() * 7) + 7
 
-    const real = reviewsByTemplate.get(t.id) || []
+    const real = reviewsByTemplate.get(tmpl.id) || []
     const allRatings = [seededRating, ...real.map((r) => r.rating)]
     const avgRating = allRatings.reduce((a, b) => a + b, 0) / allRatings.length
     const totalReviewCount = seededCount + real.length
@@ -161,13 +163,13 @@ const ReviewsSection = () => {
     usedPairs.add(pairKey)
 
     return {
-      id: t.id,
-      title: t.title,
-      image_url: t.image_url,
+      id: tmpl.id,
+      title: tmpl.title,
+      image_url: tmpl.image_url,
       rating: Math.round(avgRating * 2) / 2,
       reviewCount: totalReviewCount,
       name: topReal?.display_name || shuffledNames[nameIdx],
-      text: topReal?.comment || shuffledTexts[textIdx],
+      text: topReal?.comment || t(shuffledTexts[textIdx]),
     }
   })
 
@@ -198,7 +200,7 @@ const ReviewsSection = () => {
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 rounded-full border border-[#e85a2d]/25 bg-[#e85a2d]/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-[#e85a2d]/90">
               <Quote className="w-3.5 h-3.5" />
-              What Buyers Say
+              {t('reviews.badge')}
             </motion.div>
 
             <motion.h2
@@ -207,7 +209,7 @@ const ReviewsSection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.06 }}
               className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.08] tracking-tight mb-4">
-              Trusted by Moroccan <span className="text-[#e85a2d]">Buyers</span>
+              {t('reviews.title1')} <span className="text-[#e85a2d]">{t('reviews.title2')}</span>
             </motion.h2>
 
             <motion.p
@@ -216,7 +218,7 @@ const ReviewsSection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.12 }}
               className="text-base text-[#787774] max-w-xl mx-auto leading-relaxed">
-              Real feedback from our growing community of creators and entrepreneurs.
+              {t('reviews.subtitle')}
             </motion.p>
           </div>
 
@@ -262,7 +264,7 @@ const ReviewsSection = () => {
                         <p className="text-sm font-semibold text-[#111111] truncate">{review.name}</p>
                         <div className="flex items-center gap-1">
                           <MapPin className="w-3 h-3 text-[#787774]/60" />
-                          <span className="text-xs text-[#787774]/70">Morocco</span>
+                          <span className="text-xs text-[#787774]/70">{t('reviews.morocco')}</span>
                         </div>
                       </div>
                     </div>
@@ -313,7 +315,7 @@ const ReviewsSection = () => {
                             ))}
                           </div>
                           <span className="text-[10px] text-[#787774]/70">
-                            {review.rating} ({review.reviewCount} reviews)
+                            {review.rating} {t('reviews.count', { count: review.reviewCount })}
                           </span>
                         </div>
                       </div>

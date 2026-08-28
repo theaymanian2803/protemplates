@@ -24,11 +24,12 @@ export function seededShuffle<T>(items: readonly T[], seed: string): T[] {
 
 export function getPlaceholderReviewCount(templateId: string): number {
   const rand = seededRandom(templateId + '_rc')
-  return Math.floor(rand() * 14) + 7
+  return Math.floor(rand() * 4) + 3
 }
 
 export function getPlaceholderSales(templateId: string): number {
-  return getPlaceholderReviewCount(templateId)
+  const rand = seededRandom(templateId + '_sales')
+  return Math.floor(rand() * 24) + 7
 }
 
 export function formatSales(n: number): string {

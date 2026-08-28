@@ -1,33 +1,37 @@
 import { Twitter, Instagram, Linkedin, Github, Youtube, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
-const footerLinks: Record<string, { label: string; to: string }[]> = {
-  Browse: [
-    { label: 'All Templates', to: '/templates' },
-    { label: 'Featured Themes', to: '/templates?featured=true' },
-    { label: 'Best Sellers', to: '/templates?sort=bestsellers' },
-    { label: 'Newest Items', to: '/templates?sort=newest' },
+const footerLinkKeys: Record<string, { key: string; to: string }[]> = {
+  footerBrowse: [
+    { key: 'footer.allTemplates', to: '/templates' },
+    { key: 'footer.featuredThemes', to: '/templates?featured=true' },
+    { key: 'footer.bestSellers', to: '/templates?sort=bestsellers' },
+    { key: 'footer.newestItems', to: '/templates?sort=newest' },
   ],
-  Company: [
-    { label: 'About Us', to: '/about' },
-    { label: 'Contact Us', to: '/contact' },
-    { label: 'FAQ', to: '/faq' },
+  footerCompany: [
+    { key: 'footer.aboutUs', to: '/about' },
+    { key: 'footer.contactUs', to: '/contact' },
+    { key: 'footer.faq', to: '/faq' },
   ],
-  'Help & Legal': [
-    { label: 'Help Center', to: '/faq' },
-    { label: 'License', to: '/license' },
-    { label: 'Refunds', to: '/refunds' },
-    { label: 'Privacy Policy', to: '/privacy' },
+  footerHelpLegal: [
+    { key: 'footer.helpCenter', to: '/faq' },
+    { key: 'footer.license', to: '/license' },
+    { key: 'footer.refunds', to: '/refunds' },
+    { key: 'footer.privacyPolicy', to: '/privacy' },
   ],
-  Account: [
-    { label: 'Dashboard', to: '/dashboard' },
-    { label: 'My Downloads', to: '/downloads' },
-    { label: 'Favorites', to: '/favorites' },
-    { label: 'Shopping Cart', to: '/cart' },
+  footerAccount: [
+    { key: 'footer.dashboard', to: '/dashboard' },
+    { key: 'footer.myDownloads', to: '/downloads' },
+    { key: 'footer.favorites', to: '/favorites' },
+    { key: 'footer.shoppingCart', to: '/cart' },
   ],
 }
 
 const Footer = () => {
+  const { t } = useTranslation()
+  const year = new Date().getFullYear()
+
   return (
     <footer className="relative overflow-hidden bg-[#F5F4F0] text-[#111111] pt-16">
       {/* subtle brand glow from the top edge */}
@@ -51,8 +55,7 @@ const Footer = () => {
               <span className="font-slab font-bold text-xl text-[#111111] tracking-tight">Unccodestore</span>
             </Link>
             <p className="text-[#787774] mb-6 max-w-xs leading-relaxed text-sm">
-              The marketplace for premium website templates and source code. Build faster, launch
-              sooner — coming 2027.
+              {t('footer.tagline')}
             </p>
             <div className="flex items-center gap-3">
               {[
@@ -74,18 +77,18 @@ const Footer = () => {
           </div>
 
           {/* Links Columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {Object.entries(footerLinkKeys).map(([title, links]) => (
             <div key={title}>
               <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#787774]/70 mb-4">
-                {title}
+                {t(title)}
               </h3>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.key}>
                     <Link
                       to={link.to}
                       className="text-sm text-[#787774] hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </li>
                 ))}
@@ -98,9 +101,9 @@ const Footer = () => {
         <div className="border-t border-[#EAEAEA] py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="max-w-md">
-              <h3 className="font-slab font-bold text-lg text-[#111111] mb-1">Get new drops in your inbox</h3>
+              <h3 className="font-slab font-bold text-lg text-[#111111] mb-1">{t('footer.newsletterTitle')}</h3>
               <p className="text-sm text-[#787774]">
-                Weekly: fresh templates, code, and creator spotlights. No spam.
+                {t('footer.newsletterDesc')}
               </p>
             </div>
             <form
@@ -110,14 +113,14 @@ const Footer = () => {
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#787774]/60" />
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t('footer.emailPlaceholder')}
                   className="w-full h-11 pl-11 pr-4 rounded-lg bg-white border border-[#EAEAEA] text-sm text-[#111111] placeholder:text-[#787774]/50 focus:outline-none focus:border-[#e85a2d]/50 focus:ring-2 focus:ring-[#e85a2d]/15 transition-colors"
                 />
               </div>
               <button
                 type="submit"
                 className="h-11 px-6 rounded-lg bg-[#e85a2d] text-white font-semibold text-sm hover:bg-[#ef7a52] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                Subscribe
+                {t('footer.subscribe')}
               </button>
             </form>
           </div>
@@ -127,12 +130,12 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="relative border-t border-[#EAEAEA] z-10">
         <div className="container mx-auto py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[#787774]/60 text-sm">
-          <p>&copy; 2027 Unccodestore. All rights reserved.</p>
+          <p>{t('footer.rights', { year })}</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">Privacy</Link>
-            <Link to="/terms" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">Terms</Link>
-            <Link to="/cookies" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">Cookies</Link>
-            <Link to="/license" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">License</Link>
+            <Link to="/privacy" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">{t('footer.privacy')}</Link>
+            <Link to="/terms" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">{t('footer.terms')}</Link>
+            <Link to="/cookies" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">{t('footer.cookies')}</Link>
+            <Link to="/license" className="hover:text-[#e85a2d] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">{t('footer.license')}</Link>
           </div>
         </div>
       </div>

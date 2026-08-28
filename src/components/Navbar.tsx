@@ -44,6 +44,8 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 const categoryIconMap: Record<string, typeof ShoppingCart> = {
   'E-Commerce': ShoppingCart,
@@ -107,6 +109,7 @@ const Navbar = () => {
   const { totalItems } = useCart()
   const { favorites } = useFavorites()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { data: categories } = useCategories()
 
   useEffect(() => {
@@ -151,14 +154,14 @@ const Navbar = () => {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search templates, themes, source code…"
+                placeholder={t('common.searchPlaceholder')}
                 className="flex-1 h-10 px-3 bg-transparent text-sm text-[#111111] placeholder:text-[#787774]/70 focus:outline-none"
-                aria-label="Search"
+                aria-label={t('common.search')}
               />
               <button
                 type="submit"
                 className="h-10 px-4 flex items-center justify-center text-brand-300 hover:text-brand-300 transition-colors border-l border-[#EAEAEA]"
-                aria-label="Submit search">
+                aria-label={t('common.submitSearch')}>
                 <Search className="w-4 h-4" />
               </button>
             </div>
@@ -174,14 +177,14 @@ const Navbar = () => {
                 aria-expanded={openMegaMenu === 'browse'}
                 aria-haspopup="true"
                 className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'browse' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
-                Browse
+                {t('nav.browse')}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'browse' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'browse' && (
                 <div className="fixed top-[64px] left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
                   <div className="max-w-[1400px] mx-auto px-8 py-6 grid grid-cols-3 gap-8">
                     <div>
-                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">Categories</p>
+                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.categories')}</p>
                       <div className="flex flex-col gap-0.5">
                         {(categories && categories.length > 0 ? categories : ['WordPress Themes', 'eCommerce Templates', 'Site Templates', 'Marketing Templates', 'CMS Templates', 'Blogging', 'E-Commerce', 'SaaS']).slice(0, 8).map((cat) => {
                           const Icon = getCategoryIcon(cat)
@@ -199,20 +202,20 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">Featured</p>
-                      <MegaMenuItem icon={Sparkles} title="Featured themes" desc="Hand-picked by our team" to="/templates?featured=true" onClick={() => setOpenMegaMenu(null)} />
-                      <MegaMenuItem icon={Star} title="Best sellers" desc="Top selling templates" to="/templates?sort=bestsellers" onClick={() => setOpenMegaMenu(null)} />
-                      <MegaMenuItem icon={Layers} title="Newest items" desc="Just added this week" to="/templates?sort=newest" onClick={() => setOpenMegaMenu(null)} />
-                      <MegaMenuItem icon={Palette} title="All templates" desc="Browse the full catalog" to="/templates" onClick={() => setOpenMegaMenu(null)} />
+                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.featured')}</p>
+                      <MegaMenuItem icon={Sparkles} title={t('nav.featuredThemes')} desc={t('nav.featuredThemesDesc')} to="/templates?featured=true" onClick={() => setOpenMegaMenu(null)} />
+                      <MegaMenuItem icon={Star} title={t('nav.bestSellers')} desc={t('nav.bestSellersDesc')} to="/templates?sort=bestsellers" onClick={() => setOpenMegaMenu(null)} />
+                      <MegaMenuItem icon={Layers} title={t('nav.newestItems')} desc={t('nav.newestItemsDesc')} to="/templates?sort=newest" onClick={() => setOpenMegaMenu(null)} />
+                      <MegaMenuItem icon={Palette} title={t('nav.allTemplates')} desc={t('nav.allTemplatesDesc')} to="/templates" onClick={() => setOpenMegaMenu(null)} />
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">Quick Links</p>
-                      <MegaMenuItem icon={Download} title="My downloads" desc="Access purchased items" to="/downloads" onClick={() => setOpenMegaMenu(null)} />
-                      <MegaMenuItem icon={Heart} title="My favorites" desc="Saved templates" to="/favorites" onClick={() => setOpenMegaMenu(null)} />
-                      <MegaMenuItem icon={ShoppingCart} title="Shopping cart" desc={`${totalItems} item${totalItems !== 1 ? 's' : ''} in cart`} to="/cart" onClick={() => setOpenMegaMenu(null)} />
+                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.quickLinks')}</p>
+                      <MegaMenuItem icon={Download} title={t('nav.myDownloads')} desc={t('nav.myDownloadsDesc')} to="/downloads" onClick={() => setOpenMegaMenu(null)} />
+                      <MegaMenuItem icon={Heart} title={t('nav.myFavorites')} desc={t('nav.myFavoritesDesc')} to="/favorites" onClick={() => setOpenMegaMenu(null)} />
+                      <MegaMenuItem icon={ShoppingCart} title={t('nav.shoppingCart')} desc={t('nav.itemsInCart', { count: totalItems })} to="/cart" onClick={() => setOpenMegaMenu(null)} />
                       <div className="mt-3 ml-3 mr-3 p-4 rounded-lg bg-[#e85a2d] text-white">
-                        <p className="text-sm font-bold font-slab">All-Access Pass</p>
-                        <p className="text-xs text-white/80 mt-1">Unlimited downloads for $300</p>
+                        <p className="text-sm font-bold font-slab">{t('nav.allAccessPass')}</p>
+                        <p className="text-xs text-white/80 mt-1">{t('nav.unlimitedDownloads300')}</p>
                       </div>
                     </div>
                   </div>
@@ -228,15 +231,15 @@ const Navbar = () => {
                 aria-expanded={openMegaMenu === 'company'}
                 aria-haspopup="true"
                 className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'company' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
-                Company
+                {t('nav.company')}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'company' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'company' && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
                   <div className="w-[340px] bg-white border border-[#EAEAEA] rounded-xl shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)] p-4">
-                    <MegaMenuItem icon={Users} title="About Us" desc="Our story and mission" to="/about" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Mail} title="Contact Us" desc="Get in touch with us" to="/contact" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={HelpCircle} title="FAQ" desc="Frequently asked questions" to="/faq" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={Users} title={t('nav.aboutUs')} desc={t('nav.aboutUsDesc')} to="/about" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={Mail} title={t('nav.contactUs')} desc={t('nav.contactUsDesc')} to="/contact" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={HelpCircle} title={t('nav.faq')} desc={t('nav.faqDesc')} to="/faq" onClick={() => setOpenMegaMenu(null)} />
                   </div>
                 </div>
               )}
@@ -250,19 +253,19 @@ const Navbar = () => {
                 aria-expanded={openMegaMenu === 'legal'}
                 aria-haspopup="true"
                 className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold transition-colors ${openMegaMenu === 'legal' ? 'text-[#111111]' : 'text-[#2F3437] hover:text-[#111111]'}`}>
-                Help & Legal
+                {t('nav.helpLegal')}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'legal' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'legal' && (
                 <div className="absolute top-full right-0 pt-2">
                   <div className="w-[380px] bg-white border border-[#EAEAEA] rounded-xl shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)] p-4 grid grid-cols-2 gap-x-3 gap-y-0.5">
-                    <MegaMenuItem icon={HelpCircle} title="Help Center" desc="Guides & tutorials" to="/faq" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Mail} title="Contact Support" desc="Get help from us" to="/contact" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileCheck} title="License" desc="Licensing details" to="/license" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Shield} title="Refunds" desc="Refund policy" to="/refunds" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Library} title="Privacy Policy" desc="How we handle data" to="/privacy" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileBarChart} title="Terms of Service" desc="Terms & conditions" to="/terms" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileText} title="Cookie Policy" desc="Cookie information" to="/cookies" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={HelpCircle} title={t('nav.helpCenter')} desc={t('nav.helpCenterDesc')} to="/faq" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={Mail} title={t('nav.contactSupport')} desc={t('nav.contactSupportDesc')} to="/contact" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={FileCheck} title={t('nav.license')} desc={t('nav.licenseDesc')} to="/license" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={Shield} title={t('nav.refunds')} desc={t('nav.refundsDesc')} to="/refunds" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={Library} title={t('nav.privacyPolicy')} desc={t('nav.privacyPolicyDesc')} to="/privacy" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={FileBarChart} title={t('nav.termsOfService')} desc={t('nav.termsOfServiceDesc')} to="/terms" onClick={() => setOpenMegaMenu(null)} />
+                    <MegaMenuItem icon={FileText} title={t('nav.cookiePolicy')} desc={t('nav.cookiePolicyDesc')} to="/cookies" onClick={() => setOpenMegaMenu(null)} />
                   </div>
                 </div>
               )}
@@ -271,12 +274,13 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <LanguageSwitcher />
             {user ? (
               <>
                 <Link
                   to="/favorites"
                   className="relative p-2.5 rounded-full hover:bg-[#F5F4F0] transition-colors"
-                  aria-label="Favorites">
+                  aria-label={t('nav.favorites')}>
                   <Heart className="w-[18px] h-[18px] text-[#2F3437]" />
                   {favorites.length > 0 && (
                     <span className="absolute top-1 right-1 w-4 h-4 bg-[#e85a2d] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -287,7 +291,7 @@ const Navbar = () => {
                 <Link
                   to="/cart"
                   className="relative p-2.5 rounded-full hover:bg-[#F5F4F0] transition-colors"
-                  aria-label="Cart">
+                  aria-label={t('nav.cart')}>
                   <ShoppingCart className="w-[18px] h-[18px] text-[#2F3437]" />
                   {totalItems > 0 && (
                     <span className="absolute top-1 right-1 w-4 h-4 bg-[#e85a2d] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -304,46 +308,46 @@ const Navbar = () => {
                   <DropdownMenuContent align="end" className="w-56 bg-white border border-[#EAEAEA] text-[#111111]">
                     <div className="px-3 py-2">
                       <p className="text-sm font-semibold truncate text-[#111111]">{user.email}</p>
-                      <p className="text-xs text-[#787774]">Signed in</p>
+                      <p className="text-xs text-[#787774]">{t('nav.signedIn')}</p>
                     </div>
                     <DropdownMenuSeparator className="bg-[#EAEAEA]" />
                     <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/dashboard">
                         <LayoutDashboard className="w-4 h-4 mr-2" />
-                        Dashboard
+                        {t('nav.dashboard')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/downloads">
                         <Download className="w-4 h-4 mr-2" />
-                        My downloads
+                        {t('nav.myDownloads')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild className={userMenuItemClasses}>
                       <Link to="/profile">
                         <Settings className="w-4 h-4 mr-2" />
-                        Settings
+                        {t('nav.settings')}
                       </Link>
                     </DropdownMenuItem>
                     {isAdmin && (
                       <DropdownMenuItem asChild className={userMenuItemClasses}>
                         <Link to="/admin">
                           <Shield className="w-4 h-4 mr-2" />
-                          Admin
+                          {t('nav.admin')}
                         </Link>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator className="bg-[#EAEAEA]" />
                     <DropdownMenuItem onClick={handleSignOut} className={signOutMenuItemClasses}>
                       <LogOut className="w-4 h-4 mr-2" />
-                      Sign out
+                      {t('nav.signOut')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             ) : (
               <>
-                <Link to="/cart" className="relative p-2.5 rounded-full hover:bg-[#F5F4F0] transition-colors" aria-label="Cart">
+                <Link to="/cart" className="relative p-2.5 rounded-full hover:bg-[#F5F4F0] transition-colors" aria-label={t('nav.cart')}>
                   <ShoppingCart className="w-[18px] h-[18px] text-[#2F3437]" />
                   {totalItems > 0 && (
                     <span className="absolute top-1 right-1 w-4 h-4 bg-[#e85a2d] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -354,7 +358,7 @@ const Navbar = () => {
                 <div className="w-px h-7 bg-[#EAEAEA] mx-1" />
                 <Link to="/auth">
                   <Button variant="ghost" size="sm" className="font-semibold text-[#2F3437] hover:text-[#111111] hover:bg-[#F5F4F0]">
-                    Sign In
+                    {t('nav.signIn')}
                   </Button>
                 </Link>
               </>
@@ -365,7 +369,7 @@ const Navbar = () => {
 
           {/* Mobile Actions */}
           <div className="lg:hidden flex items-center gap-1 shrink-0">
-            <Link to="/cart" className="relative p-2" aria-label="Cart">
+            <Link to="/cart" className="relative p-2" aria-label={t('nav.cart')}>
               <ShoppingCart className="w-5 h-5 text-[#2F3437]" />
               {totalItems > 0 && (
                 <span className="absolute top-0 right-0 w-4 h-4 bg-[#e85a2d] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -376,7 +380,7 @@ const Navbar = () => {
             <button
               className="p-2 rounded-lg hover:bg-[#F5F4F0] transition-colors"
               onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}>
+              aria-label={isOpen ? t('common.closeMenu') : t('common.openMenu')}>
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
@@ -394,27 +398,27 @@ const Navbar = () => {
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search templates, themes, source code…"
+                    placeholder={t('common.searchPlaceholder')}
                     className="flex-1 h-11 px-3 bg-transparent text-sm text-[#111111] placeholder:text-[#787774]/70 focus:outline-none"
-                    aria-label="Search"
+                    aria-label={t('common.search')}
                   />
                   <button
                     type="submit"
                     className="h-11 px-4 flex items-center justify-center text-brand-300 hover:text-brand-300 transition-colors border-l border-[#EAEAEA]"
-                    aria-label="Submit search">
+                    aria-label={t('common.submitSearch')}>
                     <Search className="w-4 h-4" />
                   </button>
                 </div>
               </form>
               {/* Browse section */}
-              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-3 mb-1">Browse</p>
-              <MobileNavLink to="/templates" onClick={() => setIsOpen(false)}>All Templates</MobileNavLink>
-              <MobileNavLink to="/templates?featured=true" onClick={() => setIsOpen(false)}>Featured Themes</MobileNavLink>
-              <MobileNavLink to="/templates?sort=bestsellers" onClick={() => setIsOpen(false)}>Best Sellers</MobileNavLink>
-              <MobileNavLink to="/templates?sort=newest" onClick={() => setIsOpen(false)}>Newest Items</MobileNavLink>
+              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-3 mb-1">{t('nav.browse')}</p>
+              <MobileNavLink to="/templates" onClick={() => setIsOpen(false)}>{t('nav.allTemplates')}</MobileNavLink>
+              <MobileNavLink to="/templates?featured=true" onClick={() => setIsOpen(false)}>{t('nav.featuredThemes')}</MobileNavLink>
+              <MobileNavLink to="/templates?sort=bestsellers" onClick={() => setIsOpen(false)}>{t('nav.bestSellers')}</MobileNavLink>
+              <MobileNavLink to="/templates?sort=newest" onClick={() => setIsOpen(false)}>{t('nav.newestItems')}</MobileNavLink>
 
               {/* Categories in mobile */}
-              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">Categories</p>
+              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">{t('nav.categories')}</p>
               {(categories && categories.length > 0 ? categories : ['WordPress Themes', 'eCommerce Templates', 'Site Templates', 'Marketing Templates', 'CMS Templates', 'Blogging']).map((cat) => (
                 <MobileNavLink key={cat} to={`/templates?category=${encodeURIComponent(cat)}`} onClick={() => setIsOpen(false)}>
                   {cat}
@@ -422,40 +426,41 @@ const Navbar = () => {
               ))}
 
               {/* Company */}
-              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">Company</p>
-              <MobileNavLink to="/about" onClick={() => setIsOpen(false)}>About Us</MobileNavLink>
-              <MobileNavLink to="/contact" onClick={() => setIsOpen(false)}>Contact Us</MobileNavLink>
-              <MobileNavLink to="/faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
+              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">{t('nav.company')}</p>
+              <MobileNavLink to="/about" onClick={() => setIsOpen(false)}>{t('nav.aboutUs')}</MobileNavLink>
+              <MobileNavLink to="/contact" onClick={() => setIsOpen(false)}>{t('nav.contactUs')}</MobileNavLink>
+              <MobileNavLink to="/faq" onClick={() => setIsOpen(false)}>{t('nav.faq')}</MobileNavLink>
 
 
               {/* Help & Legal */}
-              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">Help & Legal</p>
-              <MobileNavLink to="/license" onClick={() => setIsOpen(false)}>License</MobileNavLink>
-              <MobileNavLink to="/refunds" onClick={() => setIsOpen(false)}>Refunds</MobileNavLink>
-              <MobileNavLink to="/privacy" onClick={() => setIsOpen(false)}>Privacy Policy</MobileNavLink>
-              <MobileNavLink to="/terms" onClick={() => setIsOpen(false)}>Terms of Service</MobileNavLink>
-              <MobileNavLink to="/cookies" onClick={() => setIsOpen(false)}>Cookie Policy</MobileNavLink>
+              <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">{t('nav.helpLegal')}</p>
+              <MobileNavLink to="/license" onClick={() => setIsOpen(false)}>{t('nav.license')}</MobileNavLink>
+              <MobileNavLink to="/refunds" onClick={() => setIsOpen(false)}>{t('nav.refunds')}</MobileNavLink>
+              <MobileNavLink to="/privacy" onClick={() => setIsOpen(false)}>{t('nav.privacyPolicy')}</MobileNavLink>
+              <MobileNavLink to="/terms" onClick={() => setIsOpen(false)}>{t('nav.termsOfService')}</MobileNavLink>
+              <MobileNavLink to="/cookies" onClick={() => setIsOpen(false)}>{t('nav.cookiePolicy')}</MobileNavLink>
 
               {/* Account */}
               {user && (
                 <>
-                  <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">Account</p>
-                  <MobileNavLink to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</MobileNavLink>
-                  <MobileNavLink to="/downloads" onClick={() => setIsOpen(false)}>My Downloads</MobileNavLink>
-                  <MobileNavLink to="/favorites" onClick={() => setIsOpen(false)}>Favorites {favorites.length > 0 && `(${favorites.length})`}</MobileNavLink>
-                  <MobileNavLink to="/profile" onClick={() => setIsOpen(false)}>Settings</MobileNavLink>
+                  <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">{t('nav.account')}</p>
+                  <MobileNavLink to="/dashboard" onClick={() => setIsOpen(false)}>{t('nav.dashboard')}</MobileNavLink>
+                  <MobileNavLink to="/downloads" onClick={() => setIsOpen(false)}>{t('nav.myDownloads')}</MobileNavLink>
+                  <MobileNavLink to="/favorites" onClick={() => setIsOpen(false)}>{t('nav.favorites')} {favorites.length > 0 && `(${favorites.length})`}</MobileNavLink>
+                  <MobileNavLink to="/profile" onClick={() => setIsOpen(false)}>{t('nav.settings')}</MobileNavLink>
                 </>
               )}
 
               <div className="h-px bg-[#EAEAEA] my-3" />
 
               <div className="flex flex-col gap-3 px-3">
+                <LanguageSwitcher compact />
                 {user ? (
                   <>
                     <Link to="/dashboard" onClick={() => setIsOpen(false)}>
                       <Button variant="outline" size="sm" className="w-full border-[#EAEAEA] bg-transparent text-[#111111] hover:bg-[#F5F4F0] hover:text-[#111111]">
                         <LayoutDashboard className="w-4 h-4 mr-2" />
-                        Dashboard
+                        {t('nav.dashboard')}
                       </Button>
                     </Link>
                     <Button
@@ -467,13 +472,13 @@ const Navbar = () => {
                         setIsOpen(false)
                       }}>
                       <LogOut className="w-4 h-4 mr-2" />
-                      Sign out
+                      {t('nav.signOut')}
                     </Button>
                   </>
                 ) : (
                   <Link to="/auth" className="w-full" onClick={() => setIsOpen(false)}>
                     <Button size="sm" className="w-full font-semibold bg-[#e85a2d] text-white hover:bg-[#ef7a52]">
-                      Sign In
+                      {t('nav.signIn')}
                     </Button>
                   </Link>
                 )}

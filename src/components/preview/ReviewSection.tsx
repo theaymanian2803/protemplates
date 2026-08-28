@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Star, Trash2, MessageSquare, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -69,43 +70,43 @@ const placeholderNames = [
   'Ghita El Mansouri', 'Yassine Bouziane', 'Ines Chraibi', 'Adil Sekkat',
 ]
 
-const placeholderTexts = [
-  'Beautifully designed, exactly what I needed for my business.',
-  'Clean code and great documentation. Highly recommend!',
-  'The template saved me weeks of work. Looks premium.',
-  'Customer support was excellent. Very responsive team.',
-  'Perfect fit for my project. Modern and well-structured.',
-  'Love the attention to detail. Worth every penny.',
-  'Easy to customize and deploy. Great experience overall.',
-  'This template exceeded my expectations. Very polished.',
-  'Fantastic quality. I will definitely buy more templates here.',
-  'Smooth setup process and beautiful design out of the box.',
-  'The layout adapts perfectly on every device I tested.',
-  'Setup was straightforward and the code is super clean.',
-  'My clients constantly compliment this design. Love it.',
-  'The included documentation answered every question I had.',
-  'Fast, modern, and incredibly easy to work with.',
-  'I customized everything in under an hour. Impressive.',
-  'A polished product from start to finish.',
-  'Great value for the price. Highly professional.',
-  'The design system is thoughtful and consistent.',
-  'Performance is excellent, loads very fast.',
-  'I love how flexible the components are.',
-  'Very intuitive for someone with basic coding skills.',
-  'The attention to mobile experience is outstanding.',
-  'Elegant and functional, exactly what I wanted.',
-  'Saved me so much time, worth every dirham.',
-  'Support helped me quickly when I got stuck.',
-  'Beautiful typography and spacing throughout.',
-  'Built with best practices, everything is organized.',
-  'My website looks ten times more professional now.',
-  'Updates are frequent and the project is well maintained.',
+const placeholderTextKeys = [
+  'reviewSection.text1',
+  'reviewSection.text2',
+  'reviewSection.text3',
+  'reviewSection.text4',
+  'reviewSection.text5',
+  'reviewSection.text6',
+  'reviewSection.text7',
+  'reviewSection.text8',
+  'reviewSection.text9',
+  'reviewSection.text10',
+  'reviewSection.text11',
+  'reviewSection.text12',
+  'reviewSection.text13',
+  'reviewSection.text14',
+  'reviewSection.text15',
+  'reviewSection.text16',
+  'reviewSection.text17',
+  'reviewSection.text18',
+  'reviewSection.text19',
+  'reviewSection.text20',
+  'reviewSection.text21',
+  'reviewSection.text22',
+  'reviewSection.text23',
+  'reviewSection.text24',
+  'reviewSection.text25',
+  'reviewSection.text26',
+  'reviewSection.text27',
+  'reviewSection.text28',
+  'reviewSection.text29',
+  'reviewSection.text30',
 ]
 
 function getPlaceholderReviews(templateId: string) {
   const count = getPlaceholderReviewCount(templateId)
   const names = seededShuffle(placeholderNames, `${templateId}-names`)
-  const texts = seededShuffle(placeholderTexts, `${templateId}-texts`)
+  const texts = seededShuffle(placeholderTextKeys, `${templateId}-texts`)
   return Array.from({ length: count }, (_, i) => {
     const rand = seededRandom(`${templateId}-review-${i}`)
     const roll = rand()
@@ -130,6 +131,7 @@ function getPlaceholderReviews(templateId: string) {
 const ReviewSection = ({ templateId }: ReviewSectionProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { data: reviews = [], isLoading } = useReviews(templateId);
   const { data: userReview } = useUserReview(templateId);
   const { data: hasPurchased } = useHasPurchased(templateId);
@@ -150,27 +152,27 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
 
   const handleSubmit = async () => {
     if (rating === 0) {
-      toast({ title: "Veuillez sélectionner une note", variant: "destructive" });
+      toast({ title: t("reviewSection.selectRating"), variant: "destructive" });
       return;
     }
 
     try {
       await submitReview.mutateAsync({ templateId, rating, comment });
-      toast({ title: userReview ? "Avis mis à jour ! Il apparaîtra après approbation de l'administrateur." : "Avis soumis ! Il apparaîtra après approbation de l'administrateur." });
+      toast({ title: userReview ? t("reviewSection.updatedPending") : t("reviewSection.submittedPending") });
       setRating(0);
       setComment("");
       setIsEditing(false);
     } catch {
-      toast({ title: "Erreur lors de l'envoi de l'avis", variant: "destructive" });
+      toast({ title: t("reviewSection.submitError"), variant: "destructive" });
     }
   };
 
   const handleDelete = async (reviewId: string) => {
     try {
       await deleteReview.mutateAsync({ reviewId, templateId });
-      toast({ title: "Avis supprimé" });
+      toast({ title: t("reviewSection.deleted") });
     } catch {
-      toast({ title: "Erreur lors de la suppression de l'avis", variant: "destructive" });
+      toast({ title: t("reviewSection.deleteError"), variant: "destructive" });
     }
   };
 
@@ -189,7 +191,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-display font-bold text-foreground flex items-center gap-2">
           <MessageSquare className="w-5 h-5 text-primary" />
-          Avis
+          {t("reviewSection.title")}
           {displayReviews.length > 0 && (
             <span className="text-sm font-normal text-muted-foreground">
               ({displayReviews.length})
@@ -210,11 +212,11 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {canReview && (
         <div className="glass-card p-5 rounded-2xl border border-border/50 space-y-4">
           <h4 className="font-semibold text-foreground text-sm">
-            {userReview ? "Modifier votre avis" : "Écrire un avis"}
+            {userReview ? t("reviewSection.editYourReview") : t("reviewSection.writeAReview")}
           </h4>
           <StarRating rating={rating} onRate={setRating} interactive />
           <Textarea
-            placeholder="Partagez votre expérience avec ce template..."
+            placeholder={t("reviewSection.commentPlaceholder")}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={3}
@@ -227,10 +229,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
               disabled={submitReview.isPending}
             >
               {submitReview.isPending
-                ? "Envoi en cours..."
+                ? t("reviewSection.sending")
                 : userReview
-                ? "Modifier l'avis"
-                : "Soumettre l'avis"}
+                ? t("reviewSection.updateReview")
+                : t("reviewSection.submitReview")}
             </Button>
             {isEditing && (
               <Button
@@ -242,7 +244,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
                   setComment("");
                 }}
               >
-                Annuler
+                {t("reviewSection.cancel")}
               </Button>
             )}
           </div>
@@ -252,11 +254,11 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {/* Prompt to purchase or sign in */}
       {!canReview && !userReview && (
         <div className="glass-card p-5 rounded-2xl border border-border/50 text-center">
-          <p className="text-sm text-muted-foreground">
+<p className="text-sm text-muted-foreground">
               {!user
-                ? "Connectez-vous et achetez ce template pour laisser un avis."
+                ? t("reviewSection.signInPrompt")
                 : !hasPurchased
-                ? "Achetez ce template pour laisser un avis."
+                ? t("reviewSection.purchasePrompt")
                 : ""}
           </p>
         </div>
@@ -267,7 +269,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
         <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-sm">
           <Clock className="w-4 h-4 text-yellow-500" />
           <span className="text-yellow-600">
-            Votre avis est en attente d'approbation par l'administrateur.
+            {t("reviewSection.pendingApproval")}
           </span>
         </div>
       )}
@@ -276,10 +278,10 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
       {userReview && !isEditing && (
         <div className="glass-card p-5 rounded-2xl border border-primary/20 bg-primary/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-primary">Votre avis</span>
+            <span className="text-xs font-medium text-primary">{t("reviewSection.yourReview")}</span>
             <div className="flex gap-1">
               <Button size="sm" variant="ghost" onClick={startEdit}>
-                Modifier
+                {t("reviewSection.edit")}
               </Button>
               <Button
                 size="sm"
@@ -301,7 +303,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
 
       {/* Reviews list */}
       {isLoading ? (
-        <p className="text-sm text-muted-foreground">Chargement des avis...</p>
+        <p className="text-sm text-muted-foreground">{t("reviewSection.loading")}</p>
       ) : (
         <div className="space-y-4">
           {displayReviews
@@ -314,7 +316,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
                 <div className="flex items-center gap-3">
                   <Avatar className="w-8 h-8">
                     <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                      {(review.display_name || "A").charAt(0).toUpperCase()}
+                      {(review.display_name || t("reviewSection.avatarFallback")).charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
@@ -331,7 +333,7 @@ const ReviewSection = ({ templateId }: ReviewSectionProps) => {
                 </div>
                 {review.comment && (
                   <p className="text-sm text-muted-foreground pl-11">
-                    {review.comment}
+                    {t(review.comment)}
                   </p>
                 )}
               </div>

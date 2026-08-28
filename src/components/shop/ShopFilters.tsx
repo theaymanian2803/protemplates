@@ -2,6 +2,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { useCategories } from '@/hooks/useTemplates'
 import { ChevronDown, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useMemo, useState } from 'react'
 
 export interface ShopFilterState {
@@ -23,11 +24,11 @@ export const defaultFilters: ShopFilterState = {
 }
 
 const SALES_OPTIONS = [
-  { value: 'none', label: 'No Sales' },
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
-  { value: 'top', label: 'Top Sellers' },
+  { value: 'none', label: 'filters.salesNone' },
+  { value: 'low', label: 'filters.salesLow' },
+  { value: 'medium', label: 'filters.salesMedium' },
+  { value: 'high', label: 'filters.salesHigh' },
+  { value: 'top', label: 'filters.salesTop' },
 ]
 
 interface ShopFiltersProps {
@@ -37,6 +38,7 @@ interface ShopFiltersProps {
 }
 
 const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
+  const { t } = useTranslation()
   const { data: liveCategories } = useCategories()
   const [priceMin, setPriceMin] = useState(filters.minPrice)
   const [priceMax, setPriceMax] = useState(filters.maxPrice)
@@ -80,7 +82,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
         <button
           onClick={() => toggleSection('category')}
           className="flex items-center justify-between w-full mb-3">
-          <h3 className="text-sm font-bold text-gray-900">Category</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t('filters.category')}</h3>
           <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${openSections.category ? '' : '-rotate-90'}`} />
         </button>
         {openSections.category && (
@@ -91,7 +93,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
                 className={`w-full flex items-center justify-between px-2 py-1.5 text-sm transition-colors ${
                   !filters.category ? 'font-bold text-gray-900' : 'text-gray-600 hover:text-gray-900'
                 }`}>
-                <span>All categories</span>
+                <span>{t('filters.allCategories')}</span>
                 <span className="text-xs text-gray-400">{totalCounts.__all ?? 0}</span>
               </button>
             </li>
@@ -116,7 +118,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
         <button
           onClick={() => toggleSection('price')}
           className="flex items-center justify-between w-full mb-3">
-          <h3 className="text-sm font-bold text-gray-900">Price</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t('filters.price')}</h3>
           <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${openSections.price ? '' : '-rotate-90'}`} />
         </button>
         {openSections.price && (
@@ -125,7 +127,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
               <Input
                 type="number"
                 min={0}
-                placeholder="$ Min"
+                placeholder={t('filters.priceMin')}
                 value={priceMin}
                 onChange={(e) => setPriceMin(e.target.value)}
                 className="h-9 text-sm border-gray-300"
@@ -136,7 +138,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
               <Input
                 type="number"
                 min={0}
-                placeholder="$ Max"
+                placeholder={t('filters.priceMax')}
                 value={priceMax}
                 onChange={(e) => setPriceMax(e.target.value)}
                 className="h-9 text-sm border-gray-300"
@@ -156,7 +158,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
         <button
           onClick={() => toggleSection('onSale')}
           className="flex items-center justify-between w-full mb-3">
-          <h3 className="text-sm font-bold text-gray-900">On Sale</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t('filters.onSale')}</h3>
           <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${openSections.onSale ? '' : '-rotate-90'}`} />
         </button>
         {openSections.onSale && (
@@ -165,7 +167,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
               checked={filters.onSale}
               onCheckedChange={(v) => onChange({ ...filters, onSale: v === true })}
             />
-            <span className="text-sm text-gray-600">Yes</span>
+            <span className="text-sm text-gray-600">{t('filters.yes')}</span>
           </label>
         )}
       </div>
@@ -175,7 +177,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
         <button
           onClick={() => toggleSection('sales')}
           className="flex items-center justify-between w-full mb-3">
-          <h3 className="text-sm font-bold text-gray-900">Sales</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t('filters.sales')}</h3>
           <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${openSections.sales ? '' : '-rotate-90'}`} />
         </button>
         {openSections.sales && (
@@ -188,7 +190,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
                       checked={filters.sales.includes(opt.value)}
                       onCheckedChange={() => toggleSales(opt.value)}
                     />
-                    <span className="text-sm text-gray-600">{opt.label}</span>
+                    <span className="text-sm text-gray-600">{t(opt.label)}</span>
                   </span>
                 </label>
               </li>
@@ -202,7 +204,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
         <button
           onClick={() => toggleSection('rating')}
           className="flex items-center justify-between w-full mb-3">
-          <h3 className="text-sm font-bold text-gray-900">Rating</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t('filters.rating')}</h3>
           <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${openSections.rating ? '' : '-rotate-90'}`} />
         </button>
         {openSections.rating && (
@@ -216,7 +218,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
                   onChange={() => onChange({ ...filters, rating: null })}
                   className="w-4 h-4 accent-orange-500"
                 />
-                <span className="text-sm text-gray-600">Show all</span>
+                <span className="text-sm text-gray-600">{t('filters.showAll')}</span>
               </label>
             </li>
             {[4, 3, 2, 1].map((r) => (
@@ -229,7 +231,7 @@ const ShopFilters = ({ filters, onChange, totalCounts }: ShopFiltersProps) => {
                     onChange={() => onChange({ ...filters, rating: r })}
                     className="w-4 h-4 accent-orange-500"
                   />
-                  <span className="text-sm text-gray-600">{r} star{r > 1 ? 's' : ''} and higher</span>
+                  <span className="text-sm text-gray-600">{t('filters.starsAndHigher', { count: r })}</span>
                 </label>
               </li>
             ))}

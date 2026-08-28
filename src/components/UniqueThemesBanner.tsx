@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useTemplates } from '@/hooks/useTemplates'
 
 const UniqueThemesBanner = () => {
   const { data: templates, isLoading } = useTemplates({ limit: 6 })
+  const { t } = useTranslation()
 
   return (
     <section className="relative overflow-hidden py-20 text-[#111111]">
@@ -65,14 +67,14 @@ const UniqueThemesBanner = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 rounded-full border border-[#ef7a52]/20 bg-[#ef7a52]/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-[#e85a2d]">
-              Crafted variety
+              {t('unique.badge')}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.05] tracking-tight mb-6">
-              Unique themes for every <span className="text-[#e85a2d]">budget</span> and every project.
+              {t('unique.title1')} <span className="text-[#e85a2d]">{t('unique.title2')}</span> {t('unique.title3')}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: 20 }}
@@ -80,7 +82,7 @@ const UniqueThemesBanner = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.08 }}
               className="text-[#787774] text-base mb-9 leading-[1.7] max-w-md">
-              Each entry is reviewed by hand before it lands here — so what you download is what was promised.
+              {t('unique.subtitle')}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -90,7 +92,7 @@ const UniqueThemesBanner = () => {
               <Link
                 to="/templates"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.2)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                View all themes
+                {t('unique.viewAll')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>

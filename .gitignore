@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
+
+# Local design screenshots
+/*.png
 
 # Editor directories and files
 .vscode/*

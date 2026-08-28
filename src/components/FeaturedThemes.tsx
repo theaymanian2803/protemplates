@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useTemplates } from '@/hooks/useTemplates'
 import ThemeCard, { ThemeCardSkeleton } from '@/components/ThemeCard'
 
 const FeaturedThemes = () => {
   const { data: templates, isLoading } = useTemplates({ category: 'sass', limit: 4 })
+  const { t } = useTranslation()
 
   return (
     <section className="relative overflow-hidden py-20 text-[#111111]">
@@ -24,14 +26,14 @@ const FeaturedThemes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 rounded-full border border-brand-400/25 bg-brand-400/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-brand-300/90">
-              Featured
+              {t('featured.badge')}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.05] tracking-tight mb-4">
-              SaaS <span className="text-[#e85a2d]">Themes</span>
+              {t('featured.title1')} <span className="text-[#e85a2d]">{t('featured.title2')}</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 18 }}
@@ -39,7 +41,7 @@ const FeaturedThemes = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.08 }}
               className="text-base text-[#787774] mb-8 leading-[1.7]">
-              Hand-picked SaaS templates built for modern web applications — clean React + TypeScript you can extend.
+              {t('featured.subtitle')}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -49,7 +51,7 @@ const FeaturedThemes = () => {
               <Link
                 to="/templates?category=sass"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                View all SaaS themes
+                {t('featured.viewAll')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>

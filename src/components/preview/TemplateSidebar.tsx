@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast'
 import { useTemplate } from '@/hooks/useTemplates'
 import { Check, Facebook, Linkedin, MessageCircle, Play, Share2, Twitter } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
 const TemplateSidebar = () => {
@@ -19,6 +20,7 @@ const TemplateSidebar = () => {
   const { user } = useAuth()
   const { toggleFavorite, isFavorite } = useFavorites()
   const { toast } = useToast()
+  const { t } = useTranslation()
   const [videoOpen, setVideoOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
 
@@ -28,25 +30,27 @@ const TemplateSidebar = () => {
   const handleAddToCart = () => {
     addToCart({
       id: templateId,
-      title: template?.title || 'Modèle',
+      title: template?.title || t('sidebar.fallbackTitle'),
       image: template?.image_url || '',
       price: template ? Number(template.price) : 59,
       license: 'regular',
     })
 
     toast({
-      title: inCart ? 'Panier mis à jour' : 'Ajouté au panier',
+      title: inCart ? t('sidebar.cartUpdated') : t('sidebar.addedToCart'),
       description: inCart
-        ? 'L\'article a été mis à jour dans votre panier.'
-        : `${template?.title || 'Modèle'} a été ajouté à votre panier.`,
+        ? t('sidebar.cartUpdatedDesc')
+        : t('sidebar.addedToCartDesc', {
+            title: template?.title || t('sidebar.fallbackTitle'),
+          }),
     })
   }
 
   const handleToggleFavorite = async () => {
     if (!user) {
       toast({
-        title: 'Connexion requise',
-        description: 'Veuillez vous connecter pour sauvegarder vos favoris.',
+        title: t('sidebar.loginRequired'),
+        description: t('sidebar.loginRequiredDesc'),
         variant: 'destructive',
       })
       return
@@ -54,10 +58,10 @@ const TemplateSidebar = () => {
 
     await toggleFavorite(templateId)
     toast({
-      title: isFav ? 'Retiré des favoris' : 'Ajouté aux favoris',
+      title: isFav ? t('sidebar.removedFromFavorites') : t('sidebar.addedToFavorites'),
       description: isFav
-        ? 'Le template a été retiré de vos favoris.'
-        : 'Le template a été ajouté à vos favoris.',
+        ? t('sidebar.removedFromFavoritesDesc')
+        : t('sidebar.addedToFavoritesDesc'),
     })
   }
 
@@ -67,7 +71,7 @@ const TemplateSidebar = () => {
         {/* Dynamic Category Section */}
         {template?.category && (
           <div>
-            <h4 className="font-semibold text-foreground mb-3 text-sm">Catégorie</h4>
+            <h4 className="font-semibold text-foreground mb-3 text-sm">{t('sidebar.category')}</h4>
             <div className="flex flex-wrap gap-2 mb-6">
               <Badge
                 variant="secondary"
@@ -81,7 +85,7 @@ const TemplateSidebar = () => {
         {/* Dynamic Features Checklist */}
         {template?.features && template.features.length > 0 && (
           <div className="pt-4 border-t border-border">
-            <h4 className="font-semibold text-foreground mb-4 text-sm">Fonctionnalités</h4>
+            <h4 className="font-semibold text-foreground mb-4 text-sm">{t('sidebar.features')}</h4>
             <ul className="space-y-3">
               {template.features.slice(0, 8).map((feature: string, index: number) => (
                 <li
@@ -99,7 +103,7 @@ const TemplateSidebar = () => {
 
         {/* Share Section */}
         <div className="pt-4 border-t border-border">
-          <h4 className="font-semibold text-foreground mb-3 text-sm">Partager</h4>
+          <h4 className="font-semibold text-foreground mb-3 text-sm">{t('sidebar.share')}</h4>
           <div className="flex items-center gap-4">
             <button className="text-muted-foreground hover:text-foreground transition-colors">
               <Twitter className="w-4 h-4" />
@@ -122,11 +126,11 @@ const TemplateSidebar = () => {
             variant={inCart ? 'secondary' : 'default'}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             onClick={handleAddToCart}>
-            {inCart ? 'Ajouté au panier' : 'Ajouter au panier'}
+            {inCart ? t('sidebar.inCart') : t('sidebar.addToCart')}
           </Button>
 
           <Button variant="outline" className="w-full" onClick={handleToggleFavorite}>
-            {isFav ? 'Retirer de la liste de souhaits' : 'Ajouter à la liste de souhaits'}
+            {isFav ? t('sidebar.removeFromWishlist') : t('sidebar.addToWishlist')}
           </Button>
 
           {template?.youtube_id && (
@@ -134,7 +138,7 @@ const TemplateSidebar = () => {
               variant="ghost"
               className="w-full text-muted-foreground"
               onClick={() => setVideoOpen(true)}>
-              <Play className="w-4 h-4 mr-2" /> Voir le tutoriel vidéo
+              <Play className="w-4 h-4 mr-2" /> {t('sidebar.watchVideoTutorial')}
             </Button>
           )}
 
@@ -142,7 +146,7 @@ const TemplateSidebar = () => {
             variant="link"
             className="w-full text-muted-foreground text-xs"
             onClick={() => setContactOpen(true)}>
-            <MessageCircle className="w-3 h-3 mr-2" /> Des questions ? Contactez le support
+            <MessageCircle className="w-3 h-3 mr-2" /> {t('sidebar.contactSupport')}
           </Button>
         </div>
       </div>

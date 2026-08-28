@@ -2,11 +2,11 @@ import { useCart } from '@/contexts/CartContext'
 import { ArrowRight, ShoppingCart, Star } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   getDisplayReviewCount,
   getDisplaySales,
   getDisplayRating,
-  formatSales,
 } from '@/lib/seeded'
 
 interface TemplateCardProps {
@@ -55,6 +55,7 @@ const TemplateCard = ({
 }: TemplateCardProps) => {
   const { addToCart, isInCart } = useCart()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const displaySales = getDisplaySales(id, sales)
   const displayReviewCount = getDisplayReviewCount(id, reviewCount)
   const displayRating = getDisplayRating(id, rating)
@@ -66,11 +67,11 @@ const TemplateCard = ({
     e.preventDefault()
     e.stopPropagation()
     if (isInCart(id)) {
-      toast.info('Already in your cart', { description: title })
+      toast.info(t('card.alreadyInCart'), { description: title })
       return
     }
     addToCart({ id, title, image, price, license: 'regular' })
-    toast.success('Added to cart', { description: title })
+    toast.success(t('card.addedToCart'), { description: title })
   }
 
   const handleReadMore = (e: React.MouseEvent) => {
@@ -98,7 +99,7 @@ const TemplateCard = ({
             </span>
             {displaySales > 100 && (
               <span className="px-2 py-1 rounded-md bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wide shadow-sm">
-                Hot
+                {t('card.hot')}
               </span>
             )}
           </div>
@@ -109,11 +110,11 @@ const TemplateCard = ({
               onClick={handleReadMore}
               className="inline-flex items-center gap-2 px-4 h-10 rounded-lg bg-background text-foreground text-sm font-semibold shadow-md hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all">
               <ArrowRight className="w-4 h-4" />
-              Read more
+              {t('card.readMore')}
             </button>
             <button
               onClick={handleAddToCart}
-              aria-label={isInCart(id) ? 'In cart' : 'Add to cart'}
+              aria-label={isInCart(id) ? t('card.inCart') : t('card.addToCart')}
               className="w-10 h-10 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 active:scale-95 transition-all">
               <ShoppingCart className="w-4 h-4" />
             </button>
@@ -154,7 +155,7 @@ const TemplateCard = ({
                 ({displayReviewCount})
               </span>
               <span className="text-border">·</span>
-              <span>{formatSales(displaySales)} sales</span>
+              <span>{t('card.sales', { count: displaySales })}</span>
             </div>
             <div className="font-extrabold text-foreground text-lg tracking-tight">
               ${Number(price).toFixed(0)}

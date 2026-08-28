@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowRight, ShoppingCart, Star } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import { useCart } from '@/contexts/CartContext'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -38,6 +39,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
   const [imgOk, setImgOk] = useState(true)
   const { addToCart, isInCart } = useCart()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const handleReadMore = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -49,7 +51,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
     e.preventDefault()
     e.stopPropagation()
     if (isInCart(template.id)) {
-      toast.info('Already in your cart', { description: template.title })
+      toast.info(t('themeCard.alreadyInCart'), { description: template.title })
       return
     }
     addToCart({
@@ -59,7 +61,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
       price: Number(template.price),
       license: 'regular',
     })
-    toast.success('Added to cart', { description: template.title })
+    toast.success(t('themeCard.addedToCart'), { description: template.title })
   }
 
   return (
@@ -103,7 +105,7 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
           <h3 className="font-slab font-bold text-[#111111] text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#e85a2d] transition-colors">
             {template.title}
           </h3>
-          <p className="text-xs text-[#787774] mb-4">by Unccodestore</p>
+          <p className="text-xs text-[#787774] mb-4">{t('themeCard.by')} Unccodestore</p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold text-[#111111]">
@@ -134,12 +136,12 @@ const ThemeCard = ({ template, index = 0 }: { template: Template; index?: number
               <button
                 onClick={handleReadMore}
                 className="text-[11px] font-semibold text-[#2F3437] border border-[#EAEAEA] rounded px-2.5 py-1.5 hover:border-[#e85a2d] hover:text-[#e85a2d] transition-colors flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
-                Read more
+                {t('themeCard.readMore')}
                 <ArrowRight className="w-3 h-3" />
               </button>
               <button
                 onClick={handleAddToCart}
-                aria-label={isInCart(template.id) ? 'In cart' : 'Add to cart'}
+                aria-label={isInCart(template.id) ? t('themeCard.inCart') : t('themeCard.addToCart')}
                 className="w-8 h-8 flex items-center justify-center rounded border border-[#EAEAEA] text-[#2F3437] hover:border-[#e85a2d] hover:text-[#e85a2d] hover:bg-[#ef7a52]/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
                 <ShoppingCart className="w-3.5 h-3.5" />
               </button>

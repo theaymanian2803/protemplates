@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
-const inclusions = [
-  'Web & UI templates',
-  'Stock video & motion',
-  'Design assets & icons',
-  'Source code you keep',
-]
+import { useTranslation } from 'react-i18next'
 
 const PromoBanner = () => {
+  const { t } = useTranslation()
+  const inclusions = [
+    t('promo.inc1'),
+    t('promo.inc2'),
+    t('promo.inc3'),
+    t('promo.inc4'),
+  ]
+
   return (
     <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111] py-20">
       {/* subtle warm atmospheric light from the right */}
@@ -31,16 +33,16 @@ const PromoBanner = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 rounded-full border border-[#ef7a52]/20 bg-[#ef7a52]/5 px-3 py-1.5 mb-6 text-[11px] font-medium tracking-wide text-[#e85a2d]">
-              All-Access Pass
+              {t('promo.badge')}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, x: -18 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className="font-slab font-bold text-3xl md:text-5xl text-[#111111] leading-[1.05] tracking-tight mb-5">
-              One pass.
+              {t('promo.title1')}
               <br />
-              <span className="text-[#e85a2d]">Unlimited downloads.</span>
+              <span className="text-[#e85a2d]">{t('promo.title2')}</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -18 }}
@@ -48,7 +50,7 @@ const PromoBanner = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.08 }}
               className="text-[#787774] text-base mb-7 leading-[1.7] max-w-md">
-              The broadest catalog of templates, video, and creative assets — yours to download and keep, forever.
+              {t('promo.subtitle')}
             </motion.p>
 
             <motion.ul
@@ -74,12 +76,12 @@ const PromoBanner = () => {
               <Link
                 to="/auth"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                Start now
+                Commencer
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-slab text-3xl font-bold text-[#111111]">$300</span>
-                <span className="text-xs text-[#787774]">one-time</span>
+                <span className="text-xs text-[#787774]">{t('promo.oneTime')}</span>
               </div>
             </motion.div>
           </div>
@@ -101,11 +103,11 @@ const PromoBanner = () => {
             />
             <div className="relative rounded-2xl border border-[#EAEAEA] bg-white backdrop-blur-sm p-7 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.06),0_0_0_1px_rgba(239,122,82,0.04)]">
               <div className="flex items-center justify-between mb-5">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#e85a2d]">All-Access</span>
-                <span className="text-[11px] text-[#787774] font-mono">lifetime</span>
+                {t('promo.allAccess')}
+                <span className="text-[11px] text-[#787774] font-mono">{t('promo.lifetime')}</span>
               </div>
               <p className="font-slab text-4xl font-bold text-[#111111] mb-1">$300</p>
-              <p className="text-sm text-[#787774] mb-6">Own the entire catalog. Forever.</p>
+              <p className="text-sm text-[#787774] mb-6">{t('promo.ownCatalog')}</p>
               <div className="h-px bg-[#EAEAEA] mb-5" />
               <ul className="flex flex-col gap-3 mb-7">
                 {inclusions.map((inc) => (
@@ -120,7 +122,7 @@ const PromoBanner = () => {
               <Link
                 to="/auth"
                 className="flex w-full items-center justify-center gap-2 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                Get All-Access
+                {t('promo.getAccess')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

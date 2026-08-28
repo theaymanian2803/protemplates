@@ -1,6 +1,7 @@
 import { useCart } from '@/contexts/CartContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { ArrowRight, Heart, ShoppingCart, Star } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Link, useNavigate } from 'react-router-dom'
 import { Template } from '@/hooks/useTemplates'
@@ -61,25 +62,27 @@ const HighlightText = ({ text, query }: { text: string; query?: string }) => {
 }
 
 const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) => {
+  const { t } = useTranslation()
   const { addToCart, isInCart } = useCart()
   const { isFavorite, toggleFavorite } = useFavorites()
   const navigate = useNavigate()
   const author = resolveAuthor(template.id)
   const inCart = isInCart(template.id)
   const isFav = isFavorite(template.id)
+  const displaySales = getDisplaySales(template.id, template.sales)
 
   const features = (template.features && template.features.length > 0
     ? template.features
     : template.tech_stack && template.tech_stack.length > 0
       ? template.tech_stack
-      : ['Production-ready', 'Clean code & docs', 'Lifetime updates']
+      : [t('shopCard.featureProductionReady'), t('shopCard.featureCleanCode'), t('shopCard.featureLifetimeUpdates')]
   ).slice(0, 3)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
     if (inCart) {
-      toast.info('Already in your cart', { description: template.title })
+      toast.info(t('shopCard.alreadyInCart'), { description: template.title })
       return
     }
     addToCart({
@@ -89,7 +92,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
       price: Number(template.price),
       license: 'regular',
     })
-    toast.success('Added to cart', { description: template.title })
+    toast.success(t('shopCard.addedToCart'), { description: template.title })
   }
 
   const handleFavorite = (e: React.MouseEvent) => {
@@ -117,14 +120,14 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <span className="absolute top-3 left-3 px-2 py-1 rounded bg-white/90 backdrop-blur-sm text-[11px] font-semibold text-gray-900 border border-gray-200">
-              {template.category || 'Template'}
+              {template.category || t('shopCard.template')}
             </span>
           </div>
           <div className="flex flex-col p-4 flex-1">
             <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mb-1 group-hover:text-orange-500 transition-colors">
               <HighlightText text={template.title} query={query} />
             </h3>
-            <p className="text-xs text-gray-500 mb-2">by {author}</p>
+            <p className="text-xs text-gray-500 mb-2">{t('shopCard.byAuthor', { author })}</p>
             <div className="flex items-center gap-1.5 mb-3">
               <span className="font-bold text-gray-900 text-sm">${Number(template.price).toFixed(0)}</span>
               <div className="flex items-center gap-0.5">
@@ -136,7 +139,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
                 ))}
               </div>
               <span className="text-[10px] text-gray-400">({getDisplayReviewCount(template.id, template.review_count)})</span>
-              <span className="text-[10px] text-gray-400">· {formatSales(getDisplaySales(template.id, template.sales))} sales</span>
+              <span className="text-[10px] text-gray-400">{t('shopCard.sales', { count: displaySales, formatted: formatSales(displaySales) })}</span>
             </div>
             <div className="flex items-center gap-2 mt-auto">
               <button
@@ -152,7 +155,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
                 onClick={handleReadMore}
                 className="flex-1 h-9 rounded border border-orange-500 text-orange-500 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-orange-500 hover:text-white transition-colors">
                 <ArrowRight className="w-3 h-3" />
-                Read more
+                {t('shopCard.readMore')}
               </button>
             </div>
           </div>
@@ -184,9 +187,9 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
           </Link>
         </h3>
         <p className="text-sm text-gray-500 mb-3">
-          by <span className="text-gray-700">{author}</span> in{' '}
+          {t('shopCard.by')} <span className="text-gray-700">{author}</span> {t('shopCard.in')}{' '}
           <Link to={`/templates?category=${encodeURIComponent(template.category || '')}`} className="text-gray-700 hover:text-orange-500">
-            {template.category || 'All'}
+            {template.category || t('shopCard.all')}
           </Link>
         </p>
 
@@ -214,7 +217,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
 
         <div className="text-right mb-3">
           <div className="text-2xl font-bold text-gray-900">${Number(template.price).toFixed(0)}</div>
-          <div className="text-xs text-gray-500 mt-1">{formatSales(getDisplaySales(template.id, template.sales))} Sales · ({getDisplayReviewCount(template.id, template.review_count)}) reviews</div>
+          <div className="text-xs text-gray-500 mt-1">{t('shopCard.salesStats', { count: displaySales, formatted: formatSales(displaySales), reviews: getDisplayReviewCount(template.id, template.review_count) })}</div>
           {Number(template.rating) > 0 && (
             <div className="flex items-center justify-end gap-0.5 mt-1">
               {Array.from({ length: 5 }).map((_, s) => (
@@ -225,7 +228,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
               ))}
             </div>
           )}
-          <div className="text-xs text-gray-400 mt-2">Last updated: {formatDate(template.updated_at)}</div>
+          <div className="text-xs text-gray-400 mt-2">{t('shopCard.lastUpdated', { date: formatDate(template.updated_at) })}</div>
         </div>
 
         <div className="flex items-center gap-2 mt-auto">
@@ -242,7 +245,7 @@ const ShopProductCard = ({ template, query, cardView }: ShopProductCardProps) =>
             onClick={handleReadMore}
             className="flex-1 h-10 rounded border-2 border-orange-500 text-orange-500 font-semibold text-sm flex items-center justify-center gap-1.5 hover:bg-orange-500 hover:text-white transition-colors">
             <ArrowRight className="w-3.5 h-3.5" />
-            Read more
+            {t('shopCard.readMore')}
           </button>
         </div>
       </div>
