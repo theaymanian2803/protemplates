@@ -257,15 +257,39 @@ const Navbar = () => {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'legal' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'legal' && (
-                <div className="absolute top-full right-0 pt-2">
-                  <div className="w-[380px] bg-white border border-[#EAEAEA] rounded-xl shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)] p-4 grid grid-cols-2 gap-x-3 gap-y-0.5">
-                    <MegaMenuItem icon={HelpCircle} title={t('nav.helpCenter')} desc={t('nav.helpCenterDesc')} to="/faq" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Mail} title={t('nav.contactSupport')} desc={t('nav.contactSupportDesc')} to="/contact" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileCheck} title={t('nav.license')} desc={t('nav.licenseDesc')} to="/license" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Shield} title={t('nav.refunds')} desc={t('nav.refundsDesc')} to="/refunds" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={Library} title={t('nav.privacyPolicy')} desc={t('nav.privacyPolicyDesc')} to="/privacy" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileBarChart} title={t('nav.termsOfService')} desc={t('nav.termsOfServiceDesc')} to="/terms" onClick={() => setOpenMegaMenu(null)} />
-                    <MegaMenuItem icon={FileText} title={t('nav.cookiePolicy')} desc={t('nav.cookiePolicyDesc')} to="/cookies" onClick={() => setOpenMegaMenu(null)} />
+                <div className="fixed top-[64px] left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
+                  <div className="max-w-[1400px] mx-auto px-8 py-6 grid grid-cols-3 gap-8">
+                    <div>
+                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.help')}</p>
+                      <div className="flex flex-col gap-0.5">
+                        <MegaMenuItem icon={HelpCircle} title={t('nav.helpCenter')} desc={t('nav.helpCenterDesc')} to="/faq" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={Mail} title={t('nav.contactSupport')} desc={t('nav.contactSupportDesc')} to="/contact" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={HelpCircle} title={t('nav.faq')} desc={t('nav.faqDesc')} to="/faq" onClick={() => setOpenMegaMenu(null)} />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.legal')}</p>
+                      <div className="flex flex-col gap-0.5">
+                        <MegaMenuItem icon={FileCheck} title={t('nav.license')} desc={t('nav.licenseDesc')} to="/license" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={Shield} title={t('nav.refunds')} desc={t('nav.refundsDesc')} to="/refunds" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={Library} title={t('nav.privacyPolicy')} desc={t('nav.privacyPolicyDesc')} to="/privacy" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={FileBarChart} title={t('nav.termsOfService')} desc={t('nav.termsOfServiceDesc')} to="/terms" onClick={() => setOpenMegaMenu(null)} />
+                        <MegaMenuItem icon={FileText} title={t('nav.cookiePolicy')} desc={t('nav.cookiePolicyDesc')} to="/cookies" onClick={() => setOpenMegaMenu(null)} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mt-3 ml-3 mr-3 p-4 rounded-lg bg-[#e85a2d] text-white">
+                        <p className="text-sm font-bold font-slab">{t('sidebar.contactSupport')}</p>
+                        <p className="text-xs text-white/80 mt-1">{t('nav.contactSupportDesc')}</p>
+                        <Link
+                          to="/contact"
+                          onClick={() => setOpenMegaMenu(null)}
+                          className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-[#e85a2d] transition-colors hover:bg-[#FFF4EF]">
+                          {t('nav.contactUs')}
+                          <ArrowRight className="w-3 h-3 rtl:rotate-180" />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -454,7 +478,7 @@ const Navbar = () => {
               <div className="h-px bg-[#EAEAEA] my-3" />
 
               <div className="flex flex-col gap-3 px-3">
-                <LanguageSwitcher compact />
+                <LanguageSwitcher />
                 {user ? (
                   <>
                     <Link to="/dashboard" onClick={() => setIsOpen(false)}>

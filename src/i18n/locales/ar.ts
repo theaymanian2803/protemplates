@@ -60,6 +60,8 @@ export default {
     cart: 'السلة',
     account: 'الحساب',
     language: 'اللغة',
+    help: 'مساعدة',
+    legal: 'قانوني',
   },
   footer: {
     tagline:

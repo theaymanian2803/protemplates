@@ -1,21 +1,31 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import en from './locales/en'
 import fr from './locales/fr'
 import ar from './locales/ar'
+import enTemplates from './locales/en.templates'
 import frTemplates from './locales/fr.templates'
 import arTemplates from './locales/ar.templates'
+import enPreview from './locales/en.preview'
 import frPreview from './locales/fr.preview'
 import arPreview from './locales/ar.preview'
+import enCheckout from './locales/en.checkout'
 import frCheckout from './locales/fr.checkout'
 import arCheckout from './locales/ar.checkout'
 
-export type Lang = 'fr' | 'ar'
+export type Lang = 'fr' | 'ar' | 'en'
+
+const LANGS: Lang[] = ['fr', 'ar', 'en']
+
+const isLang = (value: string | null): value is Lang => !!value && LANGS.includes(value as Lang)
 
 export const getInitialLang = (): Lang => {
   if (typeof window === 'undefined') return 'fr'
   const urlLang = new URLSearchParams(window.location.search).get('lang')
-  if (urlLang === 'ar' || urlLang === 'fr') return urlLang
-  return localStorage.getItem('lang') === 'ar' ? 'ar' : 'fr'
+  if (isLang(urlLang)) return urlLang
+  const stored = localStorage.getItem('lang')
+  if (isLang(stored)) return stored
+  return 'fr'
 }
 
 export const applyLang = (lang: Lang) => {
@@ -33,6 +43,7 @@ const initialLang = getInitialLang()
 
 i18n.use(initReactI18next).init({
   resources: {
+    en: { translation: { ...en, ...enTemplates, ...enPreview, ...enCheckout } },
     fr: { translation: { ...fr, ...frTemplates, ...frPreview, ...frCheckout } },
     ar: { translation: { ...ar, ...arTemplates, ...arPreview, ...arCheckout } },
   },

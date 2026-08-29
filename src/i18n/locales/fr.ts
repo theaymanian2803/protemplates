@@ -60,6 +60,8 @@ export default {
     cart: 'Panier',
     account: 'Compte',
     language: 'Langue',
+    help: 'Aide',
+    legal: 'Légal',
   },
   footer: {
     tagline:
