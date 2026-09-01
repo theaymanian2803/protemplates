@@ -99,7 +99,7 @@ export default {
     title1: 'Buy once.',
     title2: 'Own it forever.',
     subtitle:
-      'Production-ready React, TypeScript & Tailwind templates with clean, maintainable source code you keep — not rent.',
+      'Production-ready TanStack TypeScript templates with shadcn/ui and advanced motion graphics — React Three Fiber, GSAP and more. Clean, maintainable source code you own — not rent.',
     popular: 'Popular:',
     trust1: 'Downloadable source code — you keep it',
     trust2: 'One-time purchase, no subscription',
