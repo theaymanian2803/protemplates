@@ -43,7 +43,7 @@ const PricingSection = () => {
   };
 
   return (
-    <section id="pricing" className="relative py-20 md:py-24 bg-[#FBFBFA] text-[#111111] overflow-hidden">
+    <section id="pricing" className="relative py-14 md:py-16 bg-[#FBFBFA] text-[#111111] overflow-hidden">
       <div className="absolute top-20 left-1/4 w-72 h-72 rounded-full bg-primary/5 blur-[80px]" />
       <div className="absolute bottom-20 right-1/4 w-64 h-64 rounded-full bg-accent/5 blur-[60px]" />
 
@@ -53,34 +53,34 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12"
+          className="text-center max-w-2xl mx-auto mb-8"
         >
           <span className="text-sm font-semibold text-[#e85a2d] uppercase tracking-wider">Tarifs</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-4">
+          <h2 className="font-slab text-3xl md:text-4xl font-bold text-[#111111] mt-3 mb-3">
             Tarifs simples et transparents
           </h2>
-          <p className="text-lg text-[#787774]">
+          <p className="text-base md:text-lg text-[#787774]">
             Achetez des templates individuellement ou obtenez tout avec un paiement unique.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative p-8 rounded-2xl bg-white border border-[#EAEAEA] hover:border-[#e85a2d]/40 hover:shadow-lg transition-all duration-300"
+            className="relative p-6 md:p-7 rounded-2xl bg-white border border-[#EAEAEA] hover:border-[#e85a2d]/40 hover:shadow-lg transition-all duration-300"
           >
-            <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-bold text-[#111111] mb-2">Templates individuels</h3>
+            <div className="text-center mb-6">
+              <h3 className="font-slab text-2xl font-bold text-[#111111] mb-2">Templates individuels</h3>
               <p className="text-[#787774] text-sm mb-4">Achetez seulement ce dont vous avez besoin</p>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl font-bold text-[#111111]">${minPrice} – ${maxPrice}</span>
+                <span className="font-slab text-4xl font-bold text-[#111111]">${minPrice} – ${maxPrice}</span>
               </div>
               <p className="text-sm text-[#787774] mt-2">par template, selon la licence</p>
             </div>
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-3.5 mb-6">
               {indFeatures.map((f, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#e85a2d]/10 flex items-center justify-center flex-shrink-0">
@@ -100,21 +100,21 @@ const PricingSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative p-8 rounded-2xl bg-white border-2 border-[#e85a2d]/60 shadow-[0_24px_60px_-24px_rgba(232,90,45,0.35)] scale-105 transition-all duration-300"
+            className="relative p-6 md:p-7 rounded-2xl bg-white border-2 border-[#e85a2d]/60 shadow-[0_24px_60px_-24px_rgba(232,90,45,0.35)] scale-105 transition-all duration-300"
           >
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#e85a2d] text-white text-sm font-semibold flex items-center gap-1">
               <Crown className="w-3.5 h-3.5" />
               Meilleur rapport qualité-prix
             </div>
-            <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-bold text-[#111111] mb-2">Pass Tout Accès</h3>
+            <div className="text-center mb-6">
+              <h3 className="font-slab text-2xl font-bold text-[#111111] mb-2">Pass Tout Accès</h3>
               <p className="text-[#787774] text-sm mb-4">Un paiement, tous les templates</p>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl font-bold text-[#111111]">${aaPrice}</span>
+                <span className="font-slab text-4xl font-bold text-[#111111]">${aaPrice}</span>
               </div>
               <p className="text-sm text-[#787774] mt-2">paiement unique</p>
             </div>
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-3.5 mb-6">
               {aaFeatures.map((f, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-[#e85a2d]/10 flex items-center justify-center flex-shrink-0">
