@@ -10,7 +10,7 @@ const FeaturedThemes = () => {
   const { t } = useTranslation()
 
   return (
-    <section className="relative overflow-hidden py-20 text-[#111111]">
+    <section className="relative overflow-hidden py-20 md:py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"

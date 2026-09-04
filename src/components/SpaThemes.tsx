@@ -27,7 +27,7 @@ const SpaThemes = () => {
   if (!isLoading && (!templates || templates.length === 0)) return null
 
   return (
-    <section className="relative overflow-hidden py-24 text-[#111111]">
+    <section className="relative overflow-hidden py-20 md:py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -45,7 +45,7 @@ const SpaThemes = () => {
       <div className="relative container mx-auto z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-14">
+          <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +89,7 @@ const SpaThemes = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-center mt-12">
+            className="text-center mt-10">
             <Link
               to="/templates?category=E-commerce&q=spa"
               className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">

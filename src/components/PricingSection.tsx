@@ -43,7 +43,7 @@ const PricingSection = () => {
   };
 
   return (
-    <section id="pricing" className="py-24 bg-muted/30 relative">
+    <section id="pricing" className="relative py-20 md:py-24 bg-[#FBFBFA] text-[#111111] overflow-hidden">
       <div className="absolute top-20 left-1/4 w-72 h-72 rounded-full bg-primary/5 blur-[80px]" />
       <div className="absolute bottom-20 right-1/4 w-64 h-64 rounded-full bg-accent/5 blur-[60px]" />
 
@@ -53,13 +53,13 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-12"
         >
-          <span className="text-sm font-semibold text-accent uppercase tracking-wider">Tarifs</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
+          <span className="text-sm font-semibold text-[#e85a2d] uppercase tracking-wider">Tarifs</span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-4">
             Tarifs simples et transparents
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-[#787774]">
             Achetez des templates individuellement ou obtenez tout avec un paiement unique.
           </p>
         </motion.div>
@@ -70,23 +70,23 @@ const PricingSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative p-8 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+            className="relative p-8 rounded-2xl bg-white border border-[#EAEAEA] hover:border-[#e85a2d]/40 hover:shadow-lg transition-all duration-300"
           >
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-bold text-foreground mb-2">Templates individuels</h3>
-              <p className="text-muted-foreground text-sm mb-4">Achetez seulement ce dont vous avez besoin</p>
+              <h3 className="font-display text-2xl font-bold text-[#111111] mb-2">Templates individuels</h3>
+              <p className="text-[#787774] text-sm mb-4">Achetez seulement ce dont vous avez besoin</p>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl font-bold text-foreground">${minPrice} – ${maxPrice}</span>
+                <span className="font-display text-5xl font-bold text-[#111111]">${minPrice} – ${maxPrice}</span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">par template, selon la licence</p>
+              <p className="text-sm text-[#787774] mt-2">par template, selon la licence</p>
             </div>
             <ul className="space-y-4 mb-8">
               {indFeatures.map((f, i) => (
                 <li key={i} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-primary" />
+                  <div className="w-5 h-5 rounded-full bg-[#e85a2d]/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-[#e85a2d]" />
                   </div>
-                  <span className="text-foreground">{f}</span>
+                  <span className="text-[#111111]">{f}</span>
                 </li>
               ))}
             </ul>
@@ -100,31 +100,31 @@ const PricingSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative p-8 rounded-2xl bg-card border border-primary shadow-glow-primary scale-105 transition-all duration-300"
+            className="relative p-8 rounded-2xl bg-white border-2 border-[#e85a2d]/60 shadow-[0_24px_60px_-24px_rgba(232,90,45,0.35)] scale-105 transition-all duration-300"
           >
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-accent-foreground text-sm font-semibold flex items-center gap-1">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#e85a2d] text-white text-sm font-semibold flex items-center gap-1">
               <Crown className="w-3.5 h-3.5" />
               Meilleur rapport qualité-prix
             </div>
             <div className="text-center mb-8">
-              <h3 className="font-display text-2xl font-bold text-foreground mb-2">Pass Tout Accès</h3>
-              <p className="text-muted-foreground text-sm mb-4">Un paiement, tous les templates</p>
+              <h3 className="font-display text-2xl font-bold text-[#111111] mb-2">Pass Tout Accès</h3>
+              <p className="text-[#787774] text-sm mb-4">Un paiement, tous les templates</p>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl font-bold text-foreground">${aaPrice}</span>
+                <span className="font-display text-5xl font-bold text-[#111111]">${aaPrice}</span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">paiement unique</p>
+              <p className="text-sm text-[#787774] mt-2">paiement unique</p>
             </div>
             <ul className="space-y-4 mb-8">
               {aaFeatures.map((f, i) => (
                 <li key={i} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-primary" />
+                  <div className="w-5 h-5 rounded-full bg-[#e85a2d]/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-[#e85a2d]" />
                   </div>
-                  <span className="text-foreground">{f}</span>
+                  <span className="text-[#111111]">{f}</span>
                 </li>
               ))}
             </ul>
-            <Button variant="hero" size="lg" className="w-full" onClick={handleBuyAllAccess}>
+            <Button size="lg" className="w-full bg-[#e85a2d] hover:bg-[#d94523]" onClick={handleBuyAllAccess}>
               Obtenir le Pass — ${aaPrice}
             </Button>
           </motion.div>

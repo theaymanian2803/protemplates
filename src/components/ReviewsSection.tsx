@@ -174,7 +174,7 @@ const ReviewsSection = () => {
   })
 
   return (
-    <section className="relative overflow-hidden py-24 text-[#111111]">
+    <section className="relative overflow-hidden py-20 md:py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -193,7 +193,7 @@ const ReviewsSection = () => {
       <div className="relative container mx-auto z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-14">
+          <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}

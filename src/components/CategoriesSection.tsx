@@ -83,7 +83,7 @@ const CategoryCard = ({ category, index }: { category: typeof categoriesData[0];
 const CategoriesSection = () => {
   const { t } = useTranslation()
   return (
-    <section className="relative overflow-hidden bg-[#FBFBFA] py-20 text-[#111111]">
+    <section className="relative overflow-hidden bg-[#FBFBFA] py-20 md:py-24 text-[#111111]">
 
       <div className="relative container mx-auto">
         <div className="max-w-2xl mb-12">
@@ -114,7 +114,7 @@ const CategoriesSection = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-14">
+          className="text-center mt-10">
           <Link
             to="/templates"
             className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#f5f5f3] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">

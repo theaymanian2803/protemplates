@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useCart } from '@/contexts/CartContext'
 
 const PromoBanner = () => {
   const { t } = useTranslation()
+  const { setAllAccess } = useCart()
+  const navigate = useNavigate()
   const inclusions = [
     t('promo.inc1'),
     t('promo.inc2'),
@@ -12,8 +15,13 @@ const PromoBanner = () => {
     t('promo.inc4'),
   ]
 
+  const handleGetPass = () => {
+    setAllAccess(true)
+    navigate('/checkout')
+  }
+
   return (
-    <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111] py-20">
+    <section className="relative overflow-hidden bg-[#FBFBFA] text-[#111111] py-20 md:py-24">
       {/* subtle warm atmospheric light from the right */}
       <div
         aria-hidden
@@ -73,12 +81,12 @@ const PromoBanner = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.24 }}
               className="flex items-center gap-5">
-              <Link
-                to="/auth"
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
-                Commencer
+              <button
+                onClick={handleGetPass}
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50 cursor-pointer">
+                {t('promo.startNow')}
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </button>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-slab text-3xl font-bold text-[#111111]">$300</span>
                 <span className="text-xs text-[#787774]">{t('promo.oneTime')}</span>
@@ -119,12 +127,12 @@ const PromoBanner = () => {
                   </li>
                 ))}
               </ul>
-              <Link
-                to="/auth"
-                className="flex w-full items-center justify-center gap-2 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50">
+              <button
+                onClick={handleGetPass}
+                className="flex w-full items-center justify-center gap-2 py-3.5 bg-[#e85a2d] text-white font-semibold text-sm rounded-lg hover:bg-[#d94523] transition-colors shadow-[0_0_30px_-8px_rgba(232,90,45,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/50 cursor-pointer">
                 {t('promo.getAccess')}
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </button>
             </div>
           </motion.div>
         </div>

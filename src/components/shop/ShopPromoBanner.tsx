@@ -1,7 +1,16 @@
 import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useCart } from '@/contexts/CartContext'
 
 const ShopPromoBanner = () => {
+  const { setAllAccess } = useCart()
+  const navigate = useNavigate()
+
+  const handleGetAllTemplates = () => {
+    setAllAccess(true)
+    navigate('/checkout')
+  }
+
   return (
     <div className="relative overflow-hidden rounded-lg bg-green-500 text-white">
       <div className="absolute inset-0 opacity-10">
@@ -17,12 +26,12 @@ const ShopPromoBanner = () => {
             All templates. One price. <span className="text-yellow-300">$300 USD — Build anything.</span>
           </p>
         </div>
-        <Link to="/auth" className="shrink-0">
-          <button className="inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-gray-900 text-white font-semibold text-sm hover:bg-gray-800 transition-colors group whitespace-nowrap">
-            Get all templates
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </Link>
+        <button
+          onClick={handleGetAllTemplates}
+          className="shrink-0 inline-flex items-center gap-2 h-11 px-6 rounded-lg bg-gray-900 text-white font-semibold text-sm hover:bg-gray-800 transition-colors group whitespace-nowrap cursor-pointer">
+          Get all templates
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </button>
       </div>
     </div>
   )

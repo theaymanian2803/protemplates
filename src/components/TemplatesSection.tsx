@@ -19,7 +19,7 @@ const TemplatesSection = () => {
   const categoryTabs = [allCategories, ...(categories || [])]
 
   return (
-    <section className="relative overflow-hidden py-20 text-[#111111]">
+    <section className="relative overflow-hidden py-20 md:py-24 text-[#111111]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -32,7 +32,7 @@ const TemplatesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-10">
+          className="text-center max-w-3xl mx-auto mb-12">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#e85a2d]/25 bg-[#e85a2d]/5 px-3 py-1.5 mb-5 text-[11px] font-medium tracking-wide text-[#e85a2d]/90">
             {t('templatesSection.badge')}
           </span>
@@ -81,7 +81,7 @@ const TemplatesSection = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-14">
+          className="text-center mt-10">
           <Link
             to="/templates"
             className="inline-flex items-center gap-2 px-8 py-3.5 border border-[#EAEAEA] text-[#111111] font-semibold text-sm rounded-lg hover:bg-[#F5F4F0] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85a2d]/40">
