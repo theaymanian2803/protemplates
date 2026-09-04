@@ -8,10 +8,11 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToast } from '@/hooks/use-toast'
+import { useAllAccessPass } from '@/hooks/useAllAccessPass'
 import { usePurchasedTemplates } from '@/hooks/useDashboard'
 import { supabase } from '@/integrations/supabase/client'
 import { getDirectDownloadUrl } from '@/lib/utils'
-import { Download, FileArchive, Loader2, Package, Rocket, Search, Star, Trash2 } from 'lucide-react'
+import { Crown, Download, FileArchive, Loader2, Package, Rocket, Search, Star, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
@@ -21,6 +22,7 @@ const Downloads = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { data: purchased, isLoading } = usePurchasedTemplates()
+  const { data: allAccessPass } = useAllAccessPass()
   const { toast } = useToast()
   const [downloadingId, setDownloadingId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -57,10 +59,10 @@ const Downloads = () => {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Échec du téléchargement',
-        description: error.message || 'Impossible de générer le lien de téléchargement',
+        description: error instanceof Error ? error.message : 'Impossible de générer le lien de téléchargement',
         variant: 'destructive',
       })
     } finally {
@@ -86,8 +88,8 @@ const Downloads = () => {
       queryClient.invalidateQueries({ queryKey: ['purchased-templates'] })
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] })
       toast({ title: 'Template supprimé', description: `"${title}" a été retiré de vos téléchargements.` })
-    } catch (error: any) {
-      toast({ title: 'Erreur', description: error.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      toast({ title: 'Erreur', description: error instanceof Error ? error.message : 'Échec de la suppression', variant: 'destructive' })
     } finally {
       setDeletingId(null)
     }
@@ -111,6 +113,26 @@ const Downloads = () => {
               Accédez à tous vos templates achetés à tout moment
             </p>
           </div>
+
+          {/* All-Access Pass banner */}
+          {allAccessPass && (
+            <div className="mb-6 rounded-xl bg-[#e85a2d] text-white p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="w-11 h-11 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+                <Crown className="w-6 h-6" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold font-slab">Pass Tout Accès actif</p>
+                <p className="text-sm text-white/85">
+                  Tous les templates du catalogue sont inclus — y compris les futurs ajouts.
+                </p>
+              </div>
+              <Link to="/templates">
+                <Button size="sm" className="bg-white text-[#e85a2d] hover:bg-[#FFF4EF] font-semibold shrink-0">
+                  Parcourir le catalogue
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {/* Search */}
           <div className="relative mb-6">
@@ -164,13 +186,19 @@ const Downloads = () => {
                           {item.template_title}
                         </Link>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Badge variant="outline" className="text-[10px] capitalize">
-                            {item.license_type}
+                          <Badge variant="outline" className={`text-[10px] capitalize ${item.license_type === 'pass' ? 'border-[#e85a2d]/40 bg-[#e85a2d]/5 text-[#e85a2d]' : ''}`}>
+                            {item.license_type === 'pass' ? 'Pass Tout Accès' : item.license_type}
                           </Badge>
                           <span>·</span>
-                          <span>{new Date(item.purchased_at).toLocaleDateString()}</span>
-                          <span>·</span>
-                          <span>${Number(item.price).toFixed(2)}</span>
+                          {item.license_type === 'pass' ? (
+                            <span className="text-[#e85a2d] font-semibold">Inclus</span>
+                          ) : (
+                            <>
+                              <span>{new Date(item.purchased_at).toLocaleDateString()}</span>
+                              <span>·</span>
+                              <span>${Number(item.price).toFixed(2)}</span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -213,18 +241,20 @@ const Downloads = () => {
                       ) : (
                         <span className="text-xs text-muted-foreground">Fichier non disponible</span>
                       )}
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="gap-1 text-muted-foreground hover:text-destructive"
-                        onClick={() => handleRemove(item.id, item.template_title)}
-                        disabled={deletingId === item.id}>
-                        {deletingId === item.id ? (
-                          <Loader2 className="w-3 h-3 animate-spin" />
-                        ) : (
-                          <Trash2 className="w-3 h-3" />
-                        )}
-                      </Button>
+                      {item.license_type !== 'pass' && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="gap-1 text-muted-foreground hover:text-destructive"
+                          onClick={() => handleRemove(item.id, item.template_title)}
+                          disabled={deletingId === item.id}>
+                          {deletingId === item.id ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-3 h-3" />
+                          )}
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

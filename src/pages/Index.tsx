@@ -3,6 +3,7 @@ import FeaturedThemes from '@/components/FeaturedThemes'
 import Footer from '@/components/Footer'
 import HeroSection from '@/components/HeroSection'
 import Navbar from '@/components/Navbar'
+import PricingSection from '@/components/PricingSection'
 import PromoBanner from '@/components/PromoBanner'
 import ReviewsSection from '@/components/ReviewsSection'
 import SpaThemes from '@/components/SpaThemes'
@@ -19,6 +20,7 @@ const Index = () => {
       <UniqueThemesBanner />
       <FeaturedThemes />
       <TemplatesSection />
+      <PricingSection />
       <ReviewsSection />
       <SpaThemes />
       <Footer />

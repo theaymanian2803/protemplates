@@ -10,10 +10,12 @@ import {
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
+import { useAllAccessPass, ALL_ACCESS_PRICE } from '@/hooks/useAllAccessPass'
 import {
   ArrowRight,
   ChevronDown,
   ChevronRight,
+  Crown,
   Layers,
   ShoppingCart,
   Rocket,
@@ -106,8 +108,9 @@ const Navbar = () => {
   const [query, setQuery] = useState('')
   const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null)
   const { user, signOut } = useAuth()
-  const { totalItems } = useCart()
+  const { totalItems, setAllAccess } = useCart()
   const { favorites } = useFavorites()
+  const { data: allAccessPass } = useAllAccessPass()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { data: categories } = useCategories()
@@ -122,6 +125,16 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut()
+  }
+
+  const handlePassClick = () => {
+    setOpenMegaMenu(null)
+    if (allAccessPass) {
+      navigate('/downloads')
+      return
+    }
+    setAllAccess(true)
+    navigate('/checkout')
   }
 
   const onSearch = (e: React.FormEvent) => {
@@ -214,8 +227,20 @@ const Navbar = () => {
                       <MegaMenuItem icon={Heart} title={t('nav.myFavorites')} desc={t('nav.myFavoritesDesc')} to="/favorites" onClick={() => setOpenMegaMenu(null)} />
                       <MegaMenuItem icon={ShoppingCart} title={t('nav.shoppingCart')} desc={t('nav.itemsInCart', { count: totalItems })} to="/cart" onClick={() => setOpenMegaMenu(null)} />
                       <div className="mt-3 ml-3 mr-3 p-4 rounded-lg bg-[#e85a2d] text-white">
-                        <p className="text-sm font-bold font-slab">{t('nav.allAccessPass')}</p>
-                        <p className="text-xs text-white/80 mt-1">{t('nav.unlimitedDownloads300')}</p>
+                        <button
+                          type="button"
+                          onClick={handlePassClick}
+                          className="w-full text-left group cursor-pointer">
+                          <p className="text-sm font-bold font-slab flex items-center gap-1.5">
+                            <Crown className="w-4 h-4" />
+                            {t('nav.allAccessPass')}
+                          </p>
+                          <p className="text-xs text-white/80 mt-1">{t('nav.unlimitedDownloads300')}</p>
+                          <p className="mt-2 inline-flex items-center gap-1 rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-[#e85a2d] transition-colors group-hover:bg-[#FFF4EF]">
+                            {allAccessPass ? t('nav.viewDownloads') : t('nav.getPass')}
+                            <ArrowRight className="w-3 h-3 rtl:rotate-180" />
+                          </p>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -244,6 +269,14 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+
+            {/* Pricing anchor link */}
+            <Link
+              to="/#pricing"
+              onClick={() => setOpenMegaMenu(null)}
+              className="inline-flex items-center px-3 py-2 text-sm font-semibold text-[#2F3437] hover:text-[#111111] transition-colors">
+              {t('nav.pricing')}
+            </Link>
 
             {/* Help & Legal Mega Menu — centered small panel */}
             <div className="relative">
@@ -440,6 +473,26 @@ const Navbar = () => {
               <MobileNavLink to="/templates?featured=true" onClick={() => setIsOpen(false)}>{t('nav.featuredThemes')}</MobileNavLink>
               <MobileNavLink to="/templates?sort=bestsellers" onClick={() => setIsOpen(false)}>{t('nav.bestSellers')}</MobileNavLink>
               <MobileNavLink to="/templates?sort=newest" onClick={() => setIsOpen(false)}>{t('nav.newestItems')}</MobileNavLink>
+              <MobileNavLink to="/#pricing" onClick={() => setIsOpen(false)}>{t('nav.pricing')}</MobileNavLink>
+
+              {/* All-Access Pass CTA */}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false)
+                  handlePassClick()
+                }}
+                className="mt-3 mx-3 p-4 rounded-lg bg-[#e85a2d] text-white text-left cursor-pointer">
+                <p className="text-sm font-bold font-slab flex items-center gap-1.5">
+                  <Crown className="w-4 h-4" />
+                  {t('nav.allAccessPass')} — ${ALL_ACCESS_PRICE}
+                </p>
+                <p className="text-xs text-white/80 mt-1">{t('nav.unlimitedDownloads300')}</p>
+                <span className="mt-2 inline-flex items-center gap-1 rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-[#e85a2d]">
+                  {allAccessPass ? t('nav.viewDownloads') : t('nav.getPass')}
+                  <ArrowRight className="w-3 h-3 rtl:rotate-180" />
+                </span>
+              </button>
 
               {/* Categories in mobile */}
               <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-4 mb-1">{t('nav.categories')}</p>

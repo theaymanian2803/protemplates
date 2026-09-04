@@ -2,18 +2,32 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import Index from "./pages/Index";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 import CookieConsent from "./components/CookieConsent";
 import ChatBubble from "./components/ChatBubble";
+
+const ScrollToHash = () => {
+  const { hash, pathname } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.getElementById(hash.slice(1));
+    if (el) {
+      window.setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 60);
+    }
+  }, [hash, pathname]);
+
+  return null;
+};
 
 const TemplatePreview = lazy(() => import("./pages/TemplatePreview"));
 const Templates = lazy(() => import("./pages/Templates"));
@@ -57,6 +71,7 @@ const App = () => (
               <ScrollToTop />
               <BrowserRouter>
                 <ScrollToTopOnNavigate />
+                <ScrollToHash />
                 <CookieConsent />
                 <ChatBubble />
                 <Routes>

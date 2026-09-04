@@ -3,16 +3,39 @@ import { Check, Crown } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { ALL_ACCESS_PRICE } from "@/hooks/useAllAccessPass";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+
+const useCatalogPriceRange = () => {
+  return useQuery({
+    queryKey: ["catalog-price-range"],
+    queryFn: async () => {
+      const [minRes, maxRes] = await Promise.all([
+        supabase.from("templates").select("price").order("price").limit(1),
+        supabase.from("templates").select("price").order("price", { ascending: false }).limit(1),
+      ]);
+      const min = minRes.data?.[0]?.price as number | undefined;
+      const max = maxRes.data?.[0]?.price as number | undefined;
+      if (minRes.error || maxRes.error) throw minRes.error || maxRes.error;
+      return { min, max };
+    },
+    staleTime: 60_000,
+  });
+};
 
 const PricingSection = () => {
   const { setAllAccess } = useCart();
   const navigate = useNavigate();
+  const { data: priceRange } = useCatalogPriceRange();
 
   const indFeatures = ["Achat à l'unité", "Licences standard et étendue", "6 mois de support", "Mises à jour à vie", "Fichiers sources inclus"];
   const aaFeatures = ["Accès à TOUS les templates", "Tous les futurs templates inclus", "Licence standard pour tous", "Support prioritaire", "Mises à jour à vie", "Fichiers sources inclus"];
   const indCtaLink = "/templates";
   const aaPrice = ALL_ACCESS_PRICE;
+
+  const minPrice = priceRange?.min != null ? Math.floor(priceRange.min) : 29;
+  const maxPrice = priceRange?.max != null ? Math.floor(priceRange.max) : 79;
 
   const handleBuyAllAccess = () => {
     setAllAccess(true);
@@ -53,9 +76,9 @@ const PricingSection = () => {
               <h3 className="font-display text-2xl font-bold text-foreground mb-2">Templates individuels</h3>
               <p className="text-muted-foreground text-sm mb-4">Achetez seulement ce dont vous avez besoin</p>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display text-5xl font-bold text-foreground">Variable</span>
+                <span className="font-display text-5xl font-bold text-foreground">${minPrice} – ${maxPrice}</span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">par template</p>
+              <p className="text-sm text-muted-foreground mt-2">par template, selon la licence</p>
             </div>
             <ul className="space-y-4 mb-8">
               {indFeatures.map((f, i) => (

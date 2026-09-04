@@ -12,9 +12,13 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
 import { useToast } from '@/hooks/use-toast'
+import { useAllAccessPass } from '@/hooks/useAllAccessPass'
 import { useTemplate } from '@/hooks/useTemplates'
-import { ArrowLeft, Home, Maximize2, ShoppingBag } from 'lucide-react'
+import { supabase } from '@/integrations/supabase/client'
+import { getDirectDownloadUrl } from '@/lib/utils'
+import { ArrowLeft, BadgeCheck, Download, Home, Loader2, Maximize2, ShoppingBag } from 'lucide-react'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
@@ -23,10 +27,57 @@ const TemplatePreview = () => {
   const { data: template, isLoading, error } = useTemplate(id || '')
   const { addToCart } = useCart()
   const { user } = useAuth()
+  const { data: allAccessPass } = useAllAccessPass()
   const navigate = useNavigate()
   const { toast } = useToast()
   const { t } = useTranslation()
   const [previewOpen, setPreviewOpen] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+
+  const { data: downloadInfo } = useQuery({
+    queryKey: ['template-download-url', id, user?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('template_downloads')
+        .select('source_file_url')
+        .eq('template_id', id)
+        .maybeSingle()
+      if (error) throw error
+      return data as { source_file_url: string | null } | null
+    },
+    enabled: !!id && !!allAccessPass,
+  })
+
+  const handleDownload = async () => {
+    if (!downloadInfo?.source_file_url || downloading) return
+    setDownloading(true)
+    try {
+      const cleanUrl = downloadInfo.source_file_url.trim()
+      if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
+        window.open(getDirectDownloadUrl(cleanUrl), '_blank', 'noopener,noreferrer')
+      } else {
+        const { data, error } = await supabase.storage
+          .from('template-files')
+          .createSignedUrl(cleanUrl, 60)
+        if (error) throw error
+        const link = document.createElement('a')
+        link.href = data.signedUrl
+        link.download = `${template?.title || 'template'}.zip`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : t('preview.downloadFailedDesc')
+      toast({
+        title: t('preview.downloadFailed'),
+        description: message,
+        variant: 'destructive',
+      })
+    } finally {
+      setDownloading(false)
+    }
+  }
 
   const handleBuyClick = () => {
     addToCart({
@@ -145,14 +196,36 @@ const TemplatePreview = () => {
                   {t('preview.fullscreenPreview')} <Maximize2 className="w-4 h-4" />
                 </Button>
               )}
-              <Button
-                className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
-                onClick={handleBuyClick}>
-                <ShoppingBag className="w-4 h-4" />
-                {Number(template.price) > 0
-                  ? t('preview.buyFor', { price: template.price })
-                  : t('preview.getForFree')}
-              </Button>
+              {allAccessPass ? (
+                <>
+                  <Button
+                    className="bg-[#e85a2d] hover:bg-[#ef7a52] text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
+                    onClick={handleDownload}
+                    disabled={downloading || !downloadInfo?.source_file_url}>
+                    {downloading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Download className="w-4 h-4" />
+                    )}
+                    {downloadInfo?.source_file_url
+                      ? t('preview.downloadNow')
+                      : t('preview.fileUnavailable')}
+                  </Button>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#e85a2d] bg-[#e85a2d]/5 border border-[#e85a2d]/20 rounded-full px-3 py-1.5">
+                    <BadgeCheck className="w-4 h-4" />
+                    {t('preview.includedInPass')}
+                  </span>
+                </>
+              ) : (
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 text-white border-none gap-2 w-full sm:w-auto text-xs sm:text-sm"
+                  onClick={handleBuyClick}>
+                  <ShoppingBag className="w-4 h-4" />
+                  {Number(template.price) > 0
+                    ? t('preview.buyFor', { price: template.price })
+                    : t('preview.getForFree')}
+                </Button>
+              )}
             </div>
           </div>
 

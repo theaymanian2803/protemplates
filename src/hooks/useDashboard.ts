@@ -22,6 +22,44 @@ export const usePurchasedTemplates = () => {
     queryFn: async () => {
       if (!user) return [];
 
+      // Get user's reviews
+      const { data: reviews } = await supabase
+        .from("reviews")
+        .select("template_id")
+        .eq("user_id", user.id);
+      const reviewedSet = new Set((reviews || []).map((r) => r.template_id));
+
+      // All-Access Pass holders get the whole catalog, including future templates
+      const { data: passRes } = await supabase
+        .from("all_access_passes")
+        .select("id, created_at")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (passRes) {
+        const [templatesRes, downloadsRes] = await Promise.all([
+          supabase.from("templates").select("id, title, price"),
+          supabase.from("template_downloads").select("template_id, source_file_url"),
+        ]);
+
+        const fileMap = new Map(
+          (downloadsRes.data ?? []).map((d) => [d.template_id, d.source_file_url])
+        );
+
+        return (templatesRes.data ?? []).map((t) => ({
+          id: `pass-${t.id}`,
+          template_id: t.id,
+          template_title: t.title,
+          license_type: "pass",
+          price: 0,
+          purchased_at: passRes.created_at,
+          order_id: `pass-${passRes.id}`,
+          order_status: "completed",
+          source_file_url: fileMap.get(t.id) ?? null,
+          has_review: reviewedSet.has(t.id),
+        })) as PurchasedTemplate[];
+      }
+
       // Get completed orders
       const { data: orders, error: ordersError } = await supabase
         .from("orders")
@@ -46,21 +84,13 @@ export const usePurchasedTemplates = () => {
       // Get download URLs
       const templateIds = [...new Set((items || []).map((i) => i.template_id))];
       const { data: downloads } = await supabase
-        .from("template_downloads" as any)
+        .from("template_downloads")
         .select("template_id, source_file_url")
         .in("template_id", templateIds);
 
       const fileMap = new Map(
-        (downloads as any[] ?? []).map((d: any) => [d.template_id, d.source_file_url])
+        (downloads ?? []).map((d) => [d.template_id, d.source_file_url])
       );
-
-      // Get user's reviews
-      const { data: reviews } = await supabase
-        .from("reviews")
-        .select("template_id")
-        .eq("user_id", user.id);
-
-      const reviewedSet = new Set((reviews || []).map((r) => r.template_id));
 
       const orderMap = new Map(orders.map((o) => [o.id, o]));
 
@@ -112,11 +142,21 @@ export const useDashboardStats = () => {
       const reviewedIds = new Set((reviewsRes.data || []).map((r) => r.template_id));
       const pendingReviews = [...purchasedTemplateIds].filter((id) => !reviewedIds.has(id)).length;
 
+      const { count: catalogCount } = await supabase
+        .from("templates")
+        .select("id", { count: "exact", head: true });
+
+      const { data: passRes } = await supabase
+        .from("all_access_passes")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
       return {
         totalOrders: (ordersRes.data || []).length,
         totalSpent,
-        totalDownloads: purchasedTemplateIds.size,
-        pendingReviews,
+        totalDownloads: passRes ? catalogCount ?? 0 : purchasedTemplateIds.size,
+        pendingReviews: passRes ? 0 : pendingReviews,
       };
     },
     enabled: !!user,
