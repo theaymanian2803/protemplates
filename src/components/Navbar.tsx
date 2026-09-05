@@ -146,9 +146,10 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FBFBFA]/92 backdrop-blur-md border-b border-[#EAEAEA] text-[#111111]">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#FBFBFA]/92 backdrop-blur-md border-b border-[#EAEAEA] text-[#111111]">
       <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16 gap-4">
+        <div className="relative z-10 flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
             <div className="w-9 h-9 rounded-lg bg-[#e85a2d] flex items-center justify-center shadow-[0_0_20px_-4px_rgba(232,90,45,0.6)]">
@@ -158,27 +159,6 @@ const Navbar = () => {
               Unccodestore
             </span>
           </Link>
-
-          {/* Center Search — desktop only, matches lg nav breakpoint */}
-          <form onSubmit={onSearch} className="hidden lg:flex flex-1 max-w-xl">
-            <div className="flex w-full items-center rounded-lg border border-[#EAEAEA] bg-white focus-within:border-brand-400/50 focus-within:bg-white transition-colors overflow-hidden">
-              <Search className="w-4 h-4 text-brand-300/60 ml-4 shrink-0" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t('common.searchPlaceholder')}
-                className="flex-1 h-10 px-3 bg-transparent text-sm text-[#111111] placeholder:text-[#787774]/70 focus:outline-none"
-                aria-label={t('common.search')}
-              />
-              <button
-                type="submit"
-                className="h-10 px-4 flex items-center justify-center text-brand-300 hover:text-brand-300 transition-colors border-l border-[#EAEAEA]"
-                aria-label={t('common.submitSearch')}>
-                <Search className="w-4 h-4" />
-              </button>
-            </div>
-          </form>
 
           {/* Desktop Nav with Mega Menus */}
           <div className="hidden lg:flex items-center gap-1 shrink-0">
@@ -194,7 +174,7 @@ const Navbar = () => {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'browse' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'browse' && (
-                <div className="fixed top-[64px] left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
+                <div className="fixed top-16 left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
                   <div className="max-w-[1400px] mx-auto px-8 py-6 grid grid-cols-3 gap-8">
                     <div>
                       <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.categories')}</p>
@@ -260,7 +240,7 @@ const Navbar = () => {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'company' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'company' && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
                   <div className="w-[340px] bg-white border border-[#EAEAEA] rounded-xl shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)] p-4">
                     <MegaMenuItem icon={Users} title={t('nav.aboutUs')} desc={t('nav.aboutUsDesc')} to="/about" onClick={() => setOpenMegaMenu(null)} />
                     <MegaMenuItem icon={Mail} title={t('nav.contactUs')} desc={t('nav.contactUsDesc')} to="/contact" onClick={() => setOpenMegaMenu(null)} />
@@ -290,7 +270,7 @@ const Navbar = () => {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMegaMenu === 'legal' ? 'rotate-180' : ''}`} />
               </button>
               {openMegaMenu === 'legal' && (
-                <div className="fixed top-[64px] left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
+                <div className="fixed top-16 left-0 right-0 z-50 border-b border-[#EAEAEA] bg-white shadow-[0_12px_40px_-8px_rgba(0,0,0,0.08)]">
                   <div className="max-w-[1400px] mx-auto px-8 py-6 grid grid-cols-3 gap-8">
                     <div>
                       <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest mb-3">{t('nav.help')}</p>
@@ -331,7 +311,6 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            <LanguageSwitcher />
             {user ? (
               <>
                 <Link
@@ -447,26 +426,6 @@ const Navbar = () => {
         {isOpen && (
           <div className="lg:hidden pb-6 animate-fade-up max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-1">
-              {/* Mobile search inside hamburger */}
-              <form onSubmit={onSearch} className="px-3 pt-4 pb-1">
-                <div className="flex w-full items-center rounded-lg border border-[#EAEAEA] bg-white focus-within:border-brand-400/50 transition-colors overflow-hidden">
-                  <Search className="w-4 h-4 text-brand-300/60 ml-4 shrink-0" />
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={t('common.searchPlaceholder')}
-                    className="flex-1 h-11 px-3 bg-transparent text-sm text-[#111111] placeholder:text-[#787774]/70 focus:outline-none"
-                    aria-label={t('common.search')}
-                  />
-                  <button
-                    type="submit"
-                    className="h-11 px-4 flex items-center justify-center text-brand-300 hover:text-brand-300 transition-colors border-l border-[#EAEAEA]"
-                    aria-label={t('common.submitSearch')}>
-                    <Search className="w-4 h-4" />
-                  </button>
-                </div>
-              </form>
               {/* Browse section */}
               <p className="text-[11px] font-bold text-[#787774]/70 uppercase tracking-widest px-3 mt-3 mb-1">{t('nav.browse')}</p>
               <MobileNavLink to="/templates" onClick={() => setIsOpen(false)}>{t('nav.allTemplates')}</MobileNavLink>
@@ -531,7 +490,6 @@ const Navbar = () => {
               <div className="h-px bg-[#EAEAEA] my-3" />
 
               <div className="flex flex-col gap-3 px-3">
-                <LanguageSwitcher />
                 {user ? (
                   <>
                     <Link to="/dashboard" onClick={() => setIsOpen(false)}>
@@ -565,7 +523,36 @@ const Navbar = () => {
           </div>
         )}
       </div>
-    </nav>
+      </nav>
+
+      {/* Utility Bar — search + language; scrolls away with the page */}
+      <div className="mt-16 border-b border-[#EAEAEA] bg-[#FBFBFA]">
+        <div className="container mx-auto relative flex items-center justify-center gap-2 h-11">
+          <form onSubmit={onSearch} role="search" className="flex-1 min-w-0 sm:flex-none sm:w-[22rem]">
+            <div className="flex w-full items-center rounded-lg border border-[#EAEAEA] bg-white focus-within:border-brand-400/50 transition-colors overflow-hidden">
+              <Search className="w-4 h-4 text-brand-300/60 ml-3 shrink-0" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t('common.searchPlaceholder')}
+                className="flex-1 h-8 px-2 bg-transparent text-sm text-[#111111] placeholder:text-[#787774]/70 focus:outline-none min-w-0"
+                aria-label={t('common.search')}
+              />
+              <button
+                type="submit"
+                className="h-8 px-3 flex items-center justify-center text-brand-300 hover:text-brand-300 transition-colors shrink-0"
+                aria-label={t('common.submitSearch')}>
+                <Search className="w-4 h-4" />
+              </button>
+            </div>
+          </form>
+          <div className="shrink-0 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 sm:rtl:left-0 sm:rtl:right-auto">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 

@@ -104,7 +104,7 @@ const TemplatePreview = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto max-w-7xl">
             <Skeleton className="h-6 w-48 mb-4" />
             <Skeleton className="h-10 w-96 mb-6" />
@@ -128,7 +128,7 @@ const TemplatePreview = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto text-center">
             <Link
               to="/"
@@ -155,7 +155,7 @@ const TemplatePreview = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-[1200px] overflow-hidden">
           {/* Header Section mimicking Webflow Details Page */}
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-6">

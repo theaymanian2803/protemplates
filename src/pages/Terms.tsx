@@ -5,7 +5,7 @@ const Terms = () => {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-3xl">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Conditions d'utilisation</h1>
           <p className="text-muted-foreground mb-12">Dernière mise à jour : mars 2026</p>

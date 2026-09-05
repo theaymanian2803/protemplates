@@ -14,7 +14,7 @@ const Cart = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
             {t('cart.title')}

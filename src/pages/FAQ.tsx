@@ -127,7 +127,7 @@ const FAQ = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
+      <section className="pt-5 pb-16 relative overflow-hidden">
         <div className="absolute top-20 right-10 w-72 h-72 bg-orange-100 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-orange-100 rounded-full blur-3xl" />
         

@@ -198,7 +198,7 @@ const Templates = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      <div className="pt-20 pb-20">
+      <div className="pt-5 pb-20">
         <div className="container mx-auto max-w-[1400px]">
           {/* Full-width search bar */}
           <div className="mb-6">

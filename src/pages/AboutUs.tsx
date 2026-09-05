@@ -114,7 +114,7 @@ const AboutUs = () => {
       <Navbar />
 
       {/* ── Hero ─ */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
+      <section className="pt-5 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(249,115,22,0.06),transparent)]" />
         <div className="absolute top-40 -left-32 w-[500px] h-[500px] rounded-full bg-orange-50 blur-3xl" />
         <div className="absolute top-20 -right-32 w-[400px] h-[400px] rounded-full bg-orange-50 blur-3xl" />

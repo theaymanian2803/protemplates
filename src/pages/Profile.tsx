@@ -183,7 +183,7 @@ const Profile = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16 container mx-auto max-w-2xl">
+        <div className="pt-9 pb-16 container mx-auto max-w-2xl">
           <Skeleton className="h-10 w-48 mb-8" />
           <Skeleton className="h-64 w-full" />
         </div>
@@ -198,7 +198,7 @@ const Profile = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-2xl">
           {/* Header */}
           <div className="mb-8 flex items-center gap-4">

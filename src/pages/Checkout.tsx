@@ -1,4 +1,4 @@
-﻿import Footer from '@/components/Footer'
+import Footer from '@/components/Footer'
 import HostingWizard from '@/components/HostingWizard'
 import Navbar from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
@@ -314,7 +314,7 @@ const Checkout = () => {
     return (
       <main className="min-h-screen bg-white">
         <Navbar />
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto max-w-2xl">
             <div className="bg-white p-8 rounded-xl border border-gray-200 text-center">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange-50 flex items-center justify-center">
@@ -356,7 +356,7 @@ const Checkout = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto">
           <Link
             to="/cart"

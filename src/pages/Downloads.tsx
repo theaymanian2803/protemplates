@@ -103,7 +103,7 @@ const Downloads = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground">

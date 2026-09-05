@@ -150,7 +150,7 @@ const Auth = () => {
         <main className="min-h-screen bg-white">
           <Navbar />
           
-          <div className="pt-24 pb-16">
+          <div className="pt-9 pb-16">
             <div className="container mx-auto max-w-md">
               <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-50 flex items-center justify-center">
@@ -187,7 +187,7 @@ const Auth = () => {
       <main className="min-h-screen bg-white">
         <Navbar />
         
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto max-w-md">
             <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
@@ -264,7 +264,7 @@ const Auth = () => {
     <main className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-md">
           {/* Header */}
           <div className="text-center mb-8">

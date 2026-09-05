@@ -91,7 +91,7 @@ const Favorites = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto">
           {/* Header */}
           <div className="text-center mb-12">

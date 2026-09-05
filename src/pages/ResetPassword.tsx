@@ -91,7 +91,7 @@ const ResetPassword = () => {
       <main className="min-h-screen bg-background">
         <Navbar />
         
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto max-w-md">
             <div className="glass-card p-8 rounded-2xl border border-border/50 shadow-lg text-center">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
@@ -125,7 +125,7 @@ const ResetPassword = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">

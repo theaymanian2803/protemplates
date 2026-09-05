@@ -45,7 +45,7 @@ const Dashboard = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16 container mx-auto">
+        <div className="pt-9 pb-16 container mx-auto">
           <Skeleton className="h-10 w-64 mb-8" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-28" />)}
@@ -69,7 +69,7 @@ const Dashboard = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-24 pb-16">
+      <div className="pt-9 pb-16">
         <div className="container mx-auto max-w-6xl">
           {/* Header */}
           <div className="mb-8">

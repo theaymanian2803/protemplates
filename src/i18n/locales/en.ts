@@ -101,8 +101,8 @@ export default {
     badge: 'Hand-picked modern templates',
     title1: 'Buy once.',
     title2: 'Own it forever.',
-    subtitle:
-      'Production-ready TanStack TypeScript templates with shadcn/ui and advanced motion graphics — React Three Fiber, GSAP and more. Clean, maintainable source code you own — not rent.',
+    subtitle1: 'Pick the right template for your business.',
+    subtitle2: 'Preview it live, buy once, and own the code forever.',
     popular: 'Popular:',
     trust1: 'Downloadable source code — you keep it',
     trust2: 'One-time purchase, no subscription',

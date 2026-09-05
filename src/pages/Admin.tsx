@@ -1,4 +1,4 @@
-﻿import { AdminSidebar } from '@/components/admin/AdminSidebar'
+import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { ContactList } from '@/components/admin/ContactList'
 import { CouponList } from '@/components/admin/CouponList'
 import { OrderDetails } from '@/components/admin/OrderDetails'
@@ -97,12 +97,12 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template créé avec succès !' })
+      toast({ title: 'Template cr�� avec succ�s !' })
       setShowForm(false)
     },
     onError: (error: Error) => {
       toast({
-        title: 'Erreur lors de la création',
+        title: 'Erreur lors de la cr�ation',
         description: error.message,
         variant: 'destructive',
       })
@@ -125,13 +125,13 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template mis à jour avec succès !' })
+      toast({ title: 'Template mis � jour avec succ�s !' })
       setEditingTemplate(null)
       setShowForm(false)
     },
     onError: (error: Error) => {
       toast({
-        title: 'Erreur lors de la mise à jour',
+        title: 'Erreur lors de la mise � jour',
         description: error.message,
         variant: 'destructive',
       })
@@ -146,7 +146,7 @@ const Admin = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['templates'] })
-      toast({ title: 'Template supprimé avec succès !' })
+      toast({ title: 'Template supprim� avec succ�s !' })
       setDeletingId(null)
     },
     onError: (error: Error) => {
@@ -181,10 +181,10 @@ const Admin = () => {
     updateOrderStatus.mutate(
       { orderId, status },
       {
-        onSuccess: () => toast({ title: 'Statut de la commande mis à jour !' }),
+        onSuccess: () => toast({ title: 'Statut de la commande mis � jour !' }),
         onError: (error) =>
           toast({
-            title: 'Erreur lors de la mise à jour',
+            title: 'Erreur lors de la mise � jour',
             description: error.message,
             variant: 'destructive',
           }),
@@ -196,7 +196,7 @@ const Admin = () => {
     setDeletingOrderId(orderId)
     deleteOrder.mutate(orderId, {
       onSuccess: () => {
-        toast({ title: 'Commande supprimée avec succès !' })
+        toast({ title: 'Commande supprim�e avec succ�s !' })
         setDeletingOrderId(null)
       },
       onError: (error) => {
@@ -243,7 +243,7 @@ const Admin = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto">
             <div className="max-w-md mx-auto text-center">
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -252,9 +252,9 @@ const Admin = () => {
               <h1 className="text-2xl font-bold text-foreground mb-2">Non disponible sur mobile</h1>
               <p className="text-muted-foreground mb-6">
                 Le panneau d'administration est accessible uniquement sur tablette et ordinateur
-                (écran de 768px et plus).
+                (�cran de 768px et plus).
               </p>
-              <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+              <Button onClick={() => navigate('/')}>Retour � l'accueil</Button>
             </div>
           </div>
         </div>
@@ -267,17 +267,17 @@ const Admin = () => {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="pt-24 pb-16">
+        <div className="pt-9 pb-16">
           <div className="container mx-auto">
             <div className="max-w-md mx-auto text-center">
               <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShieldAlert className="w-10 h-10 text-destructive" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground mb-2">Accès refusé</h1>
+              <h1 className="text-2xl font-bold text-foreground mb-2">Acc�s refus�</h1>
               <p className="text-muted-foreground mb-6">
-                Vous n'avez pas les permissions nécessaires pour accéder au tableau de bord.
+                Vous n'avez pas les permissions n�cessaires pour acc�der au tableau de bord.
               </p>
-              <Button onClick={() => navigate('/')}>Retour à l'accueil</Button>
+              <Button onClick={() => navigate('/')}>Retour � l'accueil</Button>
             </div>
           </div>
         </div>
@@ -362,7 +362,7 @@ const Admin = () => {
                   (showForm ? (
                     <div className="glass-card p-6 rounded-2xl border border-border/50">
                       <h2 className="text-xl font-semibold mb-6">
-                        {editingTemplate ? 'Modifier le template' : 'Créer un template'}
+                        {editingTemplate ? 'Modifier le template' : 'Cr�er un template'}
                       </h2>
                       <TemplateForm
                         template={editingTemplate}
